@@ -1,8 +1,9 @@
+
 {
-  "appName": "Habit Heroes",
+  "appName": "Discipline Baby",
   "landing": {
-    "title": "Turn Habits into Heroic Adventures",
-    "description": "A gamified task management app for kids that makes completing chores and learning fun. Watch your virtual pet grow as you conquer your goals!",
+    "title": "Gamified Habit Tracking for Kids",
+    "description": "Turn daily chores and learning goals into an exciting adventure with a virtual pet that grows with your child's achievements.",
     "getStarted": "Get Started",
     "goToDashboard": "Go to Dashboard"
   },
@@ -27,44 +28,44 @@
   "dashboard": {
     "title": "Dashboard",
     "myPet": "My Pet",
-    "dailyGoal": "Today's Goal",
-    "dailyGoalDescription": "{{completedTasks}} of {{totalTasks}} tasks completed",
-    "xpGained": "XP Gained Today",
+    "dailyGoal": "Daily Goal",
+    "dailyGoalDescription": "{{completedTasks}} of {{totalTasks}} tasks completed today.",
+    "xpGained": "XP Gained",
     "xpToNextLevel": "{{xp}} XP to next level",
     "petIntro": "Pet Introduction",
-    "changePet": "Change your pet in settings",
+    "changePet": "Change your pet",
     "todaysAdventures": "Today's Adventures",
-    "noAdventures": "No adventures for today. Great job!"
+    "noAdventures": "No tasks for today. Enjoy your day!"
   },
   "tasks": {
     "title": "Task Management",
-    "addTask": "Add New Task",
+    "addTask": "Add Task",
     "addTaskDialog": {
-      "title": "Create a New Quest",
-      "description": "Design a new task for your hero. Add details about the challenge.",
+      "title": "Create a New Task",
+      "description": "Set up a new recurring or one-time task for your child.",
       "taskName": "Task Name",
-      "taskNamePlaceholder": "e.g., Read for 20 minutes",
+      "taskNamePlaceholder": "e.g., Read a book",
       "category": "Category",
       "categoryPlaceholder": "Select a category",
       "difficulty": "Difficulty",
       "difficultyPlaceholder": "Select a difficulty",
-      "createTask": "Create Task",
       "recurrence": "Recurrence",
       "repeatEvery": "Repeat every",
       "selectUnit": "Select unit",
       "daysOfWeek": "Days of Week",
-      "time": "Time"
+      "time": "Time",
+      "createTask": "Create Task"
     },
     "editTaskDialog": {
-      "title": "Edit Quest",
-      "description": "Update the details of this task.",
+      "title": "Edit Task",
+      "description": "Update the details for this task.",
       "save": "Save Changes"
     },
     "delete": {
       "title": "Are you sure?",
-      "description": "This action cannot be undone. This will permanently delete this task.",
-      "cancel": "Cancel",
-      "confirm": "Delete"
+      "description": "This action cannot be undone. This will permanently delete the task.",
+      "confirm": "Delete",
+      "cancel": "Cancel"
     },
     "table": {
       "task": "Task",
@@ -78,12 +79,6 @@
       "pause": "Pause",
       "resume": "Resume",
       "delete": "Delete"
-    },
-    "status": {
-      "active": "Active",
-      "paused": "Paused",
-      "completed": "Completed",
-      "pending": "Pending"
     },
     "categories": {
       "learning": "Learning",
@@ -100,36 +95,36 @@
     "recurrence": {
       "once": "Once",
       "recurring": "Recurring",
-      "units": {
-        "week": "Week",
-        "month": "Month",
-        "year": "Year"
-      },
       "display": {
         "once": "One-time task",
         "onceAtTime": "One-time at {{time}}",
         "every_week": "Every week at {{time}}",
-        "every_month": "Every month at {{time}}",
-        "every_year": "Every year at {{time}}",
+        "every_week_on": "Weekly at {{time}} on",
         "every_x_weeks": "Every {{count}} weeks at {{time}}",
+        "every_x_weeks_on": "Every {{count}} weeks at {{time}} on",
+        "every_month": "Every month at {{time}}",
+        "every_month_on": "Monthly at {{time}} on",
         "every_x_months": "Every {{count}} months at {{time}}",
+        "every_x_months_on": "Every {{count}} months at {{time}} on",
+        "every_year": "Every year at {{time}}",
+        "every_year_on": "Annually at {{time}} on",
         "every_x_years": "Every {{count}} years at {{time}}",
-        "every_week_on": "Weekly on",
-        "every_month_on": "Monthly on",
-        "every_year_on": "Yearly on",
-        "every_x_weeks_on": "Every {{count}} weeks on",
-        "every_x_months_on": "Every {{count}} months on",
-        "every_x_years_on": "Every {{count}} years on"
+        "every_x_years_on": "Every {{count}} years at {{time}} on"
+      },
+      "units": {
+        "week": "Week",
+        "month": "Month",
+        "year": "Year"
       }
     },
     "weekdays": {
-      "mon": "Mon",
-      "tue": "Tue",
-      "wed": "Wed",
-      "thu": "Thu",
-      "fri": "Fri",
-      "sat": "Sat",
-      "sun": "Sun"
+      "mon": "M",
+      "tue": "T",
+      "wed": "W",
+      "thu": "T",
+      "fri": "F",
+      "sat": "S",
+      "sun": "S"
     },
     "weekdaysShort": {
       "mon": "Mon",
@@ -149,25 +144,19 @@
       "saturday": "Saturday",
       "sunday": "Sunday"
     },
+    "status": {
+      "active": "Active",
+      "paused": "Paused",
+      "pending": "Pending",
+      "completed": "Completed"
+    },
     "items": {
-      "read": {
-        "title": "Read for 20 minutes"
-      },
-      "drawing": {
-        "title": "Practice drawing"
-      },
-      "bedtime": {
-        "title": "Go to bed on time"
-      },
-      "homework": {
-        "title": "Finish science homework"
-      },
-      "bike": {
-        "title": "Bike ride in the park"
-      },
-      "workout": {
-        "title": "Morning workout"
-      }
+      "read": { "title": "Read for 20 minutes" },
+      "drawing": { "title": "Practice drawing" },
+      "bedtime": { "title": "Go to bed on time" },
+      "homework": { "title": "Finish science homework" },
+      "bike": { "title": "Bike ride in the park" },
+      "workout": { "title": "Morning workout" }
     }
   },
   "achievements": {
@@ -177,11 +166,11 @@
     "add": {
       "button": "Add Achievement",
       "title": "Add New Achievement",
-      "description": "Create a custom achievement badge for your hero."
+      "description": "Create a new custom achievement for your collection."
     },
     "edit": {
       "title": "Edit Achievement",
-      "description": "Update the details for this achievement.",
+      "description": "Modify the details of this custom achievement.",
       "name": "Name",
       "descriptionLabel": "Description",
       "icon": "Icon",
@@ -190,13 +179,13 @@
       "unlocked": "Unlocked",
       "date": "Date Unlocked",
       "pickDate": "Pick a date",
-      "delete": "Delete",
+      "save": "Save Changes",
       "cancel": "Cancel",
-      "save": "Save Changes"
+      "delete": "Delete"
     },
-     "delete": {
-      "title": "Are you sure?",
-      "description": "This action cannot be undone. This will permanently delete this achievement.",
+    "delete": {
+      "title": "Delete Achievement?",
+      "description": "This will permanently remove this achievement. This action cannot be undone.",
       "confirm": "Delete"
     },
     "items": {
@@ -287,9 +276,9 @@
     }
   },
   "reports": {
-    "title": "Progress Reports",
-    "performanceTitle": "Task Performance",
-    "selectRange": "Select a time range",
+    "title": "Reports",
+    "performanceTitle": "Performance Summary",
+    "selectRange": "Select a date range",
     "thisWeek": "This Week",
     "thisMonth": "This Month",
     "thisYear": "This Year"
@@ -300,66 +289,69 @@
   "settings": {
     "title": "Settings",
     "profile": {
-      "title": "Child's Profile",
-      "description": "Manage your child's profile information.",
+      "title": "Profile",
+      "description": "Manage your child's profile and pet.",
       "name": "Name",
       "avatar": "Avatar",
-      "petName": "Pet's Name",
-      "choosePet": "Choose your Pet",
-      "appLogo": "Custom App Logo",
-      "logoUrlPlaceholder": "Enter image URL for the logo",
       "upload": "Upload",
+      "petName": "Pet Name",
+      "choosePet": "Choose Your Pet",
+      "appLogo": "App Logo",
+      "logoUrlPlaceholder": "Enter image URL or upload",
       "save": "Save Changes",
       "saveSuccessTitle": "Profile Updated",
       "saveSuccessDescription": "Your changes have been saved successfully."
     },
+    "parentalControls": {
+      "title": "Parental Controls",
+      "description": "Set up rules, limits, and rewards.",
+      "rewardSystem": "Reward System",
+      "rewardSystemDescription": "Create custom rewards that your child can earn by completing tasks.",
+      "addReward": "Add Reward",
+      "addRewardDialog": {
+        "title": "Add New Reward",
+        "description": "Define the reward and the requirements to earn it.",
+        "rewardName": "Reward",
+        "rewardNamePlaceholder": "e.g., 30 mins of TV",
+        "tasksRequired": "Tasks Required",
+        "daysRequired": "Days Required",
+        "createButton": "Create Reward"
+      },
+      "tasksToComplete": "{{count}} tasks to complete",
+      "daysToComplete": "{{count}} day streak to complete",
+      "tasksAndDaysToComplete": "{{tasksCount}} tasks and {{daysCount}} day streak",
+      "noRequirement": "No specific requirement",
+      "noRewards": "No rewards have been set up yet."
+    },
     "personalization": {
       "title": "Personalization",
-      "description": "Customize the look and feel of the app.",
+      "description": "Customize the app's look and feel.",
       "darkMode": "Dark Mode",
       "darkModeDescription": "Toggle between light and dark themes.",
       "soundEffects": "Sound Effects",
-      "soundEffectsDescription": "Enable or disable in-app sound effects."
+      "soundEffectsDescription": "Enable or disable sound effects in the app."
     },
     "language": {
-      "title": "Language Settings",
-      "description": "Choose the language for the app interface.",
+      "title": "Language & Region",
+      "description": "Manage language and regional settings.",
       "displayLanguage": "Display Language",
       "selectLanguage": "Select a language"
     },
     "appearance": {
       "title": "Appearance",
-      "description": "Customize the app's visual elements."
-    },
-    "parentalControls": {
-      "title": "Parental Controls",
-      "description": "Manage settings for rewards and notifications.",
-      "rewardSystem": "Reward System",
-      "rewardSystemDescription": "Define rewards that can be earned by completing tasks.",
-      "addReward": "Add Reward",
-      "tasksToComplete": "{{count}} tasks to complete",
-      "daysToComplete": "{{count}} day streak required",
-      "tasksAndDaysToComplete": "{{tasksCount}} tasks & {{daysCount}} day streak",
-      "noRequirement": "No specific requirement",
-      "noRewards": "No rewards have been set up yet.",
-      "addRewardDialog": {
-        "title": "Add a New Reward",
-        "description": "Set up a new reward and the conditions to earn it.",
-        "rewardName": "Reward Name",
-        "rewardNamePlaceholder": "e.g., 30 mins of screen time",
-        "tasksRequired": "Tasks Required",
-        "daysRequired": "Days Required (Streak)",
-        "createButton": "Create Reward"
-      }
+      "description": "Customize the overall appearance of the app."
     }
   },
   "pets": {
     "description": {
-      "pet1": "Blobby is a cheerful and simple friend who grows bigger and happier with every task you complete.",
-      "pet2": "Spiky is a bit shy, but with each success, its spines become more colorful and vibrant.",
-      "pet3": "Cacto is a resilient desert dweller. Help it bloom by staying consistent with your habits.",
-      "pet4": "Boxy is a sturdy and reliable robot. Complete tasks to unlock new upgrades and features for it.",
-      "pet5": "Cloudy is a dreamy, airy companion. Your progress helps it become a beautiful, magnificent cloud."
+      "default": "This is your virtual pet! Complete your daily tasks to earn XP, help it level up, and watch it evolve. Don't forget to click on it for a surprise interaction!",
+      "pet1": "This is your virtual pet! Complete your daily tasks to earn XP, help it level up, and watch it evolve. Don't forget to click on it for a surprise interaction!",
+      "pet2": "This is your virtual pet! Complete your daily tasks to earn XP, help it level up, and watch it evolve. Don't forget to click on it for a surprise interaction!",
+      "pet3": "This is your virtual pet! Complete your daily tasks to earn XP, help it level up, and watch it evolve. Don't forget to click on it for a surprise interaction!",
+      "pet4": "This is your virtual pet! Complete your daily tasks to earn XP, help it level up, and watch it evolve. Don't forget to click on it for a surprise interaction!",
+      "pet5": "This is your virtual pet! Complete your daily tasks to earn XP, help it level up, and watch it evolve. Don't forget to click on it for a surprise interaction!"
     }
   }
 }
+
+    

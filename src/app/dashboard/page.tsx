@@ -120,7 +120,7 @@ export default function DashboardPage() {
                             {isClient && currentPet ? (
                                 <>
                                 <CardDescription>
-                                    <ClientOnlyT tKey={`pets.description.${currentPet.id}`} />
+                                    <ClientOnlyT tKey={'pets.description.default'} />
                                 </CardDescription>
                                 <Button variant="link" asChild className="px-0 -mx-1 mt-2">
                                     <Link href="/dashboard/settings">
@@ -145,3 +145,5 @@ export default function DashboardPage() {
     </div>
   );
 }
+
+    
