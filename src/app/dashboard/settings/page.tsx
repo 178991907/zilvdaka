@@ -80,7 +80,7 @@ export default function SettingsPage() {
   };
 
   const handleSaveChanges = () => {
-    // Save the changes to localStorage
+    // Save all changes from the page
     updateUser({
       name: name,
       petName: petName,
@@ -204,7 +204,7 @@ export default function SettingsPage() {
                     {appLogo ? (
                         <Image src={appLogo} alt="App Logo Preview" width={120} height={120} className="object-contain" />
                     ) : (
-                        <span className="text-xs text-muted-foreground"><ClientOnlyT tKey='settings.profile.logoPreview' /></span>
+                        <span className="text-xs text-muted-foreground text-center p-2"><ClientOnlyT tKey='settings.profile.logoPreview' /></span>
                     )}
                 </div>
                 <div className="flex-1 space-y-2">
