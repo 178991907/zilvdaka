@@ -103,14 +103,6 @@ export default function LandingPage() {
             <h2 className="text-4xl md:text-6xl font-bold font-headline tracking-tight text-foreground">
               宝贝成长计划
             </h2>
-            <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-              A gamified habit tracking system designed for kids. Raise a virtual pet by completing real-life tasks and building great habits.
-            </p>
-            <div className="mt-8 flex justify-center gap-4">
-              <Button size="lg" asChild>
-                <Link href="/dashboard">Start Your Adventure</Link>
-              </Button>
-            </div>
           </div>
         </section>
       </main>
