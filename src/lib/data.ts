@@ -165,7 +165,7 @@ export const completeTaskAndUpdateXP = (task: Task, completed: boolean) => {
 
 const defaultAchievements: Achievement[] = [
   {
-    id: 'first_mission',
+    id: '1',
     title: 'First Mission',
     description: 'Complete your very first task.',
     icon: 'Star',
@@ -173,7 +173,7 @@ const defaultAchievements: Achievement[] = [
     dateUnlocked: new Date(new Date().setDate(new Date().getDate() - 5)),
   },
   {
-    id: 'task_master',
+    id: '2',
     title: 'Task Master',
     description: 'Complete 10 tasks in total.',
     icon: 'Trophy',
@@ -181,14 +181,14 @@ const defaultAchievements: Achievement[] = [
     dateUnlocked: new Date(new Date().setDate(new Date().getDate() - 2)),
   },
   {
-    id: 'perfect_week',
+    id: '3',
     title: 'Perfect Week',
     description: 'Complete all your tasks for 7 days in a row.',
     icon: 'ShieldCheck',
     unlocked: false,
   },
     {
-    id: 'streak_starter',
+    id: '4',
     title: 'Streak Starter',
     description: 'Maintain a 3-day completion streak.',
     icon: 'Zap',
@@ -196,14 +196,14 @@ const defaultAchievements: Achievement[] = [
     dateUnlocked: new Date(new Date().setDate(new Date().getDate() - 3)),
   },
   {
-    id: 'learning_hero',
+    id: '5',
     title: 'Learning Hero',
     description: 'Complete 5 learning tasks.',
     icon: 'Book',
     unlocked: false,
   },
   {
-    id: 'creative_genius',
+    id: '6',
     title: 'Creative Genius',
     description: 'Complete 5 creative tasks.',
     icon: 'Brush',
