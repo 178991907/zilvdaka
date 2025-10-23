@@ -69,7 +69,7 @@ export default function DashboardPage() {
                         <CardHeader>
                             <CardTitle><ClientOnlyT tKey='dashboard.myPet' /></CardTitle>
                         </CardHeader>
-                        <CardContent className="flex-grow flex flex-col">
+                        <CardContent className="flex-grow flex flex-col pb-8">
                             {isClient && user ? (
                                 <>
                                     <PetViewer progress={petProgress} className="flex-grow -mt-8" />
