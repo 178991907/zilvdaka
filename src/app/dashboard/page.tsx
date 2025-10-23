@@ -73,7 +73,7 @@ export default function DashboardPage() {
                             {isClient && user ? (
                                 <>
                                     <div className="flex-grow flex items-start justify-center">
-                                        <PetViewer progress={petProgress} className="flex-grow scale-[0.8]" />
+                                        <PetViewer progress={petProgress} className="scale-[0.8]" />
                                     </div>
                                     <div className="mt-4">
                                         <div className="text-center">
