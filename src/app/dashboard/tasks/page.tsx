@@ -56,19 +56,32 @@ export default function TasksPage() {
     setIsDialogOpen(true);
   };
   
-  const handleSaveTask = (taskData: Omit<Task, 'id' | 'icon' | 'completed' | 'dueDate'>) => {
-    if (editingTask) {
+  const handleSaveTask = (taskData: Omit<Task, 'id' | 'icon' | 'completed' | 'dueDate'>, taskId?: string) => {
+    if (taskId) {
       // Update existing task
-       const updatedTask = {
-        ...editingTask,
-        ...taskData,
-        icon: iconMap[taskData.category] || Book,
-      };
-      handleUpdateTask(updatedTask);
+       const taskToUpdate = tasks.find(t => t.id === taskId);
+       if (taskToUpdate) {
+            const updatedTask = {
+                ...taskToUpdate,
+                ...taskData,
+                icon: iconMap[taskData.category] || Book,
+            };
+            handleUpdateTask(updatedTask);
+       }
     } else {
       // Add new task
       handleAddTask(taskData);
     }
+  };
+  
+  const handleToggleStatus = (taskId: string) => {
+    setTasks(prevTasks =>
+      prevTasks.map(task =>
+        task.id === taskId
+          ? { ...task, status: task.status === 'active' ? 'paused' : 'active' }
+          : task
+      )
+    );
   };
 
 
@@ -96,6 +109,7 @@ export default function TasksPage() {
             setTasks={setTasks} 
             onEdit={handleOpenDialog}
             onDelete={handleDeleteRequest}
+            onToggleStatus={handleToggleStatus}
         />
       </main>
 

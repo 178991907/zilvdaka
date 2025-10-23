@@ -11,9 +11,11 @@ import {
   Flower,
   Gem,
   Bug,
+  Pause,
+  Play,
 } from 'lucide-react';
 
-export type IconName = 'Book' | 'Brush' | 'ShieldCheck' | 'Star' | 'Trophy' | 'Zap' | 'Swords' | 'Mountain' | 'Flower' | 'Gem' | 'Bug';
+export type IconName = 'Book' | 'Brush' | 'ShieldCheck' | 'Star' | 'Trophy' | 'Zap' | 'Swords' | 'Mountain' | 'Flower' | 'Gem' | 'Bug' | 'Pause' | 'Play';
 
 const icons: { [key in IconName]: LucideIcon } = {
   Book,
@@ -27,6 +29,8 @@ const icons: { [key in IconName]: LucideIcon } = {
   Flower,
   Gem,
   Bug,
+  Pause,
+  Play,
 };
 
 export const iconNames = Object.keys(icons) as IconName[];

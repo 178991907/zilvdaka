@@ -14,6 +14,7 @@ export type Task = {
   icon: LucideIcon;
   difficulty: 'Easy' | 'Medium' | 'Hard';
   completed: boolean;
+  status: 'active' | 'paused';
   dueDate: Date;
   recurrence?: Recurrence;
   time?: string;
@@ -300,6 +301,7 @@ export const tasks: Task[] = [
     icon: Book,
     difficulty: 'Easy',
     completed: true,
+    status: 'active',
     dueDate: new Date(),
     recurrence: { interval: 1, unit: 'week' },
     time: '20:00',
@@ -311,6 +313,7 @@ export const tasks: Task[] = [
     icon: Brush,
     difficulty: 'Medium',
     completed: false,
+    status: 'active',
     dueDate: new Date(),
     recurrence: { interval: 1, unit: 'week', daysOfWeek: ['tue', 'thu'] },
     time: '16:30',
@@ -322,6 +325,7 @@ export const tasks: Task[] = [
     icon: Bed,
     difficulty: 'Easy',
     completed: false,
+    status: 'active',
     dueDate: new Date(),
     time: '21:00',
   },
@@ -332,6 +336,7 @@ export const tasks: Task[] = [
     icon: Atom,
     difficulty: 'Hard',
     completed: true,
+    status: 'active',
     dueDate: new Date(new Date().setDate(new Date().getDate() - 1)),
   },
   {
@@ -341,6 +346,7 @@ export const tasks: Task[] = [
     icon: Bike,
     difficulty: 'Medium',
     completed: false,
+    status: 'paused',
     dueDate: new Date(new Date().setDate(new Date().getDate() + 1)),
   },
    {
@@ -350,6 +356,7 @@ export const tasks: Task[] = [
     icon: Dumbbell,
     difficulty: 'Medium',
     completed: true,
+    status: 'active',
     dueDate: new Date(),
     time: '07:00',
   },

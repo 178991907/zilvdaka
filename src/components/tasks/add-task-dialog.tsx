@@ -22,9 +22,10 @@ import { useTranslation } from 'react-i18next';
 import { ClientOnlyT } from '../layout/app-sidebar';
 import { useState, useEffect } from 'react';
 import { Task } from '@/lib/data';
+import { Switch } from '../ui/switch';
 
 type AddTaskDialogProps = {
-  onSave: (task: Omit<Task, 'id' | 'icon' | 'completed' | 'dueDate'>) => void;
+  onSave: (task: Omit<Task, 'id' | 'icon' | 'completed' | 'dueDate'>, taskId?: string) => void;
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
   task: Task | null;
@@ -45,6 +46,8 @@ export function AddTaskDialog({ onSave, isOpen, setIsOpen, task }: AddTaskDialog
   const [daysOfWeek, setDaysOfWeek] = useState<WeekDay[]>([]);
   const [time, setTime] = useState('08:00');
   const [isRecurring, setIsRecurring] = useState(false);
+  const [status, setStatus] = useState<Task['status']>('active');
+
   
   const isEditMode = task !== null;
 
@@ -55,6 +58,7 @@ export function AddTaskDialog({ onSave, isOpen, setIsOpen, task }: AddTaskDialog
         setCategory(task.category);
         setDifficulty(task.difficulty);
         setTime(task.time || '08:00');
+        setStatus(task.status);
         if (task.recurrence) {
           setIsRecurring(true);
           setRecurrenceInterval(String(task.recurrence.interval));
@@ -76,6 +80,7 @@ export function AddTaskDialog({ onSave, isOpen, setIsOpen, task }: AddTaskDialog
         setRecurrenceUnit('week');
         setDaysOfWeek([]);
         setTime('08:00');
+        setStatus('active');
       }
     }
   }, [isOpen, task]);
@@ -90,7 +95,8 @@ export function AddTaskDialog({ onSave, isOpen, setIsOpen, task }: AddTaskDialog
       title: name, 
       category, 
       difficulty, 
-      time 
+      time,
+      status,
     };
 
     if (isRecurring) {
@@ -101,7 +107,7 @@ export function AddTaskDialog({ onSave, isOpen, setIsOpen, task }: AddTaskDialog
         }
     }
 
-    onSave(taskData);
+    onSave(taskData, task?.id);
     setIsOpen(false);
   };
 
@@ -205,27 +211,27 @@ export function AddTaskDialog({ onSave, isOpen, setIsOpen, task }: AddTaskDialog
                     </Select>
                 </div>
               </div>
-
-              <div className="grid grid-cols-4 items-start gap-4">
-                  <Label className="text-right pt-2">
-                      <ClientOnlyT tKey='tasks.addTaskDialog.daysOfWeek' />
-                  </Label>
-                  <ToggleGroup
-                      type="multiple"
-                      variant="outline"
-                      className="col-span-3 flex-wrap justify-start gap-1"
-                      value={daysOfWeek}
-                      onValueChange={(days) => setDaysOfWeek(days as WeekDay[])}
-                  >
-                      {weekDays.map(day => (
-                          <ToggleGroupItem key={day} value={day} className="h-8 w-8 p-0">
-                              <ClientOnlyT tKey={`tasks.weekdays.${day}`} />
-                          </ToggleGroupItem>
-                      ))}
-                  </ToggleGroup>
-              </div>
             </>
           )}
+
+            <div className="grid grid-cols-4 items-start gap-4">
+                <Label className="text-right pt-2">
+                    <ClientOnlyT tKey='tasks.addTaskDialog.daysOfWeek' />
+                </Label>
+                <ToggleGroup
+                    type="multiple"
+                    variant="outline"
+                    className="col-span-3 flex-wrap justify-start gap-1"
+                    value={daysOfWeek}
+                    onValueChange={(days) => setDaysOfWeek(days as WeekDay[])}
+                >
+                    {weekDays.map(day => (
+                        <ToggleGroupItem key={day} value={day} className="h-8 w-8 p-0">
+                            <ClientOnlyT tKey={`tasks.weekdays.${day}`} />
+                        </ToggleGroupItem>
+                    ))}
+                </ToggleGroup>
+            </div>
 
 
           <div className="grid grid-cols-4 items-center gap-4">
@@ -240,6 +246,23 @@ export function AddTaskDialog({ onSave, isOpen, setIsOpen, task }: AddTaskDialog
               onChange={(e) => setTime(e.target.value)}
             />
           </div>
+
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="status" className="text-right">
+              <ClientOnlyT tKey='tasks.table.status' />
+            </Label>
+            <div className="col-span-3 flex items-center gap-2">
+              <Switch
+                id="status"
+                checked={status === 'active'}
+                onCheckedChange={(checked) => setStatus(checked ? 'active' : 'paused')}
+              />
+              <span className="text-sm text-muted-foreground">
+                <ClientOnlyT tKey={status === 'active' ? 'tasks.status.active' : 'tasks.status.paused'} />
+              </span>
+            </div>
+          </div>
+
 
         </div>
         <DialogFooter>

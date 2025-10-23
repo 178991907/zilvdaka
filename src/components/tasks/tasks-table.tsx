@@ -12,7 +12,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Task } from '@/lib/data';
 import { Button } from '@/components/ui/button';
-import { MoreHorizontal, Pencil, Trash2 } from 'lucide-react';
+import { MoreHorizontal, Pencil, Trash2, Play, Pause } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,6 +22,7 @@ import {
 import { Checkbox } from '../ui/checkbox';
 import { useTranslation } from 'react-i18next';
 import { ClientOnlyT } from '../layout/app-sidebar';
+import { cn } from '@/lib/utils';
 
 const difficultyVariant = {
     Easy: 'default',
@@ -34,16 +35,24 @@ interface TasksTableProps {
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
   onEdit: (task: Task) => void;
   onDelete: (task: Task) => void;
+  onToggleStatus: (taskId: string) => void;
 }
 
 // This component handles the translation of daysOfWeek on the client side to prevent hydration mismatch.
 const TranslatedDays = ({ days }: { days: ('mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun')[] | undefined }) => {
-  if (!days || days.length === 0) return null;
+  const { t } = useTranslation();
+  const [isClient, setIsClient] = React.useState(false);
+  React.useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!days || days.length === 0 || !isClient) return null;
+  
   return (
     <>
       {days.map((day, index) => (
         <React.Fragment key={day}>
-          <ClientOnlyT tKey={`tasks.weekdaysShort.${day}`} />
+          {t(`tasks.weekdaysShort.${day}`)}
           {index < days.length - 1 && ', '}
         </React.Fragment>
       ))}
@@ -52,7 +61,7 @@ const TranslatedDays = ({ days }: { days: ('mon' | 'tue' | 'wed' | 'thu' | 'fri'
 };
 
 
-export default function TasksTable({ tasks, setTasks, onEdit, onDelete }: TasksTableProps) {
+export default function TasksTable({ tasks, setTasks, onEdit, onDelete, onToggleStatus }: TasksTableProps) {
   const { t } = useTranslation();
 
   const handleTaskCompletion = (taskId: string, completed: boolean) => {
@@ -72,8 +81,6 @@ export default function TasksTable({ tasks, setTasks, onEdit, onDelete }: TasksT
     }
 
     const { interval, unit, daysOfWeek } = task.recurrence;
-    const time = task.time ? ` at ${task.time}` : '';
-    const intervalText = interval > 1 ? interval : '';
 
     const options: { [key: string]: any } = {
         count: interval,
@@ -85,9 +92,9 @@ export default function TasksTable({ tasks, setTasks, onEdit, onDelete }: TasksT
         tKey = `tasks.recurrence.display.every_x_${unit}s`;
     }
 
-    if (unit === 'week' && daysOfWeek && daysOfWeek.length > 0) {
+    if (daysOfWeek && daysOfWeek.length > 0) {
         tKey += '_on';
-        options.days = <TranslatedDays days={daysOfWeek} />;
+        return <ClientOnlyT tKey={tKey} tOptions={{...options, days: <TranslatedDays days={daysOfWeek} />}} />;
     }
 
     return <ClientOnlyT tKey={tKey} tOptions={options} />;
@@ -110,15 +117,16 @@ export default function TasksTable({ tasks, setTasks, onEdit, onDelete }: TasksT
         </TableHeader>
         <TableBody>
           {tasks.map(task => (
-            <TableRow key={task.id}>
+            <TableRow key={task.id} className={cn(task.status === 'paused' && 'text-muted-foreground bg-muted/30')}>
               <TableCell>
                  <Checkbox
                     checked={task.completed}
                     onCheckedChange={(checked) => handleTaskCompletion(task.id, !!checked)}
+                    disabled={task.status === 'paused'}
                   />
               </TableCell>
               <TableCell className="font-medium flex items-center gap-3">
-                 <task.icon className="h-5 w-5 text-muted-foreground" />
+                 <task.icon className="h-5 w-5" />
                  {task.id.startsWith('task-') ? task.title : <ClientOnlyT tKey={`tasks.items.${task.id}.title`} />}
               </TableCell>
               <TableCell>
@@ -127,13 +135,19 @@ export default function TasksTable({ tasks, setTasks, onEdit, onDelete }: TasksT
               <TableCell>
                 <Badge variant={difficultyVariant[task.difficulty]}><ClientOnlyT tKey={`tasks.difficulties.${task.difficulty.toLowerCase()}`} /></Badge>
               </TableCell>
-               <TableCell className="text-muted-foreground text-xs">
+               <TableCell className="text-xs">
                 {formatRecurrence(task)}
               </TableCell>
               <TableCell>
-                <Badge variant={task.completed ? 'default' : 'secondary'} className={task.completed ? 'bg-green-500/20 text-green-700' : ''}>
-                    {task.completed ? <ClientOnlyT tKey='tasks.status.completed' /> : <ClientOnlyT tKey='tasks.status.pending' />}
-                </Badge>
+                 {task.status === 'paused' ? (
+                    <Badge variant="secondary">
+                        <ClientOnlyT tKey='tasks.status.paused' />
+                    </Badge>
+                 ) : (
+                    <Badge variant={task.completed ? 'default' : 'secondary'} className={task.completed ? 'bg-green-500/20 text-green-700' : ''}>
+                        {task.completed ? <ClientOnlyT tKey='tasks.status.completed' /> : <ClientOnlyT tKey='tasks.status.pending' />}
+                    </Badge>
+                 )}
               </TableCell>
               <TableCell className="text-right">
                 <DropdownMenu>
@@ -147,6 +161,14 @@ export default function TasksTable({ tasks, setTasks, onEdit, onDelete }: TasksT
                     <DropdownMenuItem onClick={() => onEdit(task)}>
                         <Pencil className="mr-2 h-4 w-4"/>
                         <ClientOnlyT tKey='tasks.table.edit' />
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => onToggleStatus(task.id)}>
+                        {task.status === 'active' ? (
+                            <Pause className="mr-2 h-4 w-4" />
+                        ) : (
+                            <Play className="mr-2 h-4 w-4" />
+                        )}
+                        <ClientOnlyT tKey={task.status === 'active' ? 'tasks.table.pause' : 'tasks.table.resume'} />
                     </DropdownMenuItem>
                     <DropdownMenuItem className="text-destructive" onClick={() => onDelete(task)}>
                         <Trash2 className="mr-2 h-4 w-4"/>
