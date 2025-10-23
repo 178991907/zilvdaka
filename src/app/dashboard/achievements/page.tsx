@@ -1,6 +1,6 @@
 'use client';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { achievements as initialAchievements, Achievement, getAchievements, updateAchievements } from '@/lib/data';
+import { Achievement, getAchievements, updateAchievements } from '@/lib/data';
 import AchievementBadge from '@/components/achievements/achievement-badge';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { useEffect, useState } from 'react';
@@ -33,7 +33,7 @@ export default function AchievementsPage() {
     return () => {
       window.removeEventListener('achievementsUpdated', handleAchievementsUpdate);
     };
-  }, []);
+  }, [achievements]);
 
   const handleAdd = () => {
     setEditingAchievement(null);
@@ -102,11 +102,12 @@ export default function AchievementsPage() {
             {!isClient && Array.from({ length: 10 }).map((_, index) => (
                 <Skeleton key={index} className="aspect-square rounded-xl" />
             ))}
-            {isClient && achievements.map(achievement => (
+            {isClient && achievements.map((achievement, index) => (
                 <AchievementBadge 
                     key={achievement.id} 
                     achievement={achievement} 
                     onEdit={handleEdit}
+                    index={index}
                 />
             ))}
         </div>
