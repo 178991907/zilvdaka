@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { LucideIcon } from 'lucide-react';
-import { ClientOnlyT } from '../layout/app-sidebar';
+import { useTranslation } from 'react-i18next';
 
 interface ProgressSummaryProps {
   icon: LucideIcon;
@@ -25,20 +25,21 @@ export function ProgressSummaryContent({
   descriptionTPOptions,
   progress,
 }: ProgressSummaryProps) {
+    const { t } = useTranslation();
     return (
         <>
             <div className="flex items-center justify-between pb-2">
-                <CardTitle className="text-base">
-                    <ClientOnlyT tKey={titleTKey} />
-                </CardTitle>
+                <h3 className="text-2xl font-semibold leading-none tracking-tight">
+                    {t(titleTKey)}
+                </h3>
                 <Icon className="h-5 w-5 text-muted-foreground" />
             </div>
             <div>
                 <div className="text-2xl font-bold">
-                    {valueTKey ? <ClientOnlyT tKey={valueTKey} tOptions={valueTPOptions} /> : value}
+                    {valueTKey ? t(valueTKey, valueTPOptions) : value}
                 </div>
                 <p className="text-xs text-muted-foreground">
-                    <ClientOnlyT tKey={descriptionTKey} tOptions={descriptionTPOptions} />
+                    {t(descriptionTKey, descriptionTPOptions)}
                 </p>
                 {progress !== undefined && (
                     <Progress value={progress} className="mt-4 h-2" />
