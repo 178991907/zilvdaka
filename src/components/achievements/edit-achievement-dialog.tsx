@@ -28,6 +28,7 @@ const defaultAchievement: Partial<Achievement> = {
   title: '',
   description: '',
   icon: 'Star',
+  imageUrl: '',
   unlocked: false,
   dateUnlocked: undefined,
 };
@@ -65,6 +66,7 @@ export function EditAchievementDialog({
       title: formData.title || 'Untitled',
       description: formData.description || '',
       icon: formData.icon || 'Star',
+      imageUrl: formData.imageUrl || '',
       unlocked: formData.unlocked || false,
       dateUnlocked: formData.unlocked ? (formData.dateUnlocked || new Date()) : undefined,
     };
@@ -104,7 +106,7 @@ export function EditAchievementDialog({
           </div>
           <div className="grid grid-cols-4 items-start gap-4">
             <Label htmlFor="description" className="text-right pt-2">
-              <ClientOnlyT tKey="achievements.edit.description" />
+              <ClientOnlyT tKey="achievements.edit.descriptionLabel" />
             </Label>
             <Textarea
               id="description"
@@ -132,6 +134,18 @@ export function EditAchievementDialog({
                 ))}
               </SelectContent>
             </Select>
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="imageUrl" className="text-right">
+              <ClientOnlyT tKey="achievements.edit.imageUrl" />
+            </Label>
+            <Input
+              id="imageUrl"
+              value={formData.imageUrl}
+              onChange={e => handleChange('imageUrl', e.target.value)}
+              className="col-span-3"
+              placeholder="https://example.com/image.png"
+            />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="unlocked" className="text-right">
@@ -165,7 +179,7 @@ export function EditAchievementDialog({
                 <PopoverContent className="w-auto p-0">
                   <Calendar
                     mode="single"
-                    selected={formData.dateUnlocked}
+                    selected={formData.dateUnlocked ? new Date(formData.dateUnlocked) : undefined}
                     onSelect={date => handleChange('dateUnlocked', date)}
                     initialFocus
                   />
@@ -176,7 +190,7 @@ export function EditAchievementDialog({
         </div>
         <DialogFooter className="sm:justify-between">
             {!isNew ? (
-                <Button variant="ghost" className="text-destructive hover:text-destructive" onClick={handleDelete}>
+                <Button variant="ghost" className="text-destructive hover:text-destructive justify-self-start" onClick={handleDelete}>
                     <Trash2 className="mr-2 h-4 w-4" />
                     <ClientOnlyT tKey="achievements.edit.delete" />
                 </Button>

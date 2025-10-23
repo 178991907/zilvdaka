@@ -16,6 +16,7 @@ export type Achievement = {
   title: string;
   description: string;
   icon: string;
+  imageUrl?: string;
   unlocked: boolean;
   dateUnlocked?: Date | string;
 };
@@ -240,7 +241,12 @@ export const getAchievements = (): Achievement[] => {
     try {
         const storedAchievements = localStorage.getItem('habit-heroes-achievements');
         if (storedAchievements) {
-            return JSON.parse(storedAchievements);
+            // Parse and ensure date objects are correctly formatted
+            const parsed = JSON.parse(storedAchievements);
+            return parsed.map((ach: Achievement) => ({
+                ...ach,
+                dateUnlocked: ach.dateUnlocked ? new Date(ach.dateUnlocked) : undefined
+            }));
         }
     } catch (error) {
         console.error("Failed to parse achievements from localStorage", error);
@@ -249,6 +255,7 @@ export const getAchievements = (): Achievement[] => {
     localStorage.setItem('habit-heroes-achievements', JSON.stringify(defaultAchievements));
     return defaultAchievements;
 };
+
 
 export let achievements = getAchievements();
 
@@ -260,6 +267,9 @@ export const updateAchievements = (newAchievements: Achievement[]) => {
             const bIsCustom = b.id.startsWith('custom-');
             if (aIsCustom && !bIsCustom) return -1;
             if (!aIsCustom && bIsCustom) return 1;
+            // then sort by unlock status
+            if (a.unlocked && !b.unlocked) return -1;
+            if (!a.unlocked && b.unlocked) return 1;
             return 0;
         });
 

@@ -7,6 +7,7 @@ import { Lock, Pencil } from 'lucide-react';
 import { Icon } from '@/components/icons';
 import { ClientOnlyT } from '../layout/app-sidebar';
 import { Button } from '../ui/button';
+import Image from 'next/image';
 
 interface AchievementBadgeProps {
   achievement: Achievement;
@@ -18,8 +19,11 @@ export default function AchievementBadge({ achievement, onEdit }: AchievementBad
 
   const handleEditClick = (e: React.MouseEvent) => {
     e.stopPropagation();
+    e.preventDefault();
     onEdit(achievement);
   };
+
+  const hasImageUrl = achievement.imageUrl && achievement.imageUrl.trim() !== '';
 
   return (
     <div className={cn(
@@ -46,20 +50,35 @@ export default function AchievementBadge({ achievement, onEdit }: AchievementBad
 
         <div
           className={cn(
-            'relative mx-auto flex h-24 w-24 items-center justify-center rounded-full z-10',
+            'relative mx-auto flex h-24 w-24 items-center justify-center rounded-full z-10 overflow-hidden',
             achievement.unlocked ? 'bg-accent/20' : 'bg-secondary'
           )}
         >
           {achievement.unlocked && (
              <div className="absolute inset-0 animate-pulse rounded-full bg-accent opacity-30"></div>
           )}
-          <Icon
-            name={achievement.icon}
-            className={cn(
-              'h-12 w-12 z-10',
-              achievement.unlocked ? 'text-accent-foreground' : 'text-muted-foreground'
-            )}
-          />
+          
+          {hasImageUrl ? (
+            <Image
+                src={achievement.imageUrl!}
+                alt={achievement.title}
+                width={96}
+                height={96}
+                className={cn(
+                    'object-cover h-full w-full z-10',
+                    achievement.unlocked ? '' : 'grayscale'
+                )}
+            />
+          ) : (
+            <Icon
+              name={achievement.icon}
+              className={cn(
+                'h-12 w-12 z-10',
+                achievement.unlocked ? 'text-accent-foreground' : 'text-muted-foreground'
+              )}
+            />
+          )}
+
           {!achievement.unlocked && (
             <div className="absolute inset-0 flex items-center justify-center bg-black/30 rounded-full">
               <Lock className="h-10 w-10 text-white/70" />
