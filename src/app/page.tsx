@@ -15,7 +15,7 @@ export default function LandingPage() {
         <div className="flex items-center gap-2">
           <Star className="w-8 h-8 text-primary" />
           <h1 className="text-2xl font-bold font-headline text-foreground">
-            <ClientOnlyT tKey='appName' />
+            Discipline Baby
           </h1>
         </div>
         <Button asChild>
@@ -82,7 +82,7 @@ export default function LandingPage() {
 
       <footer className="py-6 bg-card">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} <ClientOnlyT tKey='appName' />. <ClientOnlyT tKey='landing.footerRights' /></p>
+          <p>&copy; {new Date().getFullYear()} Discipline Baby. <ClientOnlyT tKey='landing.footerRights' /></p>
         </div>
       </footer>
     </div>
