@@ -45,7 +45,9 @@ export const ClientOnlyT = ({ tKey, tOptions }: { tKey: string; tOptions?: any }
   
   if (!isClient) {
     const fallbackText = getTranslation('en', tKey, tOptions);
-    return fallbackText;
+    // Render a placeholder or the base language text on the server.
+    // Return `null` or a placeholder span to avoid hydration mismatch.
+    return <span>{fallbackText}</span>;
   }
 
   if (i18n.language === 'en-zh') {
