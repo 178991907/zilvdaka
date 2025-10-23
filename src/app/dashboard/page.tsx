@@ -50,12 +50,30 @@ export default function DashboardPage() {
           <SidebarTrigger className="md:hidden" />
           <h1 className="text-xl font-semibold"><ClientOnlyT tKey='dashboard.title' /></h1>
         </header>
-      <main className="flex-1 p-4 md:p-8 overflow-y-auto space-y-6">
+      <main className="flex-1 p-4 md:p-8 space-y-6">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
           
-          {/* Left Column */}
-          <div className="lg:col-span-2 flex flex-col gap-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Left Column: Pet Viewer */}
+          <div className="lg:col-span-1">
+            <Card>
+                <CardHeader>
+                  <CardTitle><ClientOnlyT tKey='dashboard.petTitle'/></CardTitle>
+                </CardHeader>
+                <CardContent className="pb-6">
+                  {isClient && user ? (
+                    <PetViewer progress={petProgress} />
+                  ) : (
+                    <div className="aspect-square w-full flex items-center justify-center">
+                      <Skeleton className="w-3/4 h-3/4 rounded-full" />
+                    </div>
+                  )}
+                </CardContent>
+            </Card>
+          </div>
+
+          {/* Right Column: Info Cards */}
+          <div className="lg:col-span-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
                 {isClient && user ? (
                   <>
                     <ProgressSummary
@@ -81,55 +99,38 @@ export default function DashboardPage() {
                       descriptionTPOptions={{ xp: user.xpToNextLevel - user.xp }}
                       progress={petProgress}
                     />
+                     <Card>
+                        <CardHeader className="pb-4">
+                            <CardTitle className="text-base font-medium flex items-center gap-2">
+                                <Info className="h-5 w-5 text-primary" />
+                                <ClientOnlyT tKey="petGuide.title" />
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent className="text-sm text-muted-foreground space-y-2">
+                            <p><strong className="text-foreground"><ClientOnlyT tKey="petGuide.xpTitle" />:</strong> <ClientOnlyT tKey='petGuide.xp' /></p>
+                            {isClient && user ? (
+                              <>
+                                <p><strong className="text-foreground"><ClientOnlyT tKey="petGuide.levelTitle" />:</strong> <ClientOnlyT tKey='petGuide.level' tOptions={{ level: user.level }}/></p>
+                                <p><strong className="text-foreground"><ClientOnlyT tKey="petGuide.skillsTitle" />:</strong> <ClientOnlyT tKey='petGuide.skills' /></p>
+                              </>
+                            ) : (
+                                <>
+                                    <Skeleton className="h-4 w-3/4" />
+                                    <Skeleton className="h-4 w-full mt-2" />
+                                </>
+                            )}
+                        </CardContent>
+                    </Card>
                   </>
                 ) : (
                   <>
                     <Skeleton className="h-32 w-full" />
                     <Skeleton className="h-32 w-full" />
                     <Skeleton className="h-32 w-full" />
+                    <Skeleton className="h-44 w-full" />
                   </>
                 )}
-              </div>
-          </div>
-
-          {/* Right Column */}
-          <div className="lg:col-span-1 space-y-6">
-            <Card>
-                <CardHeader>
-                  <CardTitle><ClientOnlyT tKey='dashboard.petTitle'/></CardTitle>
-                </CardHeader>
-                <CardContent className="pb-6">
-                  {isClient && user ? (
-                    <PetViewer progress={petProgress} />
-                  ) : (
-                    <div className="aspect-square w-full flex items-center justify-center">
-                      <Skeleton className="w-3/4 h-3/4 rounded-full" />
-                    </div>
-                  )}
-                </CardContent>
-            </Card>
-            <Card>
-                <CardHeader className="pb-4">
-                    <CardTitle className="text-base font-medium flex items-center gap-2">
-                        <Info className="h-5 w-5 text-primary" />
-                        <ClientOnlyT tKey="petGuide.title" />
-                    </CardTitle>
-                </CardHeader>
-                <CardContent className="text-sm text-muted-foreground space-y-2">
-                    <p><strong className="text-foreground"><ClientOnlyT tKey="petGuide.xpTitle" />:</strong> <ClientOnlyT tKey='petGuide.xp' /></p>
-                    {isClient && user ? (
-                       <>
-                         <p><strong className="text-foreground"><ClientOnlyT tKey="petGuide.levelTitle" />:</strong> <ClientOnlyT tKey='petGuide.level' tOptions={{ level: user.level }}/></p>
-                         <p><strong className="text-foreground"><ClientOnlyT tKey="petGuide.skillsTitle" />:</strong> <ClientOnlyT tKey='petGuide.skills' /></p>
-                       </>
-                    ) : (
-                        <>
-                            <Skeleton className="h-4 w-3/4" />
-                            <Skeleton className="h-4 w-full mt-2" />
-                        </>
-                    )}
-                </CardContent>
-            </Card>
+            </div>
           </div>
         </div>
         
