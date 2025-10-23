@@ -52,7 +52,7 @@ export default function DashboardPage() {
         </header>
       <main className="flex-1 p-4 md:p-8">
         <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-3">
-          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="lg:col-span-1">
             <Card>
               <CardHeader>
                 <CardTitle><ClientOnlyT tKey='dashboard.petTitle'/></CardTitle>
@@ -67,7 +67,9 @@ export default function DashboardPage() {
                 )}
               </CardContent>
             </Card>
+          </div>
 
+          <div className="lg:col-span-2">
             <div className="space-y-6">
               {isClient && user ? (
                 <>
@@ -94,35 +96,29 @@ export default function DashboardPage() {
                     descriptionTPOptions={{ xp: user.xpToNextLevel - user.xp }}
                     progress={petProgress}
                   />
+                   <Card>
+                    <CardHeader className="pb-4">
+                        <CardTitle className="text-base font-medium flex items-center gap-2">
+                          <Info className="h-5 w-5 text-primary" />
+                          <ClientOnlyT tKey="petGuide.title" />
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent className="text-sm text-muted-foreground space-y-2">
+                      <p><strong className="text-foreground"><ClientOnlyT tKey="petGuide.xpTitle" />:</strong> <ClientOnlyT tKey='petGuide.xp' /></p>
+                      <p><strong className="text-foreground"><ClientOnlyT tKey="petGuide.levelTitle" />:</strong> <ClientOnlyT tKey='petGuide.level' tOptions={{ level: user.level }}/></p>
+                      <p><strong className="text-foreground"><ClientOnlyT tKey="petGuide.skillsTitle" />:</strong> <ClientOnlyT tKey='petGuide.skills' /></p>
+                    </CardContent>
+                  </Card>
                 </>
               ) : (
                 <>
                   <Skeleton className="h-32 w-full" />
                   <Skeleton className="h-32 w-full" />
                   <Skeleton className="h-32 w-full" />
+                  <Skeleton className="h-40 w-full" />
                 </>
               )}
             </div>
-          </div>
-
-          <div className="lg:col-span-1">
-             {isClient && user ? (
-                <Card>
-                  <CardHeader className="pb-4">
-                      <CardTitle className="text-base font-medium flex items-center gap-2">
-                        <Info className="h-5 w-5 text-primary" />
-                        <ClientOnlyT tKey="petGuide.title" />
-                      </CardTitle>
-                  </CardHeader>
-                  <CardContent className="text-sm text-muted-foreground space-y-2">
-                     <p><strong className="text-foreground"><ClientOnlyT tKey="petGuide.xpTitle" />:</strong> <ClientOnlyT tKey='petGuide.xp' /></p>
-                     <p><strong className="text-foreground"><ClientOnlyT tKey="petGuide.levelTitle" />:</strong> <ClientOnlyT tKey='petGuide.level' tOptions={{ level: user.level }}/></p>
-                     <p><strong className="text-foreground"><ClientOnlyT tKey="petGuide.skillsTitle" />:</strong> <ClientOnlyT tKey='petGuide.skills' /></p>
-                  </CardContent>
-                </Card>
-              ) : (
-                 <Skeleton className="h-40 w-full" />
-              )}
           </div>
         </div>
         <div className="mt-6">
