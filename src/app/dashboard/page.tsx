@@ -5,7 +5,7 @@ import PetViewer from '@/components/dashboard/pet-viewer';
 import ProgressSummary from '@/components/dashboard/progress-summary';
 import TaskList from '@/components/dashboard/task-list';
 import { getTasks, getUser, User, Task } from '@/lib/data';
-import { Flame, Target, Zap } from 'lucide-react';
+import { Flame, Target, Zap, Info } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
@@ -92,12 +92,26 @@ export default function DashboardPage() {
                   descriptionTPOptions={{ xp: user.xpToNextLevel - user.xp }}
                   progress={petProgress}
                 />
+                <Card>
+                  <CardHeader className="pb-4">
+                      <CardTitle className="text-base font-medium flex items-center gap-2">
+                        <Info className="h-5 w-5 text-primary" />
+                        Pet Guide
+                      </CardTitle>
+                  </CardHeader>
+                  <CardContent className="text-sm text-muted-foreground space-y-2">
+                     <p><strong className="text-foreground"><ClientOnlyT tKey="petGuide.xpTitle" />:</strong> <ClientOnlyT tKey='petGuide.xp' /></p>
+                     <p><strong className="text-foreground"><ClientOnlyT tKey="petGuide.levelTitle" />:</strong> <ClientOnlyT tKey='petGuide.level' tOptions={{ level: user.level }}/></p>
+                     <p><strong className="text-foreground"><ClientOnlyT tKey="petGuide.skillsTitle" />:</strong> <ClientOnlyT tKey='petGuide.skills' /></p>
+                  </CardContent>
+                </Card>
               </>
             ) : (
               <>
                 <Skeleton className="h-32 w-full" />
                 <Skeleton className="h-32 w-full" />
                 <Skeleton className="h-32 w-full" />
+                <Skeleton className="h-28 w-full" />
               </>
             )}
           </div>

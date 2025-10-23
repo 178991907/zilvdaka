@@ -106,15 +106,6 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress }) => {
           dangerouslySetInnerHTML={{ __html: selectedPet.getSvg(eyeBlinkDuration, eyeAnimation ? animations['wink'] : undefined) }}
         />
       </motion.div>
-      
-       <div className="absolute bottom-4 right-4 w-1/3 bg-background/80 backdrop-blur-sm p-3 rounded-lg text-xs text-muted-foreground shadow-lg">
-          <h4 className="font-bold text-foreground mb-2 flex items-center gap-1.5"><Info className="w-4 h-4 text-primary" />Pet Guide</h4>
-          <ul className="space-y-1.5">
-            <li><strong className="text-foreground">XP:</strong> <ClientOnlyT tKey='petGuide.xp' /></li>
-            <li><strong className="text-foreground">Level:</strong> <ClientOnlyT tKey='petGuide.level' tOptions={{ level: user.level }}/></li>
-            <li><strong className="text-foreground">Skills:</strong> <ClientOnlyT tKey='petGuide.skills' /></li>
-          </ul>
-      </div>
     </Card>
   );
 };
