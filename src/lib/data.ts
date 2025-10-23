@@ -15,7 +15,7 @@ export type Achievement = {
   id: string;
   title: string;
   description: string;
-  icon: LucideIcon;
+  icon: string;
   unlocked: boolean;
   dateUnlocked?: Date;
 };
@@ -98,7 +98,7 @@ export const achievements: Achievement[] = [
     id: '1',
     title: 'First Mission',
     description: 'Complete your very first task.',
-    icon: Star,
+    icon: 'Star',
     unlocked: true,
     dateUnlocked: new Date(new Date().setDate(new Date().getDate() - 5)),
   },
@@ -106,7 +106,7 @@ export const achievements: Achievement[] = [
     id: '2',
     title: 'Task Master',
     description: 'Complete 10 tasks in total.',
-    icon: Trophy,
+    icon: 'Trophy',
     unlocked: true,
     dateUnlocked: new Date(new Date().setDate(new Date().getDate() - 2)),
   },
@@ -114,14 +114,14 @@ export const achievements: Achievement[] = [
     id: '3',
     title: 'Perfect Week',
     description: 'Complete all your tasks for 7 days in a row.',
-    icon: ShieldCheck,
+    icon: 'ShieldCheck',
     unlocked: false,
   },
     {
     id: '4',
     title: 'Streak Starter',
     description: 'Maintain a 3-day completion streak.',
-    icon: Zap,
+    icon: 'Zap',
     unlocked: true,
     dateUnlocked: new Date(new Date().setDate(new Date().getDate() - 3)),
   },
@@ -129,14 +129,14 @@ export const achievements: Achievement[] = [
     id: '5',
     title: 'Learning Hero',
     description: 'Complete 5 learning tasks.',
-    icon: Book,
+    icon: 'Book',
     unlocked: false,
   },
   {
     id: '6',
     title: 'Creative Genius',
     description: 'Complete 5 creative tasks.',
-    icon: Brush,
+    icon: 'Brush',
     unlocked: false,
   },
 ];

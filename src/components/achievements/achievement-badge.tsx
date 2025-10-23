@@ -5,14 +5,13 @@ import { Achievement } from '@/lib/data';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { Lock } from 'lucide-react';
+import { Icon } from '@/components/icons';
 
 interface AchievementBadgeProps {
   achievement: Achievement;
 }
 
 export default function AchievementBadge({ achievement }: AchievementBadgeProps) {
-  const Icon = achievement.icon;
-
   return (
     <Card
       className={cn(
@@ -34,6 +33,7 @@ export default function AchievementBadge({ achievement }: AchievementBadgeProps)
             )}
           ></div>
           <Icon
+            name={achievement.icon}
             className={cn(
               'h-10 w-10 z-10',
               achievement.unlocked ? 'text-accent' : 'text-muted-foreground'
