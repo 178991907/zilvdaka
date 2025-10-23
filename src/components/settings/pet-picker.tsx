@@ -18,7 +18,7 @@ export default function PetPicker({ selectedPet, onSelectPet, userLevel }: PetPi
   }, [userLevel]);
 
   return (
-    <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4">
+    <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-7 gap-4">
       {Pets.map((pet) => {
         const isUnlocked = unlockedPetIds.has(pet.id);
         return (
@@ -38,7 +38,7 @@ export default function PetPicker({ selectedPet, onSelectPet, userLevel }: PetPi
             
             {!isUnlocked && (
                 <div className="absolute inset-0 bg-black/50 rounded-lg flex flex-col items-center justify-center text-white">
-                    <Lock className="h-8 w-8" />
+                    <Lock className="h-6 w-6" />
                     <span className="text-xs font-bold mt-1">Lv. {pet.unlockLevel}</span>
                 </div>
             )}

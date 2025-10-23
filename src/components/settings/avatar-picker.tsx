@@ -34,7 +34,7 @@ export default function AvatarPicker({ selectedAvatar, onSelectAvatar }: AvatarP
   const isUploadedAvatarSelected = selectedAvatar.startsWith('data:image');
 
   return (
-    <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-4">
+    <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 gap-2">
       {/* Upload Button */}
       <div
         className={cn(
@@ -59,14 +59,14 @@ export default function AvatarPicker({ selectedAvatar, onSelectAvatar }: AvatarP
             className="rounded-full aspect-square object-cover w-full h-full"
           />
         ) : (
-          <div className="text-center p-2">
-            <Upload className="h-6 w-6 mx-auto text-muted-foreground" />
-             <p className="text-xs mt-1 text-muted-foreground"><ClientOnlyT tKey="settings.profile.upload" /></p>
+          <div className="text-center p-1">
+            <Upload className="h-4 w-4 mx-auto text-muted-foreground" />
+             <p className="text-[10px] mt-1 text-muted-foreground"><ClientOnlyT tKey="settings.profile.upload" /></p>
           </div>
         )}
         {isUploadedAvatarSelected && (
-           <div className="absolute -top-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-primary">
-             <CheckCircle className="h-4 w-4 text-primary-foreground" />
+           <div className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary">
+             <CheckCircle className="h-3 w-3 text-primary-foreground" />
            </div>
          )}
       </div>
@@ -88,8 +88,8 @@ export default function AvatarPicker({ selectedAvatar, onSelectAvatar }: AvatarP
         >
           <div dangerouslySetInnerHTML={{ __html: avatar.svg }} className="w-full h-full" />
           {selectedAvatar === avatar.id && (
-            <div className="absolute -top-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-primary">
-              <CheckCircle className="h-4 w-4 text-primary-foreground" />
+            <div className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary">
+              <CheckCircle className="h-3 w-3 text-primary-foreground" />
             </div>
           )}
         </div>
