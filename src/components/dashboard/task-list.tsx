@@ -7,14 +7,17 @@ import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { ClientOnlyT } from '../layout/app-sidebar';
+import { Skeleton } from '../ui/skeleton';
 
 export default function TaskList() {
   const { t } = useTranslation();
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
     const updateTodaysTasks = () => {
         setTasks(getTasks().filter(t => new Date(t.dueDate).toDateString() === new Date().toDateString()));
+        setIsClient(true);
     };
 
     updateTodaysTasks(); // Initial load
@@ -29,6 +32,21 @@ export default function TaskList() {
     completeTaskAndUpdateXP(task, completed);
     // The 'tasksUpdated' event fired by completeTaskAndUpdateXP will trigger the useEffect to update state
   };
+
+  if (!isClient) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle><ClientOnlyT tKey='dashboard.todaysAdventures' /></CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <Skeleton className="h-10 w-full" />
+          <Skeleton className="h-10 w-full" />
+          <Skeleton className="h-10 w-full" />
+        </CardContent>
+      </Card>
+    )
+  }
 
   return (
     <Card>

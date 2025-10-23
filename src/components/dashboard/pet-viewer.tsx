@@ -27,7 +27,7 @@ const animations = {
 
 const PetViewer: React.FC<PetViewerProps> = ({ progress }) => {
   const { t } = useTranslation();
-  const [user, setUser] = useState<User>(getUser());
+  const [user, setUser] = useState<User | null>(null);
   const [eyeBlinkDuration, setEyeBlinkDuration] = useState(4);
   const [bodyAnimation, setBodyAnimation] = useState<AnimationType | null>(null);
   const [eyeAnimation, setEyeAnimation] = useState<AnimationType | null>(null);
@@ -51,6 +51,10 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress }) => {
       window.removeEventListener('userProfileUpdated', handleProfileUpdate);
     };
   }, []);
+
+  if (!user) {
+    return null; // Or a loading skeleton
+  }
 
   const selectedPet = Pets.find(p => p.id === user.petStyle) || Pets[0];
   
