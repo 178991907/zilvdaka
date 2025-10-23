@@ -1,13 +1,15 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const DigitalClock = () => {
-  const [time, setTime] = useState(new Date());
+  const [now, setNow] = useState(new Date());
+  const { i18n } = useTranslation();
 
   useEffect(() => {
     const timerId = setInterval(() => {
-      setTime(new Date());
+      setNow(new Date());
     }, 1000);
 
     // Cleanup the interval on component unmount
@@ -16,8 +18,16 @@ const DigitalClock = () => {
     };
   }, []);
 
-  // Format the time to show hours, minutes, and seconds
-  const formattedTime = time.toLocaleTimeString('en-US', {
+  // Use i18n language to format date and time
+  const language = i18n.language.startsWith('zh') ? 'zh-CN' : 'en-US';
+
+  const formattedDate = now.toLocaleDateString(language, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
+  const formattedTime = now.toLocaleTimeString(language, {
     hour: '2-digit',
     minute: '2-digit',
     second: '2-digit',
@@ -25,8 +35,13 @@ const DigitalClock = () => {
   });
 
   return (
-    <div className="text-4xl font-bold font-mono text-foreground">
-      {formattedTime}
+    <div className="flex flex-col items-center">
+      <div className="text-sm font-medium text-muted-foreground">
+        {formattedDate}
+      </div>
+      <div className="text-4xl font-bold font-mono text-foreground">
+        {formattedTime}
+      </div>
     </div>
   );
 };
