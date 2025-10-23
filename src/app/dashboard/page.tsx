@@ -98,19 +98,19 @@ export default function DashboardPage() {
                 </div>
                 <div key="dailyGoal" className="overflow-hidden rounded-lg">
                     <Card className="h-full">
-                        <CardHeader>
+                        <CardContent className="p-4">
                             <ProgressSummaryContent
                                 icon={Target}
                                 title={<ClientOnlyT tKey="dashboard.dailyGoal" />}
                                 value={`${Math.round(dailyProgress)}%`}
                                 description={<ClientOnlyT tKey="dashboard.dailyGoalDescription" tOptions={{ completedTasks, totalTasks }} />}
                             />
-                        </CardHeader>
+                        </CardContent>
                     </Card>
                 </div>
                 <div key="xpGained" className="overflow-hidden rounded-lg">
                     <Card className="h-full">
-                         <CardHeader>
+                         <CardContent className="p-4">
                             <ProgressSummaryContent
                                 icon={Zap}
                                 title={<ClientOnlyT tKey="dashboard.xpGained" />}
@@ -118,7 +118,7 @@ export default function DashboardPage() {
                                 description={<ClientOnlyT tKey="dashboard.xpToNextLevel" tOptions={{ xp: user ? user.xpToNextLevel - user.xp : '...' }} />}
                                 progress={petProgress}
                             />
-                         </CardHeader>
+                         </CardContent>
                     </Card>
                 </div>
                 <div key="petIntro" className="overflow-hidden rounded-lg">
