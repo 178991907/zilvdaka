@@ -23,18 +23,18 @@ export default function RewardsPage() {
     { name: 'Ice cream trip', tasksRequired: 10 },
   ]);
 
-  const getRewardDescription = (reward: Reward) => {
+  const getRewardDescription = (reward: Reward): { tKey: string, tOptions?: any } => {
     const tasks = reward.tasksRequired;
     const days = reward.daysRequired;
 
     if (tasks && tasks > 0 && days && days > 0) {
-      return t('settings.parentalControls.tasksAndDaysToComplete', { tasksCount: tasks, daysCount: days });
+      return { tKey: 'settings.parentalControls.tasksAndDaysToComplete', tOptions: { tasksCount: tasks, daysCount: days } };
     } else if (tasks && tasks > 0) {
-      return t('settings.parentalControls.tasksToComplete', { count: tasks });
+      return { tKey: 'settings.parentalControls.tasksToComplete', tOptions: { count: tasks } };
     } else if (days && days > 0) {
-        return t('settings.parentalControls.daysToComplete', { count: days });
+        return { tKey: 'settings.parentalControls.daysToComplete', tOptions: { count: days } };
     }
-    return t('settings.parentalControls.noRequirement');
+    return { tKey: 'settings.parentalControls.noRequirement' };
   };
 
   return (
@@ -93,19 +93,22 @@ export default function RewardsPage() {
                         </Dialog>
                     </div>
                      <div className="space-y-2 rounded-md border p-2">
-                        {rewards.length > 0 ? rewards.map((reward, index) => (
+                        {rewards.length > 0 ? rewards.map((reward, index) => {
+                           const { tKey, tOptions } = getRewardDescription(reward);
+                           return (
                            <div key={index} className="flex items-center justify-between p-2 rounded-md hover:bg-muted/50">
                                 <div>
                                     <p className="font-medium">{reward.name}</p>
                                     <p className="text-sm text-muted-foreground">
-                                        {getRewardDescription(reward)}
+                                        <ClientOnlyT tKey={tKey} tOptions={tOptions} />
                                     </p>
                                 </div>
                                 <Button variant="ghost" size="icon" className="text-destructive">
                                     <Trash2 className="h-4 w-4" />
                                 </Button>
                            </div>
-                        )) : (
+                           );
+                        }) : (
                             <p className="text-center text-muted-foreground p-4"><ClientOnlyT tKey="settings.parentalControls.noRewards" /></p>
                         )}
                     </div>
