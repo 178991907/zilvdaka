@@ -1,13 +1,10 @@
 'use client';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { achievements as initialAchievements, updateAchievements, Achievement } from '@/lib/data';
+import { achievements as initialAchievements, Achievement } from '@/lib/data';
 import AchievementBadge from '@/components/achievements/achievement-badge';
 import { useTranslation } from 'react-i18next';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { useEffect, useState } from 'react';
-import { EditAchievementDialog } from '@/components/achievements/edit-achievement-dialog';
-import { PlusCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function AchievementsPage() {
@@ -34,21 +31,6 @@ export default function AchievementsPage() {
   const unlockedCount = achievements.filter(a => a.unlocked).length;
   const totalCount = achievements.length;
     
-  const handleSave = (updatedAchievement: Achievement) => {
-    const newAchievements = achievements.map(a => a.id === updatedAchievement.id ? updatedAchievement : a);
-    updateAchievements(newAchievements);
-  };
-  
-  const handleAdd = (newAchievement: Achievement) => {
-    const newAchievements = [...achievements, newAchievement];
-    updateAchievements(newAchievements);
-  };
-
-  const handleDelete = (achievementId: string) => {
-    const newAchievements = achievements.filter(a => a.id !== achievementId);
-    updateAchievements(newAchievements);
-  };
-
   return (
     <div className="flex flex-col">
        <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 border-b bg-background px-4">
@@ -60,15 +42,6 @@ export default function AchievementsPage() {
                   <ClientOnlyT tKey='achievements.unlocked' tOptions={{ unlockedCount, totalCount }} />
               </span>
             ) : <Skeleton className="h-5 w-24" />}
-            <EditAchievementDialog
-                trigger={
-                    <Button>
-                        <PlusCircle className="mr-2 h-4 w-4" />
-                        <ClientOnlyT tKey="achievements.add" />
-                    </Button>
-                }
-                onSave={handleAdd}
-            />
           </div>
         </header>
       <main className="flex-1 p-4 md:p-8">
@@ -80,8 +53,6 @@ export default function AchievementsPage() {
                 <AchievementBadge 
                     key={achievement.id} 
                     achievement={achievement} 
-                    onSave={handleSave}
-                    onDelete={handleDelete}
                 />
             ))}
         </div>

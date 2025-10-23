@@ -2,17 +2,17 @@
   "appName": "习惯英雄",
   "sidebar": {
     "dashboard": "仪表盘",
-    "tasks": "任务管理",
-    "achievements": "成就徽章",
-    "reports": "进度报告",
-    "settings": "设置中心",
+    "tasks": "任务",
+    "achievements": "成就",
+    "reports": "报告",
+    "settings": "设置",
     "logout": "退出登录"
   },
   "user": {
     "level": "等级 {{level}}",
     "menu": {
       "profile": "个人资料",
-      "billing": "账单信息",
+      "billing": "账单",
       "settings": "设置",
       "logout": "退出登录"
     }
@@ -20,64 +20,54 @@
   "landing": {
     "getStarted": "开始使用",
     "heroTitle": "将好习惯变成英雄冒险",
-    "heroSubtitle": "一个有趣、游戏化的任务管理系统，旨在帮助孩子们建立积极的日常习惯，并享受他们的日常责任。",
+    "heroSubtitle": "专为孩子设计的游戏化习惯养成系统。完成任务、赚取经验值，并看着你的宠物成长！",
     "startAdventure": "开始你的冒险",
-    "featuresTitle": "为什么孩子和家长都喜欢“习惯英雄”",
+    "featuresTitle": "为什么孩子和家长都喜欢习惯英雄",
     "feature1": {
-      "title": "游戏化任务",
-      "description": "把家务活变成激动人心的任务，每完成一项任务就能获得经验值（XP）。"
+      "title": "游戏化任务管理",
+      "description": "将日常杂务和学习变成激动人心的任务。"
     },
     "feature2": {
-      "title": "解锁成就",
-      "description": "用独特的徽章和奖励庆祝里程碑，激励孩子们继续前进。"
+      "title": "可解锁的成就",
+      "description": "用一墙可收集的徽章来庆祝每一个里程碑。"
     },
     "feature3": {
-      "title": "养育虚拟宠物",
-      "description": "你的进步会帮助一个可爱的虚拟宠物成长和进化，建立一种责任感纽带。"
+      "title": "虚拟宠物伴侣",
+      "description": "你的进步能帮助你的神奇宠物进化和成长。"
     },
     "feature4": {
       "title": "家长控制",
-      "description": "轻松设置任务、监控进度，并为你的小英雄创建自定义奖励。"
+      "description": "设置自定义奖励并监督孩子的成长之旅。"
     },
     "footerRights": "版权所有。"
   },
   "dashboard": {
     "title": "仪表盘",
-    "petTitle": "你的宠物进度",
+    "petTitle": "你的英雄宠物",
     "petLevel": "宠物等级",
-    "dailyGoal": "今日目标",
-    "dailyGoalDescription": "今天已完成 {{completedTasks}} / {{totalTasks}} 个任务。",
+    "dailyGoal": "每日目标进度",
+    "dailyGoalDescription": "今日已完成 {{completedTasks}} / {{totalTasks}} 个任务",
     "weeklyStreak": "本周连胜",
     "weeklyStreakValue": "{{count}} 天",
-    "weeklyStreakDescription": "继续保持以获得额外经验值！",
-    "xpGained": "已获经验值",
+    "weeklyStreakDescription": "保持一周连胜以获得奖励！",
+    "xpGained": "总经验值",
     "xpToNextLevel": "距离下一级还需 {{xp}} 经验值",
     "todaysAdventures": "今天的冒险",
-    "noAdventures": "今天没有安排冒险活动！"
+    "noAdventures": "今天没有冒险任务。快去添加一个新任务吧！"
   },
   "tasks": {
-    "title": "任务管理",
-    "addTask": "添加新任务",
+    "title": "任务",
+    "addTask": "添加任务",
     "addTaskDialog": {
       "title": "创建新的冒险",
-      "description": "为你的英雄添加一个新任务。设置名称、类别和难度。",
+      "description": "为你的英雄添加一个新任务来完成。设置它的类别和难度。",
       "taskName": "任务名称",
-      "taskNamePlaceholder": "例如：整理卧室",
+      "taskNamePlaceholder": "例如：读一章书",
       "category": "类别",
       "categoryPlaceholder": "选择一个类别",
       "difficulty": "难度",
       "difficultyPlaceholder": "选择一个难度",
       "createTask": "创建任务"
-    },
-    "table": {
-      "task": "任务",
-      "category": "类别",
-      "difficulty": "难度",
-      "status": "状态",
-      "actions": "操作",
-      "openMenu": "打开菜单",
-      "edit": "编辑",
-      "delete": "删除"
     },
     "categories": {
       "learning": "学习",
@@ -91,21 +81,31 @@
       "medium": "中等",
       "hard": "困难"
     },
+    "table": {
+      "task": "任务",
+      "category": "类别",
+      "difficulty": "难度",
+      "status": "状态",
+      "actions": "操作",
+      "openMenu": "打开菜单",
+      "edit": "编辑",
+      "delete": "删除"
+    },
     "status": {
       "completed": "已完成",
       "pending": "待处理"
     },
     "items": {
       "1": { "title": "阅读20分钟" },
-      "2": { "title": "练习绘画" },
-      "3": { "title": "按时睡觉" },
+      "2": { "title": "练习画画" },
+      "3": { "title": "准时上床睡觉" },
       "4": { "title": "完成科学作业" },
       "5": { "title": "在公园骑自行车" },
       "6": { "title": "晨间锻炼" }
     }
   },
   "achievements": {
-    "title": "成就徽章",
+    "title": "成就",
     "unlocked": "已解锁 {{unlockedCount}} / {{totalCount}}",
     "unlockedOn": "解锁于",
     "items": {
@@ -134,80 +134,80 @@
         "description": "完成5个创意任务。"
       },
       "ant_bronze": {
-        "title": "小蚂蚁坚持奖 - 铜级",
-        "description": "达成1天连胜。"
+        "title": "小蚂蚁 - 铜级",
+        "description": "1天连胜。"
       },
       "ant_silver": {
-        "title": "小蚂蚁坚持奖 - 银级",
-        "description": "达成3天连胜。"
+        "title": "小蚂蚁 - 银级",
+        "description": "3天连胜。"
       },
       "ant_gold": {
-        "title": "小蚂蚁坚持奖 - 金级",
-        "description": "达成7天连胜。"
+        "title": "小蚂蚁 - 金级",
+        "description": "7天连胜。"
       },
       "knight_bronze": {
-        "title": "勇敢小骑士守护奖 - 铜级",
-        "description": "达成7天连胜。"
+        "title": "勇敢小骑士 - 铜级",
+        "description": "7天连胜。"
       },
       "knight_silver": {
-        "title": "勇敢小骑士守护奖 - 银级",
-        "description": "达成14天连胜。"
+        "title": "勇敢小骑士 - 银级",
+        "description": "14天连胜。"
       },
       "knight_gold": {
-        "title": "勇敢小骑士守护奖 - 金级",
-        "description": "达成21天连胜。"
+        "title": "勇敢小骑士 - 金级",
+        "description": "21天连胜。"
       },
       "explorer_bronze": {
-        "title": "魔法森林探险家奖 - 铜级",
-        "description": "达成30天连胜。"
+        "title": "魔法探险家 - 铜级",
+        "description": "30天连胜。"
       },
       "explorer_silver": {
-        "title": "魔法森林探险家奖 - 银级",
-        "description": "达成60天连胜。"
+        "title": "魔法探险家 - 银级",
+        "description": "60天连胜。"
       },
       "explorer_gold": {
-        "title": "魔法森林探险家奖 - 金级",
-        "description": "达成90天连胜。"
+        "title": "魔法探险家 - 金级",
+        "description": "90天连胜。"
       },
       "guardian_bronze": {
-        "title": "四季精灵守护者奖 - 铜级",
-        "description": "达成90天连胜。"
+        "title": "四季守护者 - 铜级",
+        "description": "90天连胜。"
       },
       "guardian_silver": {
-        "title": "四季精灵守护者奖 - 银级",
-        "description": "达成180天连胜。"
+        "title": "四季守护者 - 银级",
+        "description": "180天连胜。"
       },
       "guardian_gold": {
-        "title": "四季精灵守护者奖 - 金级",
-        "description": "达成365天连胜。"
+        "title": "四季守护者 - 金级",
+        "description": "365天连胜。"
       },
       "master_bronze": {
-        "title": "超级自理大师奖 - 铜级",
-        "description": "达成1年连胜。"
+        "title": "超级大师 - 铜级",
+        "description": "1年连胜。"
       },
       "master_silver": {
-        "title": "超级自理大师奖 - 银级",
-        "description": "达成2年连胜。"
+        "title": "超级大师 - 银级",
+        "description": "2年连胜。"
       },
       "master_gold": {
-        "title": "超级自理大师奖 - 金级",
-        "description": "达成3年连胜。"
+        "title": "超级大师 - 金级",
+        "description": "3年连胜。"
       }
     }
   },
   "reports": {
-    "title": "进度报告",
+    "title": "报告",
     "performanceTitle": "任务表现",
-    "selectRange": "选择时间范围",
+    "selectRange": "选择范围",
     "thisWeek": "本周",
     "thisMonth": "本月",
     "thisYear": "本年"
   },
   "settings": {
-    "title": "设置中心",
+    "title": "设置",
     "profile": {
       "title": "个人资料",
-      "description": "管理你的公开资料和个人信息。",
+      "description": "其他人将如何在本网站上看到您。",
       "name": "姓名",
       "avatar": "头像",
       "upload": "上传",
@@ -222,30 +222,30 @@
       "darkMode": "深色模式",
       "darkModeDescription": "在浅色和深色主题之间切换。",
       "soundEffects": "音效",
-      "soundEffectsDescription": "启用或禁用应用内声音。"
+      "soundEffectsDescription": "启用或禁用音效。"
     },
     "language": {
-      "title": "语言设置",
-      "description": "选择应用程序的显示语言。",
+      "title": "语言",
+      "description": "设置您偏好的显示语言。",
       "displayLanguage": "显示语言",
       "selectLanguage": "选择一种语言"
     },
     "parentalControls": {
       "title": "家长控制",
-      "description": "管理您孩子的奖励和设置。",
+      "description": "为您的孩子管理奖励和设置。",
       "rewardSystem": "奖励系统",
       "rewardSystemDescription": "为完成任务设置自定义奖励。",
       "addReward": "添加奖励",
       "addRewardDialog": {
-        "title": "添加新奖励",
-        "description": "创建一个您的孩子可以通过完成任务获得的自定义奖励。",
-        "rewardName": "奖励",
-        "rewardNamePlaceholder": "例如，去一次冰淇淋店",
+        "title": "添加自定义奖励",
+        "description": "创建一个您的孩子可以获得的新奖励。",
+        "rewardName": "奖励名称",
+        "rewardNamePlaceholder": "例如：30分钟屏幕时间",
         "tasksRequired": "所需任务数",
         "createButton": "创建奖励"
       },
-      "tasksToComplete": "需完成 {{count}} 个任务",
-      "noRewards": "尚未设置任何奖励。"
+      "tasksToComplete": "需要完成 {{count}} 个任务",
+      "noRewards": "尚未设置自定义奖励。"
     }
   }
 }

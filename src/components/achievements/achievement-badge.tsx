@@ -3,19 +3,15 @@
 import { Achievement } from '@/lib/data';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
-import { Lock, Pencil } from 'lucide-react';
+import { Lock } from 'lucide-react';
 import { Icon } from '@/components/icons';
 import { ClientOnlyT } from '../layout/app-sidebar';
-import { EditAchievementDialog } from './edit-achievement-dialog';
-import { Button } from '../ui/button';
 
 interface AchievementBadgeProps {
   achievement: Achievement;
-  onSave: (achievement: Achievement) => void;
-  onDelete: (id: string) => void;
 }
 
-export default function AchievementBadge({ achievement, onSave, onDelete }: AchievementBadgeProps) {
+export default function AchievementBadge({ achievement }: AchievementBadgeProps) {
   const isCustom = achievement.id.startsWith('custom-');
 
   return (
@@ -25,16 +21,6 @@ export default function AchievementBadge({ achievement, onSave, onDelete }: Achi
           ? 'bg-accent/20 border-2 border-accent/50 shadow-lg shadow-accent/10' 
           : 'bg-muted/50'
       )}>
-        <EditAchievementDialog 
-            achievement={achievement} 
-            onSave={onSave}
-            onDelete={onDelete}
-            trigger={
-                 <Button variant="ghost" size="icon" className="absolute top-1 right-1 h-7 w-7 z-20 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Pencil className="h-4 w-4" />
-                </Button>
-            }
-        />
        
         {achievement.unlocked && (
             <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-slate-700/25 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]"></div>
