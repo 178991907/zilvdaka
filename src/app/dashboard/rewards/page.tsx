@@ -1,6 +1,6 @@
 'use client';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -30,13 +30,13 @@ export default function RewardsPage() {
         </header>
       <main className="flex-1 p-4 md:p-8">
         <Card>
-            <CardContent className="space-y-4 pt-6">
+            <CardHeader>
+                <CardTitle><ClientOnlyT tKey='settings.parentalControls.rewardSystem' /></CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
                 <div>
                     <div className="flex justify-between items-center mb-4">
-                        <div>
-                            <Label><ClientOnlyT tKey='settings.parentalControls.rewardSystem' /></Label>
-                            <p className="text-sm text-muted-foreground"><ClientOnlyT tKey='settings.parentalControls.rewardSystemDescription' /></p>
-                        </div>
+                        <p className="text-sm text-muted-foreground"><ClientOnlyT tKey='settings.parentalControls.rewardSystemDescription' /></p>
                         <Dialog>
                             <DialogTrigger asChild>
                                 <Button>
