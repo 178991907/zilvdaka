@@ -9,8 +9,9 @@ import { ClientOnlyT } from '../layout/app-sidebar';
 import { getUser, User } from '@/lib/data';
 import { Pets } from '@/lib/pets';
 import { motion, AnimatePresence } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
-interface PetViewerProps {
+interface PetViewerProps extends React.HTMLAttributes<HTMLDivElement> {
   progress: number;
 }
 
@@ -25,7 +26,7 @@ const animations = {
 };
 
 
-const PetViewer: React.FC<PetViewerProps> = ({ progress }) => {
+const PetViewer: React.FC<PetViewerProps> = ({ progress, className }) => {
   const { t } = useTranslation();
   const [user, setUser] = useState<User | null>(null);
   const [eyeBlinkDuration, setEyeBlinkDuration] = useState(4);
@@ -80,8 +81,8 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress }) => {
   };
   
   return (
-    <Card 
-        className="bg-primary/10 border-primary/20 flex flex-col items-center justify-start p-0 aspect-square w-full relative overflow-hidden cursor-pointer h-full"
+    <div 
+        className={cn("bg-primary/10 border-primary/20 flex flex-col items-center justify-start p-0 aspect-square w-full relative overflow-hidden cursor-pointer h-full rounded-lg", className)}
         onClick={handleClick}
     >
       <div className="w-full p-6 pb-2">
@@ -105,7 +106,7 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress }) => {
           dangerouslySetInnerHTML={{ __html: selectedPet.getSvg(eyeBlinkDuration, eyeAnimation ? animations['wink'] : undefined) }}
         />
       </motion.div>
-    </Card>
+    </div>
   );
 };
 

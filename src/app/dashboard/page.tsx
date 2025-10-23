@@ -51,16 +51,17 @@ export default function DashboardPage() {
           <h1 className="text-xl font-semibold"><ClientOnlyT tKey='dashboard.title' /></h1>
         </header>
       <main className="flex-1 p-4 md:p-8 overflow-y-auto">
-        <div className="flex flex-col lg:flex-row gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          
           {/* Left Column */}
-          <div className="lg:w-1/3">
-              <Card>
+          <div className="lg:col-span-1 row-span-4">
+              <Card className="h-full">
                 <CardHeader>
                   <CardTitle><ClientOnlyT tKey='dashboard.petTitle'/></CardTitle>
                 </CardHeader>
-                <CardContent className="pb-6">
+                <CardContent className="pb-6 h-full">
                   {isClient && user ? (
-                    <PetViewer progress={petProgress} />
+                    <PetViewer progress={petProgress} className="h-full" />
                   ) : (
                     <div className="aspect-square w-full flex items-center justify-center">
                       <Skeleton className="w-3/4 h-3/4 rounded-full" />
@@ -71,7 +72,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Right Column */}
-          <div className="lg:w-2/3 flex flex-col gap-6">
+          <div className="lg:col-span-2 grid grid-cols-1 gap-6 content-start">
               {isClient && user ? (
                 <>
                   <ProgressSummary
