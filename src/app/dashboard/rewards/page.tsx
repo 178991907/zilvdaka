@@ -30,11 +30,7 @@ export default function RewardsPage() {
         </header>
       <main className="flex-1 p-4 md:p-8">
         <Card>
-            <CardHeader>
-                <CardTitle><ClientOnlyT tKey='settings.parentalControls.title' /></CardTitle>
-                <CardDescription><ClientOnlyT tKey='settings.parentalControls.description' /></CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 pt-6">
                 <div>
                     <div className="flex justify-between items-center mb-4">
                         <div>
