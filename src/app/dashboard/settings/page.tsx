@@ -1,6 +1,6 @@
 'use client';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -16,7 +16,6 @@ import PetPicker from '@/components/settings/pet-picker';
 import { useToast } from '@/hooks/use-toast';
 import { getUser, updateUser, User } from '@/lib/data';
 import { Upload } from 'lucide-react';
-import Image from 'next/image';
 
 export default function SettingsPage() {
   const { t, i18n } = useTranslation();
@@ -197,7 +196,7 @@ export default function SettingsPage() {
             <CardTitle><ClientOnlyT tKey='settings.appearance.title' /></CardTitle>
             <CardDescription><ClientOnlyT tKey='settings.appearance.description' /></CardDescription>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent>
             <div className="space-y-2">
               <Label htmlFor="appLogoUrl"><ClientOnlyT tKey='settings.profile.appLogo' /></Label>
               <div className="flex gap-2">
@@ -220,20 +219,11 @@ export default function SettingsPage() {
                 />
               </div>
             </div>
-            {appLogo && (
-              <div className="space-y-2">
-                <Label><ClientOnlyT tKey='settings.profile.logoPreview' /></Label>
-                <div className="w-full aspect-[3/1] rounded-lg border bg-muted flex items-center justify-center overflow-hidden">
-                    <Image src={appLogo} alt="App logo preview" width={600} height={200} className="object-contain" />
-                </div>
-              </div>
-            )}
           </CardContent>
+          <CardFooter className="border-t px-6 py-4">
+             <Button onClick={handleSaveChanges}><ClientOnlyT tKey='settings.profile.save' /></Button>
+          </CardFooter>
         </Card>
-
-        <div className="flex justify-end">
-            <Button onClick={handleSaveChanges}><ClientOnlyT tKey='settings.profile.save' /></Button>
-        </div>
 
       </main>
     </div>
