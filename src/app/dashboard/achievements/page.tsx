@@ -33,7 +33,7 @@ export default function AchievementsPage() {
     return () => {
       window.removeEventListener('achievementsUpdated', handleAchievementsUpdate);
     };
-  }, [achievements]);
+  }, []);
 
   const handleAdd = () => {
     setEditingAchievement(null);
