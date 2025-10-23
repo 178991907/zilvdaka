@@ -1,45 +1,38 @@
 'use client';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { LucideIcon } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
+import { ReactNode } from 'react';
 
 interface ProgressSummaryProps {
   icon: LucideIcon;
-  titleTKey: string;
+  title: ReactNode;
   value: string;
-  valueTKey?: string;
-  valueTPOptions?: any;
-  descriptionTKey: string;
-  descriptionTPOptions?: any;
+  description: ReactNode;
   progress?: number;
 }
 
 export function ProgressSummaryContent({
   icon: Icon,
-  titleTKey,
+  title,
   value,
-  valueTKey,
-  valueTPOptions,
-  descriptionTKey,
-  descriptionTPOptions,
+  description,
   progress,
 }: ProgressSummaryProps) {
-    const { t } = useTranslation();
     return (
         <>
             <div className="flex items-center justify-between pb-2">
-                <h3 className="text-2xl font-semibold leading-none tracking-tight">
-                    {t(titleTKey)}
-                </h3>
+                <CardTitle className="text-2xl font-semibold leading-none tracking-tight">
+                    {title}
+                </CardTitle>
                 <Icon className="h-5 w-5 text-muted-foreground" />
             </div>
             <div>
                 <div className="text-2xl font-bold">
-                    {valueTKey ? t(valueTKey, valueTPOptions) : value}
+                    {value}
                 </div>
                 <p className="text-xs text-muted-foreground">
-                    {t(descriptionTKey, descriptionTPOptions)}
+                    {description}
                 </p>
                 {progress !== undefined && (
                     <Progress value={progress} className="mt-4 h-2" />

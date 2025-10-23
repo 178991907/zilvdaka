@@ -1,5 +1,4 @@
 'use client';
-import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Target, Zap, Info } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -11,7 +10,6 @@ import DigitalClock from '@/components/dashboard/digital-clock';
 import TaskList from '@/components/dashboard/task-list';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Pets } from '@/lib/pets';
-import { Button } from '@/components/ui/button';
 import { useTranslation } from 'react-i18next';
 import { Progress } from '@/components/ui/progress';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
@@ -50,8 +48,9 @@ export default function DashboardPage() {
   const petProgress = user ? (user.xp / user.xpToNextLevel) * 100 : 0;
   const currentPet = user ? Pets.find(p => p.id === user.petStyle) : null;
 
-  const petIntroTitle = t('dashboard.petIntroTitle');
-  const petIntroItems = t('pets.description.items', { returnObjects: true }) as string[];
+  const petIntroTitle = t('dashboard.petIntro.title');
+  const petIntroDescription = t('dashboard.petIntro.description');
+  const petIntroItems = t('dashboard.petIntro.items', { returnObjects: true }) as string[];
 
 
   return (
@@ -69,7 +68,7 @@ export default function DashboardPage() {
                 <div className="grid lg:grid-cols-3 gap-6">
                     <Card className="lg:col-span-2 transform scale-[1.30] origin-top-left md:ml-20 mt-10">
                         <CardHeader>
-                            <CardTitle>{t('dashboard.myPet')}</CardTitle>
+                            <CardTitle><ClientOnlyT tKey='dashboard.myPet' /></CardTitle>
                         </CardHeader>
                         <CardContent>
                             {isClient && user ? (
@@ -78,7 +77,7 @@ export default function DashboardPage() {
                                     <div className="text-center mt-4">
                                         <p className="text-lg font-bold">{user.petName}</p>
                                         <p className="text-sm text-muted-foreground">
-                                        {t('user.level', { level: user.level })}
+                                            <ClientOnlyT tKey='user.level' tOptions={{ level: user.level }} />
                                         </p>
                                     </div>
                                     <Progress value={petProgress} className="mt-4 h-2" />
@@ -99,9 +98,9 @@ export default function DashboardPage() {
                                 <CardHeader>
                                     <ProgressSummaryContent
                                         icon={Target}
-                                        title={t("dashboard.dailyGoal")}
+                                        title={<ClientOnlyT tKey="dashboard.dailyGoal" />}
                                         value={`${Math.round(dailyProgress)}%`}
-                                        description={t("dashboard.dailyGoalDescription", { completedTasks, totalTasks })}
+                                        description={<ClientOnlyT tKey="dashboard.dailyGoalDescription" tOptions={{ completedTasks, totalTasks }} />}
                                     />
                                 </CardHeader>
                             </Card>
@@ -109,9 +108,9 @@ export default function DashboardPage() {
                                  <CardHeader>
                                     <ProgressSummaryContent
                                         icon={Zap}
-                                        title={t("dashboard.xpGained")}
+                                        title={<ClientOnlyT tKey="dashboard.xpGained" />}
                                         value={`${user ? user.xp : 0} XP`}
-                                        description={t("dashboard.xpToNextLevel", { xp: user ? user.xpToNextLevel - user.xp : '...' })}
+                                        description={<ClientOnlyT tKey="dashboard.xpToNextLevel" tOptions={{ xp: user ? user.xpToNextLevel - user.xp : '...' }} />}
                                         progress={petProgress}
                                     />
                                  </CardHeader>
@@ -121,13 +120,13 @@ export default function DashboardPage() {
                            <CardHeader className="flex flex-row items-start gap-4">
                              <Info className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
                              <div className="flex-1">
-                              <CardTitle>{petIntroTitle}</CardTitle>
+                              <CardTitle><ClientOnlyT tKey="dashboard.petIntro.title" /></CardTitle>
                                {isClient && Array.isArray(petIntroItems) ? (
                                  <div className="mt-2 text-sm text-muted-foreground">
-                                   {petIntroItems[0] && <p className="mb-3">{petIntroItems[0]}</p>}
-                                   {petIntroItems.length > 1 && (
+                                   {petIntroDescription && <p className="mb-3">{petIntroDescription}</p>}
+                                   {petIntroItems.length > 0 && (
                                      <ul className="space-y-2 list-disc pl-5">
-                                       {petIntroItems.slice(1).map((item, index) => (
+                                       {petIntroItems.map((item, index) => (
                                          <li key={index}>{item}</li>
                                        ))}
                                      </ul>
