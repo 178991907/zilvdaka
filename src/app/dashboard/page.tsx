@@ -64,30 +64,34 @@ export default function DashboardPage() {
 
         <main className="flex-grow p-4 md:p-8">
             <div className="max-w-6xl w-full mx-auto space-y-6">
-                <div className="grid lg:grid-cols-3 gap-6">
-                    <Card className="lg:col-span-2">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <Card className="lg:col-span-2 flex flex-col">
                         <CardHeader>
                             <CardTitle><ClientOnlyT tKey='dashboard.myPet' /></CardTitle>
                         </CardHeader>
-                        <CardContent>
+                        <CardContent className="flex-grow flex flex-col">
                             {isClient && user ? (
                                 <>
-                                    <PetViewer progress={petProgress} className="h-48" />
-                                    <div className="text-center mt-4">
-                                        <p className="text-lg font-bold">{user.petName}</p>
-                                        <p className="text-sm text-muted-foreground">
-                                            <ClientOnlyT tKey='user.level' tOptions={{ level: user.level }} />
-                                        </p>
+                                    <PetViewer progress={petProgress} className="flex-grow" />
+                                    <div className="mt-4">
+                                        <div className="text-center">
+                                            <p className="text-lg font-bold">{user.petName}</p>
+                                            <p className="text-sm text-muted-foreground">
+                                                <ClientOnlyT tKey='user.level' tOptions={{ level: user.level }} />
+                                            </p>
+                                        </div>
+                                        <Progress value={petProgress} className="mt-4 h-2" />
                                     </div>
-                                    <Progress value={petProgress} className="mt-4 h-2" />
                                 </>
                             ) : (
-                                <>
-                                    <Skeleton className="h-48 w-full" />
-                                    <Skeleton className="h-6 w-24 mx-auto mt-4" />
-                                    <Skeleton className="h-4 w-16 mx-auto mt-2" />
-                                    <Skeleton className="h-2 w-full mt-4" />
-                                </>
+                                <div className="flex-grow flex flex-col">
+                                    <Skeleton className="flex-grow w-full" />
+                                    <div className="mt-4">
+                                        <Skeleton className="h-6 w-24 mx-auto" />
+                                        <Skeleton className="h-4 w-16 mx-auto mt-2" />
+                                        <Skeleton className="h-2 w-full mt-4" />
+                                    </div>
+                                </div>
                             )}
                         </CardContent>
                     </Card>
