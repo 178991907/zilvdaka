@@ -93,8 +93,8 @@ export default function AppSidebar() {
 
   return (
     <>
-      <SidebarHeader>
-         <div className="flex items-center p-2">
+      <SidebarContent>
+        <SidebarHeader>
             <div className="w-full">
               {user?.appLogo ? (
                 <div className="w-full h-auto aspect-[3/1] rounded-lg overflow-hidden">
@@ -111,10 +111,8 @@ export default function AppSidebar() {
                 </div>
               )}
             </div>
-        </div>
-      </SidebarHeader>
-      <SidebarContent>
-        <SidebarMenu>
+        </SidebarHeader>
+        <SidebarMenu className="pt-4">
           {navItems.map((item) => (
             <SidebarMenuItem key={item.href}>
               <SidebarMenuButton
