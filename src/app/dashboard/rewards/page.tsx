@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
 import { PlusCircle, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -59,6 +59,10 @@ export default function RewardsPage() {
     setIsDialogOpen(false);
   };
 
+  const handleDeleteReward = (indexToDelete: number) => {
+    setRewards(prev => prev.filter((_, index) => index !== indexToDelete));
+  };
+
   return (
     <div className="flex flex-col">
        <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 border-b bg-background px-4">
@@ -84,9 +88,9 @@ export default function RewardsPage() {
                             <DialogContent className="sm:max-w-[425px]">
                                 <DialogHeader>
                                 <DialogTitle><ClientOnlyT tKey='settings.parentalControls.addRewardDialog.title' /></DialogTitle>
-                                <DialogDescription>
+                                <CardDescription>
                                     <ClientOnlyT tKey='settings.parentalControls.addRewardDialog.description' />
-                                </DialogDescription>
+                                </CardDescription>
                                 </DialogHeader>
                                 <div className="grid gap-4 py-4">
                                     <div className="grid grid-cols-4 items-center gap-4">
@@ -145,7 +149,7 @@ export default function RewardsPage() {
                                         <ClientOnlyT tKey={tKey} tOptions={tOptions} />
                                     </p>
                                 </div>
-                                <Button variant="ghost" size="icon" className="text-destructive">
+                                <Button variant="ghost" size="icon" className="text-destructive" onClick={() => handleDeleteReward(index)}>
                                     <Trash2 className="h-4 w-4" />
                                 </Button>
                            </div>
