@@ -68,40 +68,43 @@ export default function LandingPage() {
               </Button>
             </div>
             
-             <div className="mt-16 max-w-lg mx-auto">
-              <div className="flex flex-col items-center gap-8">
-                  {isClient && user ? (
-                    <>
-                       <div className="p-6 w-full">
-                        <ProgressSummaryContent
-                            icon={Target}
-                            titleTKey="dashboard.dailyGoal"
-                            value={`${Math.round(dailyProgress)}%`}
-                            descriptionTKey="dashboard.dailyGoalDescription"
-                            descriptionTPOptions={{ completedTasks, totalTasks }}
-                          />
-                      </div>
-                      <div className="p-6">
-                        <PetViewer progress={petProgress} className="min-h-[300px]" />
-                      </div>
-                       <div className="p-6 w-full">
-                         <ProgressSummaryContent
-                            icon={Zap}
-                            titleTKey="dashboard.xpGained"
-                            value={`${user.xp} XP`}
-                            descriptionTKey="dashboard.xpToNextLevel"
-                            descriptionTPOptions={{ xp: user.xpToNextLevel - user.xp }}
-                            progress={petProgress}
-                          />
-                       </div>
-                    </>
-                  ) : (
-                    <>
-                      <Skeleton className="h-32 w-full" />
-                      <Skeleton className="h-full min-h-[300px] w-full" />
-                      <Skeleton className="h-32 w-full" />
-                    </>
-                  )}
+             <div className="mt-16 max-w-4xl mx-auto grid lg:grid-cols-2 gap-6 items-center">
+              <div>
+                {isClient && user ? (
+                  <PetViewer progress={petProgress} className="min-h-[300px]" />
+                ) : (
+                  <Skeleton className="h-full min-h-[300px] w-full" />
+                )}
+              </div>
+              <div className="space-y-6">
+                {isClient && user ? (
+                  <>
+                    <div className="p-6">
+                      <ProgressSummaryContent
+                          icon={Target}
+                          titleTKey="dashboard.dailyGoal"
+                          value={`${Math.round(dailyProgress)}%`}
+                          descriptionTKey="dashboard.dailyGoalDescription"
+                          descriptionTPOptions={{ completedTasks, totalTasks }}
+                        />
+                    </div>
+                     <div className="p-6">
+                       <ProgressSummaryContent
+                          icon={Zap}
+                          titleTKey="dashboard.xpGained"
+                          value={`${user.xp} XP`}
+                          descriptionTKey="dashboard.xpToNextLevel"
+                          descriptionTPOptions={{ xp: user.xpToNextLevel - user.xp }}
+                          progress={petProgress}
+                        />
+                     </div>
+                  </>
+                ) : (
+                  <>
+                    <Skeleton className="h-32 w-full" />
+                    <Skeleton className="h-32 w-full" />
+                  </>
+                )}
               </div>
             </div>
 
