@@ -8,12 +8,15 @@ import { useEffect, useState } from 'react';
 import { EditAchievementDialog } from '@/components/achievements/edit-achievement-dialog';
 import { PlusCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function AchievementsPage() {
   const { t } = useTranslation();
-  const [achievements, setAchievements] = useState<Achievement[]>(initialAchievements);
+  const [achievements, setAchievements] = useState<Achievement[]>([]);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
     const handleAchievementsUpdate = () => {
       const updatedAchievements = JSON.parse(localStorage.getItem('habit-heroes-achievements') || 'null') || initialAchievements;
       setAchievements(updatedAchievements);
@@ -52,9 +55,11 @@ export default function AchievementsPage() {
           <SidebarTrigger className="md:hidden" />
           <h1 className="text-xl font-semibold"><ClientOnlyT tKey='achievements.title' /></h1>
           <div className="ml-auto flex items-center gap-4">
-            <span className="text-sm font-semibold text-muted-foreground">
-                <ClientOnlyT tKey='achievements.unlocked' tOptions={{ unlockedCount, totalCount }} />
-            </span>
+            {isClient ? (
+              <span className="text-sm font-semibold text-muted-foreground">
+                  <ClientOnlyT tKey='achievements.unlocked' tOptions={{ unlockedCount, totalCount }} />
+              </span>
+            ) : <Skeleton className="h-5 w-24" />}
             <EditAchievementDialog
                 trigger={
                     <Button>
@@ -68,7 +73,10 @@ export default function AchievementsPage() {
         </header>
       <main className="flex-1 p-4 md:p-8">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-            {achievements.map(achievement => (
+            {!isClient && Array.from({ length: 10 }).map((_, index) => (
+                <Skeleton key={index} className="aspect-square rounded-xl" />
+            ))}
+            {isClient && achievements.map(achievement => (
                 <AchievementBadge 
                     key={achievement.id} 
                     achievement={achievement} 
