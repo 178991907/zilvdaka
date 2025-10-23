@@ -28,14 +28,24 @@ export default function SettingsPage() {
     { name: '30 minutes of screen time', tasksRequired: 5 },
     { name: 'Ice cream trip', tasksRequired: 10 },
   ]);
+  const [isSoundEnabled, setIsSoundEnabled] = useState(true);
 
-  const [currentLanguage, setCurrentLanguage] = useState(i18n.language || 'en-zh');
+  const [currentLanguage, setCurrentLanguage] = useState(i18n.language);
 
   useEffect(() => {
+    setCurrentLanguage(i18n.language || 'en-zh');
+    
+    const storedSoundSetting = localStorage.getItem('sound-effects-enabled');
+    if (storedSoundSetting !== null) {
+      setIsSoundEnabled(storedSoundSetting === 'true');
+    }
+
     const handleLanguageChanged = (lng: string) => {
       setCurrentLanguage(lng);
     };
+
     i18n.on('languageChanged', handleLanguageChanged);
+    
     return () => {
       i18n.off('languageChanged', handleLanguageChanged);
     };
@@ -45,6 +55,12 @@ export default function SettingsPage() {
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
   };
+  
+  const handleSoundToggle = (checked: boolean) => {
+    setIsSoundEnabled(checked);
+    localStorage.setItem('sound-effects-enabled', String(checked));
+  };
+
 
   return (
     <div className="flex flex-col">
@@ -98,7 +114,11 @@ export default function SettingsPage() {
                         <Label htmlFor="sound-effects"><ClientOnlyT tKey='settings.personalization.soundEffects' /></Label>
                         <p className="text-sm text-muted-foreground"><ClientOnlyT tKey='settings.personalization.soundEffectsDescription' /></p>
                     </div>
-                    <Switch id="sound-effects" defaultChecked />
+                    <Switch 
+                      id="sound-effects" 
+                      checked={isSoundEnabled}
+                      onCheckedChange={handleSoundToggle}
+                    />
                 </div>
             </CardContent>
         </Card>
