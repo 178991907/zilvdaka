@@ -1,11 +1,11 @@
 'use client';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { PlusCircle, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -33,7 +33,7 @@ export default function RewardsPage() {
             <CardContent className="space-y-4 pt-6">
                 <div className="space-y-1">
                     <CardTitle><ClientOnlyT tKey='settings.parentalControls.rewardSystem' /></CardTitle>
-                    <CardDescription><ClientOnlyT tKey='settings.parentalControls.rewardSystemDescription' /></CardDescription>
+                    <CardDescription className="mb-4"><ClientOnlyT tKey='settings.parentalControls.rewardSystemDescription' /></CardDescription>
                 </div>
                 <div>
                     <div className="flex justify-between items-center mb-4">
