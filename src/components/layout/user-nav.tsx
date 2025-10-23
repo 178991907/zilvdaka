@@ -91,10 +91,12 @@ export function UserNav() {
               <span><ClientOnlyT tKey='user.menu.profile' /></span>
             </DropdownMenuItem>
           </Link>
-          <DropdownMenuItem>
-            <CreditCard className="mr-2 h-4 w-4" />
-            <span><ClientOnlyT tKey='user.menu.billing' /></span>
-          </DropdownMenuItem>
+          <Link href="/dashboard/settings">
+            <DropdownMenuItem>
+              <CreditCard className="mr-2 h-4 w-4" />
+              <span><ClientOnlyT tKey='user.menu.billing' /></span>
+            </DropdownMenuItem>
+          </Link>
           <Link href="/dashboard/settings">
             <DropdownMenuItem>
               <Settings className="mr-2 h-4 w-4" />
@@ -103,12 +105,12 @@ export function UserNav() {
           </Link>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <Link href="/">
-            <DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href="/">
             <LogOut className="mr-2 h-4 w-4" />
             <span><ClientOnlyT tKey='user.menu.logout' /></span>
-            </DropdownMenuItem>
-        </Link>
+          </Link>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
