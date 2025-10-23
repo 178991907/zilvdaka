@@ -20,14 +20,14 @@ export function ProgressSummaryContent({
   progress,
 }: ProgressSummaryProps) {
     return (
-        <>
+        <div className="flex flex-col h-full">
             <div className="flex items-center justify-between pb-2">
                 <CardTitle className="text-2xl font-semibold leading-none tracking-tight">
                     {title}
                 </CardTitle>
                 <Icon className="h-5 w-5 text-muted-foreground" />
             </div>
-            <div>
+            <div className="flex flex-col flex-grow">
                 <div className="text-2xl font-bold">
                     {value}
                 </div>
@@ -35,10 +35,12 @@ export function ProgressSummaryContent({
                     {description}
                 </p>
                 {progress !== undefined && (
-                    <Progress value={progress} className="mt-4 h-2" />
+                    <div className="flex-grow flex items-end">
+                      <Progress value={progress} className="mt-4 h-2 w-full" />
+                    </div>
                 )}
             </div>
-        </>
+        </div>
     );
 }
 
