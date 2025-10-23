@@ -79,7 +79,7 @@ export default function LandingPage() {
 
       <footer className="py-6 bg-card">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} Discipline Baby. All rights reserved.</p>
+          <p>© 2025 英语全科启蒙. All Rights Reserved.『Terry开发与维护』</p>
         </div>
       </footer>
     </div>
