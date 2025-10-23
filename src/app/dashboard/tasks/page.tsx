@@ -4,18 +4,11 @@ import TasksTable from '@/components/tasks/tasks-table';
 import { AddTaskDialog } from '@/components/tasks/add-task-dialog';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { useState, useEffect } from 'react';
-import { Task, getTasks, updateTasks, tasks as initialTasks } from '@/lib/data';
-import { Atom, Bike, Book, Brush, Dumbbell, LucideIcon, PlusCircle } from 'lucide-react';
+import { Task, getTasks, updateTasks, tasks as initialTasks, iconMap } from '@/lib/data';
+import { LucideIcon, PlusCircle } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 
-const iconMap: { [key: string]: LucideIcon } = {
-  Learning: Book,
-  Creative: Brush,
-  Health: Dumbbell,
-  School: Atom,
-  Activity: Bike,
-};
 
 export default function TasksPage() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -50,20 +43,15 @@ export default function TasksPage() {
       // Update existing task
        updatedTasks = tasks.map(t => 
         t.id === taskId 
-        ? { ...t, ...taskData, icon: iconMap[taskData.category] || Book } 
+        ? { ...t, ...taskData, icon: iconMap[taskData.category] || iconMap.Learning } 
         : t
       );
     } else {
       // Add new task
-      const maxId = tasks.reduce((max, task) => {
-        const taskIdNum = parseInt(task.id, 10);
-        return isNaN(taskIdNum) ? max : Math.max(max, taskIdNum);
-      }, 0);
-
       const newTask: Task = {
-        id: (maxId + 1).toString(),
+        id: `custom-${Date.now()}`,
         ...taskData,
-        icon: iconMap[taskData.category] || Book,
+        icon: iconMap[taskData.category] || iconMap.Learning,
         completed: false,
         dueDate: new Date(),
       };

@@ -125,7 +125,7 @@ export default function TasksTable({ tasks, setTasks, onEdit, onDelete, onToggle
                   />
               </TableCell>
               <TableCell className="font-medium flex items-center gap-3">
-                 <task.icon className="h-5 w-5" />
+                 {task.icon && <task.icon className="h-5 w-5" />}
                  <ClientOnlyT tKey={`tasks.items.${task.id}.title`} fallback={task.title} />
               </TableCell>
               <TableCell>

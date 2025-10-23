@@ -292,10 +292,18 @@ export const updateAchievements = (newAchievements: Achievement[]) => {
     }
 };
 
+export const iconMap: { [key: string]: LucideIcon } = {
+  Learning: Book,
+  Creative: Brush,
+  Health: Dumbbell,
+  School: Atom,
+  Activity: Bike,
+  Bed: Bed,
+};
 
 export const tasks: Task[] = [
   {
-    id: '1',
+    id: 'read',
     title: 'Read for 20 minutes',
     category: 'Learning',
     icon: Book,
@@ -303,11 +311,11 @@ export const tasks: Task[] = [
     completed: true,
     status: 'active',
     dueDate: new Date(),
-    recurrence: { interval: 1, unit: 'week' },
+    recurrence: { interval: 1, unit: 'week', daysOfWeek: ['mon', 'tue', 'wed', 'thu', 'fri'] },
     time: '20:00',
   },
   {
-    id: '2',
+    id: 'drawing',
     title: 'Practice drawing',
     category: 'Creative',
     icon: Brush,
@@ -319,7 +327,7 @@ export const tasks: Task[] = [
     time: '16:30',
   },
   {
-    id: '3',
+    id: 'bedtime',
     title: 'Go to bed on time',
     category: 'Health',
     icon: Bed,
@@ -330,7 +338,7 @@ export const tasks: Task[] = [
     time: '21:00',
   },
   {
-    id: '4',
+    id: 'homework',
     title: 'Finish science homework',
     category: 'School',
     icon: Atom,
@@ -340,7 +348,7 @@ export const tasks: Task[] = [
     dueDate: new Date(new Date().setDate(new Date().getDate() - 1)),
   },
   {
-    id: '5',
+    id: 'bike',
     title: 'Bike ride in the park',
     category: 'Activity',
     icon: Bike,
@@ -350,7 +358,7 @@ export const tasks: Task[] = [
     dueDate: new Date(new Date().setDate(new Date().getDate() + 1)),
   },
    {
-    id: '6',
+    id: 'workout',
     title: 'Morning workout',
     category: 'Health',
     icon: Dumbbell,
@@ -371,14 +379,14 @@ export const getTasks = (): Task[] => {
         if (storedTasks) {
             return JSON.parse(storedTasks).map((task: any) => ({
               ...task,
-              icon: iconMap[task.category] || Book, // Re-assign icon function
+              icon: iconMap[task.category] || iconMap.Learning, // Re-assign icon function
               dueDate: new Date(task.dueDate)
             }));
         }
     } catch (error) {
         console.error("Failed to parse tasks from localStorage", error);
     }
-    localStorage.setItem('habit-heroes-tasks', JSON.stringify(tasks));
+    localStorage.setItem('habit-heroes-tasks', JSON.stringify(tasks.map(({icon, ...rest}) => rest)));
     return tasks;
 };
 
@@ -393,15 +401,6 @@ export const updateTasks = (newTasks: Task[]) => {
             console.error("Failed to save tasks to localStorage", error);
         }
     }
-};
-
-const iconMap: { [key: string]: LucideIcon } = {
-  Learning: Book,
-  Creative: Brush,
-  Health: Dumbbell,
-  School: Atom,
-  Activity: Bike,
-  Bed: Bed,
 };
 
 
