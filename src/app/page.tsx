@@ -22,7 +22,7 @@ export default function LandingPage() {
         <section className="py-20 md:py-32">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-4xl md:text-6xl font-bold font-headline tracking-tight text-foreground">
-              Turn Daily Tasks into Fun Adventures
+              宝贝成长计划
             </h2>
             <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
               A gamified habit tracking system designed for kids. Raise a virtual pet by completing real-life tasks and building great habits.
@@ -90,7 +90,7 @@ function FeatureCard({ icon, title, description }: { icon: React.ReactNode, titl
   return (
     <Card className="text-center">
       <CardHeader>
-        <div className="mx-auto bg-secondary p-4 rounded-full w-fit">
+        <div className="mx-auto bg-secondary p-4 rounded-lg w-fit">
           {icon}
         </div>
         <CardTitle className="mt-4">{title}</CardTitle>
