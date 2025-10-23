@@ -85,7 +85,7 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress, className }) => {
      <div className={cn("flex flex-col", className)}>
         <div className="flex flex-col flex-grow items-center justify-start p-4 w-full relative overflow-hidden">
            <div
-            className="w-full flex-grow flex items-center justify-center rounded-lg cursor-pointer"
+            className="w-full flex-grow flex items-center justify-start rounded-lg cursor-pointer"
             onClick={handleClick}
           >
             <motion.div
