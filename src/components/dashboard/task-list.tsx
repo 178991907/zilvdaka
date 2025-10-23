@@ -5,8 +5,10 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { tasks as initialTasks, Task } from '@/lib/data';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 export default function TaskList() {
+  const { t } = useTranslation();
   const [tasks, setTasks] = useState<Task[]>(
     initialTasks.filter(t => new Date(t.dueDate).toDateString() === new Date().toDateString())
   );
@@ -22,7 +24,7 @@ export default function TaskList() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Today's Adventures</CardTitle>
+        <CardTitle>{t('dashboard.todaysAdventures')}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
@@ -55,7 +57,7 @@ export default function TaskList() {
                       task.completed ? 'text-muted-foreground line-through' : 'text-foreground'
                     )}
                   >
-                    {task.title}
+                    {t(`tasks.items.${task.id}.title`)}
                   </label>
                   <div className="flex items-center justify-center h-8 w-8 rounded-full bg-primary/10">
                     <task.icon className="h-5 w-5 text-primary" />
@@ -64,7 +66,7 @@ export default function TaskList() {
               ))
             ) : (
               <p className="text-muted-foreground text-center py-8">
-                No adventures for today! Plan some new ones.
+                {t('dashboard.noAdventures')}
               </p>
             )}
           </AnimatePresence>

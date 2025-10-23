@@ -6,12 +6,14 @@ import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { Lock } from 'lucide-react';
 import { Icon } from '@/components/icons';
+import { useTranslation } from 'react-i18next';
 
 interface AchievementBadgeProps {
   achievement: Achievement;
 }
 
 export default function AchievementBadge({ achievement }: AchievementBadgeProps) {
+  const { t } = useTranslation();
   return (
     <Card
       className={cn(
@@ -47,13 +49,13 @@ export default function AchievementBadge({ achievement }: AchievementBadgeProps)
         </div>
       </CardHeader>
       <CardContent className="px-2 pb-2 flex-grow">
-        <p className="font-bold text-sm text-foreground">{achievement.title}</p>
-        <p className="text-xs text-muted-foreground mt-1">{achievement.description}</p>
+        <p className="font-bold text-sm text-foreground">{t(`achievements.items.${achievement.id}.title`)}</p>
+        <p className="text-xs text-muted-foreground mt-1">{t(`achievements.items.${achievement.id}.description`)}</p>
       </CardContent>
       {achievement.unlocked && achievement.dateUnlocked && (
         <CardFooter className="p-2 pt-0 w-full">
             <p className="text-xs text-muted-foreground w-full">
-                Unlocked: {format(achievement.dateUnlocked, 'MMM d, yyyy')}
+                {t('achievements.unlockedOn')}: {format(achievement.dateUnlocked, t('achievements.dateFormat'))}
             </p>
         </CardFooter>
       )}

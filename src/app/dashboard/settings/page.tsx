@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useTranslation } from 'react-i18next';
 
 export default function SettingsPage() {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
@@ -21,45 +21,45 @@ export default function SettingsPage() {
     <div className="flex flex-col">
        <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 border-b bg-background px-4">
           <SidebarTrigger className="md:hidden" />
-          <h1 className="text-xl font-semibold">Settings</h1>
+          <h1 className="text-xl font-semibold">{t('settings.title')}</h1>
         </header>
       <main className="flex-1 p-4 md:p-8 space-y-8">
         <Card>
           <CardHeader>
-            <CardTitle>Profile</CardTitle>
-            <CardDescription>Manage your personal information.</CardDescription>
+            <CardTitle>{t('settings.profile.title')}</CardTitle>
+            <CardDescription>{t('settings.profile.description')}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="name">Name</Label>
+              <Label htmlFor="name">{t('settings.profile.name')}</Label>
               <Input id="name" defaultValue="Alex" />
             </div>
              <div className="space-y-2">
-              <Label>Avatar</Label>
+              <Label>{t('settings.profile.avatar')}</Label>
               <AvatarPicker />
             </div>
-            <Button>Save Changes</Button>
+            <Button>{t('settings.profile.save')}</Button>
           </CardContent>
         </Card>
 
         <Card>
             <CardHeader>
-                <CardTitle>Personalization</CardTitle>
-                <CardDescription>Customize the look and feel of your app.</CardDescription>
+                <CardTitle>{t('settings.personalization.title')}</CardTitle>
+                <CardDescription>{t('settings.personalization.description')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
                  <div className="flex items-center justify-between">
                     <div>
-                        <Label htmlFor="dark-mode">Dark Mode</Label>
-                        <p className="text-sm text-muted-foreground">Toggle between light and dark themes.</p>
+                        <Label htmlFor="dark-mode">{t('settings.personalization.darkMode')}</Label>
+                        <p className="text-sm text-muted-foreground">{t('settings.personalization.darkModeDescription')}</p>
                     </div>
                     <Switch id="dark-mode" />
                 </div>
                 <Separator />
                 <div className="flex items-center justify-between">
                     <div>
-                        <Label htmlFor="sound-effects">Sound Effects</Label>
-                        <p className="text-sm text-muted-foreground">Enable or disable sounds for completing tasks.</p>
+                        <Label htmlFor="sound-effects">{t('settings.personalization.soundEffects')}</Label>
+                        <p className="text-sm text-muted-foreground">{t('settings.personalization.soundEffectsDescription')}</p>
                     </div>
                     <Switch id="sound-effects" defaultChecked />
                 </div>
@@ -68,15 +68,15 @@ export default function SettingsPage() {
 
         <Card>
             <CardHeader>
-                <CardTitle>Language</CardTitle>
-                <CardDescription>Choose your preferred language for the app.</CardDescription>
+                <CardTitle>{t('settings.language.title')}</CardTitle>
+                <CardDescription>{t('settings.language.description')}</CardDescription>
             </CardHeader>
             <CardContent>
                  <div className="space-y-2">
-                    <Label htmlFor="language-select">Display Language</Label>
+                    <Label htmlFor="language-select">{t('settings.language.displayLanguage')}</Label>
                      <Select defaultValue={i18n.language} onValueChange={changeLanguage}>
                         <SelectTrigger id="language-select" className="w-[280px]">
-                            <SelectValue placeholder="Select language" />
+                            <SelectValue placeholder={t('settings.language.selectLanguage')} />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="en">English</SelectItem>
@@ -90,24 +90,24 @@ export default function SettingsPage() {
 
          <Card>
             <CardHeader>
-                <CardTitle>Parental Controls</CardTitle>
-                <CardDescription>Manage rewards and notifications.</CardDescription>
+                <CardTitle>{t('settings.parentalControls.title')}</CardTitle>
+                <CardDescription>{t('settings.parentalControls.description')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
                 <div className="flex items-center justify-between">
                     <div>
-                        <Label htmlFor="notifications">Email Notifications</Label>
-                        <p className="text-sm text-muted-foreground">Receive weekly progress reports via email.</p>
+                        <Label htmlFor="notifications">{t('settings.parentalControls.emailNotifications')}</Label>
+                        <p className="text-sm text-muted-foreground">{t('settings.parentalControls.emailNotificationsDescription')}</p>
                     </div>
                     <Switch id="notifications" />
                 </div>
                 <Separator />
                  <div>
-                    <Label htmlFor="rewards">Reward System</Label>
-                    <p className="text-sm text-muted-foreground mb-4">Set a custom reward for achieving goals.</p>
+                    <Label htmlFor="rewards">{t('settings.parentalControls.rewardSystem')}</Label>
+                    <p className="text-sm text-muted-foreground mb-4">{t('settings.parentalControls.rewardSystemDescription')}</p>
                     <div className="flex gap-2">
-                        <Input id="rewards" placeholder="e.g., An hour of video games" />
-                        <Button>Set Reward</Button>
+                        <Input id="rewards" placeholder={t('settings.parentalControls.rewardPlaceholder')} />
+                        <Button>{t('settings.parentalControls.setReward')}</Button>
                     </div>
                 </div>
             </CardContent>

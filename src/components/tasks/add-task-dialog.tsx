@@ -19,65 +19,67 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { PlusCircle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export function AddTaskDialog() {
+  const { t } = useTranslation();
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button>
           <PlusCircle className="mr-2 h-4 w-4" />
-          Add Task
+          {t('tasks.addTask')}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add a New Adventure</DialogTitle>
+          <DialogTitle>{t('tasks.addTaskDialog.title')}</DialogTitle>
           <DialogDescription>
-            Create a new task for your hero to complete.
+            {t('tasks.addTaskDialog.description')}
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right">
-              Task Name
+              {t('tasks.addTaskDialog.taskName')}
             </Label>
-            <Input id="name" defaultValue="Read a chapter" className="col-span-3" />
+            <Input id="name" placeholder={t('tasks.addTaskDialog.taskNamePlaceholder')} className="col-span-3" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="category" className="text-right">
-              Category
+              {t('tasks.addTaskDialog.category')}
             </Label>
             <Select>
               <SelectTrigger className="col-span-3">
-                <SelectValue placeholder="Select a category" />
+                <SelectValue placeholder={t('tasks.addTaskDialog.categoryPlaceholder')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="learning">Learning</SelectItem>
-                <SelectItem value="creative">Creative</SelectItem>
-                <SelectItem value="health">Health</SelectItem>
-                <SelectItem value="school">School</SelectItem>
-                <SelectItem value="activity">Activity</SelectItem>
+                <SelectItem value="learning">{t('tasks.categories.learning')}</SelectItem>
+                <SelectItem value="creative">{t('tasks.categories.creative')}</SelectItem>
+                <SelectItem value="health">{t('tasks.categories.health')}</SelectItem>
+                <SelectItem value="school">{t('tasks.categories.school')}</SelectItem>
+                <SelectItem value="activity">{t('tasks.categories.activity')}</SelectItem>
               </SelectContent>
             </Select>
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="difficulty" className="text-right">
-              Difficulty
+              {t('tasks.addTaskDialog.difficulty')}
             </Label>
             <Select>
               <SelectTrigger className="col-span-3">
-                <SelectValue placeholder="Select difficulty" />
+                <SelectValue placeholder={t('tasks.addTaskDialog.difficultyPlaceholder')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="easy">Easy</SelectItem>
-                <SelectItem value="medium">Medium</SelectItem>
-                <SelectItem value="hard">Hard</SelectItem>
+                <SelectItem value="easy">{t('tasks.difficulties.easy')}</SelectItem>
+                <SelectItem value="medium">{t('tasks.difficulties.medium')}</SelectItem>
+                <SelectItem value="hard">{t('tasks.difficulties.hard')}</SelectItem>
               </SelectContent>
             </Select>
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit">Create Task</Button>
+          <Button type="submit">{t('tasks.addTaskDialog.createTask')}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

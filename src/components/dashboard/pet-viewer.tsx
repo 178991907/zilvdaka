@@ -1,15 +1,17 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Star } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface PetViewerProps {
   progress: number;
 }
 
 const PetViewer: React.FC<PetViewerProps> = ({ progress }) => {
+  const { t } = useTranslation();
   const [eyeBlinkDuration, setEyeBlinkDuration] = useState(4);
   const petScale = 0.8 + (progress / 100) * 0.4; // Scale from 0.8 to 1.2
 
@@ -34,7 +36,7 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress }) => {
       <div className="absolute top-4 left-4 right-4">
         <div className="flex items-center gap-2 mb-2">
             <Star className="w-5 h-5 text-accent fill-accent" />
-            <span className="font-bold text-foreground">Pet Level</span>
+            <span className="font-bold text-foreground">{t('dashboard.petLevel')}</span>
         </div>
         <Progress value={progress} className="w-full h-3" />
       </div>
@@ -56,7 +58,7 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress }) => {
           <ellipse cx="100" cy="180" rx="60" ry="10" fill="black" opacity="0.1" />
 
           {/* Body */}
-          <g style={{ transformOrigin: 'bottom center', animation: 'sway 8s ease-in-out infinite' }}>
+          <g style={{ transformOrigin: 'bottom center', animationName: 'sway', animationDuration: '8s', animationTimingFunction: 'ease-in-out', animationIterationCount: 'infinite' }}>
             <path
               d="M 50,170 C 20,130 20,70 50,40 C 80,10 120,10 150,40 C 180,70 180,130 150,170 Z"
               fill="url(#bodyGradient)"

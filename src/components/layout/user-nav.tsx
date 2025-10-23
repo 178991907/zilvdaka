@@ -14,8 +14,10 @@ import { user } from '@/lib/data';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import Link from 'next/link';
 import { CreditCard, LogOut, Settings, User as UserIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export function UserNav() {
+  const { t } = useTranslation();
   const avatarImage = PlaceHolderImages.find(img => img.id === user.avatar);
 
   return (
@@ -31,7 +33,7 @@ export function UserNav() {
           </Avatar>
            <div className="flex flex-col items-start truncate">
               <span className="font-semibold text-sm truncate">{user.name}</span>
-              <span className="text-xs text-muted-foreground">Level {user.level}</span>
+              <span className="text-xs text-muted-foreground">{t('user.level', { level: user.level })}</span>
             </div>
         </Button>
       </DropdownMenuTrigger>
@@ -49,17 +51,17 @@ export function UserNav() {
           <Link href="/dashboard/settings">
             <DropdownMenuItem>
               <UserIcon className="mr-2 h-4 w-4" />
-              <span>Profile</span>
+              <span>{t('user.menu.profile')}</span>
             </DropdownMenuItem>
           </Link>
           <DropdownMenuItem>
             <CreditCard className="mr-2 h-4 w-4" />
-            <span>Billing</span>
+            <span>{t('user.menu.billing')}</span>
           </DropdownMenuItem>
           <Link href="/dashboard/settings">
             <DropdownMenuItem>
               <Settings className="mr-2 h-4 w-4" />
-              <span>Settings</span>
+              <span>{t('user.menu.settings')}</span>
             </DropdownMenuItem>
           </Link>
         </DropdownMenuGroup>
@@ -67,7 +69,7 @@ export function UserNav() {
         <Link href="/">
             <DropdownMenuItem>
             <LogOut className="mr-2 h-4 w-4" />
-            <span>Log out</span>
+            <span>{t('user.menu.logout')}</span>
             </DropdownMenuItem>
         </Link>
       </DropdownMenuContent>
