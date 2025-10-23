@@ -38,20 +38,15 @@ export const ClientOnlyT = ({ tKey, tOptions }: { tKey: string; tOptions?: any }
     setIsClient(true);
   }, []);
 
-  const getTranslation = (lng: string, key: string, options?: any) => {
-    // Use the standard i18n.t() method which correctly handles nested keys and options.
-    return i18n.t(key, { lng, ...options });
-  };
-  
   if (!isClient) {
     // On the server, always render the English text to ensure consistency with server-rendered HTML.
-    const fallbackText = getTranslation('en', tKey, tOptions);
+    const fallbackText = i18n.t(tKey, { lng: 'en', ...tOptions });
     return <span>{fallbackText}</span>;
   }
 
   if (i18nInstance.language === 'en-zh') {
-    const zhText = getTranslation('zh', tKey, tOptions);
-    const enText = getTranslation('en', tKey, tOptions);
+    const zhText = i18n.t(tKey, { lng: 'zh', ...tOptions });
+    const enText = i18n.t(tKey, { lng: 'en', ...tOptions });
     // Avoid showing the key if translation is missing for both
     if (zhText !== tKey && enText !== tKey) {
         return (
@@ -66,7 +61,7 @@ export const ClientOnlyT = ({ tKey, tOptions }: { tKey: string; tOptions?: any }
   }
 
   // For 'en' or 'zh', use the standard t function
-  return t(tKey, tOptions);
+  return <span>{t(tKey, tOptions)}</span>;
 };
 
 export default function AppSidebar() {
@@ -120,7 +115,7 @@ export default function AppSidebar() {
               >
                 <Link href={item.href}>
                   <item.icon />
-                  <span><ClientOnlyT tKey={item.labelKey} /></span>
+                  <ClientOnlyT tKey={item.labelKey} />
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -134,7 +129,7 @@ export default function AppSidebar() {
                 <SidebarMenuButton asChild tooltip={t('sidebar.logout')}>
                     <Link href="/">
                         <LogOut />
-                        <span><ClientOnlyT tKey="sidebar.logout" /></span>
+                        <ClientOnlyT tKey="sidebar.logout" />
                     </Link>
                 </SidebarMenuButton>
             </SidebarMenuItem>
