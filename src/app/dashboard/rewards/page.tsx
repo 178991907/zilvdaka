@@ -12,7 +12,8 @@ import { useTranslation } from 'react-i18next';
 
 type Reward = {
   name: string;
-  tasksRequired: number;
+  tasksRequired?: number;
+  daysRequired?: number;
 };
 
 export default function RewardsPage() {
@@ -21,6 +22,20 @@ export default function RewardsPage() {
     { name: '30 minutes of screen time', tasksRequired: 5 },
     { name: 'Ice cream trip', tasksRequired: 10 },
   ]);
+
+  const getRewardDescription = (reward: Reward) => {
+    const tasks = reward.tasksRequired;
+    const days = reward.daysRequired;
+
+    if (tasks && tasks > 0 && days && days > 0) {
+      return t('settings.parentalControls.tasksAndDaysToComplete', { tasksCount: tasks, daysCount: days });
+    } else if (tasks && tasks > 0) {
+      return t('settings.parentalControls.tasksToComplete', { count: tasks });
+    } else if (days && days > 0) {
+        return t('settings.parentalControls.daysToComplete', { count: days });
+    }
+    return t('settings.parentalControls.noRequirement');
+  };
 
   return (
     <div className="flex flex-col">
@@ -64,6 +79,12 @@ export default function RewardsPage() {
                                         </Label>
                                         <Input id="tasks-required" type="number" placeholder="5" className="col-span-3" />
                                     </div>
+                                    <div className="grid grid-cols-4 items-center gap-4">
+                                        <Label htmlFor="days-required" className="text-right">
+                                            <ClientOnlyT tKey='settings.parentalControls.addRewardDialog.daysRequired' />
+                                        </Label>
+                                        <Input id="days-required" type="number" placeholder="3" className="col-span-3" />
+                                    </div>
                                 </div>
                                 <DialogFooter>
                                 <Button type="submit"><ClientOnlyT tKey='settings.parentalControls.addRewardDialog.createButton' /></Button>
@@ -77,7 +98,7 @@ export default function RewardsPage() {
                                 <div>
                                     <p className="font-medium">{reward.name}</p>
                                     <p className="text-sm text-muted-foreground">
-                                        <ClientOnlyT tKey="settings.parentalControls.tasksToComplete" tOptions={{ count: reward.tasksRequired }} />
+                                        {getRewardDescription(reward)}
                                     </p>
                                 </div>
                                 <Button variant="ghost" size="icon" className="text-destructive">

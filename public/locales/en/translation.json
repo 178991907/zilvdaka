@@ -5,37 +5,80 @@
     "tasks": "Tasks",
     "achievements": "Achievements",
     "reports": "Reports",
-    "rewards": "Rewards",
     "settings": "Settings",
-    "logout": "Logout"
+    "logout": "Logout",
+    "rewards": "Rewards"
+  },
+  "user": {
+    "level": "Level {{level}}",
+    "menu": {
+      "profile": "Profile",
+      "billing": "Billing",
+      "settings": "Settings",
+      "logout": "Logout"
+    }
+  },
+  "landing": {
+    "getStarted": "Get Started",
+    "heroTitle": "Turn Habits into Heroic Adventures",
+    "heroSubtitle": "A fun, gamified task management system designed to help kids build positive habits, one quest at a time.",
+    "startAdventure": "Start Your Adventure",
+    "featuresTitle": "Why Kids and Parents Love Habit Heroes",
+    "feature1": {
+      "title": "Engaging Quests",
+      "description": "Daily tasks are transformed into exciting quests, making chores and homework feel like a game."
+    },
+    "feature2": {
+      "title": "Unlock Achievements",
+      "description": "Kids earn badges and trophies for completing tasks and maintaining streaks, boosting motivation."
+    },
+    "feature3": {
+      "title": "Grow a Virtual Pet",
+      "description": "Completing quests helps a cute virtual pet grow and evolve, creating a bond and a reason to stay engaged."
+    },
+    "feature4": {
+      "title": "Parental Controls",
+      "description": "Easily set up tasks, monitor progress, and create custom rewards for your little heroes."
+    },
+    "footerRights": "All rights reserved."
   },
   "dashboard": {
     "title": "Dashboard",
-    "petTitle": "Your Pet's Progress",
-    "petLevel": "Level 5",
+    "petTitle": "Your Heroic Pet",
+    "petLevel": "Pet Level",
     "dailyGoal": "Daily Goal",
-    "dailyGoalDescription": "{{completedTasks}} of {{totalTasks}} adventures completed today.",
+    "dailyGoalDescription": "{{completedTasks}} of {{totalTasks}} tasks completed today",
     "weeklyStreak": "Weekly Streak",
-    "weeklyStreakValue": "{{count}} Days",
-    "weeklyStreakDescription": "Keep it up for a bonus!",
+    "weeklyStreakValue": "{{count}} days",
+    "weeklyStreakDescription": "Keep it up to earn bonus XP!",
     "xpGained": "XP Gained",
     "xpToNextLevel": "{{xp}} XP to next level",
     "todaysAdventures": "Today's Adventures",
-    "noAdventures": "No adventures for today. Go outside and play!"
+    "noAdventures": "No adventures for today. Time for a break!"
   },
   "tasks": {
-    "title": "My Adventures",
-    "addTask": "Add Adventure",
+    "title": "Tasks",
+    "addTask": "Add Task",
     "addTaskDialog": {
-      "title": "Create a New Adventure",
-      "description": "Add a new task for your hero to complete.",
-      "taskName": "Adventure Name",
+      "title": "Add a New Task",
+      "description": "Create a new quest for your hero. Set a name, category, and difficulty.",
+      "taskName": "Task Name",
       "taskNamePlaceholder": "e.g., Read a book chapter",
       "category": "Category",
       "categoryPlaceholder": "Select a category",
       "difficulty": "Difficulty",
       "difficultyPlaceholder": "Select a difficulty",
-      "createTask": "Create Adventure"
+      "createTask": "Create Task"
+    },
+    "table": {
+      "task": "Task",
+      "category": "Category",
+      "difficulty": "Difficulty",
+      "status": "Status",
+      "actions": "Actions",
+      "openMenu": "Open menu",
+      "edit": "Edit",
+      "delete": "Delete"
     },
     "categories": {
       "learning": "Learning",
@@ -49,102 +92,43 @@
       "medium": "Medium",
       "hard": "Hard"
     },
-    "items": {
-      "1": { "title": "Read for 20 minutes" },
-      "2": { "title": "Practice drawing" },
-      "3": { "title": "Go to bed on time" },
-      "4": { "title": "Finish science homework" },
-      "5": { "title": "Bike ride in the park" },
-      "6": { "title": "Morning workout" }
-    },
-    "table": {
-      "task": "Task",
-      "category": "Category",
-      "difficulty": "Difficulty",
-      "status": "Status",
-      "actions": "Actions",
-      "openMenu": "Open menu",
-      "edit": "Edit",
-      "delete": "Delete"
-    },
     "status": {
       "completed": "Completed",
       "pending": "Pending"
     }
   },
   "achievements": {
-    "title": "My Achievements",
+    "title": "Achievements",
     "unlocked": "{{unlockedCount}} of {{totalCount}} Unlocked",
     "unlockedOn": "Unlocked",
-    "items": {
-      "1": {
-        "title": "First Mission",
-        "description": "Complete your very first task."
-      },
-      "2": {
-        "title": "Task Master",
-        "description": "Complete 10 tasks in total."
-      },
-      "3": {
-        "title": "Perfect Week",
-        "description": "Complete all tasks for 7 days."
-      },
-      "4": {
-        "title": "Streak Starter",
-        "description": "Maintain a 3-day streak."
-      },
-      "5": {
-        "title": "Learning Hero",
-        "description": "Complete 5 learning tasks."
-      },
-      "6": {
-        "title": "Creative Genius",
-        "description": "Complete 5 creative tasks."
-      },
-      "ant_bronze": { "title": "Little Ant - Bronze", "description": "1-day streak." },
-      "ant_silver": { "title": "Little Ant - Silver", "description": "3-day streak." },
-      "ant_gold": { "title": "Little Ant - Gold", "description": "7-day streak." },
-      "knight_bronze": { "title": "Brave Knight - Bronze", "description": "7-day streak." },
-      "knight_silver": { "title": "Brave Knight - Silver", "description": "14-day streak." },
-      "knight_gold": { "title": "Brave Knight - Gold", "description": "21-day streak." },
-      "explorer_bronze": { "title": "Magic Explorer - Bronze", "description": "30-day streak." },
-      "explorer_silver": { "title": "Magic Explorer - Silver", "description": "60-day streak." },
-      "explorer_gold": { "title": "Magic Explorer - Gold", "description": "90-day streak." },
-      "guardian_bronze": { "title": "Seasons Guardian - Bronze", "description": "90-day streak." },
-      "guardian_silver": { "title": "Seasons Guardian - Silver", "description": "180-day streak." },
-      "guardian_gold": { "title": "Seasons Guardian - Gold", "description": "365-day streak." },
-      "master_bronze": { "title": "Super Master - Bronze", "description": "1-year streak." },
-      "master_silver": { "title": "Super Master - Silver", "description": "2-year streak." },
-      "master_gold": { "title": "Super Master - Gold", "description": "3-year streak." }
-    },
     "add": {
       "button": "Add Achievement",
       "title": "Add Custom Achievement",
-      "description": "Create a new achievement to track."
+      "description": "Create a unique achievement with your own title, description, and icon."
     },
     "edit": {
       "title": "Edit Achievement",
-      "description": "Modify this custom achievement.",
+      "description": "Update the details of this custom achievement.",
       "name": "Name",
       "descriptionLabel": "Description",
       "icon": "Icon",
       "selectIcon": "Select an icon",
-      "imageUrl": "Image URL",
       "unlocked": "Unlocked",
-      "date": "Date Unlocked",
+      "date": "Date",
       "pickDate": "Pick a date",
-      "delete": "Delete",
+      "save": "Save Changes",
       "cancel": "Cancel",
-      "save": "Save Changes"
+      "delete": "Delete Achievement",
+      "imageUrl": "Image URL"
     },
     "delete": {
       "title": "Are you sure?",
-      "description": "This action cannot be undone. This will permanently delete this achievement.",
+      "description": "This will permanently delete the achievement. This action cannot be undone.",
       "confirm": "Delete"
     }
   },
   "reports": {
-    "title": "My Progress",
+    "title": "Reports",
     "performanceTitle": "Task Performance",
     "selectRange": "Select range",
     "thisWeek": "This Week",
@@ -152,13 +136,13 @@
     "thisYear": "This Year"
   },
   "rewards": {
-    "title": "Reward System"
+    "title": "Rewards"
   },
   "settings": {
     "title": "Settings",
     "profile": {
       "title": "Profile",
-      "description": "Manage your hero's profile.",
+      "description": "Customize your child's profile.",
       "name": "Name",
       "avatar": "Avatar",
       "upload": "Upload",
@@ -169,17 +153,17 @@
     },
     "personalization": {
       "title": "Personalization",
-      "description": "Customize the look and feel of the app.",
+      "description": "Adjust the look and feel of the app.",
       "darkMode": "Dark Mode",
       "darkModeDescription": "Toggle between light and dark themes.",
       "soundEffects": "Sound Effects",
-      "soundEffectsDescription": "Enable or disable sound effects."
+      "soundEffectsDescription": "Enable or disable in-app sounds."
     },
     "language": {
-      "title": "Language & Region",
+      "title": "Language",
       "description": "Set your preferred language.",
       "displayLanguage": "Display Language",
-      "selectLanguage": "Select a language"
+      "selectLanguage": "Select language"
     },
     "parentalControls": {
       "title": "Parental Controls",
@@ -189,47 +173,18 @@
       "addReward": "Add Reward",
       "noRewards": "No rewards set up yet.",
       "tasksToComplete": "{{count}} tasks to complete",
+      "daysToComplete": "{{count}} days to complete",
+      "tasksAndDaysToComplete": "{{tasksCount}} tasks & {{daysCount}} days to complete",
+      "noRequirement": "No requirement set",
       "addRewardDialog": {
         "title": "Add New Reward",
-        "description": "Create a reward for a certain number of completed tasks.",
+        "description": "Define a reward your child can earn.",
         "rewardName": "Reward Name",
-        "rewardNamePlaceholder": "e.g., 30 mins of screen time",
+        "rewardNamePlaceholder": "e.g., An hour of video games",
         "tasksRequired": "Tasks Required",
+        "daysRequired": "Days Required",
         "createButton": "Create Reward"
       }
-    }
-  },
-  "landing": {
-    "getStarted": "Get Started",
-    "heroTitle": "Turn Habits into Heroic Adventures",
-    "heroSubtitle": "A gamified habit tracking app designed to make learning and completing daily tasks fun for kids.",
-    "startAdventure": "Start Your Adventure",
-    "featuresTitle": "Why Kids and Parents Love Habit Heroes",
-    "feature1": {
-      "title": "Fun Task Tracking",
-      "description": "Turn daily chores and learning into exciting quests."
-    },
-    "feature2": {
-      "title": "Earn Rewards",
-      "description": "Unlock achievements and level up your virtual pet."
-    },
-    "feature3": {
-      "title": "Customize Your Hero",
-      "description": "Personalize your avatar and pet to match your style."
-    },
-    "feature4": {
-      "title": "Parent-Friendly",
-      "description": "Easily set tasks, monitor progress, and create custom rewards."
-    },
-    "footerRights": "All rights reserved."
-  },
-  "user": {
-    "level": "Level {{level}}",
-    "menu": {
-      "profile": "Profile",
-      "billing": "Billing",
-      "settings": "Settings",
-      "logout": "Log out"
     }
   }
 }
