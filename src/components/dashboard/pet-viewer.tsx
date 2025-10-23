@@ -9,6 +9,8 @@ import { getUser, User } from '@/lib/data';
 import { Pets } from '@/lib/pets';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { useSound } from '@/hooks/use-sound';
+
 
 interface PetViewerProps extends React.HTMLAttributes<HTMLDivElement> {
   progress: number;
@@ -30,6 +32,7 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress, className }) => {
   const [eyeBlinkDuration, setEyeBlinkDuration] = useState(4);
   const [bodyAnimation, setBodyAnimation] = useState<AnimationType | null>(null);
   const [eyeAnimation, setEyeAnimation] = useState<AnimationType | null>(null);
+  const { playSound } = useSound();
 
   const petContainerRef = useRef<HTMLDivElement>(null);
   
@@ -58,6 +61,7 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress, className }) => {
   const selectedPet = Pets.find(p => p.id === user.petStyle) || Pets[0];
   
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    playSound('click');
     const target = event.target as SVGElement;
     const clickedPartId = target.id || target.parentElement?.id;
 
@@ -83,9 +87,10 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress, className }) => {
         <CardHeader>
             <CardTitle><ClientOnlyT tKey='dashboard.petTitle'/></CardTitle>
         </CardHeader>
-        <CardContent className="flex flex-col flex-grow items-center justify-start p-4 pt-0 w-full relative overflow-hidden cursor-pointer" onClick={handleClick}>
+        <CardContent className="flex flex-col flex-grow items-center justify-start p-4 pt-0 w-full relative overflow-hidden">
            <div
-            className="w-full flex-grow flex items-center justify-center rounded-lg bg-primary/10"
+            className="w-full flex-grow flex items-center justify-center rounded-lg bg-primary/10 cursor-pointer"
+            onClick={handleClick}
           >
             <motion.div
               style={{ scale: petScale, transition: 'transform 0.5s ease' }}

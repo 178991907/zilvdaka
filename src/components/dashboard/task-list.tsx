@@ -8,11 +8,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { ClientOnlyT } from '../layout/app-sidebar';
 import { Skeleton } from '../ui/skeleton';
+import { useSound } from '@/hooks/use-sound';
 
 export default function TaskList() {
   const { t } = useTranslation();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isClient, setIsClient] = useState(false);
+  const { playSound } = useSound();
+  const { i18n } = useTranslation();
 
   useEffect(() => {
     const updateTodaysTasks = () => {
@@ -22,15 +25,27 @@ export default function TaskList() {
 
     updateTodaysTasks(); // Initial load
 
-    window.addEventListener('tasksUpdated', updateTodaysTasks);
+    const handleUpdate = () => {
+      updateTodaysTasks();
+    };
+
+    window.addEventListener('tasksUpdated', handleUpdate);
+    window.addEventListener('userProfileUpdated', handleUpdate);
+
     return () => {
-      window.removeEventListener('tasksUpdated', updateTodaysTasks);
+      window.removeEventListener('tasksUpdated', handleUpdate);
+      window.removeEventListener('userProfileUpdated', handleUpdate);
     };
   }, []);
 
   const handleTaskCompletion = (task: Task, completed: boolean) => {
-    completeTaskAndUpdateXP(task, completed);
-    // The 'tasksUpdated' event fired by completeTaskAndUpdateXP will trigger the useEffect to update state
+    const levelUp = completeTaskAndUpdateXP(task, completed);
+    if (completed) {
+        playSound('success');
+    }
+    if (levelUp) {
+        playSound('level-up');
+    }
   };
 
   if (!isClient) {

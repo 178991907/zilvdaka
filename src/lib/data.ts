@@ -104,7 +104,7 @@ const getPetStyleForLevel = (level: number): string => {
 };
 
 
-export const completeTaskAndUpdateXP = (task: Task, completed: boolean) => {
+export const completeTaskAndUpdateXP = (task: Task, completed: boolean): boolean => {
   const currentUser = getUser();
   const oldLevel = currentUser.level;
   const oldPetStyle = currentUser.petStyle;
@@ -122,11 +122,13 @@ export const completeTaskAndUpdateXP = (task: Task, completed: boolean) => {
 
   let newLevel = currentUser.level;
   let newXpToNextLevel = currentUser.xpToNextLevel;
+  let hasLeveledUp = false;
 
   while (newXp >= newXpToNextLevel) {
     newLevel++;
     newXp -= newXpToNextLevel;
     newXpToNextLevel = Math.floor(newXpToNextLevel * 1.2); // Increase XP requirement for next level
+    hasLeveledUp = true;
   }
   
   const newPetStyle = getPetStyleForLevel(newLevel);
@@ -139,7 +141,7 @@ export const completeTaskAndUpdateXP = (task: Task, completed: boolean) => {
   });
 
   // Handle notifications
-  if (newLevel > oldLevel) {
+  if (hasLeveledUp) {
     const newPet = Pets.find(p => p.id === newPetStyle);
     const oldPet = Pets.find(p => p.id === oldPetStyle);
 
@@ -163,6 +165,8 @@ export const completeTaskAndUpdateXP = (task: Task, completed: boolean) => {
     t.id === task.id ? { ...t, completed } : t
   );
   updateTasks(updatedTasks);
+  
+  return hasLeveledUp;
 };
 
 
