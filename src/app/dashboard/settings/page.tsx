@@ -27,40 +27,40 @@ export default function SettingsPage() {
       <main className="flex-1 p-4 md:p-8 space-y-8">
         <Card>
           <CardHeader>
-            <CardTitle>{t('settings.profile.title')}</CardTitle>
-            <CardDescription>{t('settings.profile.description')}</CardDescription>
+            <CardTitle><ClientOnlyT tKey='settings.profile.title' /></CardTitle>
+            <CardDescription><ClientOnlyT tKey='settings.profile.description' /></CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="name">{t('settings.profile.name')}</Label>
+              <Label htmlFor="name"><ClientOnlyT tKey='settings.profile.name' /></Label>
               <Input id="name" defaultValue="Alex" />
             </div>
              <div className="space-y-2">
-              <Label>{t('settings.profile.avatar')}</Label>
+              <Label><ClientOnlyT tKey='settings.profile.avatar' /></Label>
               <AvatarPicker />
             </div>
-            <Button>{t('settings.profile.save')}</Button>
+            <Button><ClientOnlyT tKey='settings.profile.save' /></Button>
           </CardContent>
         </Card>
 
         <Card>
             <CardHeader>
-                <CardTitle>{t('settings.personalization.title')}</CardTitle>
-                <CardDescription>{t('settings.personalization.description')}</CardDescription>
+                <CardTitle><ClientOnlyT tKey='settings.personalization.title' /></CardTitle>
+                <CardDescription><ClientOnlyT tKey='settings.personalization.description' /></CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
                  <div className="flex items-center justify-between">
                     <div>
-                        <Label htmlFor="dark-mode">{t('settings.personalization.darkMode')}</Label>
-                        <p className="text-sm text-muted-foreground">{t('settings.personalization.darkModeDescription')}</p>
+                        <Label htmlFor="dark-mode"><ClientOnlyT tKey='settings.personalization.darkMode' /></Label>
+                        <p className="text-sm text-muted-foreground"><ClientOnlyT tKey='settings.personalization.darkModeDescription' /></p>
                     </div>
                     <Switch id="dark-mode" />
                 </div>
                 <Separator />
                 <div className="flex items-center justify-between">
                     <div>
-                        <Label htmlFor="sound-effects">{t('settings.personalization.soundEffects')}</Label>
-                        <p className="text-sm text-muted-foreground">{t('settings.personalization.soundEffectsDescription')}</p>
+                        <Label htmlFor="sound-effects"><ClientOnlyT tKey='settings.personalization.soundEffects' /></Label>
+                        <p className="text-sm text-muted-foreground"><ClientOnlyT tKey='settings.personalization.soundEffectsDescription' /></p>
                     </div>
                     <Switch id="sound-effects" defaultChecked />
                 </div>
@@ -69,12 +69,12 @@ export default function SettingsPage() {
 
         <Card>
             <CardHeader>
-                <CardTitle>{t('settings.language.title')}</CardTitle>
-                <CardDescription>{t('settings.language.description')}</CardDescription>
+                <CardTitle><ClientOnlyT tKey='settings.language.title' /></CardTitle>
+                <CardDescription><ClientOnlyT tKey='settings.language.description' /></CardDescription>
             </CardHeader>
             <CardContent>
                  <div className="space-y-2">
-                    <Label htmlFor="language-select">{t('settings.language.displayLanguage')}</Label>
+                    <Label htmlFor="language-select"><ClientOnlyT tKey='settings.language.displayLanguage' /></Label>
                      <Select defaultValue={i18n.language} onValueChange={changeLanguage}>
                         <SelectTrigger id="language-select" className="w-[280px]">
                             <SelectValue placeholder={t('settings.language.selectLanguage')} />
@@ -91,24 +91,24 @@ export default function SettingsPage() {
 
          <Card>
             <CardHeader>
-                <CardTitle>{t('settings.parentalControls.title')}</CardTitle>
-                <CardDescription>{t('settings.parentalControls.description')}</CardDescription>
+                <CardTitle><ClientOnlyT tKey='settings.parentalControls.title' /></CardTitle>
+                <CardDescription><ClientOnlyT tKey='settings.parentalControls.description' /></CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
                 <div className="flex items-center justify-between">
                     <div>
-                        <Label htmlFor="notifications">{t('settings.parentalControls.emailNotifications')}</Label>
-                        <p className="text-sm text-muted-foreground">{t('settings.parentalControls.emailNotificationsDescription')}</p>
+                        <Label htmlFor="notifications"><ClientOnlyT tKey='settings.parentalControls.emailNotifications' /></Label>
+                        <p className="text-sm text-muted-foreground"><ClientOnlyT tKey='settings.parentalControls.emailNotificationsDescription' /></p>
                     </div>
                     <Switch id="notifications" />
                 </div>
                 <Separator />
                  <div>
-                    <Label htmlFor="rewards">{t('settings.parentalControls.rewardSystem')}</Label>
-                    <p className="text-sm text-muted-foreground mb-4">{t('settings.parentalControls.rewardSystemDescription')}</p>
+                    <Label htmlFor="rewards"><ClientOnlyT tKey='settings.parentalControls.rewardSystem' /></Label>
+                    <p className="text-sm text-muted-foreground mb-4"><ClientOnlyT tKey='settings.parentalControls.rewardSystemDescription' /></p>
                     <div className="flex gap-2">
                         <Input id="rewards" placeholder={t('settings.parentalControls.rewardPlaceholder')} />
-                        <Button>{t('settings.parentalControls.setReward')}</Button>
+                        <Button><ClientOnlyT tKey='settings.parentalControls.setReward' /></Button>
                     </div>
                 </div>
             </CardContent>

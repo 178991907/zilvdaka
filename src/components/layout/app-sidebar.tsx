@@ -53,7 +53,12 @@ export const ClientOnlyT = ({ tKey, tOptions }: { tKey: string; tOptions?: any }
     const enText = getTranslation('en', tKey, tOptions);
     // Avoid showing the key if translation is missing for both
     if (zhText !== tKey && enText !== tKey) {
-        return `${zhText} (${enText})`;
+        return (
+          <span className="flex flex-wrap items-center gap-x-2">
+            <span>{zhText}</span>
+            <span className="text-muted-foreground">({enText})</span>
+          </span>
+        );
     }
     return zhText || enText;
   }
