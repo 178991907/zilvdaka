@@ -15,6 +15,7 @@ import { PlusCircle, Trash2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import PetPicker from '@/components/settings/pet-picker';
+import { useToast } from '@/hooks/use-toast';
 
 type Reward = {
   name: string;
@@ -29,6 +30,7 @@ export default function SettingsPage() {
     { name: 'Ice cream trip', tasksRequired: 10 },
   ]);
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
+  const { toast } = useToast();
 
   useEffect(() => {
     const storedSoundSetting = localStorage.getItem('sound-effects-enabled');
@@ -45,6 +47,14 @@ export default function SettingsPage() {
   const handleSoundToggle = (checked: boolean) => {
     setIsSoundEnabled(checked);
     localStorage.setItem('sound-effects-enabled', String(checked));
+  };
+
+  const handleSaveChanges = () => {
+    // In a real app, you would save the data to a backend here.
+    toast({
+      title: t('settings.profile.saveSuccessTitle'),
+      description: t('settings.profile.saveSuccessDescription'),
+    });
   };
 
 
@@ -73,7 +83,7 @@ export default function SettingsPage() {
               <Label><ClientOnlyT tKey='settings.profile.choosePet' /></Label>
                <PetPicker />
             </div>
-            <Button><ClientOnlyT tKey='settings.profile.save' /></Button>
+            <Button onClick={handleSaveChanges}><ClientOnlyT tKey='settings.profile.save' /></Button>
           </CardContent>
         </Card>
 
