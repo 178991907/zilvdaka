@@ -26,6 +26,7 @@ export type User = {
   level: number;
   xp: number;
   xpToNextLevel: number;
+  petStyle: string;
 };
 
 export const user: User = {
@@ -34,6 +35,7 @@ export const user: User = {
   level: 5,
   xp: 75,
   xpToNextLevel: 100,
+  petStyle: 'pet1',
 };
 
 export const tasks: Task[] = [

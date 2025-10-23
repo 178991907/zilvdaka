@@ -14,6 +14,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { PlusCircle, Trash2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
+import PetPicker from '@/components/settings/pet-picker';
 
 type Reward = {
   name: string;
@@ -28,25 +29,17 @@ export default function SettingsPage() {
     { name: 'Ice cream trip', tasksRequired: 10 },
   ]);
 
-  // This state ensures we have a reliable value for the Select component,
-  // especially during initial client-side render.
-  const [currentLanguage, setCurrentLanguage] = useState(i18n.language);
+  const [currentLanguage, setCurrentLanguage] = useState(i18n.language || 'en-zh');
 
   useEffect(() => {
     const handleLanguageChanged = (lng: string) => {
       setCurrentLanguage(lng);
     };
     i18n.on('languageChanged', handleLanguageChanged);
-    
-    // Fallback for when the detector has run but component hasn't updated
-    if (i18n.language !== currentLanguage) {
-      setCurrentLanguage(i18n.language);
-    }
-    
     return () => {
       i18n.off('languageChanged', handleLanguageChanged);
     };
-  }, [i18n, currentLanguage]);
+  }, [i18n]);
 
 
   const changeLanguage = (lng: string) => {
@@ -73,6 +66,10 @@ export default function SettingsPage() {
              <div className="space-y-2">
               <Label><ClientOnlyT tKey='settings.profile.avatar' /></Label>
               <AvatarPicker />
+            </div>
+             <div className="space-y-2">
+              <Label>Choose Your Pet</Label>
+               <PetPicker />
             </div>
             <Button><ClientOnlyT tKey='settings.profile.save' /></Button>
           </CardContent>
