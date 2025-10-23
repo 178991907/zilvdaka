@@ -1,5 +1,5 @@
 'use client';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -10,15 +10,31 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { user } from '@/lib/data';
+import { user as initialUser } from '@/lib/data';
 import { Avatars } from '@/lib/placeholder-images';
 import Link from 'next/link';
 import { CreditCard, LogOut, Settings, User as UserIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ClientOnlyT } from './app-sidebar';
+import { useState, useEffect } from 'react';
 
 export function UserNav() {
   const { t } = useTranslation();
+  const [user, setUser] = useState(initialUser);
+
+  useEffect(() => {
+    const handleProfileUpdate = () => {
+      // Create a new object to force re-render
+      setUser({ ...initialUser });
+    };
+
+    window.addEventListener('userProfileUpdated', handleProfileUpdate);
+
+    return () => {
+      window.removeEventListener('userProfileUpdated', handleProfileUpdate);
+    };
+  }, []);
+
   const selectedAvatar = Avatars.find(img => img.id === user.avatar);
 
   return (

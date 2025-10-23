@@ -1,15 +1,16 @@
 'use client';
 import { useState, useRef } from 'react';
-import { Avatars, AvatarInfo } from '@/lib/placeholder-images';
-import { user } from '@/lib/data';
+import { Avatars } from '@/lib/placeholder-images';
 import { cn } from '@/lib/utils';
 import { CheckCircle, Upload } from 'lucide-react';
+import { ClientOnlyT } from '../layout/app-sidebar';
 
-// A simple utility to get the avatar by ID
-const getAvatarById = (id: string | null) => Avatars.find(a => a.id === id) || null;
+interface AvatarPickerProps {
+  selectedAvatar: string;
+  onSelectAvatar: (id: string) => void;
+}
 
-export default function AvatarPicker() {
-  const [selectedAvatarId, setSelectedAvatarId] = useState(user.avatar);
+export default function AvatarPicker({ selectedAvatar, onSelectAvatar }: AvatarPickerProps) {
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -18,8 +19,9 @@ export default function AvatarPicker() {
       const file = event.target.files[0];
       const reader = new FileReader();
       reader.onloadend = () => {
-        setUploadedImage(reader.result as string);
-        setSelectedAvatarId('uploaded'); // Special ID for uploaded image
+        const result = reader.result as string;
+        setUploadedImage(result);
+        onSelectAvatar(result); // Pass the data URL as the selected "avatar"
       };
       reader.readAsDataURL(file);
     }
@@ -29,13 +31,15 @@ export default function AvatarPicker() {
     fileInputRef.current?.click();
   };
 
+  const isUploadedAvatarSelected = selectedAvatar.startsWith('data:image');
+
   return (
     <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-4">
       {/* Upload Button */}
       <div
         className={cn(
           'relative cursor-pointer rounded-full border-2 transition-all aspect-square w-full flex items-center justify-center bg-secondary/50 hover:bg-secondary',
-           selectedAvatarId === 'uploaded' ? 'border-primary' : 'border-dashed'
+           isUploadedAvatarSelected ? 'border-primary' : 'border-dashed'
         )}
         onClick={handleUploadClick}
         role="button"
@@ -48,7 +52,7 @@ export default function AvatarPicker() {
           onChange={handleFileChange}
           accept="image/*"
         />
-        {uploadedImage && selectedAvatarId === 'uploaded' ? (
+        {uploadedImage && isUploadedAvatarSelected ? (
           <img
             src={uploadedImage}
             alt="Uploaded avatar"
@@ -57,10 +61,10 @@ export default function AvatarPicker() {
         ) : (
           <div className="text-center p-2">
             <Upload className="h-6 w-6 mx-auto text-muted-foreground" />
-            <p className="text-xs mt-1 text-muted-foreground">上传</p>
+             <p className="text-xs mt-1 text-muted-foreground"><ClientOnlyT tKey="settings.profile.upload" /></p>
           </div>
         )}
-        {selectedAvatarId === 'uploaded' && (
+        {isUploadedAvatarSelected && (
            <div className="absolute -top-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-primary">
              <CheckCircle className="h-4 w-4 text-primary-foreground" />
            </div>
@@ -73,17 +77,17 @@ export default function AvatarPicker() {
           key={avatar.id}
           className={cn(
             'relative cursor-pointer rounded-full border-2 transition-all aspect-square w-full p-2 bg-card',
-            selectedAvatarId === avatar.id ? 'border-primary' : 'border-transparent'
+            selectedAvatar === avatar.id ? 'border-primary' : 'border-transparent'
           )}
           onClick={() => {
-            setSelectedAvatarId(avatar.id);
+            onSelectAvatar(avatar.id);
             setUploadedImage(null); // Clear uploaded image if a pre-defined one is selected
           }}
           role="button"
           aria-label={`Select ${avatar.name} avatar`}
         >
           <div dangerouslySetInnerHTML={{ __html: avatar.svg }} className="w-full h-full" />
-          {selectedAvatarId === avatar.id && (
+          {selectedAvatar === avatar.id && (
             <div className="absolute -top-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-primary">
               <CheckCircle className="h-4 w-4 text-primary-foreground" />
             </div>

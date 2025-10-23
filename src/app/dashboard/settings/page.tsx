@@ -16,6 +16,7 @@ import { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import PetPicker from '@/components/settings/pet-picker';
 import { useToast } from '@/hooks/use-toast';
+import { user as initialUser } from '@/lib/data';
 
 type Reward = {
   name: string;
@@ -25,6 +26,11 @@ type Reward = {
 export default function SettingsPage() {
   const { t, i18n } = useTranslation();
   const { theme, setTheme } = useTheme();
+  
+  const [name, setName] = useState(initialUser.name);
+  const [selectedAvatar, setSelectedAvatar] = useState(initialUser.avatar);
+  const [selectedPet, setSelectedPet] = useState(initialUser.petStyle);
+  
   const [rewards, setRewards] = useState<Reward[]>([
     { name: '30 minutes of screen time', tasksRequired: 5 },
     { name: 'Ice cream trip', tasksRequired: 10 },
@@ -51,6 +57,16 @@ export default function SettingsPage() {
 
   const handleSaveChanges = () => {
     // In a real app, you would save the data to a backend here.
+    // For now, we update a global object or context if needed, or just local state for visual feedback.
+    // Let's pretend we are saving it.
+    initialUser.name = name;
+    initialUser.avatar = selectedAvatar;
+    initialUser.petStyle = selectedPet;
+    
+    // We need to inform other components about the change.
+    // A simple way is to use a custom event.
+    window.dispatchEvent(new CustomEvent('userProfileUpdated'));
+
     toast({
       title: t('settings.profile.saveSuccessTitle'),
       description: t('settings.profile.saveSuccessDescription'),
@@ -73,15 +89,15 @@ export default function SettingsPage() {
           <CardContent className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="name"><ClientOnlyT tKey='settings.profile.name' /></Label>
-              <Input id="name" defaultValue="Alex" />
+              <Input id="name" value={name} onChange={(e) => setName(e.target.value)} />
             </div>
              <div className="space-y-2">
               <Label><ClientOnlyT tKey='settings.profile.avatar' /></Label>
-              <AvatarPicker />
+              <AvatarPicker selectedAvatar={selectedAvatar} onSelectAvatar={setSelectedAvatar} />
             </div>
              <div className="space-y-2">
               <Label><ClientOnlyT tKey='settings.profile.choosePet' /></Label>
-               <PetPicker />
+               <PetPicker selectedPet={selectedPet} onSelectPet={setSelectedPet} />
             </div>
             <Button onClick={handleSaveChanges}><ClientOnlyT tKey='settings.profile.save' /></Button>
           </CardContent>
