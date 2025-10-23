@@ -13,6 +13,7 @@ import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { PlusCircle, Trash2 } from 'lucide-react';
 import { useState } from 'react';
+import { useTheme } from 'next-themes';
 
 type Reward = {
   name: string;
@@ -21,6 +22,7 @@ type Reward = {
 
 export default function SettingsPage() {
   const { t, i18n } = useTranslation();
+  const { theme, setTheme } = useTheme();
   const [rewards, setRewards] = useState<Reward[]>([
     { name: '30 minutes of screen time', tasksRequired: 5 },
     { name: 'Ice cream trip', tasksRequired: 10 },
@@ -66,7 +68,11 @@ export default function SettingsPage() {
                         <Label htmlFor="dark-mode"><ClientOnlyT tKey='settings.personalization.darkMode' /></Label>
                         <p className="text-sm text-muted-foreground"><ClientOnlyT tKey='settings.personalization.darkModeDescription' /></p>
                     </div>
-                    <Switch id="dark-mode" />
+                    <Switch
+                        id="dark-mode"
+                        checked={theme === 'dark'}
+                        onCheckedChange={(checked) => setTheme(checked ? 'dark' : 'light')}
+                    />
                 </div>
                 <Separator />
                 <div className="flex items-center justify-between">
