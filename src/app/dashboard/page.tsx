@@ -66,7 +66,7 @@ export default function DashboardPage() {
         <main className="flex-grow p-4 md:p-8">
             <div className="max-w-6xl w-full mx-auto space-y-6">
                 <div className="grid lg:grid-cols-3 gap-6">
-                    <Card className="lg:col-span-2 transform scale-[1.30] origin-top-left md:ml-20 mt-10">
+                    <Card className="lg:col-span-2">
                         <CardHeader>
                             <CardTitle><ClientOnlyT tKey='dashboard.myPet' /></CardTitle>
                         </CardHeader>
@@ -120,7 +120,7 @@ export default function DashboardPage() {
                            <CardHeader className="flex flex-row items-start gap-4">
                              <Info className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
                              <div className="flex-1">
-                              <CardTitle><ClientOnlyT tKey="dashboard.petIntro.title" /></CardTitle>
+                              <CardTitle><ClientOnlyT tKey="dashboard.petIntroTitle" /></CardTitle>
                                {isClient && Array.isArray(petIntroItems) ? (
                                  <div className="mt-2 text-sm text-muted-foreground">
                                    {petIntroDescription && <p className="mb-3">{petIntroDescription}</p>}
