@@ -28,18 +28,29 @@ export default function SettingsPage() {
     { name: 'Ice cream trip', tasksRequired: 10 },
   ]);
 
+  // This state ensures we have a reliable value for the Select component,
+  // especially during initial client-side render.
   const [currentLanguage, setCurrentLanguage] = useState(i18n.language);
 
   useEffect(() => {
-    // When i18n.language changes (e.g. from detector), update our state
+    const handleLanguageChanged = (lng: string) => {
+      setCurrentLanguage(lng);
+    };
+    i18n.on('languageChanged', handleLanguageChanged);
+    
+    // Fallback for when the detector has run but component hasn't updated
     if (i18n.language !== currentLanguage) {
       setCurrentLanguage(i18n.language);
     }
-  }, [i18n.language, currentLanguage]);
+    
+    return () => {
+      i18n.off('languageChanged', handleLanguageChanged);
+    };
+  }, [i18n, currentLanguage]);
+
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
-    setCurrentLanguage(lng);
   };
 
   return (
