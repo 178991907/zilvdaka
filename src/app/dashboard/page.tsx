@@ -26,7 +26,7 @@ export default function DashboardPage() {
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <Card className="lg:col-span-2">
             <CardHeader>
-              <CardTitle>{t('dashboard.petTitle')}</CardTitle>
+              <CardTitle><ClientOnlyT tKey='dashboard.petTitle' /></CardTitle>
             </CardHeader>
             <CardContent>
               <PetViewer progress={user.xp} />
