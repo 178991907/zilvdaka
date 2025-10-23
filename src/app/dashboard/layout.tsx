@@ -18,7 +18,9 @@ export default function DashboardLayout({
             {children}
           </div>
           <footer className="py-4 text-center text-xs text-muted-foreground">
-            <p>© 2025 英语全科启蒙. All Rights Reserved.『Terry开发与维护』</p>
+            <a href="https://web.terry.dpdns.org/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+              © 2025 英语全科启蒙. All Rights Reserved.『Terry开发与维护』
+            </a>
           </footer>
         </div>
       </SidebarInset>

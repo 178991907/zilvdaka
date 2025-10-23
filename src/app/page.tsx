@@ -79,7 +79,9 @@ export default function LandingPage() {
 
       <footer className="py-6 bg-card">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center text-muted-foreground">
-          <p>© 2025 英语全科启蒙. All Rights Reserved.『Terry开发与维护』</p>
+          <a href="https://web.terry.dpdns.org/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+            © 2025 英语全科启蒙. All Rights Reserved.『Terry开发与维护』
+          </a>
         </div>
       </footer>
     </div>
