@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Card } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Star } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -81,10 +81,10 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress }) => {
   
   return (
     <Card 
-        className="bg-primary/10 border-primary/20 flex flex-col items-center justify-center p-6 aspect-square w-full relative overflow-hidden cursor-pointer"
+        className="bg-primary/10 border-primary/20 flex flex-col items-center justify-center p-0 aspect-square w-full relative overflow-hidden cursor-pointer"
         onClick={handleClick}
     >
-      <div className="w-full">
+      <div className="w-full p-6 pb-0">
         <div className="flex items-center gap-2 mb-2">
             <Star className="w-5 h-5 text-accent fill-accent" />
             <span className="font-bold text-foreground"><ClientOnlyT tKey='dashboard.petLevel' /> {user.level}</span>
@@ -95,7 +95,7 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress }) => {
        <h2 className="text-2xl font-bold text-center my-4">{user.petName}</h2>
 
        <motion.div
-        className="w-full h-full flex items-center justify-center flex-grow"
+        className="w-full h-full flex items-center justify-center"
         style={{ scale: petScale, transition: 'transform 0.5s ease' }}
         animate={bodyAnimation ? animations[bodyAnimation] : {}}
         onAnimationComplete={() => setBodyAnimation(null)}
