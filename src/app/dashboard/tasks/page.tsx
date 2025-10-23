@@ -5,8 +5,9 @@ import { AddTaskDialog } from '@/components/tasks/add-task-dialog';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { useState } from 'react';
 import { Task, tasks as initialTasks } from '@/lib/data';
-import { Atom, Bike, Book, Brush, Dumbbell, LucideIcon } from 'lucide-react';
+import { Atom, Bike, Book, Brush, Dumbbell, LucideIcon, PlusCircle } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
 
 const iconMap: { [key: string]: LucideIcon } = {
   Learning: Book,
