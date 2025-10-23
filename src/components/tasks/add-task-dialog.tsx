@@ -31,16 +31,15 @@ type AddTaskDialogProps = {
 };
 
 const weekDays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'] as const;
+type WeekDay = typeof weekDays[number];
 
 export function AddTaskDialog({ onSave, isOpen, setIsOpen, task }: AddTaskDialogProps) {
   const { t } = useTranslation();
   const [name, setName] = useState('');
   const [category, setCategory] = useState('');
   const [difficulty, setDifficulty] = useState<'Easy' | 'Medium' | 'Hard' | ''>('');
-  const [recurrence, setRecurrence] = useState({
-    frequency: 'daily',
-    daysOfWeek: [] as (typeof weekDays[number])[],
-  });
+  const [recurrenceFrequency, setRecurrenceFrequency] = useState('daily');
+  const [daysOfWeek, setDaysOfWeek] = useState<WeekDay[]>([]);
   const [time, setTime] = useState('08:00');
   
   const isEditMode = task !== null;
@@ -51,14 +50,22 @@ export function AddTaskDialog({ onSave, isOpen, setIsOpen, task }: AddTaskDialog
         setName(task.title);
         setCategory(task.category);
         setDifficulty(task.difficulty);
-        setRecurrence(task.recurrence || { frequency: 'daily', daysOfWeek: [] });
+        // If days are selected, it's weekly, otherwise check frequency.
+        if (task.recurrence?.daysOfWeek && task.recurrence.daysOfWeek.length > 0) {
+          setRecurrenceFrequency('weekly');
+          setDaysOfWeek(task.recurrence.daysOfWeek);
+        } else {
+          setRecurrenceFrequency(task.recurrence?.frequency || 'daily');
+          setDaysOfWeek([]);
+        }
         setTime(task.time || '08:00');
       } else {
         // Reset form for new task
         setName('');
         setCategory('');
         setDifficulty('');
-        setRecurrence({ frequency: 'daily', daysOfWeek: [] });
+        setRecurrenceFrequency('daily');
+        setDaysOfWeek([]);
         setTime('08:00');
       }
     }
@@ -69,7 +76,20 @@ export function AddTaskDialog({ onSave, isOpen, setIsOpen, task }: AddTaskDialog
       // Basic validation
       return;
     }
-    onSave({ title: name, category, difficulty, recurrence, time });
+    
+    // Determine the final frequency based on whether days of the week are selected.
+    const finalFrequency = daysOfWeek.length > 0 ? 'weekly' : recurrenceFrequency;
+
+    onSave({ 
+      title: name, 
+      category, 
+      difficulty, 
+      recurrence: {
+        frequency: finalFrequency,
+        daysOfWeek: daysOfWeek
+      }, 
+      time 
+    });
     setIsOpen(false);
   };
 
@@ -132,14 +152,13 @@ export function AddTaskDialog({ onSave, isOpen, setIsOpen, task }: AddTaskDialog
               <ClientOnlyT tKey='tasks.addTaskDialog.recurrence' />
             </Label>
             <Select
-              value={recurrence.frequency}
-              onValueChange={(value) => setRecurrence(prev => ({ ...prev, frequency: value }))}
+              value={recurrenceFrequency}
+              onValueChange={setRecurrenceFrequency}
             >
               <SelectTrigger className="col-span-3">
                 <SelectValue placeholder={<ClientOnlyT tKey='tasks.addTaskDialog.selectRecurrence' />} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="daily"><ClientOnlyT tKey='tasks.recurrence.daily' /></SelectItem>
                 <SelectItem value="weekly"><ClientOnlyT tKey='tasks.recurrence.weekly' /></SelectItem>
                 <SelectItem value="monthly"><ClientOnlyT tKey='tasks.recurrence.monthly' /></SelectItem>
                 <SelectItem value="yearly"><ClientOnlyT tKey='tasks.recurrence.yearly' /></SelectItem>
@@ -147,26 +166,24 @@ export function AddTaskDialog({ onSave, isOpen, setIsOpen, task }: AddTaskDialog
             </Select>
           </div>
 
-          {recurrence.frequency === 'weekly' && (
-             <div className="grid grid-cols-4 items-start gap-4">
-                <Label className="text-right pt-2">
-                    <ClientOnlyT tKey='tasks.addTaskDialog.daysOfWeek' />
-                </Label>
-                <ToggleGroup
-                    type="multiple"
-                    variant="outline"
-                    className="col-span-3 flex-wrap justify-start gap-1"
-                    value={recurrence.daysOfWeek}
-                    onValueChange={(days) => setRecurrence(prev => ({...prev, daysOfWeek: days as any}))}
-                >
-                    {weekDays.map(day => (
-                        <ToggleGroupItem key={day} value={day} className="h-8 w-8 p-0">
-                           <ClientOnlyT tKey={`tasks.weekdays.${day}`} />
-                        </ToggleGroupItem>
-                    ))}
-                </ToggleGroup>
-            </div>
-          )}
+          <div className="grid grid-cols-4 items-start gap-4">
+              <Label className="text-right pt-2">
+                  <ClientOnlyT tKey='tasks.addTaskDialog.daysOfWeek' />
+              </Label>
+              <ToggleGroup
+                  type="multiple"
+                  variant="outline"
+                  className="col-span-3 flex-wrap justify-start gap-1"
+                  value={daysOfWeek}
+                  onValueChange={(days) => setDaysOfWeek(days as WeekDay[])}
+              >
+                  {weekDays.map(day => (
+                      <ToggleGroupItem key={day} value={day} className="h-8 w-8 p-0">
+                          <ClientOnlyT tKey={`tasks.weekdays.${day}`} />
+                      </ToggleGroupItem>
+                  ))}
+              </ToggleGroup>
+          </div>
 
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="time" className="text-right">
