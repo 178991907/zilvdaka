@@ -113,32 +113,6 @@ export default function SettingsPage() {
             <CardDescription><ClientOnlyT tKey='settings.profile.description' /></CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-             <div className="space-y-2">
-              <Label htmlFor="appLogo"><ClientOnlyT tKey='settings.profile.appLogo' /></Label>
-              <div className="flex items-center gap-4">
-                <div className="w-32 h-32 rounded-md border border-dashed flex items-center justify-center bg-muted/50 overflow-hidden">
-                    {appLogo ? (
-                        <Image src={appLogo} alt="App Logo Preview" width={120} height={120} className="object-contain" />
-                    ) : (
-                        <span className="text-xs text-muted-foreground"><ClientOnlyT tKey='settings.profile.logoPreview' /></span>
-                    )}
-                </div>
-                <div className="flex-1 space-y-2">
-                    <Input id="appLogo" placeholder={t('settings.profile.logoUrlPlaceholder')} value={appLogo} onChange={(e) => setAppLogo(e.target.value)} />
-                     <Button variant="outline" onClick={() => logoFileInputRef.current?.click()}>
-                        <Upload className="mr-2 h-4 w-4" />
-                        <ClientOnlyT tKey='settings.profile.upload' />
-                     </Button>
-                    <input
-                        type="file"
-                        ref={logoFileInputRef}
-                        className="hidden"
-                        onChange={handleLogoFileChange}
-                        accept="image/*"
-                    />
-                </div>
-              </div>
-            </div>
             <div className="space-y-2">
               <Label htmlFor="name"><ClientOnlyT tKey='settings.profile.name' /></Label>
               <Input id="name" value={name} onChange={(e) => setName(e.target.value)} />
@@ -162,7 +136,7 @@ export default function SettingsPage() {
             <Button onClick={handleSaveChanges}><ClientOnlyT tKey='settings.profile.save' /></Button>
           </CardContent>
         </Card>
-
+        
         <Card>
             <CardHeader>
                 <CardTitle><ClientOnlyT tKey='settings.personalization.title' /></CardTitle>
@@ -217,6 +191,41 @@ export default function SettingsPage() {
             </CardContent>
         </Card>
 
+         <Card>
+          <CardHeader>
+            <CardTitle><ClientOnlyT tKey='settings.appearance.title' /></CardTitle>
+            <CardDescription><ClientOnlyT tKey='settings.appearance.description' /></CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+             <div className="space-y-2">
+              <Label htmlFor="appLogo"><ClientOnlyT tKey='settings.profile.appLogo' /></Label>
+              <div className="flex items-center gap-4">
+                <div className="w-32 h-32 rounded-md border border-dashed flex items-center justify-center bg-muted/50 overflow-hidden">
+                    {appLogo ? (
+                        <Image src={appLogo} alt="App Logo Preview" width={120} height={120} className="object-contain" />
+                    ) : (
+                        <span className="text-xs text-muted-foreground"><ClientOnlyT tKey='settings.profile.logoPreview' /></span>
+                    )}
+                </div>
+                <div className="flex-1 space-y-2">
+                    <Input id="appLogo" placeholder={t('settings.profile.logoUrlPlaceholder')} value={appLogo} onChange={(e) => setAppLogo(e.target.value)} />
+                     <Button variant="outline" onClick={() => logoFileInputRef.current?.click()}>
+                        <Upload className="mr-2 h-4 w-4" />
+                        <ClientOnlyT tKey='settings.profile.upload' />
+                     </Button>
+                    <input
+                        type="file"
+                        ref={logoFileInputRef}
+                        className="hidden"
+                        onChange={handleLogoFileChange}
+                        accept="image/*"
+                    />
+                </div>
+              </div>
+            </div>
+            <Button onClick={handleSaveChanges}><ClientOnlyT tKey='settings.profile.save' /></Button>
+          </CardContent>
+        </Card>
       </main>
     </div>
   );
