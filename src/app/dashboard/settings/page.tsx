@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { PlusCircle, Trash2 } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 
 type Reward = {
@@ -28,8 +28,18 @@ export default function SettingsPage() {
     { name: 'Ice cream trip', tasksRequired: 10 },
   ]);
 
+  const [currentLanguage, setCurrentLanguage] = useState(i18n.language);
+
+  useEffect(() => {
+    // When i18n.language changes (e.g. from detector), update our state
+    if (i18n.language !== currentLanguage) {
+      setCurrentLanguage(i18n.language);
+    }
+  }, [i18n.language, currentLanguage]);
+
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
+    setCurrentLanguage(lng);
   };
 
   return (
@@ -93,7 +103,7 @@ export default function SettingsPage() {
             <CardContent>
                  <div className="space-y-2">
                     <Label htmlFor="language-select"><ClientOnlyT tKey='settings.language.displayLanguage' /></Label>
-                     <Select defaultValue={i18n.language} onValueChange={changeLanguage}>
+                     <Select value={currentLanguage} onValueChange={changeLanguage}>
                         <SelectTrigger id="language-select" className="w-[280px]">
                             <SelectValue placeholder={t('settings.language.selectLanguage')} />
                         </SelectTrigger>
