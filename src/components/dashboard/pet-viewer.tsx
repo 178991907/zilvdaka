@@ -92,7 +92,7 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress }) => {
         <Progress value={progress} className="w-full h-3" />
       </div>
 
-       <h2 className="text-2xl font-bold text-center my-8">{user.petName}</h2>
+       <h2 className="text-2xl font-bold text-center my-4">{user.petName}</h2>
 
        <motion.div
         className="w-full h-full flex items-center justify-center flex-grow"
