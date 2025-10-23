@@ -71,9 +71,7 @@ export default function LandingPage() {
             <div className="mt-16 max-w-4xl mx-auto">
               <div className="grid lg:grid-cols-2 gap-8 items-start">
                   {isClient && user ? (
-                    <div className="rounded-lg border bg-card text-card-foreground shadow-sm">
-                      <PetViewer progress={petProgress} className="min-h-[450px]" />
-                    </div>
+                    <PetViewer progress={petProgress} className="min-h-[450px]" />
                   ) : (
                     <Skeleton className="h-full min-h-[450px] w-full" />
                   )}
