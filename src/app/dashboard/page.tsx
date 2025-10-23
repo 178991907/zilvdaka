@@ -26,7 +26,7 @@ export default function DashboardPage() {
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <Card className="lg:col-span-2">
             <CardHeader>
-              <CardTitle><ClientOnlyT tKey='dashboard.petTitle' /></CardTitle>
+              <CardTitle><ClientOnlyT tKey='dashboard.petTitle'/></CardTitle>
             </CardHeader>
             <CardContent>
               <PetViewer progress={user.xp} />
@@ -35,21 +35,29 @@ export default function DashboardPage() {
           <div className="space-y-6">
             <ProgressSummary
               icon={Target}
+              titleTKey="dashboard.dailyGoal"
               title={t('dashboard.dailyGoal')}
               value={`${Math.round(dailyProgress)}%`}
+              descriptionTKey="dashboard.dailyGoalDescription"
+              descriptionTPOptions={{ completedTasks, totalTasks }}
               description={t('dashboard.dailyGoalDescription', { completedTasks, totalTasks })}
               progress={dailyProgress}
             />
             <ProgressSummary
               icon={Flame}
+              titleTKey="dashboard.weeklyStreak"
               title={t('dashboard.weeklyStreak')}
               value={t('dashboard.weeklyStreakValue', { count: 4 })}
+              descriptionTKey="dashboard.weeklyStreakDescription"
               description={t('dashboard.weeklyStreakDescription')}
             />
             <ProgressSummary
               icon={Zap}
+              titleTKey="dashboard.xpGained"
               title={t('dashboard.xpGained')}
               value={`${user.xp} XP`}
+              descriptionTKey="dashboard.xpToNextLevel"
+              descriptionTPOptions={{ xp: user.xpToNextLevel - user.xp }}
               description={t('dashboard.xpToNextLevel', { xp: user.xpToNextLevel - user.xp })}
               progress={(user.xp / user.xpToNextLevel) * 100}
             />

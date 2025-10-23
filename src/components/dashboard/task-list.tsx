@@ -6,6 +6,7 @@ import { tasks as initialTasks, Task } from '@/lib/data';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { ClientOnlyT } from '../layout/app-sidebar';
 
 export default function TaskList() {
   const { t } = useTranslation();
@@ -24,7 +25,7 @@ export default function TaskList() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{t('dashboard.todaysAdventures')}</CardTitle>
+        <CardTitle><ClientOnlyT tKey='dashboard.todaysAdventures' /></CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
@@ -57,7 +58,7 @@ export default function TaskList() {
                       task.completed ? 'text-muted-foreground line-through' : 'text-foreground'
                     )}
                   >
-                    {t(`tasks.items.${task.id}.title`)}
+                    <ClientOnlyT tKey={`tasks.items.${task.id}.title`} />
                   </label>
                   <div className="flex items-center justify-center h-8 w-8 rounded-full bg-primary/10">
                     <task.icon className="h-5 w-5 text-primary" />
@@ -66,7 +67,7 @@ export default function TaskList() {
               ))
             ) : (
               <p className="text-muted-foreground text-center py-8">
-                {t('dashboard.noAdventures')}
+                <ClientOnlyT tKey='dashboard.noAdventures' />
               </p>
             )}
           </AnimatePresence>

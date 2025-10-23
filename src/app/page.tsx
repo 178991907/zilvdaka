@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle, Trophy, Star, Shield } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { ClientOnlyT } from '@/components/layout/app-sidebar';
 
 export default function LandingPage() {
   const { t } = useTranslation();
@@ -14,11 +15,11 @@ export default function LandingPage() {
         <div className="flex items-center gap-2">
           <Star className="w-8 h-8 text-primary" />
           <h1 className="text-2xl font-bold font-headline text-foreground">
-            {t('appName')}
+            <ClientOnlyT tKey='appName' />
           </h1>
         </div>
         <Button asChild>
-          <Link href="/dashboard">{t('landing.getStarted')}</Link>
+          <Link href="/dashboard"><ClientOnlyT tKey='landing.getStarted' /></Link>
         </Button>
       </header>
 
@@ -26,14 +27,14 @@ export default function LandingPage() {
         <section className="py-20 md:py-32">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-4xl md:text-6xl font-bold font-headline tracking-tight text-foreground">
-              {t('landing.heroTitle')}
+              <ClientOnlyT tKey='landing.heroTitle' />
             </h2>
             <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-              {t('landing.heroSubtitle')}
+              <ClientOnlyT tKey='landing.heroSubtitle' />
             </p>
             <div className="mt-8 flex justify-center gap-4">
               <Button size="lg" asChild>
-                <Link href="/dashboard">{t('landing.startAdventure')}</Link>
+                <Link href="/dashboard"><ClientOnlyT tKey='landing.startAdventure' /></Link>
               </Button>
             </div>
             <div className="mt-16 relative">
@@ -52,27 +53,35 @@ export default function LandingPage() {
 
         <section className="py-20 bg-card">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h3 className="text-3xl font-bold text-center font-headline">{t('landing.featuresTitle')}</h3>
+            <h3 className="text-3xl font-bold text-center font-headline"><ClientOnlyT tKey='landing.featuresTitle' /></h3>
             <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
               <FeatureCard
                 icon={<CheckCircle className="w-10 h-10 text-primary" />}
                 title={t('landing.feature1.title')}
                 description={t('landing.feature1.description')}
+                titleTKey='landing.feature1.title'
+                descriptionTKey='landing.feature1.description'
               />
               <FeatureCard
                 icon={<Trophy className="w-10 h-10 text-accent" />}
                 title={t('landing.feature2.title')}
                 description={t('landing.feature2.description')}
+                titleTKey='landing.feature2.title'
+                descriptionTKey='landing.feature2.description'
               />
               <FeatureCard
                 icon={<Star className="w-10 h-10 text-primary" />}
                 title={t('landing.feature3.title')}
                 description={t('landing.feature3.description')}
+                titleTKey='landing.feature3.title'
+                descriptionTKey='landing.feature3.description'
               />
               <FeatureCard
                 icon={<Shield className="w-10 h-10 text-accent" />}
                 title={t('landing.feature4.title')}
                 description={t('landing.feature4.description')}
+                titleTKey='landing.feature4.title'
+                descriptionTKey='landing.feature4.description'
               />
             </div>
           </div>
@@ -81,24 +90,24 @@ export default function LandingPage() {
 
       <footer className="py-6 bg-card">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} {t('appName')}. {t('landing.footerRights')}</p>
+          <p>&copy; {new Date().getFullYear()} <ClientOnlyT tKey='appName' />. <ClientOnlyT tKey='landing.footerRights' /></p>
         </div>
       </footer>
     </div>
   );
 }
 
-function FeatureCard({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) {
+function FeatureCard({ icon, title, description, titleTKey, descriptionTKey }: { icon: React.ReactNode, title: string, description: string, titleTKey: string, descriptionTKey: string }) {
   return (
     <Card className="text-center">
       <CardHeader>
         <div className="mx-auto bg-secondary p-4 rounded-full w-fit">
           {icon}
         </div>
-        <CardTitle className="mt-4">{title}</CardTitle>
+        <CardTitle className="mt-4"><ClientOnlyT tKey={titleTKey} /></CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-muted-foreground">{description}</p>
+        <p className="text-muted-foreground"><ClientOnlyT tKey={descriptionTKey} /></p>
       </CardContent>
     </Card>
   );
