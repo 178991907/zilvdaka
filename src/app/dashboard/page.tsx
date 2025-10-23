@@ -65,11 +65,11 @@ export default function DashboardPage() {
         <main className="flex-grow p-4 md:p-8">
             <div className="max-w-6xl w-full mx-auto space-y-6">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <Card className="lg:col-span-2 flex flex-col">
+                    <Card className="lg:col-span-2 flex flex-col scale-[0.9]">
                         <CardHeader>
                             <CardTitle><ClientOnlyT tKey='dashboard.myPet' /></CardTitle>
                         </CardHeader>
-                        <CardContent className="flex-grow flex flex-col pb-8">
+                        <CardContent className="flex-grow flex flex-col">
                             {isClient && user ? (
                                 <>
                                     <PetViewer progress={petProgress} className="flex-grow -mt-8" />
