@@ -104,7 +104,7 @@ const getPetStyleForLevel = (level: number): string => {
 };
 
 
-export const completeTaskAndUpdateXP = (task: Task, completed: boolean): boolean => {
+export const completeTaskAndUpdateXP = (task: Task, completed: boolean) => {
   const currentUser = getUser();
   const oldLevel = currentUser.level;
   const oldPetStyle = currentUser.petStyle;
@@ -165,8 +165,6 @@ export const completeTaskAndUpdateXP = (task: Task, completed: boolean): boolean
     t.id === task.id ? { ...t, completed } : t
   );
   updateTasks(updatedTasks);
-  
-  return hasLeveledUp;
 };
 
 

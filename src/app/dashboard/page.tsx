@@ -52,7 +52,6 @@ export default function DashboardPage() {
         </header>
       <main className="flex-1 p-4 md:p-8">
         <div className="grid lg:grid-cols-3 gap-6 mb-6">
-          {/* Left Column */}
           <div className="lg:col-span-1">
             {isClient && user ? (
               <PetViewer progress={petProgress} className="h-full" />
@@ -61,7 +60,6 @@ export default function DashboardPage() {
             )}
           </div>
 
-          {/* Right Column */}
           <div className="lg:col-span-2 space-y-6">
                 {isClient && user ? (
                   <>

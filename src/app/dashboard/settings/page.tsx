@@ -16,7 +16,6 @@ import PetPicker from '@/components/settings/pet-picker';
 import { useToast } from '@/hooks/use-toast';
 import { getUser, updateUser, User } from '@/lib/data';
 import { Upload } from 'lucide-react';
-import { useSound } from '@/hooks/use-sound';
 
 export default function SettingsPage() {
   const { t, i18n } = useTranslation();
@@ -30,14 +29,14 @@ export default function SettingsPage() {
   const [selectedPet, setSelectedPet] = useState('');
   const [appLogo, setAppLogo] = useState('');
   
-  const { playSound, isSoundEnabled } = useSound();
-  const [isSoundSwitchChecked, setIsSoundSwitchChecked] = useState(isSoundEnabled);
+  const [isSoundEnabled, setIsSoundEnabled] = useState(true);
 
   const { toast } = useToast();
 
   useEffect(() => {
-    setIsSoundSwitchChecked(isSoundEnabled);
-  }, [isSoundEnabled]);
+    const soundEnabled = localStorage.getItem('sound-effects-enabled') !== 'false';
+    setIsSoundEnabled(soundEnabled);
+  }, []);
 
   useEffect(() => {
     const handleUserUpdate = () => {
@@ -65,14 +64,8 @@ export default function SettingsPage() {
   };
   
   const handleSoundToggle = (checked: boolean) => {
-    setIsSoundSwitchChecked(checked);
+    setIsSoundEnabled(checked);
     localStorage.setItem('sound-effects-enabled', String(checked));
-    // Dispatch a custom event so other components in the same tab can update their sound state
-    window.dispatchEvent(new CustomEvent('soundSettingChanged'));
-    if (checked) {
-      // Play a sound to confirm the setting is on
-      playSound('click');
-    }
   };
 
   const handleSaveChanges = () => {
@@ -88,7 +81,6 @@ export default function SettingsPage() {
       title: t('settings.profile.saveSuccessTitle'),
       description: t('settings.profile.saveSuccessDescription'),
     });
-    playSound('success');
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -171,7 +163,7 @@ export default function SettingsPage() {
                     </div>
                     <Switch 
                       id="sound-effects" 
-                      checked={isSoundSwitchChecked}
+                      checked={isSoundEnabled}
                       onCheckedChange={handleSoundToggle}
                     />
                 </div>
