@@ -68,6 +68,6 @@ export const reportData = [
     { date: 'Wed', completed: 1 },
     { date: 'Thu', completed: 1 },
     { date: 'Fri', completed: 1 },
-    { date 'Sat', completed: 1 },
+    { date: 'Sat', completed: 1 },
     { date: 'Sun', completed: 1 },
 ];
