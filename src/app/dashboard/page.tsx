@@ -50,18 +50,18 @@ export default function DashboardPage() {
           <SidebarTrigger className="md:hidden" />
           <h1 className="text-xl font-semibold"><ClientOnlyT tKey='dashboard.title' /></h1>
         </header>
-      <main className="flex-1 p-4 md:p-8 space-y-6">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+      <main className="flex-1 p-4 md:p-8">
+        <div className="flex flex-col lg:flex-row gap-6 items-start">
           
-          {/* Left Column: Pet Viewer */}
-          <div className="lg:col-span-1">
-            <Card>
+          {/* Left Column */}
+          <div className="w-full lg:w-1/3">
+            <Card className="h-full">
                 <CardHeader>
                   <CardTitle><ClientOnlyT tKey='dashboard.petTitle'/></CardTitle>
                 </CardHeader>
-                <CardContent className="pb-6">
+                <CardContent className="pb-6 h-full flex flex-col">
                   {isClient && user ? (
-                    <PetViewer progress={petProgress} />
+                    <PetViewer progress={petProgress} className="flex-grow" />
                   ) : (
                     <div className="aspect-square w-full flex items-center justify-center">
                       <Skeleton className="w-3/4 h-3/4 rounded-full" />
@@ -71,8 +71,8 @@ export default function DashboardPage() {
             </Card>
           </div>
 
-          {/* Right Column: Info Cards */}
-          <div className="lg:col-span-2 space-y-6">
+          {/* Right Column */}
+          <div className="w-full lg:w-2/3 space-y-6">
                 {isClient && user ? (
                   <>
                     <ProgressSummary
@@ -129,10 +129,9 @@ export default function DashboardPage() {
                     <Skeleton className="h-44 w-full" />
                   </>
                 )}
+                <TaskList />
           </div>
         </div>
-        
-        <TaskList />
       </main>
     </div>
   );
