@@ -51,15 +51,14 @@ export default function DashboardPage() {
           <h1 className="text-xl font-semibold"><ClientOnlyT tKey='dashboard.title' /></h1>
         </header>
       <main className="flex-1 p-4 md:p-8 overflow-y-auto">
-        <div className="flex flex-col lg:flex-row gap-6 h-full">
+        <div className="flex flex-col lg:flex-row gap-6">
           {/* Left Column */}
-          <div className="lg:w-1/3 flex flex-col">
-            <div className="flex-grow">
-              <Card className="h-full">
+          <div className="lg:w-1/3">
+              <Card>
                 <CardHeader>
                   <CardTitle><ClientOnlyT tKey='dashboard.petTitle'/></CardTitle>
                 </CardHeader>
-                <CardContent className="h-full pb-6">
+                <CardContent className="pb-6">
                   {isClient && user ? (
                     <PetViewer progress={petProgress} />
                   ) : (
@@ -69,12 +68,10 @@ export default function DashboardPage() {
                   )}
                 </CardContent>
               </Card>
-            </div>
           </div>
 
           {/* Right Column */}
-          <div className="lg:w-2/3 flex flex-col">
-            <div className="flex-grow flex flex-col gap-6">
+          <div className="lg:w-2/3 flex flex-col gap-6">
               {isClient && user ? (
                 <>
                   <ProgressSummary
@@ -122,7 +119,6 @@ export default function DashboardPage() {
                   <Skeleton className="h-40 w-full" />
                 </>
               )}
-            </div>
           </div>
         </div>
         <div className="mt-6">
