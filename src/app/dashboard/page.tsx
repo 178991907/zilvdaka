@@ -96,7 +96,7 @@ export default function DashboardPage() {
                   <CardHeader className="pb-4">
                       <CardTitle className="text-base font-medium flex items-center gap-2">
                         <Info className="h-5 w-5 text-primary" />
-                        Pet Guide
+                        <ClientOnlyT tKey="petGuide.title" />
                       </CardTitle>
                   </CardHeader>
                   <CardContent className="text-sm text-muted-foreground space-y-2">

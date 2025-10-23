@@ -7,7 +7,7 @@
     "reports": "Reports",
     "rewards": "Rewards",
     "settings": "Settings",
-    "logout": "Logout"
+    "logout": "Log out"
   },
   "user": {
     "level": "Level {{level}}",
@@ -15,91 +15,100 @@
       "profile": "Profile",
       "billing": "Billing",
       "settings": "Settings",
-      "logout": "Logout"
+      "logout": "Log out"
     }
-  },
-  "landing": {
-    "getStarted": "Get Started",
-    "heroTitle": "Turn Habits into Heroic Adventures",
-    "heroSubtitle": "A fun, gamified task management system designed to help kids build positive habits.",
-    "startAdventure": "Start Your Adventure",
-    "featuresTitle": "Why Kids and Parents Love Habit Heroes",
-    "feature1": {
-      "title": "Gamified Tasks",
-      "description": "Kids complete daily tasks to earn XP and level up their virtual pet."
-    },
-    "feature2": {
-      "title": "Unlock Achievements",
-      "description": "Milestones and streaks unlock cool badges and rewards, keeping kids motivated."
-    },
-    "feature3": {
-      "title": "Evolving Pets",
-      "description": "As kids level up, their pet companion grows and evolves with them."
-    },
-    "feature4": {
-      "title": "Parental Controls",
-      "description": "Parents can customize tasks, set rewards, and monitor progress easily."
-    },
-    "footerRights": "All rights reserved."
   },
   "dashboard": {
     "title": "Dashboard",
-    "petTitle": "Your Pet Companion",
-    "petLevel": "Lv.",
+    "petTitle": "Your Pet",
     "dailyGoal": "Daily Goal",
     "dailyGoalDescription": "{{completedTasks}} of {{totalTasks}} tasks completed today",
     "weeklyStreak": "Weekly Streak",
     "weeklyStreakValue": "{{count}} days",
-    "weeklyStreakDescription": "Keep it up to earn bonus XP!",
+    "weeklyStreakDescription": "Keep it up to earn more rewards!",
     "xpGained": "XP Gained",
     "xpToNextLevel": "{{xp}} XP to next level",
+    "petLevel": "Lv.",
     "todaysAdventures": "Today's Adventures",
-    "noAdventures": "No adventures scheduled for today. Great job!"
+    "noAdventures": "No tasks for today. Add one!"
   },
   "petGuide": {
-    "xpTitle": "How to Get XP",
-    "xp": "Complete daily adventures to earn experience points for your pet.",
+    "title": "Pet Guide",
+    "xpTitle": "How to get XP",
+    "xp": "Complete daily tasks to earn experience points.",
     "levelTitle": "Level Up",
-    "level": "Your pet is currently Level {{level}}.",
-    "skillsTitle": "Evolving",
-    "skills": "Leveling up unlocks new pet forms and abilities."
+    "level": "Your pet is currently at level {{level}}.",
+    "skillsTitle": "Pet Evolution",
+    "skills": "Leveling up can unlock new pet forms."
+  },
+  "landing": {
+    "getStarted": "Get Started",
+    "heroTitle": "Make Habits an Adventure",
+    "heroSubtitle": "Habit Heroes turns daily routines into a fun game for kids. Complete tasks, level up your pet, and earn rewards!",
+    "startAdventure": "Start Your Adventure",
+    "featuresTitle": "How It Works",
+    "feature1": {
+      "title": "Set Daily Tasks",
+      "description": "Create a list of daily habits and chores for your child to complete."
+    },
+    "feature2": {
+      "title": "Earn XP & Level Up",
+      "description": "Every completed task earns experience points for their virtual pet."
+    },
+    "feature3": {
+      "title": "Unlock Achievements",
+      "description": "Milestones and streaks unlock special badges and rewards."
+    },
+    "feature4": {
+      "title": "Parental Controls",
+      "description": "Set custom rewards and manage tasks with easy-to-use settings."
+    },
+    "footerRights": "All rights reserved."
   },
   "tasks": {
     "title": "Manage Tasks",
-    "addTask": "Add Task",
+    "addTask": "Add New Task",
     "addTaskDialog": {
-        "title": "Create a New Adventure",
-        "description": "Add a new repeatable task for your hero. Set its difficulty and how often it occurs.",
-        "taskName": "Task Name",
-        "taskNamePlaceholder": "e.g., Read for 20 minutes",
-        "category": "Category",
-        "categoryPlaceholder": "Select a category",
-        "difficulty": "Difficulty",
-        "difficultyPlaceholder": "Select a difficulty",
-        "recurrence": "Recurrence",
-        "repeatEvery": "Repeat Every",
-        "selectUnit": "Select unit",
-        "daysOfWeek": "Days of Week",
-        "time": "Time",
-        "createTask": "Create Task"
+      "title": "Create New Adventure",
+      "description": "Add a new task or chore for your hero to complete.",
+      "taskName": "Task Name",
+      "taskNamePlaceholder": "e.g., Read a book for 20 mins",
+      "category": "Category",
+      "categoryPlaceholder": "Select a category",
+      "difficulty": "Difficulty",
+      "difficultyPlaceholder": "Select a difficulty",
+      "createTask": "Create Task",
+      "recurrence": "Recurrence",
+      "repeatEvery": "Repeat Every",
+      "selectUnit": "Select unit",
+      "daysOfWeek": "Days of Week",
+      "time": "Time"
     },
     "editTaskDialog": {
         "title": "Edit Adventure",
         "description": "Update the details for this task.",
         "save": "Save Changes"
     },
-    "table": {
-        "task": "Task",
-        "category": "Category",
-        "difficulty": "Difficulty",
-        "recurrence": "Recurrence",
-        "status": "Status",
-        "actions": "Actions",
-        "openMenu": "Open menu",
-        "edit": "Edit",
-        "pause": "Pause",
-        "resume": "Resume",
-        "delete": "Delete"
+    "recurrence": {
+        "once": "Once",
+        "recurring": "Recurring",
+        "units": {
+            "week": "Week",
+            "month": "Month",
+            "year": "Year"
+        },
+        "display": {
+            "once": "One-time task",
+            "onceAtTime": "One-time at {{time}}",
+            "every_week": "Every week at {{time}}",
+            "every_week_on": "Weekly on",
+            "every_month": "Every month at {{time}}",
+            "every_year": "Every year at {{time}}",
+            "every_x_weeks": "Every {{count}} weeks at {{time}}",
+            "every_x_weeks_on": "Every {{count}} weeks on",
+            "every_x_months": "Every {{count}} months at {{time}}",
+            "every_x_years": "Every {{count}} years at {{time}}"
+        }
     },
     "categories": {
       "learning": "Learning",
@@ -113,66 +122,79 @@
       "medium": "Medium",
       "hard": "Hard"
     },
-    "recurrence": {
-      "once": "Once",
-      "recurring": "Recurring",
-      "display": {
-        "once": "One-time task",
-        "onceAtTime": "One-time at {{time}}",
-        "every_week": "Every week at {{time}}",
-        "every_month": "Every month at {{time}}",
-        "every_year": "Every year at {{time}}",
-        "every_week_on": "Weekly on",
-        "every_month_on": "Monthly on",
-        "every_year_on": "Yearly on",
-        "every_x_weeks": "Every {{count}} weeks",
-        "every_x_months": "Every {{count}} months",
-        "every_x_years": "Every {{count}} years",
-        "every_x_weeks_on": "Every {{count}} weeks on",
-        "every_x_months_on": "Every {{count}} months on",
-        "every_x_years_on": "Every {{count}} years on"
-      },
-      "units": {
-        "week": "Week",
-        "month": "Month",
-        "year": "Year"
-      }
-    },
     "weekdays": {
-      "mon": "Mon",
-      "tue": "Tue",
-      "wed": "Wed",
-      "thu": "Thu",
-      "fri": "Fri",
-      "sat": "Sat",
-      "sun": "Sun"
+        "mon": "M",
+        "tue": "T",
+        "wed": "W",
+        "thu": "T",
+        "fri": "F",
+        "sat": "S",
+        "sun": "S"
     },
     "weekdaysShort": {
-      "mon": "M",
-      "tue": "T",
-      "wed": "W",
-      "thu": "Th",
-      "fri": "F",
-      "sat": "Sa",
-      "sun": "Su"
+        "mon": "Mon",
+        "tue": "Tue",
+        "wed": "Wed",
+        "thu": "Thu",
+        "fri": "Fri",
+        "sat": "Sat",
+        "sun": "Sun"
     },
     "status": {
-      "active": "Active",
-      "paused": "Paused",
-      "completed": "Completed",
-      "pending": "Pending"
+        "active": "Active",
+        "paused": "Paused",
+        "completed": "Completed",
+        "pending": "Pending"
+    },
+    "table": {
+        "task": "Task",
+        "category": "Category",
+        "difficulty": "Difficulty",
+        "recurrence": "Recurrence",
+        "status": "Status",
+        "actions": "Actions",
+        "openMenu": "Open menu",
+        "edit": "Edit",
+        "delete": "Delete",
+        "pause": "Pause",
+        "resume": "Resume"
     },
     "delete": {
-      "title": "Are you sure?",
-      "description": "This action cannot be undone. This will permanently delete the task.",
-      "cancel": "Cancel",
-      "confirm": "Delete"
+        "title": "Are you sure?",
+        "description": "This action cannot be undone. This will permanently delete the task.",
+        "cancel": "Cancel",
+        "confirm": "Delete"
     }
   },
   "achievements": {
     "title": "Achievements",
     "unlocked": "{{unlockedCount}} of {{totalCount}} Unlocked",
     "unlockedOn": "Unlocked",
+    "add": {
+        "button": "Add Achievement",
+        "title": "Add Custom Achievement",
+        "description": "Create a unique achievement for a special goal."
+    },
+    "edit": {
+        "title": "Edit Achievement",
+        "description": "Update the details of this custom achievement.",
+        "name": "Name",
+        "descriptionLabel": "Description",
+        "icon": "Icon",
+        "selectIcon": "Select an icon",
+        "imageUrl": "Image URL",
+        "unlocked": "Unlocked",
+        "date": "Date Unlocked",
+        "pickDate": "Pick a date",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "save": "Save Changes"
+    },
+    "delete": {
+        "title": "Delete Achievement?",
+        "description": "Are you sure you want to delete this custom achievement? This cannot be undone.",
+        "confirm": "Delete"
+    },
     "items": {
       "first_mission": {
         "title": "First Mission",
@@ -199,95 +221,70 @@
         "description": "Complete 5 creative tasks."
       },
       "ant_bronze": {
-          "title": "Little Ant - Bronze",
-          "description": "1-day streak."
+        "title": "Little Ant - Bronze",
+        "description": "1-day streak."
       },
       "ant_silver": {
-          "title": "Little Ant - Silver",
-          "description": "3-day streak."
+        "title": "Little Ant - Silver",
+        "description": "3-day streak."
       },
       "ant_gold": {
-          "title": "Little Ant - Gold",
-          "description": "7-day streak."
+        "title": "Little Ant - Gold",
+        "description": "7-day streak."
       },
       "knight_bronze": {
-          "title": "Brave Knight - Bronze",
-          "description": "7-day streak."
+        "title": "Brave Knight - Bronze",
+        "description": "7-day streak."
       },
       "knight_silver": {
-          "title": "Brave Knight - Silver",
-          "description": "14-day streak."
+        "title": "Brave Knight - Silver",
+        "description": "14-day streak."
       },
       "knight_gold": {
-          "title": "Brave Knight - Gold",
-          "description": "21-day streak."
+        "title": "Brave Knight - Gold",
+        "description": "21-day streak."
       },
       "explorer_bronze": {
-          "title": "Magic Explorer - Bronze",
-          "description": "30-day streak."
+        "title": "Magic Explorer - Bronze",
+        "description": "30-day streak."
       },
       "explorer_silver": {
-          "title": "Magic Explorer - Silver",
-          "description": "60-day streak."
+        "title": "Magic Explorer - Silver",
+        "description": "60-day streak."
       },
       "explorer_gold": {
-          "title": "Magic Explorer - Gold",
-          "description": "90-day streak."
+        "title": "Magic Explorer - Gold",
+        "description": "90-day streak."
       },
       "guardian_bronze": {
-          "title": "Seasons Guardian - Bronze",
-          "description": "90-day streak."
+        "title": "Seasons Guardian - Bronze",
+        "description": "90-day streak."
       },
       "guardian_silver": {
-          "title": "Seasons Guardian - Silver",
-          "description": "180-day streak."
+        "title": "Seasons Guardian - Silver",
+        "description": "180-day streak."
       },
       "guardian_gold": {
-          "title": "Seasons Guardian - Gold",
-          "description": "365-day streak."
+        "title": "Seasons Guardian - Gold",
+        "description": "365-day streak."
       },
       "master_bronze": {
-          "title": "Super Master - Bronze",
-          "description": "1-year streak."
+        "title": "Super Master - Bronze",
+        "description": "1-year streak."
       },
       "master_silver": {
-          "title": "Super Master - Silver",
-          "description": "2-year streak."
+        "title": "Super Master - Silver",
+        "description": "2-year streak."
       },
       "master_gold": {
-          "title": "Super Master - Gold",
-          "description": "3-year streak."
+        "title": "Super Master - Gold",
+        "description": "3-year streak."
       }
-    },
-    "add": {
-      "button": "Add Achievement",
-      "title": "Add Custom Achievement",
-      "description": "Create a unique achievement for a special goal."
-    },
-    "edit": {
-      "title": "Edit Achievement",
-      "description": "Update the details for this custom achievement.",
-      "name": "Name",
-      "descriptionLabel": "Description",
-      "icon": "Icon",
-      "selectIcon": "Select an icon",
-      "imageUrl": "Image URL",
-      "unlocked": "Unlocked",
-      "date": "Date Unlocked",
-      "pickDate": "Pick a date",
-      "delete": "Delete",
-      "cancel": "Cancel",
-      "save": "Save"
-    },
-    "delete": {
-      "title": "Are you sure?",
-      "description": "This action cannot be undone. This will permanently delete this achievement.",
-      "confirm": "Delete"
     }
   },
   "reports": {
     "title": "Reports",
-    "performanceTitle": "Task Performance",
+    "performanceTitle": "Performance",
     "selectRange": "Select a range",
     "thisWeek": "This Week",
     "thisMonth": "This Month",
@@ -303,12 +300,12 @@
       "description": "This is how others will see you on the site.",
       "name": "Name",
       "avatar": "Avatar",
-      "upload": "Upload",
       "petName": "Pet Name",
       "choosePet": "Choose Your Pet",
       "save": "Save Changes",
       "saveSuccessTitle": "Profile Updated",
-      "saveSuccessDescription": "Your changes have been saved successfully."
+      "saveSuccessDescription": "Your changes have been saved successfully.",
+      "upload": "Upload"
     },
     "personalization": {
       "title": "Personalization",
@@ -316,34 +313,34 @@
       "darkMode": "Dark Mode",
       "darkModeDescription": "Toggle between light and dark themes.",
       "soundEffects": "Sound Effects",
-      "soundEffectsDescription": "Enable or disable sound effects throughout the app."
+      "soundEffectsDescription": "Enable or disable sound effects."
     },
     "language": {
-      "title": "Language & Region",
-      "description": "Set your preferred language for the application.",
+      "title": "Language",
+      "description": "Set your preferred display language.",
       "displayLanguage": "Display Language",
       "selectLanguage": "Select a language"
     },
     "parentalControls": {
+      "title": "Parental Controls",
+      "description": "Manage rewards and app settings for your child.",
       "rewardSystem": "Reward System",
-      "rewardSystemDescription": "Set up rewards that can be earned by completing tasks.",
+      "rewardSystemDescription": "Create custom rewards your child can earn by completing tasks.",
       "addReward": "Add Reward",
+      "tasksToComplete": "{{count}} tasks to complete",
+      "daysToComplete": "{{count}} days to complete",
+      "tasksAndDaysToComplete": "{{tasksCount}} tasks & {{daysCount}} days to complete",
+      "noRequirement": "No specific requirement",
       "addRewardDialog": {
         "title": "Add New Reward",
-        "description": "Create a new reward. You can set requirements based on tasks completed or consecutive days of activity.",
+        "description": "Define a new reward and the requirements to earn it.",
         "rewardName": "Reward Name",
-        "rewardNamePlaceholder": "e.g., 30 mins screen time",
+        "rewardNamePlaceholder": "e.g., Trip to the park",
         "tasksRequired": "Tasks Required",
         "daysRequired": "Days Required",
         "createButton": "Create Reward"
       },
-      "noRewards": "No rewards have been set up yet.",
-      "tasksToComplete": "{{count}} tasks to complete",
-      "daysToComplete": "{{count}} consecutive days",
-      "tasksAndDaysToComplete": "{{tasksCount}} tasks & {{daysCount}} days",
-      "noRequirement": "No specific requirement"
+      "noRewards": "No rewards have been set up yet."
     }
   }
 }
-
-    
