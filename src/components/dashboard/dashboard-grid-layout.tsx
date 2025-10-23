@@ -30,29 +30,32 @@ const saveToLS = (key: string, value: any) => {
   }
 };
 
+const defaultLayouts = {
+    lg: [
+        { i: 'pet', x: 0, y: 0, w: 8, h: 4 },
+        { i: 'dailyGoal', x: 8, y: 0, w: 4, h: 1 },
+        { i: 'xpGained', x: 8, y: 1, w: 4, h: 1 },
+        { i: 'petIntro', x: 8, y: 2, w: 4, h: 2 },
+        { i: 'tasks', x: 0, y: 4, w: 12, h: 3 },
+    ]
+};
+
+
 const DashboardGridLayout = ({ children }: { children: React.ReactNode }) => {
   const [isMounted, setIsMounted] = useState(false);
+  const [layouts, setLayouts] = useState<{[key: string]: Layout[]}>(defaultLayouts);
 
   useEffect(() => {
     setIsMounted(true);
-  }, []);
-
-  const initialLayoutLg: Layout[] = [
-    { i: 'pet', x: 0, y: 0, w: 8, h: 4 },
-    { i: 'dailyGoal', x: 8, y: 0, w: 4, h: 1 },
-    { i: 'xpGained', x: 8, y: 1, w: 4, h: 1 },
-    { i: 'petIntro', x: 8, y: 2, w: 4, h: 2 },
-    { i: 'tasks', x: 0, y: 4, w: 12, h: 3 },
-  ];
-  
-  const initialLayouts = {
-    lg: getFromLS('layouts_lg') || initialLayoutLg,
-  };
-  
-  const onLayoutChange = (layout: Layout[], layouts: { [key: string]: Layout[] }) => {
-    if (layouts.lg) {
-        saveToLS('layouts_lg', layouts.lg);
+    const savedLayouts = getFromLS('layouts');
+    if (savedLayouts) {
+      setLayouts(savedLayouts);
     }
+  }, []);
+  
+  const onLayoutChange = (layout: Layout[], allLayouts: { [key: string]: Layout[] }) => {
+    saveToLS('layouts', allLayouts);
+    setLayouts(allLayouts);
   };
 
   if (!isMounted) {
@@ -62,14 +65,13 @@ const DashboardGridLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <ResponsiveGridLayout
         className="layout"
-        layouts={initialLayouts}
+        layouts={layouts}
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
         cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
         rowHeight={100}
         onLayoutChange={onLayoutChange}
         isDraggable={true}
         isResizable={true}
-        draggableHandle=".react-grid-drag-handle"
     >
         {children}
     </ResponsiveGridLayout>

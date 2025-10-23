@@ -64,7 +64,7 @@ export default function DashboardPage() {
 
         <main className="flex-grow p-4 md:p-8">
             <DashboardGridLayout>
-                <div key="pet">
+                <div key="pet" className="overflow-hidden rounded-lg">
                     <Card className="h-full flex flex-col">
                         <CardHeader>
                             <CardTitle><ClientOnlyT tKey='dashboard.myPet' /></CardTitle>
@@ -96,7 +96,7 @@ export default function DashboardPage() {
                         </CardContent>
                     </Card>
                 </div>
-                <div key="dailyGoal">
+                <div key="dailyGoal" className="overflow-hidden rounded-lg">
                     <Card className="h-full">
                         <CardHeader>
                             <ProgressSummaryContent
@@ -108,7 +108,7 @@ export default function DashboardPage() {
                         </CardHeader>
                     </Card>
                 </div>
-                <div key="xpGained">
+                <div key="xpGained" className="overflow-hidden rounded-lg">
                     <Card className="h-full">
                          <CardHeader>
                             <ProgressSummaryContent
@@ -121,7 +121,7 @@ export default function DashboardPage() {
                          </CardHeader>
                     </Card>
                 </div>
-                <div key="petIntro">
+                <div key="petIntro" className="overflow-hidden rounded-lg">
                     <Card className="h-full">
                        <CardHeader className="flex flex-row items-start gap-4">
                          <Info className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
@@ -149,7 +149,7 @@ export default function DashboardPage() {
                        </CardHeader>
                    </Card>
                 </div>
-                <div key="tasks">
+                <div key="tasks" className="overflow-hidden rounded-lg">
                     <TaskList />
                 </div>
             </DashboardGridLayout>
