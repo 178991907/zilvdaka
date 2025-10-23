@@ -2,99 +2,99 @@
   "placeholderImages": [
     {
       "id": "avatar1",
-      "description": "Cartoon girl with yellow hair",
-      "imageUrl": "https://images.unsplash.com/photo-1715247466949-b6844b69dcd5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y2FydG9vbiUyMGdpcmwlMjB5ZWxsb3clMjBoYWlyfGVufDB8fHx8MTc2MTIxMjUwNXww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "cartoon girl yellow hair"
+      "description": "3D cartoon boy with glasses",
+      "imageUrl": "https://images.unsplash.com/photo-1701323382746-1157c1328639?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHwzZCUyMGNoYXJhY3RlciUyMGtpZHxlbnwwfHx8fDE3NjEyMTI4OTR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3D cartoon boy"
     },
     {
       "id": "avatar2",
-      "description": "Cartoon girl with blue hair",
-      "imageUrl": "https://images.unsplash.com/photo-1692899213302-dc0911eee10a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjYXJ0b29uJTIwZ2lybCUyMGJsdWUlMjBoYWlyfGVufDB8fHx8MTc2MTIxMjUwNXww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "cartoon girl blue hair"
+      "description": "3D cartoon girl with pink hair",
+      "imageUrl": "https://images.unsplash.com/photo-1701323382823-14949a147828?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHwzZCUyMGNoYXJhY3RlciUyMGtpZHxlbnwwfHx8fDE3NjEyMTI4OTR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3D cartoon girl"
     },
     {
       "id": "avatar3",
-      "description": "Cartoon girl with pink hair",
-      "imageUrl": "https://images.unsplash.com/photo-1565898559217-715bc3c3cf1b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjYXJ0b29uJTIwZ2lybCUyMHBpbmslMjBoYWlyfGVufDB8fHx8MTc2MTIxMjUwNXww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "cartoon girl pink hair"
+      "description": "3D cartoon boy with blue hat",
+      "imageUrl": "https://images.unsplash.com/photo-1701323382895-33b00f2832a8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHwzZCUyMGNoYXJhY3RlciUyMGtpZHxlbnwwfHx8fDE3NjEyMTI4OTR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3D cartoon boy"
     },
     {
       "id": "avatar4",
-      "description": "Cartoon girl with brown hair",
-      "imageUrl": "https://images.unsplash.com/photo-1633291851903-b684b574d58e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjYXJ0b29uJTIwZ2lybCUyMGJyb3duJTIwaGFpcnxlbnwwfHx8fDE3NjEyMTI1MDV8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "cartoon girl brown hair"
+      "description": "3D cartoon girl with headphones",
+      "imageUrl": "https://images.unsplash.com/photo-1701323383049-74436f5aa57a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHwzZCUyMGNoYXJhY3RlciUyMGtpZHxlbnwwfHx8fDE3NjEyMTI4OTR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3D cartoon girl"
     },
     {
       "id": "avatar5",
-      "description": "Cartoon boy with green hair",
-      "imageUrl": "https://images.unsplash.com/photo-1636814129985-20bfa3581f8f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjYXJ0b29uJTIwYm95JTIwZ3JlZW4lMjBoYWlyfGVufDB8fHx8MTc2MTIxMjUwNXww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "cartoon boy green hair"
+      "description": "3D cartoon boy astronaut",
+      "imageUrl": "https://images.unsplash.com/photo-1701323382905-593ea8d77c19?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHwzZCUyMGNoYXJhY3RlciUyMGtpZHxlbnwwfHx8fDE3NjEyMTI4OTR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3D cartoon astronaut"
     },
     {
       "id": "avatar6",
-      "description": "Cartoon boy with brown hair",
-      "imageUrl": "https://images.unsplash.com/photo-1625749596163-d6304ea8c5ff?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjYXJ0b29uJTIwYm95JTIwYnJvd24lMjBoYWlyfGVufDB8fHx8MTc2MTIxMjUwNXww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "cartoon boy brown hair"
+      "description": "3D cartoon girl with glasses and red hair",
+      "imageUrl": "https://images.unsplash.com/photo-1691316520775-654a1d8a877a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHwzZCUyMGNoYXJhY3RlciUyMGtpZHxlbnwwfHx8fDE3NjEyMTI4OTR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3D cartoon girl"
     },
     {
       "id": "avatar7",
-      "description": "Cartoon boy with orange hair",
-      "imageUrl": "https://images.unsplash.com/photo-1723144290064-33efe64705f5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxjYXJ0b29uJTIwYm95JTIwb3JhbmdlJTIwaGFpcnxlbnwwfHx8fDE3NjEyMTI1MDV8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "cartoon boy orange hair"
+      "description": "3D cartoon boy in superhero costume",
+      "imageUrl": "https://images.unsplash.com/photo-1701323382697-35a14d115433?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHwzZCUyMGNoYXJhY3RlciUyMGtpZHxlbnwwfHx8fDE3NjEyMTI4OTR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3D cartoon superhero"
     },
     {
       "id": "avatar8",
-      "description": "Cartoon boy with blue hair",
-      "imageUrl": "https://images.unsplash.com/photo-1692899213302-dc0911eee10a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjYXJ0b29uJTIwYm95JTIwYmx1ZSUyMGhhaXJ8ZW58MHx8fHwxNzYxMjEyNTA1fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "cartoon boy blue hair"
+      "description": "3D cartoon girl in yellow jacket",
+      "imageUrl": "https://images.unsplash.com/photo-1675121427568-7b9603f905c8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHwzZCUyMGNoYXJhY3RlciUyMGtpZHxlbnwwfHx8fDE3NjEyMTI4OTR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3D cartoon girl"
     },
     {
       "id": "avatar9",
-      "description": "Cartoon girl with orange hair",
-      "imageUrl": "https://images.unsplash.com/photo-1722393606871-576ea7bd34c7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxjYXJ0b29uJTIwZ2lybCUyMG9yYW5nZSUyMGhhaXJ8ZW58MHx8fHwxNzYxMjEyNTA1fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "cartoon girl orange hair"
+      "description": "3D cartoon boy with beanie",
+      "imageUrl": "https://images.unsplash.com/photo-1688502340579-a7643b4f6244?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHwzZCUyMGNoYXJhY3RlciUyMGtpZHxlbnwwfHx8fDE3NjEyMTI4OTR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3D cartoon boy"
     },
     {
       "id": "avatar10",
-      "description": "Cartoon girl with light green hair",
-      "imageUrl": "https://images.unsplash.com/photo-1633132300691-ce0c39fb8dfb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjYXJ0b29uJTIwZ2lybCUyMGxpZ2h0JTIwZ3JlZW58ZW58MHx8fHwxNzYxMjEyNTA1fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "cartoon girl light green"
+      "description": "3D cartoon girl with bunny ears",
+      "imageUrl": "https://images.unsplash.com/photo-1691316520849-b541a02b1f85?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8M2QlMjBjaGFyYWN0ZXIlMjBraWR8ZW58MHx8fHwxNzYxMjEyODk0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3D cartoon bunny"
     },
     {
       "id": "avatar11",
-      "description": "Cartoon girl with dark hair",
-      "imageUrl": "https://images.unsplash.com/photo-1622925926319-307997ca88e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y2FydG9vbiUyMGdpcmwlMjBkYXJrJTIwaGFpcnxlbnwwfHx8fDE3NjEyMTI1MDV8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "cartoon girl dark hair"
+      "description": "3D cartoon boy with curly hair",
+      "imageUrl": "https://images.unsplash.com/photo-1701323382583-490333390317?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMXx8M2QlMjBjaGFyYWN0ZXIlMjBraWR8ZW58MHx8fHwxNzYxMjEyODk0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3D cartoon boy"
     },
     {
       "id": "avatar12",
-      "description": "Cartoon boy with grey hair",
-      "imageUrl": "https://images.unsplash.com/photo-1703092268687-3716a99c29d2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjYXJ0b29uJTIwYm95JTIwZ3JleSUyMGhhaXJ8ZW58MHx8fHwxNzYxMjEyNTA1fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "cartoon boy grey hair"
+      "description": "3D cartoon girl with space helmet",
+      "imageUrl": "https://images.unsplash.com/photo-1691316520993-c9132a48b5c4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMnx8M2QlMjBjaGFyYWN0ZXIlMjBraWR8ZW58MHx8fHwxNzYxMjEyODk0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3D cartoon astronaut"
     },
     {
       "id": "avatar13",
-      "description": "Cartoon boy with light brown hair",
-      "imageUrl": "https://images.unsplash.com/photo-1758782213616-7b4cd41eff29?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjYXJ0b29uJTIwYm95JTIwbGlnaHQlMjBicm93bnxlbnwwfHx8fDE3NjEyMTI1MDV8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "cartoon boy light brown"
+      "description": "3D cartoon boy adventurer",
+      "imageUrl": "https://images.unsplash.com/photo-1675121427506-f84393275239?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxM3x8M2QlMjBjaGFyYWN0ZXIlMjBraWR8ZW58MHx8fHwxNzYxMjEyODk0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3D cartoon adventurer"
     },
     {
       "id": "avatar14",
-      "description": "Cartoon girl with bright hair",
-      "imageUrl": "https://images.unsplash.com/photo-1662878856638-7d317c1a1a3c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxjYXJ0b29uJTIwZ2lybCUyMGJyaWdodCUyMGhhaXJ8ZW58MHx8fHwxNzYxMjEyNTA1fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "cartoon girl bright hair"
+      "description": "3D cartoon girl artist",
+      "imageUrl": "https://images.unsplash.com/photo-1691316520743-39446c8e310e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxNHx8M2QlMjBjaGFyYWN0ZXIlMjBraWR8ZW58MHx8fHwxNzYxMjEyODk0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3D cartoon artist"
     },
     {
       "id": "avatar15",
-      "description": "Cartoon boy in a mask",
-      "imageUrl": "https://images.unsplash.com/photo-1666130297772-d15dbf5658a8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjYXJ0b29uJTIwYm95JTIwbWFza3xlbnwwfHx8fDE3NjEyMTI1MDV8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "cartoon boy mask"
+      "description": "3D cartoon boy pilot",
+      "imageUrl": "https://images.unsplash.com/photo-1691316520703-a6d17a3a60a8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxNXx8M2QlMjBjaGFyYWN0ZXIlMjBraWR8ZW58MHx8fHwxNzYxMjEyODk0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3D cartoon pilot"
     },
     {
       "id": "avatar16",
-      "description": "Cartoon girl with purple hair",
-      "imageUrl": "https://images.unsplash.com/photo-1574773004910-1eeaabb62b55?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxjYXJ0b29uJTIwZ2lybCUyMHB1cnBsZSUyMGhhaXJ8ZW58MHx8fHwxNzYxMjEyNTA1fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "cartoon girl purple hair"
+      "description": "3D cartoon girl with pigtails",
+      "imageUrl": "https://images.unsplash.com/photo-1688502340539-8d7a1267b075?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxNnx8M2QlMjBjaGFyYWN0ZXIlMjBraWR8ZW58MHx8fHwxNzYxMjEyODk0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3D cartoon girl"
     },
     {
       "id": "pet-happy",
