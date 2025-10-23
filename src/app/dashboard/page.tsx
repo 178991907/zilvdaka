@@ -66,36 +66,34 @@ export default function DashboardPage() {
             <div className="max-w-6xl w-full mx-auto space-y-6">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <Card className="lg:col-span-2 flex flex-col">
-                        <div className="scale-[0.9] flex flex-col flex-grow">
-                            <CardHeader>
-                                <CardTitle><ClientOnlyT tKey='dashboard.myPet' /></CardTitle>
-                            </CardHeader>
-                            <CardContent className="flex-grow flex flex-col">
-                                {isClient && user ? (
-                                    <>
-                                        <PetViewer progress={petProgress} className="flex-grow -mt-8" />
-                                        <div className="mt-4">
-                                            <div className="text-center">
-                                                <p className="text-lg font-bold">{user.petName}</p>
-                                                <p className="text-sm text-muted-foreground">
-                                                    <ClientOnlyT tKey='user.level' tOptions={{ level: user.level }} />
-                                                </p>
-                                            </div>
-                                            <Progress value={petProgress} className="mt-4 h-2" />
+                        <CardHeader>
+                            <CardTitle><ClientOnlyT tKey='dashboard.myPet' /></CardTitle>
+                        </CardHeader>
+                        <CardContent className="flex-grow flex flex-col">
+                            {isClient && user ? (
+                                <>
+                                    <PetViewer progress={petProgress} className="flex-grow -mt-8 scale-[0.9]" />
+                                    <div className="mt-4">
+                                        <div className="text-center">
+                                            <p className="text-lg font-bold">{user.petName}</p>
+                                            <p className="text-sm text-muted-foreground">
+                                                <ClientOnlyT tKey='user.level' tOptions={{ level: user.level }} />
+                                            </p>
                                         </div>
-                                    </>
-                                ) : (
-                                    <div className="flex-grow flex flex-col">
-                                        <Skeleton className="flex-grow w-full" />
-                                        <div className="mt-4">
-                                            <Skeleton className="h-6 w-24 mx-auto" />
-                                            <Skeleton className="h-4 w-16 mx-auto mt-2" />
-                                            <Skeleton className="h-2 w-full mt-4" />
-                                        </div>
+                                        <Progress value={petProgress} className="mt-4 h-2" />
                                     </div>
-                                )}
-                            </CardContent>
-                        </div>
+                                </>
+                            ) : (
+                                <div className="flex-grow flex flex-col">
+                                    <Skeleton className="flex-grow w-full" />
+                                    <div className="mt-4">
+                                        <Skeleton className="h-6 w-24 mx-auto" />
+                                        <Skeleton className="h-4 w-16 mx-auto mt-2" />
+                                        <Skeleton className="h-2 w-full mt-4" />
+                                    </div>
+                                </div>
+                            )}
+                        </CardContent>
                     </Card>
                     <div className="flex flex-col gap-6">
                         <Card>
