@@ -84,10 +84,7 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress, className }) => {
   
   return (
      <div className={cn("flex flex-col", className)}>
-        <div className="p-6">
-            <h3 className="text-2xl font-semibold leading-none tracking-tight"><ClientOnlyT tKey='dashboard.petTitle'/></h3>
-        </div>
-        <div className="flex flex-col flex-grow items-center justify-start p-4 pt-0 w-full relative overflow-hidden">
+        <div className="flex flex-col flex-grow items-center justify-start p-4 w-full relative overflow-hidden">
            <div
             className="w-full flex-grow flex items-center justify-center rounded-lg bg-primary/10 cursor-pointer"
             onClick={handleClick}
