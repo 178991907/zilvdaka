@@ -6,7 +6,7 @@ import { Progress } from '@/components/ui/progress';
 import { Star } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ClientOnlyT } from '../layout/app-sidebar';
-import { user } from '@/lib/data';
+import { getUser, User } from '@/lib/data';
 import { Pets } from '@/lib/pets';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -27,17 +27,29 @@ const animations = {
 
 const PetViewer: React.FC<PetViewerProps> = ({ progress }) => {
   const { t } = useTranslation();
+  const [user, setUser] = useState<User>(getUser());
   const [eyeBlinkDuration, setEyeBlinkDuration] = useState(4);
   const [bodyAnimation, setBodyAnimation] = useState<AnimationType | null>(null);
   const [eyeAnimation, setEyeAnimation] = useState<AnimationType | null>(null);
 
   const petContainerRef = useRef<HTMLDivElement>(null);
   
-  const petScale = 0.7 + (progress / 100) * 0.3;
+  const petScale = 0.6 + (progress / 100) * 0.3; // Reduced the base scale
 
   useEffect(() => {
+    const handleProfileUpdate = () => {
+      setUser(getUser());
+    };
+    
+    window.addEventListener('userProfileUpdated', handleProfileUpdate);
+    handleProfileUpdate(); // Initial load
+
     // This will only run on the client, after initial hydration
     setEyeBlinkDuration(2 + Math.random() * 4);
+
+    return () => {
+      window.removeEventListener('userProfileUpdated', handleProfileUpdate);
+    };
   }, []);
 
   const selectedPet = Pets.find(p => p.id === user.petStyle) || Pets[0];

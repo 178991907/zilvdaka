@@ -29,7 +29,7 @@ export type User = {
   petStyle: string;
 };
 
-export const user: User = {
+const defaultUser: User = {
   name: 'Alex',
   avatar: 'avatar1',
   level: 5,
@@ -37,6 +37,46 @@ export const user: User = {
   xpToNextLevel: 100,
   petStyle: 'pet1',
 };
+
+// This function now gets user data, prioritizing localStorage.
+export const getUser = (): User => {
+  if (typeof window === 'undefined') {
+    return defaultUser;
+  }
+  try {
+    const storedUser = localStorage.getItem('habit-heroes-user');
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      // We merge with default user to ensure all fields are present,
+      // in case of data structure changes.
+      return { ...defaultUser, ...parsedUser };
+    }
+  } catch (error) {
+    console.error("Failed to parse user from localStorage", error);
+    // If parsing fails, fall back to default
+  }
+  return defaultUser;
+};
+
+// We still export the single instance for components that don't need real-time updates after initial load.
+// Note: for reactive updates, components should call getUser() themselves within useEffect.
+export let user = getUser();
+
+// Function to update the global user object and localStorage
+export const updateUser = (newUserData: Partial<User>) => {
+   if (typeof window !== 'undefined') {
+    const currentUser = getUser();
+    const updatedUser = { ...currentUser, ...newUserData };
+    user = updatedUser;
+    try {
+      localStorage.setItem('habit-heroes-user', JSON.stringify(updatedUser));
+      window.dispatchEvent(new CustomEvent('userProfileUpdated'));
+    } catch (error) {
+      console.error("Failed to save user to localStorage", error);
+    }
+  }
+};
+
 
 export const tasks: Task[] = [
   {

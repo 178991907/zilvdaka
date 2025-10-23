@@ -16,7 +16,7 @@ import { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import PetPicker from '@/components/settings/pet-picker';
 import { useToast } from '@/hooks/use-toast';
-import { user as initialUser } from '@/lib/data';
+import { getUser, updateUser } from '@/lib/data';
 
 type Reward = {
   name: string;
@@ -27,9 +27,10 @@ export default function SettingsPage() {
   const { t, i18n } = useTranslation();
   const { theme, setTheme } = useTheme();
   
-  const [name, setName] = useState(initialUser.name);
-  const [selectedAvatar, setSelectedAvatar] = useState(initialUser.avatar);
-  const [selectedPet, setSelectedPet] = useState(initialUser.petStyle);
+  // Initialize state from localStorage via getUser
+  const [name, setName] = useState('');
+  const [selectedAvatar, setSelectedAvatar] = useState('');
+  const [selectedPet, setSelectedPet] = useState('');
   
   const [rewards, setRewards] = useState<Reward[]>([
     { name: '30 minutes of screen time', tasksRequired: 5 },
@@ -39,6 +40,12 @@ export default function SettingsPage() {
   const { toast } = useToast();
 
   useEffect(() => {
+    // Load user data from localStorage on component mount
+    const currentUser = getUser();
+    setName(currentUser.name);
+    setSelectedAvatar(currentUser.avatar);
+    setSelectedPet(currentUser.petStyle);
+
     const storedSoundSetting = localStorage.getItem('sound-effects-enabled');
     if (storedSoundSetting !== null) {
       setIsSoundEnabled(storedSoundSetting === 'true');
@@ -56,16 +63,12 @@ export default function SettingsPage() {
   };
 
   const handleSaveChanges = () => {
-    // In a real app, you would save the data to a backend here.
-    // For now, we update a global object or context if needed, or just local state for visual feedback.
-    // Let's pretend we are saving it.
-    initialUser.name = name;
-    initialUser.avatar = selectedAvatar;
-    initialUser.petStyle = selectedPet;
-    
-    // We need to inform other components about the change.
-    // A simple way is to use a custom event.
-    window.dispatchEvent(new CustomEvent('userProfileUpdated'));
+    // Save the changes to localStorage
+    updateUser({
+      name: name,
+      avatar: selectedAvatar,
+      petStyle: selectedPet,
+    });
 
     toast({
       title: t('settings.profile.saveSuccessTitle'),

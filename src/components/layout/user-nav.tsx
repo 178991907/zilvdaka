@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { user as initialUser } from '@/lib/data';
+import { getUser, User } from '@/lib/data';
 import { Avatars } from '@/lib/placeholder-images';
 import Link from 'next/link';
 import { CreditCard, LogOut, Settings, User as UserIcon } from 'lucide-react';
@@ -20,15 +20,17 @@ import { useState, useEffect } from 'react';
 
 export function UserNav() {
   const { t } = useTranslation();
-  const [user, setUser] = useState(initialUser);
+  const [user, setUser] = useState<User>(getUser());
 
   useEffect(() => {
     const handleProfileUpdate = () => {
-      // Create a new object to force re-render
-      setUser({ ...initialUser });
+      setUser(getUser());
     };
 
     window.addEventListener('userProfileUpdated', handleProfileUpdate);
+    
+    // Initial load
+    handleProfileUpdate();
 
     return () => {
       window.removeEventListener('userProfileUpdated', handleProfileUpdate);
