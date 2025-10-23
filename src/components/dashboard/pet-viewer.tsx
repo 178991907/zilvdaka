@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Star } from 'lucide-react';
@@ -10,8 +10,13 @@ interface PetViewerProps {
 }
 
 const PetViewer: React.FC<PetViewerProps> = ({ progress }) => {
+  const [eyeBlinkDuration, setEyeBlinkDuration] = useState(4);
   const petScale = 0.8 + (progress / 100) * 0.4; // Scale from 0.8 to 1.2
-  const eyeBlinkDuration = 2 + Math.random() * 4;
+
+  useEffect(() => {
+    // This will only run on the client, after initial hydration
+    setEyeBlinkDuration(2 + Math.random() * 4);
+  }, []); // Empty dependency array ensures this runs once on mount
 
   return (
     <Card className="bg-primary/10 border-primary/20 flex flex-col items-center justify-center p-6 aspect-square w-full relative overflow-hidden">
