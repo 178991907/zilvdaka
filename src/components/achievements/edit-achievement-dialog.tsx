@@ -31,6 +31,8 @@ const defaultAchievement: Partial<Achievement> = {
   imageUrl: '',
   unlocked: false,
   dateUnlocked: undefined,
+  tasksRequired: undefined,
+  daysRequired: undefined,
 };
 
 export function EditAchievementDialog({
@@ -69,6 +71,8 @@ export function EditAchievementDialog({
       imageUrl: formData.imageUrl || '',
       unlocked: formData.unlocked || false,
       dateUnlocked: formData.unlocked ? (formData.dateUnlocked || new Date()) : undefined,
+      tasksRequired: formData.tasksRequired ? Number(formData.tasksRequired) : undefined,
+      daysRequired: formData.daysRequired ? Number(formData.daysRequired) : undefined,
     };
     onSave(newAchievement);
     setIsOpen(false);
@@ -145,6 +149,32 @@ export function EditAchievementDialog({
               onChange={e => handleChange('imageUrl', e.target.value)}
               className="col-span-3"
               placeholder="https://example.com/image.png"
+            />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="tasksRequired" className="text-right">
+              任务数量
+            </Label>
+            <Input
+              id="tasksRequired"
+              type="number"
+              value={formData.tasksRequired || ''}
+              onChange={e => handleChange('tasksRequired', e.target.value)}
+              className="col-span-3"
+              placeholder="例如: 5"
+            />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="daysRequired" className="text-right">
+              天数
+            </Label>
+            <Input
+              id="daysRequired"
+              type="number"
+              value={formData.daysRequired || ''}
+              onChange={e => handleChange('daysRequired', e.target.value)}
+              className="col-span-3"
+              placeholder="例如: 3"
             />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">

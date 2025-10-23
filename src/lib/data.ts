@@ -1,4 +1,3 @@
-
 'use client';
 import type { LucideIcon } from 'lucide-react';
 import { Book, Brush, Bed, Atom, Bike, Dumbbell, ShieldCheck, Star, Trophy, Zap, Bug, Swords, Mountain, Flower, Gem } from 'lucide-react';
@@ -32,6 +31,8 @@ export type Achievement = {
   imageUrl?: string;
   unlocked: boolean;
   dateUnlocked?: Date | string;
+  tasksRequired?: number;
+  daysRequired?: number;
 };
 
 export type User = {

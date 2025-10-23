@@ -26,6 +26,22 @@ export default function AchievementBadge({ achievement, onEdit, index }: Achieve
 
   const hasImageUrl = achievement.imageUrl && achievement.imageUrl.trim() !== '';
 
+  const getRequirementDescription = () => {
+    const tasks = achievement.tasksRequired;
+    const days = achievement.daysRequired;
+
+    if (tasks && tasks > 0 && days && days > 0) {
+        return <ClientOnlyT tKey='settings.parentalControls.tasksAndDaysToComplete' tOptions={{ tasksCount: tasks, daysCount: days }} />;
+    } else if (tasks && tasks > 0) {
+        return <ClientOnlyT tKey='settings.parentalControls.tasksToComplete' tOptions={{ count: tasks }} />;
+    } else if (days && days > 0) {
+        return <ClientOnlyT tKey='settings.parentalControls.daysToComplete' tOptions={{ count: days }} />;
+    }
+    return null;
+  };
+
+  const requirementText = getRequirementDescription();
+
   return (
     <div className={cn(
         "relative flex flex-col items-center justify-start text-center aspect-square rounded-xl transition-all duration-300 transform hover:scale-105 p-4 group",
@@ -51,7 +67,7 @@ export default function AchievementBadge({ achievement, onEdit, index }: Achieve
 
         <div
           className={cn(
-            'relative mx-auto flex h-24 w-24 items-center justify-center rounded-full z-10 overflow-hidden',
+            'relative mx-auto flex h-20 w-20 items-center justify-center rounded-full z-10 overflow-hidden',
             achievement.unlocked ? 'bg-accent/20' : 'bg-secondary'
           )}
         >
@@ -63,8 +79,8 @@ export default function AchievementBadge({ achievement, onEdit, index }: Achieve
             <Image
                 src={achievement.imageUrl!}
                 alt={achievement.title}
-                width={96}
-                height={96}
+                width={80}
+                height={80}
                 className={cn(
                     'object-cover h-full w-full z-10',
                     achievement.unlocked ? '' : 'grayscale'
@@ -74,7 +90,7 @@ export default function AchievementBadge({ achievement, onEdit, index }: Achieve
             <Icon
               name={achievement.icon}
               className={cn(
-                'h-12 w-12 z-10',
+                'h-10 w-10 z-10',
                 achievement.unlocked ? 'text-accent-foreground' : 'text-muted-foreground'
               )}
             />
@@ -82,21 +98,26 @@ export default function AchievementBadge({ achievement, onEdit, index }: Achieve
 
           {!achievement.unlocked && (
             <div className="absolute inset-0 flex items-center justify-center bg-black/30 rounded-full">
-              <Lock className="h-10 w-10 text-white/70" />
+              <Lock className="h-8 w-8 text-white/70" />
             </div>
           )}
         </div>
       <div className="flex flex-col flex-grow justify-center mt-2 z-10">
-        <p className="font-bold text-base text-foreground">
+        <p className="font-bold text-sm text-foreground leading-tight">
             {isCustom ? achievement.title : <ClientOnlyT tKey={`achievements.items.${achievement.id}.title`} />}
         </p>
-        <p className="text-xs text-muted-foreground mt-1 px-2">
+        <p className="text-xs text-muted-foreground mt-1 px-1">
             {isCustom ? achievement.description : <ClientOnlyT tKey={`achievements.items.${achievement.id}.description`} />}
         </p>
+        {!achievement.unlocked && requirementText && (
+          <p className="text-xs font-semibold text-primary mt-1.5 px-1">
+            {requirementText}
+          </p>
+        )}
       </div>
       {achievement.unlocked && achievement.dateUnlocked && (
-        <div className="w-full mt-2 z-10">
-            <p className="text-xs text-muted-foreground w-full">
+        <div className="w-full mt-auto z-10 pt-1">
+            <p className="text-[10px] text-muted-foreground w-full">
                 <ClientOnlyT tKey='achievements.unlockedOn' />: {format(new Date(achievement.dateUnlocked), 'MMM d, yyyy')}
             </p>
         </div>
