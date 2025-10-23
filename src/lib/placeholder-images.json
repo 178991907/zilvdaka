@@ -3,26 +3,26 @@
     {
       "id": "avatar1",
       "description": "User avatar 1",
-      "imageUrl": "https://images.unsplash.com/photo-1566847438217-76e82d383f84?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjdXRlJTIwY2F0fGVufDB8fHx8MTc2MTE1MTQzM3ww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "cute cat"
-    },
-    {
-      "id": "avatar2",
-      "description": "User avatar 2",
-      "imageUrl": "https://images.unsplash.com/photo-1559190394-df5a28aab5c5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxoYXBweSUyMGRvZ3xlbnwwfHx8fDE3NjExNTcwNDh8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "happy dog"
-    },
-    {
-      "id": "avatar3",
-      "description": "User avatar 3",
       "imageUrl": "https://images.unsplash.com/photo-1658233427329-9d72b824e144?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjYXJ0b29uJTIwcm9ib3R8ZW58MHx8fHwxNzYxMTY1MzQ1fDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "cartoon robot"
     },
     {
-      "id": "avatar4",
-      "description": "User avatar 4",
+      "id": "avatar2",
+      "description": "User avatar 2",
       "imageUrl": "https://images.unsplash.com/photo-1572671734755-0554459614e2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzbWlsaW5nJTIwbW9uc3RlcnxlbnwwfHx8fDE3NjEyMTE1MTV8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "smiling monster"
+    },
+    {
+      "id": "avatar3",
+      "description": "User avatar 3",
+      "imageUrl": "https://images.unsplash.com/photo-1566847438217-76e82d383f84?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjdXRlJTIwY2F0fGVufDB8fHx8MTc2MTE1MTQzM3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cute cat"
+    },
+    {
+      "id": "avatar4",
+      "description": "User avatar 4",
+      "imageUrl": "https://images.unsplash.com/photo-1559190394-df5a28aab5c5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxoYXBweSUyMGRvZ3xlbnwwfHx8fDE3NjExNTcwNDh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "happy dog"
     },
     {
       "id": "avatar5",
@@ -81,7 +81,7 @@
     {
       "id": "landing-hero",
       "description": "Hero image for the landing page",
-      "imageUrl": "https://images.unsplash.com/photo-1573788708917-3d447b0d6271?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxkYXNoYm9hcmQlMjBraWRzJTIwYXBwfGVufDB8fHx8MTc2MTIwNzA2MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1670034353433-65a76b0b2797?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxkYXNoYm9hcmQlMjBraWRzJTIwYXBwfGVufDB8fHx8MTc2MTIwNzA2MXww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "dashboard kids app"
     }
   ]
