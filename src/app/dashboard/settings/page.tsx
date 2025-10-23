@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import AvatarPicker from '@/components/settings/avatar-picker';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 export default function SettingsPage() {
   return (
@@ -53,6 +54,28 @@ export default function SettingsPage() {
                         <p className="text-sm text-muted-foreground">Enable or disable sounds for completing tasks.</p>
                     </div>
                     <Switch id="sound-effects" defaultChecked />
+                </div>
+            </CardContent>
+        </Card>
+
+        <Card>
+            <CardHeader>
+                <CardTitle>Language</CardTitle>
+                <CardDescription>Choose your preferred language for the app.</CardDescription>
+            </CardHeader>
+            <CardContent>
+                 <div className="space-y-2">
+                    <Label htmlFor="language-select">Display Language</Label>
+                     <Select defaultValue="en">
+                        <SelectTrigger id="language-select" className="w-[280px]">
+                            <SelectValue placeholder="Select language" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="en">English</SelectItem>
+                            <SelectItem value="zh">中文 (Chinese)</SelectItem>
+                            <SelectItem value="en-zh">中英对照 (Bilingual)</SelectItem>
+                        </SelectContent>
+                    </Select>
                 </div>
             </CardContent>
         </Card>
