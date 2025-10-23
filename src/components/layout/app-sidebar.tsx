@@ -72,6 +72,15 @@ export const ClientOnlyT = ({ tKey, tOptions }: { tKey: string; tOptions?: any }
 export default function AppSidebar() {
   const pathname = usePathname();
   const { t } = useTranslation();
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const handleUserUpdate = () => setUser(getUser());
+    window.addEventListener('userProfileUpdated', handleUserUpdate);
+    handleUserUpdate(); // Initial load
+    return () => window.removeEventListener('userProfileUpdated', handleUserUpdate);
+  }, []);
+
 
   const navItems = [
     { href: '/dashboard', icon: LayoutDashboard, labelKey: 'sidebar.dashboard' },
@@ -87,8 +96,12 @@ export default function AppSidebar() {
       <SidebarHeader>
         <div className="flex items-center p-2">
             <div className="flex items-center gap-2">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-                <Star className="h-6 w-6 text-primary-foreground" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary overflow-hidden">
+                {user?.appLogo ? (
+                  <Image src={user.appLogo} alt="App Logo" width={40} height={40} className="object-cover w-full h-full" />
+                ) : (
+                  <Star className="h-6 w-6 text-primary-foreground" />
+                )}
                 </div>
                 <span className="font-bold text-xl font-headline text-foreground">
                 <ClientOnlyT tKey="appName" />

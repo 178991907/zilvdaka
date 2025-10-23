@@ -10,21 +10,25 @@ import AvatarPicker from '@/components/settings/avatar-picker';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useTranslation } from 'react-i18next';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTheme } from 'next-themes';
 import PetPicker from '@/components/settings/pet-picker';
 import { useToast } from '@/hooks/use-toast';
 import { getUser, updateUser, User } from '@/lib/data';
+import { Upload } from 'lucide-react';
+import Image from 'next/image';
 
 export default function SettingsPage() {
   const { t, i18n } = useTranslation();
   const { theme, setTheme } = useTheme();
+  const fileInputRef = useRef<HTMLInputElement>(null);
   
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [name, setName] = useState('');
   const [petName, setPetName] = useState('');
   const [selectedAvatar, setSelectedAvatar] = useState('');
   const [selectedPet, setSelectedPet] = useState('');
+  const [appLogo, setAppLogo] = useState('');
   
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
   const { toast } = useToast();
@@ -37,6 +41,7 @@ export default function SettingsPage() {
       setPetName(user.petName);
       setSelectedAvatar(user.avatar);
       setSelectedPet(user.petStyle);
+      setAppLogo(user.appLogo || '');
     };
 
     handleUserUpdate(); // Initial load
@@ -64,12 +69,12 @@ export default function SettingsPage() {
   };
 
   const handleSaveChanges = () => {
-    // Save all changes from the page
     updateUser({
       name: name,
       petName: petName,
       avatar: selectedAvatar,
       petStyle: selectedPet,
+      appLogo: appLogo,
     });
 
     toast({
@@ -78,10 +83,24 @@ export default function SettingsPage() {
     });
   };
 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setAppLogo(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleUploadClick = () => {
+    fileInputRef.current?.click();
+  };
+
   if (!currentUser) {
     return null; // or a loading skeleton
   }
-
 
   return (
     <div className="flex flex-col">
@@ -173,6 +192,47 @@ export default function SettingsPage() {
                 </div>
             </CardContent>
         </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle><ClientOnlyT tKey='settings.appearance.title' /></CardTitle>
+            <CardDescription><ClientOnlyT tKey='settings.appearance.description' /></CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="space-y-2">
+              <Label htmlFor="appLogoUrl"><ClientOnlyT tKey='settings.profile.appLogo' /></Label>
+              <div className="flex gap-2">
+                <Input
+                  id="appLogoUrl"
+                  placeholder={t('settings.profile.logoUrlPlaceholder')}
+                  value={appLogo.startsWith('data:') ? '' : appLogo}
+                  onChange={(e) => setAppLogo(e.target.value)}
+                />
+                <Button variant="outline" onClick={handleUploadClick}>
+                  <Upload className="mr-2 h-4 w-4" />
+                  <ClientOnlyT tKey='settings.profile.upload' />
+                </Button>
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  className="hidden"
+                  onChange={handleFileChange}
+                  accept="image/*"
+                />
+              </div>
+            </div>
+            {appLogo && (
+              <div className="space-y-2">
+                <Label><ClientOnlyT tKey='settings.profile.logoPreview' /></Label>
+                <div className="w-full aspect-[3/1] rounded-lg border bg-muted flex items-center justify-center overflow-hidden">
+                    <Image src={appLogo} alt="App logo preview" width={600} height={200} className="object-contain" />
+                </div>
+              </div>
+            )}
+            <Button onClick={handleSaveChanges}><ClientOnlyT tKey='settings.profile.save' /></Button>
+          </CardContent>
+        </Card>
+
       </main>
     </div>
   );
