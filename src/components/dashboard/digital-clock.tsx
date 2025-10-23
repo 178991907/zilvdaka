@@ -5,20 +5,18 @@ import { useTranslation } from 'react-i18next';
 
 const DigitalClock = () => {
   const [now, setNow] = useState(new Date());
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
 
   useEffect(() => {
     const timerId = setInterval(() => {
       setNow(new Date());
     }, 1000);
 
-    // Cleanup the interval on component unmount
     return () => {
       clearInterval(timerId);
     };
   }, []);
 
-  // Use i18n language to format date and time
   const language = i18n.language.startsWith('zh') ? 'zh-CN' : 'en-US';
 
   const formattedTime = now.toLocaleTimeString(language, {
@@ -28,9 +26,22 @@ const DigitalClock = () => {
     hour12: false,
   });
 
+  const formattedDate = now.toLocaleDateString(language, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+  
+  const dayOfWeekKey = `tasks.weekdaysFull.${now.toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase()}`;
+
   return (
-    <div className="text-4xl font-bold font-mono text-foreground">
-      {formattedTime}
+    <div className="flex flex-col items-center">
+        <div className="text-lg font-medium text-muted-foreground">
+            {formattedDate} {t(dayOfWeekKey)}
+        </div>
+        <div className="text-4xl font-bold font-mono text-foreground">
+            {formattedTime}
+        </div>
     </div>
   );
 };
