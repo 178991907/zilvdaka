@@ -22,7 +22,6 @@ import {
 import { Checkbox } from '../ui/checkbox';
 import { ClientOnlyT } from '../layout/app-sidebar';
 import { cn } from '@/lib/utils';
-import { useTranslation } from 'react-i18next';
 
 const difficultyVariant = {
     Easy: 'default',
@@ -40,27 +39,15 @@ interface TasksTableProps {
 
 // This component handles the translation of daysOfWeek on the client side to prevent hydration mismatch.
 const TranslatedDays = ({ days }: { days: ('mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun')[] | undefined }) => {
-  const { t } = useTranslation();
-  const [isClient, setIsClient] = React.useState(false);
-  React.useEffect(() => {
-    setIsClient(true);
-  }, []);
-
   if (!days || days.length === 0) {
     return null;
   }
   
-  if (!isClient) {
-    // On the server, render the English short names to avoid mismatch.
-    return <span>{days.join(', ')}</span>;
-  }
-
-  // On the client, render the translated full names.
   return (
     <>
       {days.map((day, index) => (
         <React.Fragment key={day}>
-          {t(`tasks.weekdaysShort.${day}`)}
+          <ClientOnlyT tKey={`tasks.weekdaysShort.${day}`} />
           {index < days.length - 1 && ', '}
         </React.Fragment>
       ))}
