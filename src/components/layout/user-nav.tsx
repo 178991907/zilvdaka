@@ -15,6 +15,37 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 import Link from 'next/link';
 import { CreditCard, LogOut, Settings, User as UserIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useEffect, useState } from 'react';
+
+const ClientOnlyT = ({ tKey, tOptions }: { tKey: string, tOptions?: any }) => {
+    const { t, i18n } = useTranslation();
+    const [isClient, setIsClient] = useState(false);
+
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
+
+    if (!isClient) {
+        // Fallback logic for server-side rendering
+        const resources = i18n.getResourceBundle('en', 'translation');
+        let fallbackText;
+        try {
+            fallbackText = tKey.split('.').reduce((acc, part) => acc && (acc as any)[part], resources);
+            if (tOptions && typeof fallbackText === 'string') {
+               Object.keys(tOptions).forEach(key => {
+                    fallbackText = fallbackText.replace(`{{${key}}}`, tOptions[key]);
+               });
+            }
+        } catch (e) {
+            // ignore
+        }
+
+        return fallbackText || tKey;
+    }
+
+    return t(tKey, tOptions);
+};
+
 
 export function UserNav() {
   const { t } = useTranslation();
@@ -33,7 +64,9 @@ export function UserNav() {
           </Avatar>
            <div className="flex flex-col items-start truncate">
               <span className="font-semibold text-sm truncate">{user.name}</span>
-              <span className="text-xs text-muted-foreground">{t('user.level', { level: user.level })}</span>
+              <span className="text-xs text-muted-foreground">
+                <ClientOnlyT tKey="user.level" tOptions={{ level: user.level }} />
+              </span>
             </div>
         </Button>
       </DropdownMenuTrigger>
@@ -51,17 +84,17 @@ export function UserNav() {
           <Link href="/dashboard/settings">
             <DropdownMenuItem>
               <UserIcon className="mr-2 h-4 w-4" />
-              <span>{t('user.menu.profile')}</span>
+              <span><ClientOnlyT tKey='user.menu.profile' /></span>
             </DropdownMenuItem>
           </Link>
           <DropdownMenuItem>
             <CreditCard className="mr-2 h-4 w-4" />
-            <span>{t('user.menu.billing')}</span>
+            <span><ClientOnlyT tKey='user.menu.billing' /></span>
           </DropdownMenuItem>
           <Link href="/dashboard/settings">
             <DropdownMenuItem>
               <Settings className="mr-2 h-4 w-4" />
-              <span>{t('user.menu.settings')}</span>
+              <span><ClientOnlyT tKey='user.menu.settings' /></span>
             </DropdownMenuItem>
           </Link>
         </DropdownMenuGroup>
@@ -69,7 +102,7 @@ export function UserNav() {
         <Link href="/">
             <DropdownMenuItem>
             <LogOut className="mr-2 h-4 w-4" />
-            <span>{t('user.menu.logout')}</span>
+            <span><ClientOnlyT tKey='user.menu.logout' /></span>
             </DropdownMenuItem>
         </Link>
       </DropdownMenuContent>
