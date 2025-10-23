@@ -43,7 +43,50 @@ export default function LandingPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      <header className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col items-center gap-4">
+      <div className="bg-card py-6">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-4xl w-full mx-auto grid lg:grid-cols-2 gap-6 items-center">
+                <div>
+                {isClient && user ? (
+                    <PetViewer progress={petProgress} className="min-h-[300px]" />
+                ) : (
+                    <Skeleton className="h-full min-h-[300px] w-full" />
+                )}
+                </div>
+                <div className="space-y-6">
+                {isClient && user ? (
+                    <>
+                    <div className="p-6">
+                        <ProgressSummaryContent
+                            icon={Target}
+                            titleTKey="dashboard.dailyGoal"
+                            value={`${Math.round(dailyProgress)}%`}
+                            descriptionTKey="dashboard.dailyGoalDescription"
+                            descriptionTPOptions={{ completedTasks, totalTasks }}
+                        />
+                    </div>
+                        <div className="p-6">
+                        <ProgressSummaryContent
+                            icon={Zap}
+                            titleTKey="dashboard.xpGained"
+                            value={`${user.xp} XP`}
+                            descriptionTKey="dashboard.xpToNextLevel"
+                            descriptionTPOptions={{ xp: user.xpToNextLevel - user.xp }}
+                            progress={petProgress}
+                        />
+                        </div>
+                    </>
+                ) : (
+                    <>
+                    <Skeleton className="h-32 w-full" />
+                    <Skeleton className="h-32 w-full" />
+                    </>
+                )}
+                </div>
+            </div>
+        </div>
+      </div>
+      <header className="container mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-4 flex flex-col items-center gap-4">
         <Image
           src="https://pic1.imgdb.cn/item/6817c79a58cb8da5c8dc723f.png"
           alt="App Logo"
@@ -51,45 +94,6 @@ export default function LandingPage() {
           height={120}
           priority
         />
-        <div className="max-w-4xl w-full mx-auto grid lg:grid-cols-2 gap-6 items-center">
-            <div>
-              {isClient && user ? (
-                <PetViewer progress={petProgress} className="min-h-[300px]" />
-              ) : (
-                <Skeleton className="h-full min-h-[300px] w-full" />
-              )}
-            </div>
-            <div className="space-y-6">
-              {isClient && user ? (
-                <>
-                  <div className="p-6">
-                    <ProgressSummaryContent
-                        icon={Target}
-                        titleTKey="dashboard.dailyGoal"
-                        value={`${Math.round(dailyProgress)}%`}
-                        descriptionTKey="dashboard.dailyGoalDescription"
-                        descriptionTPOptions={{ completedTasks, totalTasks }}
-                      />
-                  </div>
-                    <div className="p-6">
-                      <ProgressSummaryContent
-                        icon={Zap}
-                        titleTKey="dashboard.xpGained"
-                        value={`${user.xp} XP`}
-                        descriptionTKey="dashboard.xpToNextLevel"
-                        descriptionTPOptions={{ xp: user.xpToNextLevel - user.xp }}
-                        progress={petProgress}
-                      />
-                    </div>
-                </>
-              ) : (
-                <>
-                  <Skeleton className="h-32 w-full" />
-                  <Skeleton className="h-32 w-full" />
-                </>
-              )}
-            </div>
-          </div>
       </header>
 
       <main className="flex-grow">
