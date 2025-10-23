@@ -32,9 +32,11 @@ const difficultyVariant = {
 interface TasksTableProps {
   tasks: Task[];
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+  onEdit: (task: Task) => void;
+  onDelete: (task: Task) => void;
 }
 
-export default function TasksTable({ tasks, setTasks }: TasksTableProps) {
+export default function TasksTable({ tasks, setTasks, onEdit, onDelete }: TasksTableProps) {
   const { t } = useTranslation();
 
   const handleTaskCompletion = (taskId: string, completed: boolean) => {
@@ -85,24 +87,26 @@ export default function TasksTable({ tasks, setTasks }: TasksTableProps) {
                 </Badge>
               </TableCell>
               <TableCell className="text-right">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="h-8 w-8 p-0">
-                      <span className="sr-only"><ClientOnlyT tKey='tasks.table.openMenu' /></span>
-                      <MoreHorizontal className="h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem>
-                        <Pencil className="mr-2 h-4 w-4"/>
-                        <ClientOnlyT tKey='tasks.table.edit' />
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="text-destructive">
-                        <Trash2 className="mr-2 h-4 w-4"/>
-                        <ClientOnlyT tKey='tasks.table.delete' />
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                {isCustomTask(task.id) ? (
+                    <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" className="h-8 w-8 p-0">
+                        <span className="sr-only"><ClientOnlyT tKey='tasks.table.openMenu' /></span>
+                        <MoreHorizontal className="h-4 w-4" />
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        <DropdownMenuItem onClick={() => onEdit(task)}>
+                            <Pencil className="mr-2 h-4 w-4"/>
+                            <ClientOnlyT tKey='tasks.table.edit' />
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="text-destructive" onClick={() => onDelete(task)}>
+                            <Trash2 className="mr-2 h-4 w-4"/>
+                            <ClientOnlyT tKey='tasks.table.delete' />
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                    </DropdownMenu>
+                ) : <div className='h-8 w-8 p-0'></div>}
               </TableCell>
             </TableRow>
           ))}

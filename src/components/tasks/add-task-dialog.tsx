@@ -21,44 +21,67 @@ import {
 import { PlusCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ClientOnlyT } from '../layout/app-sidebar';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Task } from '@/lib/data';
 
 type AddTaskDialogProps = {
-  onAddTask: (task: { name: string; category: string; difficulty: 'Easy' | 'Medium' | 'Hard' }) => void;
+  onSave: (task: { name: string; category: string; difficulty: 'Easy' | 'Medium' | 'Hard' }) => void;
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
+  task: Task | null;
 };
 
-export function AddTaskDialog({ onAddTask }: AddTaskDialogProps) {
+export function AddTaskDialog({ onSave, isOpen, setIsOpen, task }: AddTaskDialogProps) {
   const { t } = useTranslation();
-  const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState('');
   const [category, setCategory] = useState('');
   const [difficulty, setDifficulty] = useState<'Easy' | 'Medium' | 'Hard' | ''>('');
+  
+  const isEditMode = task !== null;
 
-  const handleCreateTask = () => {
+  useEffect(() => {
+    if (isOpen && task) {
+      setName(task.title);
+      setCategory(task.category);
+      setDifficulty(task.difficulty);
+    } else if (!isOpen) {
+      // Reset form when dialog closes
+      setName('');
+      setCategory('');
+      setDifficulty('');
+    }
+  }, [isOpen, task]);
+
+  const handleSave = () => {
     if (!name || !category || !difficulty) {
       // Basic validation
       return;
     }
-    onAddTask({ name, category, difficulty });
+    onSave({ name, category, difficulty });
     setIsOpen(false);
-    setName('');
-    setCategory('');
-    setDifficulty('');
   };
 
-  return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
+  // The trigger is now handled in the parent page component
+  // to allow opening the dialog for both add and edit.
+  // We can keep a trigger here for simplicity if it's only for adding.
+  const triggerButton = !isEditMode && (
+     <DialogTrigger asChild>
         <Button>
           <PlusCircle className="mr-2 h-4 w-4" />
           <ClientOnlyT tKey='tasks.addTask' />
         </Button>
       </DialogTrigger>
+  );
+
+
+  return (
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      {!task && triggerButton}
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle><ClientOnlyT tKey='tasks.addTaskDialog.title' /></DialogTitle>
+          <DialogTitle><ClientOnlyT tKey={isEditMode ? 'tasks.editTaskDialog.title' : 'tasks.addTaskDialog.title'} /></DialogTitle>
           <DialogDescription>
-            <ClientOnlyT tKey='tasks.addTaskDialog.description' />
+            <ClientOnlyT tKey={isEditMode ? 'tasks.editTaskDialog.description' : 'tasks.addTaskDialog.description'} />
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
@@ -108,7 +131,9 @@ export function AddTaskDialog({ onAddTask }: AddTaskDialogProps) {
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit" onClick={handleCreateTask}><ClientOnlyT tKey='tasks.addTaskDialog.createTask' /></Button>
+          <Button type="submit" onClick={handleSave}>
+            <ClientOnlyT tKey={isEditMode ? 'tasks.editTaskDialog.save' : 'tasks.addTaskDialog.createTask'} />
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
