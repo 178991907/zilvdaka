@@ -64,9 +64,9 @@ export default function DashboardPage() {
 
         <main className="flex-grow p-4 md:p-8">
             <div className="max-w-6xl w-full mx-auto space-y-6">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:items-start">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <Card className="lg:col-span-2 flex flex-col">
-                        <div className="scale-[0.9]">
+                        <div className="scale-[0.9] flex flex-col flex-grow">
                             <CardHeader>
                                 <CardTitle><ClientOnlyT tKey='dashboard.myPet' /></CardTitle>
                             </CardHeader>
