@@ -51,7 +51,7 @@ export default function LandingPage() {
           height={120}
           priority
         />
-        <div className="max-w-4xl w-full mx-auto grid lg:grid-cols-2 gap-6 items-center mt-8">
+        <div className="max-w-4xl w-full mx-auto grid lg:grid-cols-2 gap-6 items-center">
             <div>
               {isClient && user ? (
                 <PetViewer progress={petProgress} className="min-h-[300px]" />
