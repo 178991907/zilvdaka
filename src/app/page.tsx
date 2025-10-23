@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { Target, Zap } from 'lucide-react';
+import { Target, Zap, Settings } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { getTasks, getUser, User, Task } from '@/lib/data';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -42,8 +42,13 @@ export default function LandingPage() {
   const petProgress = user ? (user.xp / user.xpToNextLevel) * 100 : 0;
 
   return (
-    <div className="flex flex-col min-h-screen bg-background">
-      <header className="container mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-4 flex flex-col items-center">
+    <div className="flex flex-col min-h-screen bg-background relative">
+        <Link href="/dashboard/settings" className="absolute top-4 right-4 z-10">
+            <Button variant="ghost" size="icon">
+                <Settings className="h-6 w-6" />
+            </Button>
+        </Link>
+      <header className="container mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-4 flex flex-col items-center gap-4">
         <Image
           src="https://pic1.imgdb.cn/item/6817c79a58cb8da5c8dc723f.png"
           alt="App Logo"
