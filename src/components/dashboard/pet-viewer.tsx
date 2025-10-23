@@ -81,18 +81,17 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress }) => {
   
   return (
     <Card 
-        className="bg-primary/10 border-primary/20 flex flex-col items-center justify-start p-0 aspect-square w-full relative overflow-hidden cursor-pointer"
+        className="bg-primary/10 border-primary/20 flex flex-col items-center justify-start p-0 aspect-square w-full relative overflow-hidden cursor-pointer h-full"
         onClick={handleClick}
     >
-      <div className="w-full p-6 pb-0">
+      <div className="w-full p-6 pb-2">
         <div className="flex items-center gap-2 mb-2">
             <Star className="w-5 h-5 text-accent fill-accent" />
             <span className="font-bold text-foreground"><ClientOnlyT tKey='dashboard.petLevel' /> {user.level}</span>
         </div>
         <Progress value={progress} className="w-full h-3" />
+        <h2 className="text-xl font-bold text-center mt-2">{user.petName}</h2>
       </div>
-
-       <h2 className="text-2xl font-bold text-center -mb-16">{user.petName}</h2>
 
        <motion.div
         className="w-full flex-grow flex items-center justify-center"

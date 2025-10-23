@@ -52,46 +52,60 @@ export default function DashboardPage() {
         </header>
       <main className="flex-1 p-4 md:p-8">
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          <Card className="lg:col-span-2">
-            <CardHeader>
-              <CardTitle><ClientOnlyT tKey='dashboard.petTitle'/></CardTitle>
-            </CardHeader>
-            <CardContent>
+          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle><ClientOnlyT tKey='dashboard.petTitle'/></CardTitle>
+              </CardHeader>
+              <CardContent>
+                {isClient && user ? (
+                  <PetViewer progress={petProgress} />
+                ) : (
+                  <div className="aspect-square w-full flex items-center justify-center">
+                    <Skeleton className="w-3/4 h-3/4 rounded-full" />
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+            <div className="space-y-6">
               {isClient && user ? (
-                <PetViewer progress={petProgress} />
+                <>
+                  <ProgressSummary
+                    icon={Target}
+                    titleTKey="dashboard.dailyGoal"
+                    value={`${Math.round(dailyProgress)}%`}
+                    descriptionTKey="dashboard.dailyGoalDescription"
+                    descriptionTPOptions={{ completedTasks, totalTasks }}
+                  />
+                  <ProgressSummary
+                    icon={Flame}
+                    titleTKey="dashboard.weeklyStreak"
+                    value=""
+                    valueTKey="dashboard.weeklyStreakValue"
+                    valueTPOptions={{ count: 4 }}
+                    descriptionTKey="dashboard.weeklyStreakDescription"
+                  />
+                  <ProgressSummary
+                    icon={Zap}
+                    titleTKey="dashboard.xpGained"
+                    value={`${user.xp} XP`}
+                    descriptionTKey="dashboard.xpToNextLevel"
+                    descriptionTPOptions={{ xp: user.xpToNextLevel - user.xp }}
+                    progress={petProgress}
+                  />
+                </>
               ) : (
-                <div className="aspect-square w-full flex items-center justify-center">
-                  <Skeleton className="w-3/4 h-3/4 rounded-full" />
-                </div>
+                <>
+                  <Skeleton className="h-32 w-full" />
+                  <Skeleton className="h-32 w-full" />
+                  <Skeleton className="h-32 w-full" />
+                </>
               )}
-            </CardContent>
-          </Card>
-          <div className="space-y-6">
-            {isClient && user ? (
-              <>
-                <ProgressSummary
-                  icon={Target}
-                  titleTKey="dashboard.dailyGoal"
-                  value={`${Math.round(dailyProgress)}%`}
-                  descriptionTKey="dashboard.dailyGoalDescription"
-                  descriptionTPOptions={{ completedTasks, totalTasks }}
-                />
-                <ProgressSummary
-                  icon={Flame}
-                  titleTKey="dashboard.weeklyStreak"
-                  value=""
-                  valueTKey="dashboard.weeklyStreakValue"
-                  valueTPOptions={{ count: 4 }}
-                  descriptionTKey="dashboard.weeklyStreakDescription"
-                />
-                <ProgressSummary
-                  icon={Zap}
-                  titleTKey="dashboard.xpGained"
-                  value={`${user.xp} XP`}
-                  descriptionTKey="dashboard.xpToNextLevel"
-                  descriptionTPOptions={{ xp: user.xpToNextLevel - user.xp }}
-                  progress={petProgress}
-                />
+            </div>
+          </div>
+
+          <div className="space-y-6 lg:col-span-1">
+             {isClient && user ? (
                 <Card>
                   <CardHeader className="pb-4">
                       <CardTitle className="text-base font-medium flex items-center gap-2">
@@ -105,15 +119,9 @@ export default function DashboardPage() {
                      <p><strong className="text-foreground"><ClientOnlyT tKey="petGuide.skillsTitle" />:</strong> <ClientOnlyT tKey='petGuide.skills' /></p>
                   </CardContent>
                 </Card>
-              </>
-            ) : (
-              <>
-                <Skeleton className="h-32 w-full" />
-                <Skeleton className="h-32 w-full" />
-                <Skeleton className="h-32 w-full" />
-                <Skeleton className="h-28 w-full" />
-              </>
-            )}
+              ) : (
+                 <Skeleton className="h-28 w-full" />
+              )}
           </div>
         </div>
         <div className="mt-6">
