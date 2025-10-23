@@ -14,6 +14,7 @@ import { Pets } from '@/lib/pets';
 import { Button } from '@/components/ui/button';
 import { useTranslation } from 'react-i18next';
 import { Progress } from '@/components/ui/progress';
+import { ClientOnlyT } from '@/components/layout/app-sidebar';
 
 export default function DashboardPage() {
   const [user, setUser] = useState<User | null>(null);
@@ -57,7 +58,7 @@ export default function DashboardPage() {
     <div className="flex flex-col min-h-screen bg-background">
        <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 border-b bg-background px-4 shrink-0">
           <SidebarTrigger className="md:hidden" />
-          <h1 className="text-xl font-semibold">{t('dashboard.title')}</h1>
+          <h1 className="text-xl font-semibold"><ClientOnlyT tKey='dashboard.title' /></h1>
           <div className="ml-auto flex items-center">
             {isClient ? <DigitalClock /> : <Skeleton className="h-16 w-48" />}
           </div>
@@ -66,35 +67,35 @@ export default function DashboardPage() {
         <main className="flex-grow p-4 md:p-8">
             <div className="max-w-6xl w-full mx-auto space-y-6">
                 <div className="grid lg:grid-cols-3 gap-6">
-                    <div className="lg:col-span-2 grid md:grid-cols-2 gap-6">
-                        <Card className="transform scale-[1.30] origin-top-left md:ml-20 mt-10">
-                            <CardHeader>
-                                <CardTitle>{t('dashboard.myPet')}</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                {isClient && user ? (
-                                    <>
-                                        <PetViewer progress={petProgress} className="h-48" />
-                                        <div className="text-center mt-4">
-                                            <p className="text-lg font-bold">{user.petName}</p>
-                                            <p className="text-sm text-muted-foreground">
-                                            {t('user.level', { level: user.level })}
-                                            </p>
-                                        </div>
-                                        <Progress value={petProgress} className="mt-4 h-2" />
-                                    </>
-                                ) : (
-                                    <>
-                                        <Skeleton className="h-48 w-full" />
-                                        <Skeleton className="h-6 w-24 mx-auto mt-4" />
-                                        <Skeleton className="h-4 w-16 mx-auto mt-2" />
-                                        <Skeleton className="h-2 w-full mt-4" />
-                                    </>
-                                )}
-                            </CardContent>
-                        </Card>
-                         <div className="space-y-6 flex flex-col">
-                            <Card className="flex-1">
+                    <Card className="lg:col-span-2 transform scale-[1.30] origin-top-left md:ml-20 mt-10">
+                        <CardHeader>
+                            <CardTitle>{t('dashboard.myPet')}</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            {isClient && user ? (
+                                <>
+                                    <PetViewer progress={petProgress} className="h-48" />
+                                    <div className="text-center mt-4">
+                                        <p className="text-lg font-bold">{user.petName}</p>
+                                        <p className="text-sm text-muted-foreground">
+                                        {t('user.level', { level: user.level })}
+                                        </p>
+                                    </div>
+                                    <Progress value={petProgress} className="mt-4 h-2" />
+                                </>
+                            ) : (
+                                <>
+                                    <Skeleton className="h-48 w-full" />
+                                    <Skeleton className="h-6 w-24 mx-auto mt-4" />
+                                    <Skeleton className="h-4 w-16 mx-auto mt-2" />
+                                    <Skeleton className="h-2 w-full mt-4" />
+                                </>
+                            )}
+                        </CardContent>
+                    </Card>
+                    <div className="flex flex-col gap-6">
+                         <div className="grid md:grid-cols-2 gap-6">
+                            <Card>
                                 <CardHeader>
                                     <ProgressSummaryContent
                                         icon={Target}
@@ -104,7 +105,7 @@ export default function DashboardPage() {
                                     />
                                 </CardHeader>
                             </Card>
-                            <Card className="flex-1">
+                            <Card>
                                  <CardHeader>
                                     <ProgressSummaryContent
                                         icon={Zap}
@@ -116,35 +117,33 @@ export default function DashboardPage() {
                                  </CardHeader>
                             </Card>
                         </div>
+                        <Card>
+                           <CardHeader className="flex flex-row items-start gap-4">
+                             <Info className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
+                             <div className="flex-1">
+                              <CardTitle>{petIntroTitle}</CardTitle>
+                               {isClient && Array.isArray(petIntroItems) ? (
+                                 <div className="mt-2 text-sm text-muted-foreground">
+                                   {petIntroItems[0] && <p className="mb-3">{petIntroItems[0]}</p>}
+                                   {petIntroItems.length > 1 && (
+                                     <ul className="space-y-2 list-disc pl-5">
+                                       {petIntroItems.slice(1).map((item, index) => (
+                                         <li key={index}>{item}</li>
+                                       ))}
+                                     </ul>
+                                   )}
+                                 </div>
+                               ) : (
+                                   <div className="mt-2 space-y-2">
+                                       <Skeleton className="h-4 w-full" />
+                                       <Skeleton className="h-4 w-full" />
+                                       <Skeleton className="h-4 w-3/4" />
+                                   </div>
+                               )}
+                             </div>
+                           </CardHeader>
+                       </Card>
                     </div>
-                     <Card>
-                        <CardHeader className="flex flex-row items-start gap-4">
-                          <Info className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
-                          <div className="flex-1">
-                           <CardTitle>{petIntroTitle}</CardTitle>
-                            {isClient && Array.isArray(petIntroItems) ? (
-                              <div className="mt-2 text-sm text-muted-foreground">
-                                {petIntroItems[0] && <p className="mb-3">{petIntroItems[0]}</p>}
-                                {petIntroItems.length > 1 && (
-                                  <ul className="space-y-2 list-none p-0">
-                                    {petIntroItems.slice(1).map((item, index) => (
-                                      <li key={index} className="flex items-start">
-                                        <span>{item}</span>
-                                      </li>
-                                    ))}
-                                  </ul>
-                                )}
-                              </div>
-                            ) : (
-                                <div className="mt-2 space-y-2">
-                                    <Skeleton className="h-4 w-full" />
-                                    <Skeleton className="h-4 w-full" />
-                                    <Skeleton className="h-4 w-3/4" />
-                                </div>
-                            )}
-                          </div>
-                        </CardHeader>
-                    </Card>
                 </div>
                 <TaskList />
             </div>
