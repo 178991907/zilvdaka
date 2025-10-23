@@ -24,6 +24,9 @@ import { UserNav } from './user-nav';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import i18n from '@/i18n'; // Import the i18n instance
+import { getUser, User } from '@/lib/data';
+import Image from 'next/image';
+
 
 // This wrapper prevents hydration errors by rendering the fallback language on the server
 // and only rendering the selected language on the client after hydration.
@@ -69,6 +72,18 @@ export const ClientOnlyT = ({ tKey, tOptions }: { tKey: string; tOptions?: any }
 export default function AppSidebar() {
   const pathname = usePathname();
   const { t } = useTranslation();
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+      const handleUserUpdate = () => {
+          setUser(getUser());
+      };
+      handleUserUpdate();
+      window.addEventListener('userProfileUpdated', handleUserUpdate);
+      return () => {
+          window.removeEventListener('userProfileUpdated', handleUserUpdate);
+      };
+  }, []);
 
   const navItems = [
     { href: '/dashboard', icon: LayoutDashboard, labelKey: 'sidebar.dashboard' },
@@ -79,16 +94,36 @@ export default function AppSidebar() {
     { href: '/dashboard/settings', icon: Settings, labelKey: 'sidebar.settings' },
   ];
 
+  const renderLogo = () => {
+    if (user?.appLogo) {
+      return (
+        <div className="relative w-[120px] h-[40px]">
+          <Image
+            src={user.appLogo}
+            alt="App Logo"
+            layout="fill"
+            objectFit="contain"
+          />
+        </div>
+      );
+    }
+    return (
+      <div className="flex items-center gap-2">
+        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
+          <Star className="h-6 w-6 text-primary-foreground" />
+        </div>
+        <span className="font-bold text-xl font-headline text-foreground">
+          <ClientOnlyT tKey="appName" />
+        </span>
+      </div>
+    );
+  }
+
   return (
     <>
       <SidebarHeader>
-        <div className="flex items-center gap-2 p-2">
-           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-            <Star className="h-6 w-6 text-primary-foreground" />
-          </div>
-          <span className="font-bold text-xl font-headline text-foreground">
-            <ClientOnlyT tKey="appName" />
-          </span>
+        <div className="flex items-center p-2">
+          {renderLogo()}
         </div>
       </SidebarHeader>
       <SidebarContent>
