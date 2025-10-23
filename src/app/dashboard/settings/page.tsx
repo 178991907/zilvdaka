@@ -95,14 +95,6 @@ export default function SettingsPage() {
                 <CardDescription><ClientOnlyT tKey='settings.parentalControls.description' /></CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-                <div className="flex items-center justify-between">
-                    <div>
-                        <Label htmlFor="notifications"><ClientOnlyT tKey='settings.parentalControls.emailNotifications' /></Label>
-                        <p className="text-sm text-muted-foreground"><ClientOnlyT tKey='settings.parentalControls.emailNotificationsDescription' /></p>
-                    </div>
-                    <Switch id="notifications" />
-                </div>
-                <Separator />
                  <div>
                     <Label htmlFor="rewards"><ClientOnlyT tKey='settings.parentalControls.rewardSystem' /></Label>
                     <p className="text-sm text-muted-foreground mb-4"><ClientOnlyT tKey='settings.parentalControls.rewardSystemDescription' /></p>
