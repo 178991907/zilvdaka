@@ -72,8 +72,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Right Column: Info Cards */}
-          <div className="lg:col-span-2">
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+          <div className="lg:col-span-2 space-y-6">
                 {isClient && user ? (
                   <>
                     <ProgressSummary
@@ -130,7 +129,6 @@ export default function DashboardPage() {
                     <Skeleton className="h-44 w-full" />
                   </>
                 )}
-            </div>
           </div>
         </div>
         
