@@ -1,0 +1,11 @@
+{
+  "appName": "Habit Heroes",
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "tasks": "Tasks",
+    "achievements": "Achievements",
+    "reports": "Reports",
+    "settings": "Settings",
+    "logout": "Logout"
+  }
+}

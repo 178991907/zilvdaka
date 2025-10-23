@@ -20,17 +20,19 @@ import {
   LogOut,
 } from 'lucide-react';
 import { UserNav } from './user-nav';
-
-const navItems = [
-  { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-  { href: '/dashboard/tasks', icon: CheckSquare, label: 'Tasks' },
-  { href: '/dashboard/achievements', icon: Trophy, label: 'Achievements' },
-  { href: '/dashboard/reports', icon: BarChart, label: 'Reports' },
-  { href: '/dashboard/settings', icon: Settings, label: 'Settings' },
-];
+import { useTranslation } from 'react-i18next';
 
 export default function AppSidebar() {
   const pathname = usePathname();
+  const { t } = useTranslation();
+
+  const navItems = [
+    { href: '/dashboard', icon: LayoutDashboard, label: t('sidebar.dashboard') },
+    { href: '/dashboard/tasks', icon: CheckSquare, label: t('sidebar.tasks') },
+    { href: '/dashboard/achievements', icon: Trophy, label: t('sidebar.achievements') },
+    { href: '/dashboard/reports', icon: BarChart, label: t('sidebar.reports') },
+    { href: '/dashboard/settings', icon: Settings, label: t('sidebar.settings') },
+  ];
 
   return (
     <>
@@ -40,7 +42,7 @@ export default function AppSidebar() {
             <Star className="h-6 w-6 text-primary-foreground" />
           </div>
           <span className="font-bold text-xl font-headline text-foreground">
-            Habit Heroes
+            {t('appName')}
           </span>
         </div>
       </SidebarHeader>
@@ -66,10 +68,10 @@ export default function AppSidebar() {
         <UserNav />
         <SidebarMenu>
             <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="Logout">
+                <SidebarMenuButton asChild tooltip={t('sidebar.logout')}>
                     <Link href="/">
                         <LogOut />
-                        <span>Logout</span>
+                        <span>{t('sidebar.logout')}</span>
                     </Link>
                 </SidebarMenuButton>
             </SidebarMenuItem>

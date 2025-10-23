@@ -1,0 +1,11 @@
+{
+  "appName": "习惯英雄",
+  "sidebar": {
+    "dashboard": "仪表板",
+    "tasks": "任务",
+    "achievements": "成就",
+    "reports": "报告",
+    "settings": "设置",
+    "logout": "登出"
+  }
+}

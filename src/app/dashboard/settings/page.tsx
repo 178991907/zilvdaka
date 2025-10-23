@@ -1,3 +1,4 @@
+'use client';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -7,8 +8,15 @@ import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import AvatarPicker from '@/components/settings/avatar-picker';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useTranslation } from 'react-i18next';
 
 export default function SettingsPage() {
+  const { i18n } = useTranslation();
+
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+  };
+
   return (
     <div className="flex flex-col">
        <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 border-b bg-background px-4">
@@ -66,7 +74,7 @@ export default function SettingsPage() {
             <CardContent>
                  <div className="space-y-2">
                     <Label htmlFor="language-select">Display Language</Label>
-                     <Select defaultValue="en">
+                     <Select defaultValue={i18n.language} onValueChange={changeLanguage}>
                         <SelectTrigger id="language-select" className="w-[280px]">
                             <SelectValue placeholder="Select language" />
                         </SelectTrigger>
