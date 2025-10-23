@@ -36,7 +36,7 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress, className }) => {
 
   const petContainerRef = useRef<HTMLDivElement>(null);
   
-  const petScale = (0.6 + (progress / 100) * 0.3) * 0.5;
+  const petScale = (0.6 + (progress / 100) * 0.3) * 1.5;
 
   useEffect(() => {
     const handleProfileUpdate = () => {
@@ -103,7 +103,7 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress, className }) => {
             </motion.div>
           </div>
           <div className="w-full pt-4">
-            <h2 className="text-lg font-bold text-center -mb-1">{user.petName}</h2>
+            
             <div className="flex items-center gap-2 mb-2">
                 <Star className="w-4 h-4 text-accent fill-accent" />
                 <span className="font-bold text-sm text-foreground"><ClientOnlyT tKey='dashboard.petLevel' /> {user.level}</span>
