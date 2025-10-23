@@ -51,10 +51,9 @@ export default function DashboardPage() {
           <h1 className="text-xl font-semibold"><ClientOnlyT tKey='dashboard.title' /></h1>
         </header>
       <main className="flex-1 p-4 md:p-8">
-        <div className="flex flex-col lg:flex-row gap-6 items-start">
-          
+        <div className="grid lg:grid-cols-3 gap-6 mb-6">
           {/* Left Column */}
-          <div className="w-full lg:w-1/3">
+          <div className="lg:col-span-1">
             <Card className="h-full">
                 <CardHeader>
                   <CardTitle><ClientOnlyT tKey='dashboard.petTitle'/></CardTitle>
@@ -72,7 +71,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Right Column */}
-          <div className="w-full lg:w-2/3 space-y-6">
+          <div className="lg:col-span-2 space-y-6">
                 {isClient && user ? (
                   <>
                     <ProgressSummary
@@ -129,9 +128,9 @@ export default function DashboardPage() {
                     <Skeleton className="h-44 w-full" />
                   </>
                 )}
-                <TaskList />
           </div>
         </div>
+        <TaskList />
       </main>
     </div>
   );
