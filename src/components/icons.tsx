@@ -6,27 +6,28 @@ import {
   Star,
   Trophy,
   Zap,
-  Ant,
   Swords,
   Mountain,
   Flower,
   Gem,
+  Bug,
 } from 'lucide-react';
 
 export type IconName = 'Book' | 'Brush' | 'ShieldCheck' | 'Star' | 'Trophy' | 'Zap' | 'Ant' | 'Swords' | 'Mountain' | 'Flower' | 'Gem';
 
-const icons: { [key in IconName]: LucideIcon } = {
+const icons: { [key in IconName | 'Bug']: LucideIcon } = {
   Book,
   Brush,
   ShieldCheck,
   Star,
   Trophy,
   Zap,
-  Ant,
+  Ant: Bug, // Use Bug icon as a replacement for Ant
   Swords,
   Mountain,
   Flower,
   Gem,
+  Bug,
 };
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {
