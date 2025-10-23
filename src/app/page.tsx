@@ -44,11 +44,11 @@ export default function LandingPage() {
   return (
     <div className="flex flex-col min-h-screen bg-background relative">
         <Link href="/dashboard/settings" className="absolute top-4 right-4 z-10">
-            <Button variant="ghost" size="icon">
-                <Settings className="h-6 w-6" />
+            <Button>
+                设置
             </Button>
         </Link>
-      <header className="container mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-4 flex flex-col items-center gap-4">
+      <header className="container mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-4 flex flex-col items-center">
         <Image
           src="https://pic1.imgdb.cn/item/6817c79a58cb8da5c8dc723f.png"
           alt="App Logo"
