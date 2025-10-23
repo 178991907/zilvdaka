@@ -3,12 +3,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { Star, Zap, Info } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
+import { Star } from 'lucide-react';
 import { ClientOnlyT } from '../layout/app-sidebar';
 import { getUser, User } from '@/lib/data';
 import { Pets } from '@/lib/pets';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 interface PetViewerProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -27,7 +26,6 @@ const animations = {
 
 
 const PetViewer: React.FC<PetViewerProps> = ({ progress, className }) => {
-  const { t } = useTranslation();
   const [user, setUser] = useState<User | null>(null);
   const [eyeBlinkDuration, setEyeBlinkDuration] = useState(4);
   const [bodyAnimation, setBodyAnimation] = useState<AnimationType | null>(null);
@@ -86,18 +84,22 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress, className }) => {
             <CardTitle><ClientOnlyT tKey='dashboard.petTitle'/></CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col flex-grow items-center justify-start p-4 pt-0 w-full relative overflow-hidden cursor-pointer" onClick={handleClick}>
-           <motion.div
+           <div
             className="w-full flex-grow flex items-center justify-center rounded-lg bg-primary/10"
-            style={{ scale: petScale, transition: 'transform 0.5s ease' }}
-            animate={bodyAnimation ? animations[bodyAnimation] : {}}
-            onAnimationComplete={() => setBodyAnimation(null)}
           >
-            <div
-              ref={petContainerRef}
+            <motion.div
+              style={{ scale: petScale, transition: 'transform 0.5s ease' }}
+              animate={bodyAnimation ? animations[bodyAnimation] : {}}
+              onAnimationComplete={() => setBodyAnimation(null)}
               className="w-full h-full"
-              dangerouslySetInnerHTML={{ __html: selectedPet.getSvg(eyeBlinkDuration, eyeAnimation ? animations['wink'] : undefined) }}
-            />
-          </motion.div>
+            >
+              <div
+                ref={petContainerRef}
+                className="w-full h-full"
+                dangerouslySetInnerHTML={{ __html: selectedPet.getSvg(eyeBlinkDuration, eyeAnimation ? animations['wink'] : undefined) }}
+              />
+            </motion.div>
+          </div>
           <div className="w-full pt-4">
             <h2 className="text-lg font-bold text-center -mb-1">{user.petName}</h2>
             <div className="flex items-center gap-2 mb-2">
