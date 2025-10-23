@@ -135,7 +135,6 @@ export default function SettingsPage() {
                   userLevel={currentUser.level}
                 />
             </div>
-            <Button onClick={handleSaveChanges}><ClientOnlyT tKey='settings.profile.save' /></Button>
           </CardContent>
         </Card>
         
@@ -229,9 +228,12 @@ export default function SettingsPage() {
                 </div>
               </div>
             )}
-            <Button onClick={handleSaveChanges}><ClientOnlyT tKey='settings.profile.save' /></Button>
           </CardContent>
         </Card>
+
+        <div className="flex justify-end">
+            <Button onClick={handleSaveChanges}><ClientOnlyT tKey='settings.profile.save' /></Button>
+        </div>
 
       </main>
     </div>
