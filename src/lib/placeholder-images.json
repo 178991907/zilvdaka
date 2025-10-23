@@ -2,99 +2,99 @@
   "placeholderImages": [
     {
       "id": "avatar1",
-      "description": "3D cartoon boy with glasses",
-      "imageUrl": "https://images.unsplash.com/photo-1653723367970-ae966c1b803e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHwzRCUyMGNhcnRvb24lMjBib3l8ZW58MHx8fHwxNzYxMjEyNzEyfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "3D cartoon boy"
+      "description": "3D cartoon car",
+      "imageUrl": "https://images.unsplash.com/photo-1738746819119-9f633966f43b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHwzRCUyMGNhcnRvb24lMjBjYXJ8ZW58MHx8fHwxNzYxMjI1MjU3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3D cartoon car"
     },
     {
       "id": "avatar2",
-      "description": "3D cartoon girl with pink hair",
-      "imageUrl": "https://images.unsplash.com/photo-1750535135635-3783825e996c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHwzRCUyMGNhcnRvb24lMjBnaXJsfGVufDB8fHx8MTc2MTIxMjcxMnww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "3D cartoon girl"
+      "description": "3D cartoon airplane",
+      "imageUrl": "https://images.unsplash.com/photo-1682702578726-bb6de39cce67?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHwzRCUyMGNhcnRvb24lMjBhaXJwbGFuZXxlbnwwfHx8fDE3NjEyMjUyNTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3D cartoon airplane"
     },
     {
       "id": "avatar3",
-      "description": "3D cartoon boy with blue hat",
-      "imageUrl": "https://images.unsplash.com/photo-1640337516270-1c675eee65f2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8M0QlMjBjYXJ0b29uJTIwYm95fGVufDB8fHx8MTc2MTIxMjcxMnww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "3D cartoon boy"
+      "description": "3D cartoon rocket",
+      "imageUrl": "https://images.unsplash.com/photo-1623683033827-31c999b099d2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHwzRCUyMGNhcnRvb24lMjByb2NrZXR8ZW58MHx8fHwxNzYxMjI1MjU3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3D cartoon rocket"
     },
     {
       "id": "avatar4",
-      "description": "3D cartoon girl with headphones",
-      "imageUrl": "https://images.unsplash.com/photo-1652795385688-9bafaac3100f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHwzRCUyMGNhcnRvb24lMjBnaXJsfGVufDB8fHx8MTc2MTIxMjcxMnww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "3D cartoon girl"
+      "description": "3D block world style character",
+      "imageUrl": "https://images.unsplash.com/photo-1760434685862-5f2b29748cb9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHwzRCUyMGJsb2NrJTIwd29ybGR8ZW58MHx8fHwxNzYxMjI1MjU3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3D block world"
     },
     {
       "id": "avatar5",
-      "description": "3D cartoon boy astronaut",
-      "imageUrl": "https://images.unsplash.com/photo-1622313762347-3c09fe5f2719?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHwzRCUyMGNhcnRvb24lMjBhc3Ryb25hdXR8ZW58MHx8fHwxNzYxMjEyNzEyfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "3D cartoon astronaut"
+      "description": "3D cartoon style plumber character",
+      "imageUrl": "https://images.unsplash.com/photo-1684395882817-030e24c0322a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHwzRCUyMHZpZGVvJTIwZ2FtZXxlbnwwfHx8fDE3NjEyMjUyNTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3D video game"
     },
     {
       "id": "avatar6",
-      "description": "3D cartoon girl with glasses and red hair",
-      "imageUrl": "https://images.unsplash.com/photo-1750535135645-005e250ff210?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8M0QlMjBjYXJ0b29uJTIwZ2lybHxlbnwwfHx8fDE3NjEyMTI3MTJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "3D cartoon girl"
+      "description": "3D cartoon astronaut in space",
+      "imageUrl": "https://images.unsplash.com/photo-1759950616527-15c2818f2f3c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHwzRCUyMGNhcnRvb24lMjBzcGFjZXxlbnwwfHx8fDE3NjEyMjUyNTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3D cartoon space"
     },
     {
       "id": "avatar7",
-      "description": "3D cartoon boy in superhero costume",
-      "imageUrl": "https://images.unsplash.com/photo-1759663177324-bfe2866c1043?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHwzRCUyMGNhcnRvb24lMjBzdXBlcmhlcm98ZW58MHx8fHwxNzYxMjEyNzEyfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "3D cartoon superhero"
+      "description": "3D cartoon solar system",
+      "imageUrl": "https://images.unsplash.com/photo-1629459322097-a190793bd00b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHwzRCUyMGNhcnRvb24lMjBzb2xhcnxlbnwwfHx8fDE3NjEyMjUyNTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3D cartoon solar"
     },
     {
       "id": "avatar8",
-      "description": "3D cartoon girl in yellow jacket",
-      "imageUrl": "https://images.unsplash.com/photo-1750535135451-7c20e24b60c1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHwzRCUyMGNhcnRvb24lMjBnaXJsfGVufDB8fHx8MTc2MTIxMjcxMnww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "3D cartoon girl"
+      "description": "3D cartoon race car",
+      "imageUrl": "https://images.unsplash.com/photo-1568145399895-80d8a0ad8ad7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHwzRCUyMGNhcnRvb24lMjByYWNlY2FyfGVufDB8fHx8MTc2MTIyNTI1N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3D cartoon racecar"
     },
     {
       "id": "avatar9",
-      "description": "3D cartoon boy with beanie",
-      "imageUrl": "https://images.unsplash.com/photo-1704790461396-5e8e85009927?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHwzRCUyMGNhcnRvb24lMjBib3l8ZW58MHx8fHwxNzYxMjEyNzEyfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "3D cartoon boy"
+      "description": "3D cartoon space shuttle",
+      "imageUrl": "https://images.unsplash.com/photo-1689714537268-838bc3430e5a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHwzRCUyMGNhcnRvb24lMjBzaHV0dGxlfGVufDB8fHx8MTc2MTIyNTI1OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3D cartoon shuttle"
     },
     {
       "id": "avatar10",
-      "description": "3D cartoon girl with bunny ears",
-      "imageUrl": "https://images.unsplash.com/photo-1631636661865-6989c73b331c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHwzRCUyMGNhcnRvb24lMjBidW5ueXxlbnwwfHx8fDE3NjEyMTI3MTJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "3D cartoon bunny"
+      "description": "3D cartoon spaceship",
+      "imageUrl": "https://images.unsplash.com/photo-1595445336136-a6ec962fbfed?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHwzRCUyMGNhcnRvb24lMjBzcGFjZXNoaXB8ZW58MHx8fHwxNzYxMjI1MjU4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3D cartoon spaceship"
     },
     {
       "id": "avatar11",
-      "description": "3D cartoon boy with curly hair",
-      "imageUrl": "https://images.unsplash.com/photo-1632060203503-2b7696605fb0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHwzRCUyMGNhcnRvb24lMjBib3l8ZW58MHx8fHwxNzYxMjEyNzEyfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "3D cartoon boy"
+      "description": "3D block world animal",
+      "imageUrl": "https://images.unsplash.com/photo-1679210208096-4cd1e8a583ea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHwzRCUyMGJsb2NrJTIwYW5pbWFsfGVufDB8fHx8MTc2MTIyNTI1N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3D block animal"
     },
     {
       "id": "avatar12",
-      "description": "3D cartoon girl with space helmet",
-      "imageUrl": "https://images.unsplash.com/photo-1604088316303-425d5e181de4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHwzRCUyMGNhcnRvb24lMjBhc3Ryb25hdXR8ZW58MHx8fHwxNzYxMjEyNzEyfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "3D cartoon astronaut"
+      "description": "3D cartoon red cap character",
+      "imageUrl": "https://images.unsplash.com/photo-1733837305574-9a8b96c08d5c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHwzRCUyMGNhcnRvb24lMjBjaGFyYWN0ZXJ8ZW58MHx8fHwxNzYxMjI1MjU3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3D cartoon character"
     },
     {
       "id": "avatar13",
-      "description": "3D cartoon boy adventurer",
-      "imageUrl": "https://images.unsplash.com/photo-1739513275605-8f768065d402?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHwzRCUyMGNhcnRvb24lMjBhZHZlbnR1cmVyfGVufDB8fHx8MTc2MTIxMjcxMnww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "3D cartoon adventurer"
+      "description": "3D cartoon alien",
+      "imageUrl": "https://images.unsplash.com/photo-1694110336492-d8bf867a84be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHwzRCUyMGNhcnRvb24lMjBhbGllbnxlbnwwfHx8fDE3NjEyMjUyNTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3D cartoon alien"
     },
     {
       "id": "avatar14",
-      "description": "3D cartoon girl artist",
-      "imageUrl": "https://images.unsplash.com/photo-1718512463386-8824c3b046af?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHwzRCUyMGNhcnRvb24lMjBhcnRpc3R8ZW58MHx8fHwxNzYxMjEyNzEyfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "3D cartoon artist"
+      "description": "3D cartoon planet Saturn",
+      "imageUrl": "https://images.unsplash.com/photo-1636601209939-ed803d732d0e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHwzRCUyMGNhcnRvb24lMjBwbGFuZXR8ZW58MHx8fHwxNzYxMjI1MjU3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3D cartoon planet"
     },
     {
       "id": "avatar15",
-      "description": "3D cartoon boy pilot",
-      "imageUrl": "https://images.unsplash.com/photo-1634308748518-5246b0705320?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8M0QlMjBjYXJ0b29uJTIwcGlsb3R8ZW58MHx8fHwxNzYxMjEyNzEyfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "3D cartoon pilot"
+      "description": "3D cartoon fire truck",
+      "imageUrl": "https://images.unsplash.com/photo-1592784082277-46e33f897110?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHwzRCUyMGNhcnRvb24lMjB0cnVja3xlbnwwfHx8fDE3NjEyMjUyNTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3D cartoon truck"
     },
     {
       "id": "avatar16",
-      "description": "3D cartoon girl with pigtails",
-      "imageUrl": "https://images.unsplash.com/photo-1662796653457-8721078fd863?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHwzRCUyMGNhcnRvb24lMjBnaXJsfGVufDB8fHx8MTc2MTIxMjcxMnww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "3D cartoon girl"
+      "description": "3D cartoon jet plane",
+      "imageUrl": "https://images.unsplash.com/photo-1663254743932-49190d0ee975?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHwzRCUyMGNhcnRvb24lMjBqZXR8ZW58MHx8fHwxNzYxMjI1MjU3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3D cartoon jet"
     },
     {
       "id": "pet-happy",
