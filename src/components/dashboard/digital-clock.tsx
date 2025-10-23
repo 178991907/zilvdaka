@@ -29,10 +29,8 @@ const DigitalClock = () => {
   });
 
   return (
-    <div className="bg-muted/50 p-2 rounded-md">
-      <div className="text-3xl font-mono text-foreground">
-        {formattedTime}
-      </div>
+    <div className="text-4xl font-bold font-mono text-foreground">
+      {formattedTime}
     </div>
   );
 };
