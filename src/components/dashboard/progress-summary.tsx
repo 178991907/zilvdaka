@@ -51,10 +51,8 @@ export function ProgressSummaryContent({
 
 export default function ProgressSummary(props: ProgressSummaryProps) {
   return (
-    <Card>
-      <CardContent className="p-6">
+    <div className="p-6">
         <ProgressSummaryContent {...props} />
-      </CardContent>
-    </Card>
+    </div>
   );
 }

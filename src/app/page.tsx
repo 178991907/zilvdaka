@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { getTasks, getUser, User, Task } from '@/lib/data';
 import { Skeleton } from '@/components/ui/skeleton';
 import PetViewer from '@/components/dashboard/pet-viewer';
-import { ProgressSummaryContent } from '@/components/dashboard/progress-summary';
+import ProgressSummary from '@/components/dashboard/progress-summary';
 
 export default function LandingPage() {
   const [user, setUser] = useState<User | null>(null);
@@ -79,17 +79,14 @@ export default function LandingPage() {
                 <div className="space-y-6 text-left">
                   {isClient && user ? (
                     <>
-                      <div className="rounded-lg border bg-card text-card-foreground shadow-sm p-6">
-                        <ProgressSummaryContent
+                      <ProgressSummary
                           icon={Target}
                           titleTKey="dashboard.dailyGoal"
                           value={`${Math.round(dailyProgress)}%`}
                           descriptionTKey="dashboard.dailyGoalDescription"
                           descriptionTPOptions={{ completedTasks, totalTasks }}
                         />
-                      </div>
-                       <div className="rounded-lg border bg-card text-card-foreground shadow-sm p-6">
-                        <ProgressSummaryContent
+                       <ProgressSummary
                           icon={Zap}
                           titleTKey="dashboard.xpGained"
                           value={`${user.xp} XP`}
@@ -97,7 +94,6 @@ export default function LandingPage() {
                           descriptionTPOptions={{ xp: user.xpToNextLevel - user.xp }}
                           progress={petProgress}
                         />
-                      </div>
                     </>
                   ) : (
                     <>
