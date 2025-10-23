@@ -72,8 +72,8 @@ export default function DashboardPage() {
                         <CardContent className="flex-grow flex flex-col p-4">
                             {isClient && user ? (
                                 <>
-                                    <div className="flex-grow flex items-start justify-center">
-                                        <PetViewer progress={petProgress} className="scale-[0.8]" />
+                                    <div className="flex items-start justify-center">
+                                        <PetViewer progress={petProgress} />
                                     </div>
                                     <div className="mt-4">
                                         <div className="text-center">
