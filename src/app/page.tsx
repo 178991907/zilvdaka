@@ -109,34 +109,6 @@ export default function LandingPage() {
 
           </div>
         </section>
-
-        <section className="py-20 bg-card">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h3 className="text-3xl font-bold text-center font-headline">How It Works</h3>
-            <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-              <FeatureCard
-                icon={<CheckCircle className="w-10 h-10 text-primary" />}
-                title="Complete Daily Tasks"
-                description="Check off real-life tasks like homework and chores."
-              />
-              <FeatureCard
-                icon={<Trophy className="w-10 h-10 text-accent" />}
-                title="Earn XP & Rewards"
-                description="Gain experience points and unlock cool achievements."
-              />
-              <FeatureCard
-                icon={<Star className="w-10 h-10 text-primary" />}
-                title="Level Up Your Pet"
-                description="Watch your virtual pet grow and evolve as you level up."
-              />
-              <FeatureCard
-                icon={<Shield className="w-10 h-10 text-accent" />}
-                title="Unlock New Abilities"
-                description="Discover new pet forms and skills on your journey."
-              />
-            </div>
-          </div>
-        </section>
       </main>
 
       <footer className="py-6 bg-card">
@@ -147,21 +119,5 @@ export default function LandingPage() {
         </div>
       </footer>
     </div>
-  );
-}
-
-function FeatureCard({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) {
-  return (
-    <Card className="text-center">
-      <CardHeader>
-        <div className="mx-auto bg-secondary p-4 rounded-lg w-fit">
-          {icon}
-        </div>
-        <CardTitle className="mt-4">{title}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p className="text-muted-foreground">{description}</p>
-      </CardContent>
-    </Card>
   );
 }
