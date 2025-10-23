@@ -17,15 +17,15 @@ export default function ReportsPage() {
       <main className="flex-1 p-4 md:p-8">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle>{t('reports.performanceTitle')}</CardTitle>
+            <CardTitle><ClientOnlyT tKey='reports.performanceTitle' /></CardTitle>
             <Select defaultValue="weekly">
                 <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder={t('reports.selectRange')} />
+                    <SelectValue placeholder={<ClientOnlyT tKey='reports.selectRange' />} />
                 </SelectTrigger>
                 <SelectContent>
-                    <SelectItem value="weekly">{t('reports.thisWeek')}</SelectItem>
-                    <SelectItem value="monthly">{t('reports.thisMonth')}</SelectItem>
-                    <SelectItem value="yearly">{t('reports.thisYear')}</SelectItem>
+                    <SelectItem value="weekly"><ClientOnlyT tKey='reports.thisWeek' /></SelectItem>
+                    <SelectItem value="monthly"><ClientOnlyT tKey='reports.thisMonth' /></SelectItem>
+                    <SelectItem value="yearly"><ClientOnlyT tKey='reports.thisYear' /></SelectItem>
                 </SelectContent>
             </Select>
           </CardHeader>

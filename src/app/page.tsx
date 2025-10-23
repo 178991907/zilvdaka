@@ -57,29 +57,21 @@ export default function LandingPage() {
             <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
               <FeatureCard
                 icon={<CheckCircle className="w-10 h-10 text-primary" />}
-                title={t('landing.feature1.title')}
-                description={t('landing.feature1.description')}
                 titleTKey='landing.feature1.title'
                 descriptionTKey='landing.feature1.description'
               />
               <FeatureCard
                 icon={<Trophy className="w-10 h-10 text-accent" />}
-                title={t('landing.feature2.title')}
-                description={t('landing.feature2.description')}
                 titleTKey='landing.feature2.title'
                 descriptionTKey='landing.feature2.description'
               />
               <FeatureCard
                 icon={<Star className="w-10 h-10 text-primary" />}
-                title={t('landing.feature3.title')}
-                description={t('landing.feature3.description')}
                 titleTKey='landing.feature3.title'
                 descriptionTKey='landing.feature3.description'
               />
               <FeatureCard
                 icon={<Shield className="w-10 h-10 text-accent" />}
-                title={t('landing.feature4.title')}
-                description={t('landing.feature4.description')}
                 titleTKey='landing.feature4.title'
                 descriptionTKey='landing.feature4.description'
               />
@@ -97,7 +89,7 @@ export default function LandingPage() {
   );
 }
 
-function FeatureCard({ icon, title, description, titleTKey, descriptionTKey }: { icon: React.ReactNode, title: string, description: string, titleTKey: string, descriptionTKey: string }) {
+function FeatureCard({ icon, titleTKey, descriptionTKey }: { icon: React.ReactNode, titleTKey: string, descriptionTKey: string }) {
   return (
     <Card className="text-center">
       <CardHeader>
