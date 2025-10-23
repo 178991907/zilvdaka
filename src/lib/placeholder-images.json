@@ -2,51 +2,99 @@
   "placeholderImages": [
     {
       "id": "avatar1",
-      "description": "A cute cartoon robot",
-      "imageUrl": "https://images.unsplash.com/photo-1657641898365-48ae7d64e676?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxjdXRlJTIwcm9ib3R8ZW58MHx8fHwxNzYxMTQ2NDMwfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "cute robot"
+      "description": "Cartoon girl with yellow hair",
+      "imageUrl": "https://images.unsplash.com/photo-1715247466949-b6844b69dcd5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y2FydG9vbiUyMGdpcmwlMjB5ZWxsb3clMjBoYWlyfGVufDB8fHx8MTc2MTIxMjUwNXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cartoon girl yellow hair"
     },
     {
       "id": "avatar2",
-      "description": "A friendly cartoon monster",
-      "imageUrl": "https://images.unsplash.com/photo-1758124993030-3465a0187f84?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjYXJ0b29uJTIwbW9uc3RlcnxlbnwwfHx8fDE3NjEyMTIyOTV8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "cartoon monster"
+      "description": "Cartoon girl with blue hair",
+      "imageUrl": "https://images.unsplash.com/photo-1692899213302-dc0911eee10a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjYXJ0b29uJTIwZ2lybCUyMGJsdWUlMjBoYWlyfGVufDB8fHx8MTc2MTIxMjUwNXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cartoon girl blue hair"
     },
     {
       "id": "avatar3",
-      "description": "A happy cartoon cat",
-      "imageUrl": "https://images.unsplash.com/photo-1737796348572-6030b08eb7ee?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjYXJ0b29uJTIwY2F0fGVufDB8fHx8MTc2MTE0OTkwNnww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "cartoon cat"
+      "description": "Cartoon girl with pink hair",
+      "imageUrl": "https://images.unsplash.com/photo-1565898559217-715bc3c3cf1b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjYXJ0b29uJTIwZ2lybCUyMHBpbmslMjBoYWlyfGVufDB8fHx8MTc2MTIxMjUwNXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cartoon girl pink hair"
     },
     {
       "id": "avatar4",
-      "description": "A joyful cartoon dog",
-      "imageUrl": "https://images.unsplash.com/photo-1555370358-a7ce3ab16f60?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxjYXJ0b29uJTIwZG9nfGVufDB8fHx8MTc2MTIxMjI5NXww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "cartoon dog"
+      "description": "Cartoon girl with brown hair",
+      "imageUrl": "https://images.unsplash.com/photo-1633291851903-b684b574d58e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjYXJ0b29uJTIwZ2lybCUyMGJyb3duJTIwaGFpcnxlbnwwfHx8fDE3NjEyMTI1MDV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cartoon girl brown hair"
     },
     {
       "id": "avatar5",
-      "description": "A playful cartoon alien",
-      "imageUrl": "https://images.unsplash.com/photo-1610714872462-2d62b7dfecf4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjdXRlJTIwYWxpZW58ZW58MHx8fHwxNzYxMjEyMjk1fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "cute alien"
+      "description": "Cartoon boy with green hair",
+      "imageUrl": "https://images.unsplash.com/photo-1636814129985-20bfa3581f8f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjYXJ0b29uJTIwYm95JTIwZ3JlZW4lMjBoYWlyfGVufDB8fHx8MTc2MTIxMjUwNXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cartoon boy green hair"
     },
     {
       "id": "avatar6",
-      "description": "A sweet cartoon fox",
-      "imageUrl": "https://images.unsplash.com/photo-1706530593874-3adf001c2aa6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxjYXJ0b29uJTIwZm94fGVufDB8fHx8MTc2MTIxMjI5NXww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "cartoon fox"
+      "description": "Cartoon boy with brown hair",
+      "imageUrl": "https://images.unsplash.com/photo-1625749596163-d6304ea8c5ff?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjYXJ0b29uJTIwYm95JTIwYnJvd24lMjBoYWlyfGVufDB8fHx8MTc2MTIxMjUwNXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cartoon boy brown hair"
     },
     {
       "id": "avatar7",
-      "description": "A brave cartoon astronaut",
-      "imageUrl": "https://images.unsplash.com/photo-1644200787637-6ecdbd110c63?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxjYXJ0b29uJTIwYXN0cm9uYXV0fGVufDB8fHx8MTc2MTIxMjI5Nnww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "cartoon astronaut"
+      "description": "Cartoon boy with orange hair",
+      "imageUrl": "https://images.unsplash.com/photo-1723144290064-33efe64705f5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxjYXJ0b29uJTIwYm95JTIwb3JhbmdlJTIwaGFpcnxlbnwwfHx8fDE3NjEyMTI1MDV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cartoon boy orange hair"
     },
     {
       "id": "avatar8",
-      "description": "A cuddly cartoon panda",
-      "imageUrl": "https://images.unsplash.com/photo-1728132875134-12bd0ae5bc84?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjYXJ0b29uJTIwcGFuZGF8ZW58MHx8fHwxNzYxMjAxMzU4fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "cartoon panda"
+      "description": "Cartoon boy with blue hair",
+      "imageUrl": "https://images.unsplash.com/photo-1692899213302-dc0911eee10a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjYXJ0b29uJTIwYm95JTIwYmx1ZSUyMGhhaXJ8ZW58MHx8fHwxNzYxMjEyNTA1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cartoon boy blue hair"
+    },
+    {
+      "id": "avatar9",
+      "description": "Cartoon girl with orange hair",
+      "imageUrl": "https://images.unsplash.com/photo-1722393606871-576ea7bd34c7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxjYXJ0b29uJTIwZ2lybCUyMG9yYW5nZSUyMGhhaXJ8ZW58MHx8fHwxNzYxMjEyNTA1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cartoon girl orange hair"
+    },
+    {
+      "id": "avatar10",
+      "description": "Cartoon girl with light green hair",
+      "imageUrl": "https://images.unsplash.com/photo-1633132300691-ce0c39fb8dfb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjYXJ0b29uJTIwZ2lybCUyMGxpZ2h0JTIwZ3JlZW58ZW58MHx8fHwxNzYxMjEyNTA1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cartoon girl light green"
+    },
+    {
+      "id": "avatar11",
+      "description": "Cartoon girl with dark hair",
+      "imageUrl": "https://images.unsplash.com/photo-1622925926319-307997ca88e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y2FydG9vbiUyMGdpcmwlMjBkYXJrJTIwaGFpcnxlbnwwfHx8fDE3NjEyMTI1MDV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cartoon girl dark hair"
+    },
+    {
+      "id": "avatar12",
+      "description": "Cartoon boy with grey hair",
+      "imageUrl": "https://images.unsplash.com/photo-1703092268687-3716a99c29d2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjYXJ0b29uJTIwYm95JTIwZ3JleSUyMGhhaXJ8ZW58MHx8fHwxNzYxMjEyNTA1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cartoon boy grey hair"
+    },
+    {
+      "id": "avatar13",
+      "description": "Cartoon boy with light brown hair",
+      "imageUrl": "https://images.unsplash.com/photo-1758782213616-7b4cd41eff29?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjYXJ0b29uJTIwYm95JTIwbGlnaHQlMjBicm93bnxlbnwwfHx8fDE3NjEyMTI1MDV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cartoon boy light brown"
+    },
+    {
+      "id": "avatar14",
+      "description": "Cartoon girl with bright hair",
+      "imageUrl": "https://images.unsplash.com/photo-1662878856638-7d317c1a1a3c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxjYXJ0b29uJTIwZ2lybCUyMGJyaWdodCUyMGhhaXJ8ZW58MHx8fHwxNzYxMjEyNTA1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cartoon girl bright hair"
+    },
+    {
+      "id": "avatar15",
+      "description": "Cartoon boy in a mask",
+      "imageUrl": "https://images.unsplash.com/photo-1666130297772-d15dbf5658a8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjYXJ0b29uJTIwYm95JTIwbWFza3xlbnwwfHx8fDE3NjEyMTI1MDV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cartoon boy mask"
+    },
+    {
+      "id": "avatar16",
+      "description": "Cartoon girl with purple hair",
+      "imageUrl": "https://images.unsplash.com/photo-1574773004910-1eeaabb62b55?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxjYXJ0b29uJTIwZ2lybCUyMHB1cnBsZSUyMGhhaXJ8ZW58MHx8fHwxNzYxMjEyNTA1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cartoon girl purple hair"
     },
     {
       "id": "pet-happy",
@@ -81,7 +129,7 @@
     {
       "id": "landing-hero",
       "description": "Hero image for the landing page",
-      "imageUrl": "https://images.unsplash.com/photo-1601751839176-7d023cb55ed8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxkYXNoYm9hcmQlMjBraWRzJTIwYXBwfGVufDB8fHx8MTc2MTIwNzA2MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1670034353433-65a76b0b2797?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxkYXNoYm9hcmQlMjBraWRzJTIwYXBwfGVufDB8fHx8MTc2MTIwNzA2MXww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "dashboard kids app"
     }
   ]
