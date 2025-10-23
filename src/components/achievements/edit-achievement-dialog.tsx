@@ -141,7 +141,7 @@ export function EditAchievementDialog({
             </Label>
             <Input
               id="imageUrl"
-              value={formData.imageUrl}
+              value={formData.imageUrl || ''}
               onChange={e => handleChange('imageUrl', e.target.value)}
               className="col-span-3"
               placeholder="https://example.com/image.png"
@@ -173,7 +173,7 @@ export function EditAchievementDialog({
                     )}
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />
-                    {formData.dateUnlocked ? format(formData.dateUnlocked, 'PPP') : <span><ClientOnlyT tKey="achievements.edit.pickDate" /></span>}
+                    {formData.dateUnlocked ? format(new Date(formData.dateUnlocked), 'PPP') : <span><ClientOnlyT tKey="achievements.edit.pickDate" /></span>}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0">
@@ -190,7 +190,7 @@ export function EditAchievementDialog({
         </div>
         <DialogFooter className="sm:justify-between">
             {!isNew ? (
-                <Button variant="ghost" className="text-destructive hover:text-destructive justify-self-start" onClick={handleDelete}>
+                <Button variant="ghost" className="text-destructive hover:text-destructive justify-self-start mr-auto" onClick={handleDelete}>
                     <Trash2 className="mr-2 h-4 w-4" />
                     <ClientOnlyT tKey="achievements.edit.delete" />
                 </Button>
