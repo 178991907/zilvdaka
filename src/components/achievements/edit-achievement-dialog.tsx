@@ -23,7 +23,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { ClientOnlyT } from '../layout/app-sidebar';
 import { Achievement } from '@/lib/data';
-import { Icon, IconName, iconNames } from '../icons';
+import { Icon, iconNames } from '../icons';
 import { Switch } from '../ui/switch';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { CalendarIcon, Trash2 } from 'lucide-react';
@@ -112,8 +112,8 @@ export function EditAchievementDialog({ achievement, trigger, onSave, onDelete }
             </Label>
             <Input id="title" value={title} onChange={(e) => setTitle(e.target.value)} className="col-span-3" />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="description" className="text-right">
+          <div className="grid grid-cols-4 items-start gap-4">
+            <Label htmlFor="description" className="text-right pt-2">
               <ClientOnlyT tKey='achievements.edit.descriptionLabel' />
             </Label>
             <Textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} className="col-span-3" />
