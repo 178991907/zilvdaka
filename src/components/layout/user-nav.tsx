@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { user } from '@/lib/data';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { Avatars } from '@/lib/placeholder-images';
 import Link from 'next/link';
 import { CreditCard, LogOut, Settings, User as UserIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -19,7 +19,7 @@ import { ClientOnlyT } from './app-sidebar';
 
 export function UserNav() {
   const { t } = useTranslation();
-  const avatarImage = PlaceHolderImages.find(img => img.id === user.avatar);
+  const selectedAvatar = Avatars.find(img => img.id === user.avatar);
 
   return (
     <DropdownMenu>
@@ -28,9 +28,12 @@ export function UserNav() {
           variant="ghost"
           className="relative h-10 w-full justify-start gap-2 px-2"
         >
-          <Avatar className="h-8 w-8">
-            <AvatarImage src={avatarImage?.imageUrl} alt={user.name} data-ai-hint={avatarImage?.imageHint} />
-            <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+          <Avatar className="h-8 w-8 bg-card p-1">
+            {selectedAvatar ? (
+              <div dangerouslySetInnerHTML={{ __html: selectedAvatar.svg }} className="w-full h-full" />
+            ) : (
+              <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+            )}
           </Avatar>
            <div className="flex flex-col items-start truncate">
               <span className="font-semibold text-sm truncate">{user.name}</span>
