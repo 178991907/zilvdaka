@@ -8,7 +8,14 @@ import { CheckCircle, Trophy, Star, Shield } from 'lucide-react';
 export default function LandingPage() {
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      <header className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-end items-center">
+      <header className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+        <Image
+          src="https://pic1.imgdb.cn/item/6817c79a58cb8da5c8dc723f.png"
+          alt="App Logo"
+          width={180}
+          height={60}
+          priority
+        />
         <Button asChild>
           <Link href="/dashboard">Get Started</Link>
         </Button>
