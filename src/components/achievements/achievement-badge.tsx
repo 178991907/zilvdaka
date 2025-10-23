@@ -1,25 +1,39 @@
 'use client';
 
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Achievement } from '@/lib/data';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
-import { Lock } from 'lucide-react';
+import { Lock, Pencil } from 'lucide-react';
 import { Icon } from '@/components/icons';
 import { ClientOnlyT } from '../layout/app-sidebar';
+import { EditAchievementDialog } from './edit-achievement-dialog';
+import { Button } from '../ui/button';
 
 interface AchievementBadgeProps {
   achievement: Achievement;
+  onSave: (achievement: Achievement) => void;
+  onDelete: (id: string) => void;
 }
 
-export default function AchievementBadge({ achievement }: AchievementBadgeProps) {
+export default function AchievementBadge({ achievement, onSave, onDelete }: AchievementBadgeProps) {
   return (
     <div className={cn(
-        "relative flex flex-col items-center justify-start text-center aspect-square rounded-xl transition-all duration-300 transform hover:scale-105 p-4",
+        "relative flex flex-col items-center justify-start text-center aspect-square rounded-xl transition-all duration-300 transform hover:scale-105 p-4 group",
         achievement.unlocked 
           ? 'bg-accent/20 border-2 border-accent/50 shadow-lg shadow-accent/10' 
           : 'bg-muted/50'
       )}>
+        <EditAchievementDialog 
+            achievement={achievement} 
+            onSave={onSave}
+            onDelete={onDelete}
+            trigger={
+                 <Button variant="ghost" size="icon" className="absolute top-1 right-1 h-7 w-7 z-20 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <Pencil className="h-4 w-4" />
+                </Button>
+            }
+        />
+       
         {achievement.unlocked && (
             <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-slate-700/25 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]"></div>
         )}
@@ -56,21 +70,10 @@ export default function AchievementBadge({ achievement }: AchievementBadgeProps)
       {achievement.unlocked && achievement.dateUnlocked && (
         <div className="w-full mt-2 z-10">
             <p className="text-xs text-muted-foreground w-full">
-                <ClientOnlyT tKey='achievements.unlockedOn' />: {format(achievement.dateUnlocked, 'MMM d, yyyy')}
+                <ClientOnlyT tKey='achievements.unlockedOn' />: {format(new Date(achievement.dateUnlocked), 'MMM d, yyyy')}
             </p>
         </div>
       )}
-       <style jsx>{`
-        .shimmer {
-          animation: shimmer 5s infinite linear;
-          background: linear-gradient(110deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0) 60%);
-          background-size: 200% 100%;
-        }
-        @keyframes shimmer {
-          0% { background-position: 200% 0; }
-          100% { background-position: -200% 0; }
-        }
-      `}</style>
     </div>
   );
 }

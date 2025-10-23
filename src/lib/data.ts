@@ -1,5 +1,5 @@
 import type { LucideIcon } from 'lucide-react';
-import { Book, Brush, Bed, Atom, Bike, Dumbbell, ShieldCheck, Star, Trophy, Zap, Ant, Swords, Mountain, Flower, Gem } from 'lucide-react';
+import { Book, Brush, Bed, Atom, Bike, Dumbbell, ShieldCheck, Star, Trophy, Zap, Bug, Swords, Mountain, Flower, Gem } from 'lucide-react';
 
 export type Task = {
   id: string;
@@ -17,7 +17,7 @@ export type Achievement = {
   description: string;
   icon: string;
   unlocked: boolean;
-  dateUnlocked?: Date;
+  dateUnlocked?: Date | string;
 };
 
 export type User = {
@@ -78,64 +78,7 @@ export const updateUser = (newUserData: Partial<User>) => {
 };
 
 
-export const tasks: Task[] = [
-  {
-    id: '1',
-    title: 'Read for 20 minutes',
-    category: 'Learning',
-    icon: Book,
-    difficulty: 'Easy',
-    completed: true,
-    dueDate: new Date(),
-  },
-  {
-    id: '2',
-    title: 'Practice drawing',
-    category: 'Creative',
-    icon: Brush,
-    difficulty: 'Medium',
-    completed: false,
-    dueDate: new Date(),
-  },
-  {
-    id: '3',
-    title: 'Go to bed on time',
-    category: 'Health',
-    icon: Bed,
-    difficulty: 'Easy',
-    completed: false,
-    dueDate: new Date(),
-  },
-  {
-    id: '4',
-    title: 'Finish science homework',
-    category: 'School',
-    icon: Atom,
-    difficulty: 'Hard',
-    completed: true,
-    dueDate: new Date(new Date().setDate(new Date().getDate() - 1)),
-  },
-  {
-    id: '5',
-    title: 'Bike ride in the park',
-    category: 'Activity',
-    icon: Bike,
-    difficulty: 'Medium',
-    completed: false,
-    dueDate: new Date(new Date().setDate(new Date().getDate() + 1)),
-  },
-   {
-    id: '6',
-    title: 'Morning workout',
-    category: 'Health',
-    icon: Dumbbell,
-    difficulty: 'Medium',
-    completed: true,
-    dueDate: new Date(),
-  },
-];
-
-export const achievements: Achievement[] = [
+const defaultAchievements: Achievement[] = [
   {
     id: '1',
     title: 'First Mission',
@@ -185,7 +128,7 @@ export const achievements: Achievement[] = [
     id: 'ant_bronze',
     title: 'Little Ant - Bronze',
     description: '1-day streak.',
-    icon: 'Ant',
+    icon: 'Bug',
     unlocked: true,
     dateUnlocked: new Date(),
   },
@@ -193,7 +136,7 @@ export const achievements: Achievement[] = [
     id: 'ant_silver',
     title: 'Little Ant - Silver',
     description: '3-day streak.',
-    icon: 'Ant',
+    icon: 'Bug',
     unlocked: true,
     dateUnlocked: new Date(),
   },
@@ -201,7 +144,7 @@ export const achievements: Achievement[] = [
     id: 'ant_gold',
     title: 'Little Ant - Gold',
     description: '7-day streak.',
-    icon: 'Ant',
+    icon: 'Bug',
     unlocked: false,
   },
   {
@@ -287,6 +230,95 @@ export const achievements: Achievement[] = [
     description: '3-year streak.',
     icon: 'Gem',
     unlocked: false,
+  },
+];
+
+export const getAchievements = (): Achievement[] => {
+    if (typeof window === 'undefined') {
+        return defaultAchievements;
+    }
+    try {
+        const storedAchievements = localStorage.getItem('habit-heroes-achievements');
+        if (storedAchievements) {
+            return JSON.parse(storedAchievements);
+        }
+    } catch (error) {
+        console.error("Failed to parse achievements from localStorage", error);
+    }
+    // Set default achievements if none are in localStorage
+    localStorage.setItem('habit-heroes-achievements', JSON.stringify(defaultAchievements));
+    return defaultAchievements;
+};
+
+export let achievements = getAchievements();
+
+export const updateAchievements = (newAchievements: Achievement[]) => {
+    if (typeof window !== 'undefined') {
+        achievements = newAchievements;
+        try {
+            localStorage.setItem('habit-heroes-achievements', JSON.stringify(newAchievements));
+            window.dispatchEvent(new CustomEvent('achievementsUpdated'));
+        } catch (error) {
+            console.error("Failed to save achievements to localStorage", error);
+        }
+    }
+};
+
+
+export const tasks: Task[] = [
+  {
+    id: '1',
+    title: 'Read for 20 minutes',
+    category: 'Learning',
+    icon: Book,
+    difficulty: 'Easy',
+    completed: true,
+    dueDate: new Date(),
+  },
+  {
+    id: '2',
+    title: 'Practice drawing',
+    category: 'Creative',
+    icon: Brush,
+    difficulty: 'Medium',
+    completed: false,
+    dueDate: new Date(),
+  },
+  {
+    id: '3',
+    title: 'Go to bed on time',
+    category: 'Health',
+    icon: Bed,
+    difficulty: 'Easy',
+    completed: false,
+    dueDate: new Date(),
+  },
+  {
+    id: '4',
+    title: 'Finish science homework',
+    category: 'School',
+    icon: Atom,
+    difficulty: 'Hard',
+    completed: true,
+    dueDate: new Date(new Date().setDate(new Date().getDate() - 1)),
+  },
+  {
+    id: '5',
+    title: 'Bike ride in the park',
+    category: 'Activity',
+    icon: Bike,
+    difficulty: 'Medium',
+    completed: false,
+    dueDate: new Date(new Date().setDate(new Date().getDate() + 1)),
+  },
+   {
+    id: '6',
+    title: 'Morning workout',
+    category: 'Health',
+    icon: Dumbbell,
+    difficulty: 'Medium',
+    completed: true,
+    dueDate: new Date(),
   },
 ];
 

@@ -13,22 +13,24 @@ import {
   Bug,
 } from 'lucide-react';
 
-export type IconName = 'Book' | 'Brush' | 'ShieldCheck' | 'Star' | 'Trophy' | 'Zap' | 'Ant' | 'Swords' | 'Mountain' | 'Flower' | 'Gem';
+export type IconName = 'Book' | 'Brush' | 'ShieldCheck' | 'Star' | 'Trophy' | 'Zap' | 'Swords' | 'Mountain' | 'Flower' | 'Gem' | 'Bug';
 
-const icons: { [key in IconName | 'Bug']: LucideIcon } = {
+const icons: { [key in IconName]: LucideIcon } = {
   Book,
   Brush,
   ShieldCheck,
   Star,
   Trophy,
   Zap,
-  Ant: Bug, // Use Bug icon as a replacement for Ant
   Swords,
   Mountain,
   Flower,
   Gem,
   Bug,
 };
+
+export const iconNames = Object.keys(icons) as IconName[];
+
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {
   name: string;
@@ -37,7 +39,7 @@ interface IconProps extends React.SVGProps<SVGSVGElement> {
 export const Icon = ({ name, ...props }: IconProps) => {
   const LucideIcon = icons[name as IconName];
   if (!LucideIcon) {
-    return null;
+    return <icons.Star {...props} />; // Fallback to a default icon
   }
   return <LucideIcon {...props} />;
 };
