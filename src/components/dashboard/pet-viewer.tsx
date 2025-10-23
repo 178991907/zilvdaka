@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { Star } from 'lucide-react';
+import { Star, Zap, Info } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ClientOnlyT } from '../layout/app-sidebar';
 import { getUser, User } from '@/lib/data';
@@ -107,6 +107,14 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress }) => {
         />
       </motion.div>
       
+       <div className="absolute bottom-4 right-4 w-1/3 bg-background/80 backdrop-blur-sm p-3 rounded-lg text-xs text-muted-foreground shadow-lg">
+          <h4 className="font-bold text-foreground mb-2 flex items-center gap-1.5"><Info className="w-4 h-4 text-primary" />Pet Guide</h4>
+          <ul className="space-y-1.5">
+            <li><strong className="text-foreground">XP:</strong> <ClientOnlyT tKey='petGuide.xp' /></li>
+            <li><strong className="text-foreground">Level:</strong> <ClientOnlyT tKey='petGuide.level' tOptions={{ level: user.level }}/></li>
+            <li><strong className="text-foreground">Skills:</strong> <ClientOnlyT tKey='petGuide.skills' /></li>
+          </ul>
+      </div>
     </Card>
   );
 };
