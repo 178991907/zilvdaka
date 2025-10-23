@@ -16,4 +16,6 @@ export {
   Pause,
   Play,
   Info,
+  Pencil,
+  Check,
 } from 'lucide-react';

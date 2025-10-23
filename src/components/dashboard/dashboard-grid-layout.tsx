@@ -69,12 +69,19 @@ const defaultLayouts = {
 };
 
 
-const DashboardGridLayout = ({ children }: { children: React.ReactNode }) => {
+const DashboardGridLayout = ({ children, isEditing }: { children: React.ReactNode, isEditing: boolean }) => {
   const [isMounted, setIsMounted] = useState(false);
   const [layouts, setLayouts] = useState<{[key: string]: Layout[]}>(() => getFromLS('layouts') || defaultLayouts);
 
   useEffect(() => {
     setIsMounted(true);
+    // Set layouts from LS on mount
+    const savedLayouts = getFromLS('layouts');
+    if (savedLayouts) {
+        setLayouts(savedLayouts);
+    } else {
+        setLayouts(defaultLayouts);
+    }
   }, []);
   
   const onLayoutChange = (layout: Layout[], allLayouts: { [key: string]: Layout[] }) => {
@@ -104,8 +111,8 @@ const DashboardGridLayout = ({ children }: { children: React.ReactNode }) => {
         cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
         rowHeight={100}
         onLayoutChange={onLayoutChange}
-        isDraggable={true}
-        isResizable={true}
+        isDraggable={isEditing}
+        isResizable={isEditing}
         draggableHandle=".react-grid-drag-handle"
     >
         {children}

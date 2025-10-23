@@ -1,6 +1,6 @@
 'use client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Target, Zap, Info } from 'lucide-react';
+import { Target, Zap, Info, Pencil, Check } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { getTasks, getUser, User, Task } from '@/lib/data';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -14,11 +14,13 @@ import { useTranslation } from 'react-i18next';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { Progress } from '@/components/ui/progress';
 import DashboardGridLayout from '@/components/dashboard/dashboard-grid-layout';
+import { Button } from '@/components/ui/button';
 
 export default function DashboardPage() {
   const [user, setUser] = useState<User | null>(null);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isClient, setIsClient] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -57,13 +59,30 @@ export default function DashboardPage() {
        <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 border-b bg-background px-4 shrink-0">
           <SidebarTrigger className="md:hidden" />
           <h1 className="text-xl font-semibold"><ClientOnlyT tKey='dashboard.title' /></h1>
-          <div className="ml-auto flex items-center">
-            {isClient ? <DigitalClock /> : <Skeleton className="h-16 w-48" />}
+          <div className="ml-auto flex items-center gap-4">
+            {isClient ? (
+              <>
+                <Button variant="outline" size="sm" onClick={() => setIsEditing(!isEditing)}>
+                  {isEditing ? (
+                    <>
+                      <Check className="mr-2 h-4 w-4" />
+                      <ClientOnlyT tKey="dashboard.done" />
+                    </>
+                  ) : (
+                    <>
+                      <Pencil className="mr-2 h-4 w-4" />
+                      <ClientOnlyT tKey="dashboard.editLayout" />
+                    </>
+                  )}
+                </Button>
+                <DigitalClock />
+              </>
+            ) : <Skeleton className="h-9 w-24" />}
           </div>
         </header>
 
         <main className="flex-grow p-4 md:p-8">
-            <DashboardGridLayout>
+            <DashboardGridLayout isEditing={isEditing}>
                 <div key="pet" className="overflow-hidden rounded-lg">
                     <Card className="flex flex-col h-full">
                         <CardHeader>
@@ -87,7 +106,9 @@ export default function DashboardPage() {
                                 </>
                             ) : (
                                 <div className="flex-grow flex flex-col">
-                                    <Skeleton className="flex-grow w-full" />
+                                    <div className='flex items-start justify-center'>
+                                      <Skeleton className="flex-grow w-full" />
+                                    </div>
                                     <div className="mt-4">
                                         <Skeleton className="h-6 w-24 mx-auto" />
                                         <Skeleton className="h-4 w-16 mx-auto mt-2" />
