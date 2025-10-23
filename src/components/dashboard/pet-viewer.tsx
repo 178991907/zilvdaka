@@ -36,7 +36,7 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress, className }) => {
 
   const petContainerRef = useRef<HTMLDivElement>(null);
   
-  const petScale = 0.6 + (progress / 100) * 0.3;
+  const petScale = (0.6 + (progress / 100) * 0.3) * 0.5;
 
   useEffect(() => {
     const handleProfileUpdate = () => {
