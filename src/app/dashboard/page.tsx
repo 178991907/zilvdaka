@@ -1,7 +1,7 @@
+
 'use client';
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
 import { Target, Zap, Info } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { getTasks, getUser, User, Task } from '@/lib/data';
@@ -14,11 +14,13 @@ import { SidebarTrigger } from '@/components/ui/sidebar';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { Pets } from '@/lib/pets';
 import { Button } from '@/components/ui/button';
+import { useTranslation } from 'react-i18next';
 
 export default function DashboardPage() {
   const [user, setUser] = useState<User | null>(null);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isClient, setIsClient] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const loadData = () => {
@@ -47,6 +49,13 @@ export default function DashboardPage() {
   
   const petProgress = user ? (user.xp / user.xpToNextLevel) * 100 : 0;
   const currentPet = user ? Pets.find(p => p.id === user.petStyle) : null;
+
+  const petIntroItems = [
+    t('pets.description.item1'),
+    t('pets.description.item2'),
+    t('pets.description.item3'),
+    t('pets.description.item4'),
+  ];
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
@@ -114,34 +123,38 @@ export default function DashboardPage() {
                             </Card>
                         </div>
                     </div>
-                    <div className="space-y-6">
-                        <Card>
-                            <CardHeader className="flex flex-row items-start gap-4">
-                              <Info className="h-6 w-6 text-primary mt-1" />
-                              <div className="flex-1">
-                                <CardTitle><ClientOnlyT tKey='dashboard.petIntro' /></CardTitle>
-                                {isClient && currentPet ? (
-                                  <>
-                                    <CardDescription className="whitespace-pre-line mt-2">
-                                        <ClientOnlyT tKey={'pets.description.default'} />
-                                    </CardDescription>
-                                    <Button variant="link" asChild className="px-0 -mx-1 mt-2">
-                                        <Link href="/dashboard/settings">
-                                            <ClientOnlyT tKey='dashboard.changePet' />
-                                        </Link>
-                                    </Button>
-                                  </>
-                                ) : (
-                                    <div className="mt-2 space-y-2">
-                                        <Skeleton className="h-4 w-full" />
-                                        <Skeleton className="h-4 w-full" />
-                                        <Skeleton className="h-4 w-3/4" />
-                                    </div>
-                                )}
+                     <Card>
+                        <CardHeader className="flex flex-row items-start gap-4">
+                          <Info className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
+                          <div className="flex-1">
+                            <CardTitle><ClientOnlyT tKey='dashboard.petIntroTitle' /></CardTitle>
+                            {isClient && currentPet ? (
+                              <div className="mt-2 text-sm text-muted-foreground">
+                                <p className="mb-3"><ClientOnlyT tKey='pets.description.fullIntro' /></p>
+                                <ul className="space-y-2">
+                                  {petIntroItems.map((item, index) => (
+                                    <li key={index} className="flex items-start">
+                                      <span className="mr-2 text-primary">{item.trim().startsWith('•') ? '' : '•'}</span>
+                                      <span>{item.trim().replace(/^•\s*/, '')}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                                <Button variant="link" asChild className="px-0 -mx-1 mt-3">
+                                    <Link href="/dashboard/settings">
+                                        <ClientOnlyT tKey='dashboard.changePet' />
+                                    </Link>
+                                </Button>
                               </div>
-                            </CardHeader>
-                        </Card>
-                    </div>
+                            ) : (
+                                <div className="mt-2 space-y-2">
+                                    <Skeleton className="h-4 w-full" />
+                                    <Skeleton className="h-4 w-full" />
+                                    <Skeleton className="h-4 w-3/4" />
+                                </div>
+                            )}
+                          </div>
+                        </CardHeader>
+                    </Card>
                 </div>
                 <TaskList />
             </div>
@@ -149,3 +162,5 @@ export default function DashboardPage() {
     </div>
   );
 }
+
+    
