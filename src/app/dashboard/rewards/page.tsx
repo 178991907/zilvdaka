@@ -22,6 +22,10 @@ export default function RewardsPage() {
     { name: '30 minutes of screen time', tasksRequired: 5 },
     { name: 'Ice cream trip', tasksRequired: 10 },
   ]);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [newRewardName, setNewRewardName] = useState('');
+  const [newTasksRequired, setNewTasksRequired] = useState('');
+  const [newDaysRequired, setNewDaysRequired] = useState('');
 
   const getRewardDescription = (reward: Reward): { tKey: string, tOptions?: any } => {
     const tasks = reward.tasksRequired;
@@ -35,6 +39,24 @@ export default function RewardsPage() {
         return { tKey: 'settings.parentalControls.daysToComplete', tOptions: { count: days } };
     }
     return { tKey: 'settings.parentalControls.noRequirement' };
+  };
+
+  const handleAddReward = () => {
+    if (!newRewardName.trim()) return;
+
+    const newReward: Reward = {
+      name: newRewardName.trim(),
+      tasksRequired: newTasksRequired ? parseInt(newTasksRequired, 10) : undefined,
+      daysRequired: newDaysRequired ? parseInt(newDaysRequired, 10) : undefined,
+    };
+
+    setRewards(prev => [...prev, newReward]);
+
+    // Reset fields and close dialog
+    setNewRewardName('');
+    setNewTasksRequired('');
+    setNewDaysRequired('');
+    setIsDialogOpen(false);
   };
 
   return (
@@ -52,7 +74,7 @@ export default function RewardsPage() {
                 </div>
                 <div>
                     <div className="flex justify-between items-center mb-4">
-                        <Dialog>
+                        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                             <DialogTrigger asChild>
                                 <Button>
                                     <PlusCircle className="mr-2 h-4 w-4" />
@@ -71,23 +93,43 @@ export default function RewardsPage() {
                                         <Label htmlFor="reward-name" className="text-right">
                                             <ClientOnlyT tKey='settings.parentalControls.addRewardDialog.rewardName' />
                                         </Label>
-                                        <Input id="reward-name" placeholder={t('settings.parentalControls.addRewardDialog.rewardNamePlaceholder')} className="col-span-3" />
+                                        <Input
+                                          id="reward-name"
+                                          placeholder={t('settings.parentalControls.addRewardDialog.rewardNamePlaceholder')}
+                                          className="col-span-3"
+                                          value={newRewardName}
+                                          onChange={(e) => setNewRewardName(e.target.value)}
+                                        />
                                     </div>
                                     <div className="grid grid-cols-4 items-center gap-4">
                                         <Label htmlFor="tasks-required" className="text-right">
                                             <ClientOnlyT tKey='settings.parentalControls.addRewardDialog.tasksRequired' />
                                         </Label>
-                                        <Input id="tasks-required" type="number" placeholder="5" className="col-span-3" />
+                                        <Input
+                                          id="tasks-required"
+                                          type="number"
+                                          placeholder="5"
+                                          className="col-span-3"
+                                          value={newTasksRequired}
+                                          onChange={(e) => setNewTasksRequired(e.target.value)}
+                                        />
                                     </div>
                                     <div className="grid grid-cols-4 items-center gap-4">
                                         <Label htmlFor="days-required" className="text-right">
                                             <ClientOnlyT tKey='settings.parentalControls.addRewardDialog.daysRequired' />
                                         </Label>
-                                        <Input id="days-required" type="number" placeholder="3" className="col-span-3" />
+                                        <Input
+                                          id="days-required"
+                                          type="number"
+                                          placeholder="3"
+                                          className="col-span-3"
+                                          value={newDaysRequired}
+                                          onChange={(e) => setNewDaysRequired(e.target.value)}
+                                        />
                                     </div>
                                 </div>
                                 <DialogFooter>
-                                <Button type="submit"><ClientOnlyT tKey='settings.parentalControls.addRewardDialog.createButton' /></Button>
+                                <Button type="submit" onClick={handleAddReward}><ClientOnlyT tKey='settings.parentalControls.addRewardDialog.createButton' /></Button>
                                 </DialogFooter>
                             </DialogContent>
                         </Dialog>
