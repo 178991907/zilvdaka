@@ -12,18 +12,7 @@ const resources = {
     translation: zhTranslation,
   },
   'en-zh': {
-    translation: {
-      ...zhTranslation,
-      sidebar: {
-        dashboard: `${zhTranslation.sidebar.dashboard} (Dashboard)`,
-        tasks: `${zhTranslation.sidebar.tasks} (Tasks)`,
-        achievements: `${zhTranslation.sidebar.achievements} (Achievements)`,
-        reports: `${zhTranslation.sidebar.reports} (Reports)`,
-        settings: `${zhTranslation.sidebar.settings} (Settings)`,
-        logout: `${zhTranslation.sidebar.logout} (Logout)`,
-      },
-      appName: `${zhTranslation.appName} (Habit Heroes)`,
-    }
+    translation: enTranslation, // Use one as a base, the ClientOnlyT will handle bilingual
   }
 };
 

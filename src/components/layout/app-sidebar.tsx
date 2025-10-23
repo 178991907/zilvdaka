@@ -33,22 +33,29 @@ export const ClientOnlyT = ({ tKey, tOptions }: { tKey: string; tOptions?: any }
     setIsClient(true);
   }, []);
 
-  // On the server, and on initial client render, render the fallback text.
-  // After hydration (in the useEffect), we render the translated text.
-  if (!isClient) {
-    let fallbackText = tKey;
-    try {
-        const resources = i18n.getResourceBundle('en', 'translation');
-        fallbackText = tKey.split('.').reduce((acc, part) => acc && (acc as any)[part], resources);
-        if (tOptions && typeof fallbackText === 'string') {
-           Object.keys(tOptions).forEach(key => {
-                fallbackText = fallbackText.replace(new RegExp(`{{${key}}}`, 'g'), tOptions[key]);
-           });
-        }
-    } catch(e) {
-        // ignore if path not found
+  const getTranslation = (lng: string, key: string, options?: any) => {
+    let translation = i18n.getResource(lng, 'translation', key) as string | undefined;
+    if (translation && options) {
+      Object.keys(options).forEach(optKey => {
+        translation = translation!.replace(new RegExp(`{{${optKey}}}`, 'g'), options[optKey]);
+      });
     }
-    return fallbackText || tKey;
+    return translation || key;
+  };
+  
+  if (!isClient) {
+    const fallbackText = getTranslation('en', tKey, tOptions);
+    return fallbackText;
+  }
+
+  if (i18n.language === 'en-zh') {
+    const zhText = getTranslation('zh', tKey, tOptions);
+    const enText = getTranslation('en', tKey, tOptions);
+    // Avoid showing the key if translation is missing for both
+    if (zhText !== tKey && enText !== tKey) {
+        return `${zhText} (${enText})`;
+    }
+    return zhText || enText;
   }
 
   return t(tKey, tOptions);
