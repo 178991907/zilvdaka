@@ -18,6 +18,7 @@ import {
   Settings,
   Star,
   LogOut,
+  Gift,
 } from 'lucide-react';
 import { UserNav } from './user-nav';
 import { useTranslation } from 'react-i18next';
@@ -77,6 +78,7 @@ export default function AppSidebar() {
     { href: '/dashboard/tasks', icon: CheckSquare, labelKey: 'sidebar.tasks' },
     { href: '/dashboard/achievements', icon: Trophy, labelKey: 'sidebar.achievements' },
     { href: '/dashboard/reports', icon: BarChart, labelKey: 'sidebar.reports' },
+    { href: '/dashboard/rewards', icon: Gift, labelKey: 'sidebar.rewards' },
     { href: '/dashboard/settings', icon: Settings, labelKey: 'sidebar.settings' },
   ];
 
