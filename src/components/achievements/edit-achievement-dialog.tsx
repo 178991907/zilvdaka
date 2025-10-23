@@ -1,5 +1,5 @@
 'use client';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -75,22 +75,21 @@ export function EditAchievementDialog({ achievement, trigger, onSave, onDelete }
         setOpen(false);
     }
   };
-
-  const handleOpenChange = (isOpen: boolean) => {
-    if (isOpen) {
-        // Reset state when opening
-        setTitle(achievement?.title || '');
-        setDescription(achievement?.description || '');
-        setIcon(achievement?.icon || 'Star');
-        setUnlocked(achievement?.unlocked || false);
-        setDateUnlocked(achievement?.dateUnlocked ? new Date(achievement.dateUnlocked) : undefined);
+  
+  // Use useEffect to reset state when the dialog opens with new `achievement` prop
+  useEffect(() => {
+    if (open) {
+      setTitle(achievement?.title || '');
+      setDescription(achievement?.description || '');
+      setIcon(achievement?.icon || 'Star');
+      setUnlocked(achievement?.unlocked || false);
+      setDateUnlocked(achievement?.dateUnlocked ? new Date(achievement.dateUnlocked) : undefined);
     }
-    setOpen(isOpen);
-  };
+  }, [open, achievement]);
 
 
   return (
-    <Dialog open={open} onOpenChange={handleOpenChange}>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="sm:max-w-[480px]">
         <DialogHeader>
@@ -145,7 +144,7 @@ export function EditAchievementDialog({ achievement, trigger, onSave, onDelete }
             <Label htmlFor="unlocked" className="text-right">
               <ClientOnlyT tKey='achievements.edit.unlocked' />
             </Label>
-             <Switch id="unlocked" checked={unlocked} onCheckedChange={setUnlocked} />
+             <Switch id="unlocked" checked={unlocked} onCheckedChange={setUnlocked} className='justify-self-start' />
           </div>
           {unlocked && (
             <div className="grid grid-cols-4 items-center gap-4">
