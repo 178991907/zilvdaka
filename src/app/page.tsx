@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { getTasks, getUser, User, Task } from '@/lib/data';
 import { Skeleton } from '@/components/ui/skeleton';
 import PetViewer from '@/components/dashboard/pet-viewer';
-import ProgressSummary from '@/components/dashboard/progress-summary';
+import { ProgressSummaryContent } from '@/components/dashboard/progress-summary';
 
 export default function LandingPage() {
   const [user, setUser] = useState<User | null>(null);
@@ -68,40 +68,40 @@ export default function LandingPage() {
               </Button>
             </div>
             
-            <div className="mt-16 max-w-4xl mx-auto">
-              <div className="grid lg:grid-cols-2 gap-8 items-start">
-                  {isClient && user ? (
-                    <PetViewer progress={petProgress} className="min-h-[450px]" />
-                  ) : (
-                    <Skeleton className="h-full min-h-[450px] w-full" />
-                  )}
-
-                <div className="space-y-6 text-left">
+             <div className="mt-16 max-w-lg mx-auto">
+              <div className="flex flex-col items-center gap-8">
                   {isClient && user ? (
                     <>
-                      <ProgressSummary
-                          icon={Target}
-                          titleTKey="dashboard.dailyGoal"
-                          value={`${Math.round(dailyProgress)}%`}
-                          descriptionTKey="dashboard.dailyGoalDescription"
-                          descriptionTPOptions={{ completedTasks, totalTasks }}
-                        />
-                       <ProgressSummary
-                          icon={Zap}
-                          titleTKey="dashboard.xpGained"
-                          value={`${user.xp} XP`}
-                          descriptionTKey="dashboard.xpToNextLevel"
-                          descriptionTPOptions={{ xp: user.xpToNextLevel - user.xp }}
-                          progress={petProgress}
-                        />
+                       <div className="p-6 w-full">
+                        <ProgressSummaryContent
+                            icon={Target}
+                            titleTKey="dashboard.dailyGoal"
+                            value={`${Math.round(dailyProgress)}%`}
+                            descriptionTKey="dashboard.dailyGoalDescription"
+                            descriptionTPOptions={{ completedTasks, totalTasks }}
+                          />
+                      </div>
+                      <div className="p-6">
+                        <PetViewer progress={petProgress} className="min-h-[300px]" />
+                      </div>
+                       <div className="p-6 w-full">
+                         <ProgressSummaryContent
+                            icon={Zap}
+                            titleTKey="dashboard.xpGained"
+                            value={`${user.xp} XP`}
+                            descriptionTKey="dashboard.xpToNextLevel"
+                            descriptionTPOptions={{ xp: user.xpToNextLevel - user.xp }}
+                            progress={petProgress}
+                          />
+                       </div>
                     </>
                   ) : (
                     <>
                       <Skeleton className="h-32 w-full" />
+                      <Skeleton className="h-full min-h-[300px] w-full" />
                       <Skeleton className="h-32 w-full" />
                     </>
                   )}
-                </div>
               </div>
             </div>
 
