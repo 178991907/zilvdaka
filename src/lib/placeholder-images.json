@@ -3,26 +3,26 @@
     {
       "id": "avatar1",
       "description": "User avatar 1",
-      "imageUrl": "https://images.unsplash.com/photo-1741805190401-a95e551b443d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxjaGlsZCUyMGF2YXRhcnxlbnwwfHx8fDE3NjEyMDcwNjF8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "child avatar"
+      "imageUrl": "https://images.unsplash.com/photo-1707734250622-46ab4db80b77?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjdXRlJTIwbW9uc3RlcnxlbnwwfHx8fDE3NjExODU4MDh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cute monster"
     },
     {
       "id": "avatar2",
       "description": "User avatar 2",
-      "imageUrl": "https://images.unsplash.com/photo-1710020494165-4c4bb6b4c7fc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxjaGlsZCUyMGF2YXRhcnxlbnwwfHx8fDE3NjEyMDcwNjF8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "child avatar"
+      "imageUrl": "https://images.unsplash.com/photo-1657644003083-a6f358244cb8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjdXRlJTIwcm9ib3R8ZW58MHx8fHwxNzYxMTQ2NDMwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cute robot"
     },
     {
       "id": "avatar3",
       "description": "User avatar 3",
-      "imageUrl": "https://images.unsplash.com/photo-1758782213616-7b4cd41eff29?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxjaGlsZCUyMGF2YXRhcnxlbnwwfHx8fDE3NjEyMDcwNjF8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "child avatar"
+      "imageUrl": "https://images.unsplash.com/photo-1743964451755-c4a8641a795d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxjYXJ0b29uJTIwYW5pbWFsfGVufDB8fHx8MTc2MTIwNjc2NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cartoon animal"
     },
     {
       "id": "avatar4",
       "description": "User avatar 4",
-      "imageUrl": "https://images.unsplash.com/photo-1758782213616-7b4cd41eff29?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxjaGlsZCUyMGF2YXRhcnxlbnwwfHx8fDE3NjEyMDcwNjF8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "child avatar"
+      "imageUrl": "https://images.unsplash.com/photo-1634079870003-5050bf25c898?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxzbWlsaW5nJTIwY2hhcmFjdGVyfGVufDB8fHx8MTc2MTIxMDkwNnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "smiling character"
     },
     {
       "id": "pet-happy",
@@ -51,13 +51,13 @@
     {
       "id": "badge-perfect-week",
       "description": "Badge for a perfect week",
-      "imageUrl": "https://images.unsplash.com/photo-1669281258783-29930e777127?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxzdGFyJTIwdHJvcGh5fGVufDB8fHx8MTc2MTIwNzA2MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1669281258783-29930e777127?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxzdGFyJTIwdHJvcGh5fGVufDB8fHx8MTc2MTIwNzA2MXww&ixlib_rb-4.1.0&q=80&w=1080",
       "imageHint": "star trophy"
     },
     {
       "id": "landing-hero",
       "description": "Hero image for the landing page",
-      "imageUrl": "https://images.unsplash.com/photo-1601751839176-7d023cb55ed8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxkYXNoYm9hcmQlMjBraWRzJTIwYXBwfGVufDB8fHx8MTc2MTIwNzA2MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1601751839176-7d023cb55ed8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxkYXNoYm9hcmQlMjBraWRzJTIwYXBwfGVufDB8fHx8MTc2MTIwNzA2MXww&ixlib-rb-4.1.0&q=80&w=1080",
       "imageHint": "dashboard kids app"
     }
   ]
