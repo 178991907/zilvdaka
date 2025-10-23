@@ -94,29 +94,27 @@ export default function DashboardPage() {
                         </CardContent>
                     </Card>
                     <div className="flex flex-col gap-6">
-                         <div className="grid md:grid-cols-2 gap-6">
-                            <Card>
-                                <CardHeader>
-                                    <ProgressSummaryContent
-                                        icon={Target}
-                                        title={<ClientOnlyT tKey="dashboard.dailyGoal" />}
-                                        value={`${Math.round(dailyProgress)}%`}
-                                        description={<ClientOnlyT tKey="dashboard.dailyGoalDescription" tOptions={{ completedTasks, totalTasks }} />}
-                                    />
-                                </CardHeader>
-                            </Card>
-                            <Card>
-                                 <CardHeader>
-                                    <ProgressSummaryContent
-                                        icon={Zap}
-                                        title={<ClientOnlyT tKey="dashboard.xpGained" />}
-                                        value={`${user ? user.xp : 0} XP`}
-                                        description={<ClientOnlyT tKey="dashboard.xpToNextLevel" tOptions={{ xp: user ? user.xpToNextLevel - user.xp : '...' }} />}
-                                        progress={petProgress}
-                                    />
-                                 </CardHeader>
-                            </Card>
-                        </div>
+                        <Card>
+                            <CardHeader>
+                                <ProgressSummaryContent
+                                    icon={Target}
+                                    title={<ClientOnlyT tKey="dashboard.dailyGoal" />}
+                                    value={`${Math.round(dailyProgress)}%`}
+                                    description={<ClientOnlyT tKey="dashboard.dailyGoalDescription" tOptions={{ completedTasks, totalTasks }} />}
+                                />
+                            </CardHeader>
+                        </Card>
+                        <Card>
+                             <CardHeader>
+                                <ProgressSummaryContent
+                                    icon={Zap}
+                                    title={<ClientOnlyT tKey="dashboard.xpGained" />}
+                                    value={`${user ? user.xp : 0} XP`}
+                                    description={<ClientOnlyT tKey="dashboard.xpToNextLevel" tOptions={{ xp: user ? user.xpToNextLevel - user.xp : '...' }} />}
+                                    progress={petProgress}
+                                />
+                             </CardHeader>
+                        </Card>
                         <Card>
                            <CardHeader className="flex flex-row items-start gap-4">
                              <Info className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
