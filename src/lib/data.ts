@@ -1,5 +1,8 @@
+'use client';
 import type { LucideIcon } from 'lucide-react';
 import { Book, Brush, Bed, Atom, Bike, Dumbbell, ShieldCheck, Star, Trophy, Zap, Bug, Swords, Mountain, Flower, Gem } from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
+import { Pets } from './pets';
 
 export type Recurrence = {
   interval: number;
@@ -42,8 +45,8 @@ export type User = {
 const defaultUser: User = {
   name: 'Alex',
   avatar: 'avatar1',
-  level: 5,
-  xp: 75,
+  level: 1,
+  xp: 0,
   xpToNextLevel: 100,
   petStyle: 'pet1',
 };
@@ -68,21 +71,16 @@ export const getUser = (): User => {
   return defaultUser;
 };
 
-// We still export the single instance for components that don't need real-time updates after initial load.
-// Note: for reactive updates, components should call getUser() themselves within useEffect.
-export let user = getUser();
-
 // Function to update the global user object and localStorage
 export const updateUser = (newUserData: Partial<User>) => {
    if (typeof window !== 'undefined') {
     const currentUser = getUser();
     const updatedUser = { ...currentUser, ...newUserData };
-    user = updatedUser;
     try {
       localStorage.setItem('habit-heroes-user', JSON.stringify(updatedUser));
       window.dispatchEvent(new CustomEvent('userProfileUpdated'));
     } catch (error) {
-      console.error("Failed to save user to localStorage", error);
+        console.error("Failed to save user to localStorage", error);
     }
   }
 };
@@ -93,15 +91,27 @@ const XP_MAP = {
   'Hard': 15,
 };
 
+const getPetStyleForLevel = (level: number): string => {
+  if (level >= 15) return 'pet5';
+  if (level >= 10) return 'pet4';
+  if (level >= 5) return 'pet3';
+  if (level >= 2) return 'pet2';
+  return 'pet1';
+};
+
+
 export const completeTaskAndUpdateXP = (task: Task, completed: boolean) => {
   const currentUser = getUser();
+  const oldLevel = currentUser.level;
+  const oldPetStyle = currentUser.petStyle;
+
   let newXp = currentUser.xp;
   const xpChange = XP_MAP[task.difficulty] || 0;
 
   if (completed) {
     newXp += xpChange;
   } else {
-    // Optionally, you can decide if de-selecting a task should remove XP
+    // De-selecting a task removes XP
     newXp -= xpChange;
     if (newXp < 0) newXp = 0;
   }
@@ -112,14 +122,36 @@ export const completeTaskAndUpdateXP = (task: Task, completed: boolean) => {
   while (newXp >= newXpToNextLevel) {
     newLevel++;
     newXp -= newXpToNextLevel;
-    newXpToNextLevel = Math.floor(newXpToNextLevel * 1.5); // Increase XP requirement for next level
+    newXpToNextLevel = Math.floor(newXpToNextLevel * 1.2); // Increase XP requirement for next level
   }
+  
+  const newPetStyle = getPetStyleForLevel(newLevel);
   
   updateUser({
     xp: newXp,
     level: newLevel,
     xpToNextLevel: newXpToNextLevel,
+    petStyle: newPetStyle,
   });
+
+  // Handle notifications
+  if (newLevel > oldLevel) {
+    const newPet = Pets.find(p => p.id === newPetStyle);
+    const oldPet = Pets.find(p => p.id === oldPetStyle);
+
+    if (newPetStyle !== oldPetStyle) {
+      toast({
+        title: 'Your pet evolved!',
+        description: `Wow! Your ${oldPet?.name} evolved into a ${newPet?.name}! You reached level ${newLevel}.`,
+      });
+    } else {
+      toast({
+        title: 'Level Up!',
+        description: `Congratulations! You and your pet have reached level ${newLevel}.`,
+      });
+    }
+  }
+
 
   // Also update the task's completion status
   const tasks = getTasks();
@@ -197,7 +229,7 @@ const defaultAchievements: Achievement[] = [
     title: 'Little Ant - Gold',
     description: '7-day streak.',
     icon: 'Bug',
-    unlocked: false,
+unlocked: false,
   },
   {
     id: 'knight_bronze',
@@ -308,8 +340,6 @@ export const getAchievements = (): Achievement[] => {
 };
 
 
-export let achievements = getAchievements();
-
 export const updateAchievements = (newAchievements: Achievement[]) => {
     if (typeof window !== 'undefined') {
         // Sort custom achievements to the top
@@ -324,7 +354,6 @@ export const updateAchievements = (newAchievements: Achievement[]) => {
             return 0;
         });
 
-        achievements = sortedAchievements;
         try {
             localStorage.setItem('habit-heroes-achievements', JSON.stringify(sortedAchievements));
             window.dispatchEvent(new CustomEvent('achievementsUpdated'));
@@ -425,7 +454,7 @@ export const getTasks = (): Task[] => {
                 localStorage.removeItem('habit-heroes-tasks');
                  const tasksToSave = initialTasks.map(({icon, ...rest}) => rest);
                 localStorage.setItem('habit-heroes-tasks', JSON.stringify(tasksToSave));
-                return initialTasks;
+                return initialTasks.map(task => ({...task, icon: iconMap[task.category]}));
             }
             
             return parsedTasks.map((task: any) => ({

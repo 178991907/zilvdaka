@@ -14,31 +14,41 @@ import { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import PetPicker from '@/components/settings/pet-picker';
 import { useToast } from '@/hooks/use-toast';
-import { getUser, updateUser } from '@/lib/data';
+import { getUser, updateUser, User } from '@/lib/data';
 
 export default function SettingsPage() {
   const { t, i18n } = useTranslation();
   const { theme, setTheme } = useTheme();
   
-  // Initialize state from localStorage via getUser
-  const [name, setName] = useState('');
-  const [selectedAvatar, setSelectedAvatar] = useState('');
-  const [selectedPet, setSelectedPet] = useState('');
+  const [currentUser, setCurrentUser] = useState<User>(getUser());
+  const [name, setName] = useState(currentUser.name);
+  const [selectedAvatar, setSelectedAvatar] = useState(currentUser.avatar);
+  const [selectedPet, setSelectedPet] = useState(currentUser.petStyle);
   
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
   const { toast } = useToast();
 
   useEffect(() => {
-    // Load user data from localStorage on component mount
-    const currentUser = getUser();
-    setName(currentUser.name);
-    setSelectedAvatar(currentUser.avatar);
-    setSelectedPet(currentUser.petStyle);
+    const handleUserUpdate = () => {
+      const user = getUser();
+      setCurrentUser(user);
+      setName(user.name);
+      setSelectedAvatar(user.avatar);
+      setSelectedPet(user.petStyle);
+    };
+
+    handleUserUpdate(); // Initial load
 
     const storedSoundSetting = localStorage.getItem('sound-effects-enabled');
     if (storedSoundSetting !== null) {
       setIsSoundEnabled(storedSoundSetting === 'true');
     }
+
+    window.addEventListener('userProfileUpdated', handleUserUpdate);
+
+    return () => {
+      window.removeEventListener('userProfileUpdated', handleUserUpdate);
+    };
   }, []);
 
 
@@ -89,7 +99,11 @@ export default function SettingsPage() {
             </div>
              <div className="space-y-2">
               <Label><ClientOnlyT tKey='settings.profile.choosePet' /></Label>
-               <PetPicker selectedPet={selectedPet} onSelectPet={setSelectedPet} />
+               <PetPicker 
+                  selectedPet={selectedPet} 
+                  onSelectPet={setSelectedPet}
+                  userLevel={currentUser.level}
+                />
             </div>
             <Button onClick={handleSaveChanges}><ClientOnlyT tKey='settings.profile.save' /></Button>
           </CardContent>
