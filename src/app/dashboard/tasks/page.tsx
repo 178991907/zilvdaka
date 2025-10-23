@@ -3,8 +3,8 @@ import { SidebarTrigger } from '@/components/ui/sidebar';
 import TasksTable from '@/components/tasks/tasks-table';
 import { AddTaskDialog } from '@/components/tasks/add-task-dialog';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
-import { useState } from 'react';
-import { Task, tasks as initialTasks } from '@/lib/data';
+import { useState, useEffect } from 'react';
+import { Task, getTasks, updateTasks, tasks as initialTasks } from '@/lib/data';
 import { Atom, Bike, Book, Brush, Dumbbell, LucideIcon, PlusCircle } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
@@ -18,26 +18,58 @@ const iconMap: { [key: string]: LucideIcon } = {
 };
 
 export default function TasksPage() {
-  const [tasks, setTasks] = useState<Task[]>(initialTasks);
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [deletingTask, setDeletingTask] = useState<Task | null>(null);
+  const [isClient, setIsClient] = useState(false);
 
-  const handleAddTask = (newTaskData: Omit<Task, 'id' | 'icon' | 'completed' | 'dueDate'>) => {
-    const newTask: Task = {
-      id: `task-${Date.now()}`,
-      ...newTaskData,
-      icon: iconMap[newTaskData.category] || Book,
-      completed: false,
-      dueDate: new Date(),
+  useEffect(() => {
+    const loadedTasks = getTasks();
+    setTasks(loadedTasks);
+    setIsClient(true);
+
+    const handleTasksUpdate = () => {
+      setTasks(getTasks());
     };
-    setTasks(prevTasks => [newTask, ...prevTasks]);
-  };
+    window.addEventListener('tasksUpdated', handleTasksUpdate);
+    return () => {
+      window.removeEventListener('tasksUpdated', handleTasksUpdate);
+    };
+  }, []);
 
-  const handleUpdateTask = (updatedTask: Task) => {
-    setTasks(prevTasks =>
-      prevTasks.map(task => (task.id === updatedTask.id ? updatedTask : task))
-    );
+
+  const handleOpenDialog = (task: Task | null = null) => {
+    setEditingTask(task);
+    setIsDialogOpen(true);
+  };
+  
+  const handleSaveTask = (taskData: Omit<Task, 'id' | 'icon' | 'completed' | 'dueDate'>, taskId?: string) => {
+    let updatedTasks;
+    if (taskId) {
+      // Update existing task
+       updatedTasks = tasks.map(t => 
+        t.id === taskId 
+        ? { ...t, ...taskData, icon: iconMap[taskData.category] || Book } 
+        : t
+      );
+    } else {
+      // Add new task
+      const maxId = tasks.reduce((max, task) => {
+        const taskIdNum = parseInt(task.id, 10);
+        return isNaN(taskIdNum) ? max : Math.max(max, taskIdNum);
+      }, 0);
+
+      const newTask: Task = {
+        id: (maxId + 1).toString(),
+        ...taskData,
+        icon: iconMap[taskData.category] || Book,
+        completed: false,
+        dueDate: new Date(),
+      };
+      updatedTasks = [newTask, ...tasks];
+    }
+    updateTasks(updatedTasks);
   };
 
   const handleDeleteRequest = (task: Task) => {
@@ -46,44 +78,24 @@ export default function TasksPage() {
 
   const handleDeleteConfirm = () => {
     if (deletingTask) {
-      setTasks(prevTasks => prevTasks.filter(task => task.id !== deletingTask.id));
+      const updatedTasks = tasks.filter(task => task.id !== deletingTask.id);
+      updateTasks(updatedTasks);
       setDeletingTask(null);
-    }
-  };
-
-  const handleOpenDialog = (task: Task | null = null) => {
-    setEditingTask(task);
-    setIsDialogOpen(true);
-  };
-  
-  const handleSaveTask = (taskData: Omit<Task, 'id' | 'icon' | 'completed' | 'dueDate'>, taskId?: string) => {
-    if (taskId) {
-      // Update existing task
-       const taskToUpdate = tasks.find(t => t.id === taskId);
-       if (taskToUpdate) {
-            const updatedTask = {
-                ...taskToUpdate,
-                ...taskData,
-                icon: iconMap[taskData.category] || Book,
-            };
-            handleUpdateTask(updatedTask);
-       }
-    } else {
-      // Add new task
-      handleAddTask(taskData);
     }
   };
   
   const handleToggleStatus = (taskId: string) => {
-    setTasks(prevTasks =>
-      prevTasks.map(task =>
-        task.id === taskId
-          ? { ...task, status: task.status === 'active' ? 'paused' : 'active' }
-          : task
-      )
+    const updatedTasks = tasks.map(task =>
+      task.id === taskId
+        ? { ...task, status: task.status === 'active' ? 'paused' : 'active' }
+        : task
     );
+    updateTasks(updatedTasks);
   };
 
+  const handleSetTasks = (newTasks: Task[]) => {
+    updateTasks(newTasks);
+  }
 
   return (
     <div className="flex flex-col">
@@ -95,18 +107,20 @@ export default function TasksPage() {
                 <PlusCircle className="mr-2 h-4 w-4" />
                 <ClientOnlyT tKey='tasks.addTask' />
             </Button>
-            <AddTaskDialog 
-              isOpen={isDialogOpen}
-              setIsOpen={setIsDialogOpen}
-              onSave={handleSaveTask}
-              task={editingTask}
-            />
+            {isClient && (
+              <AddTaskDialog 
+                isOpen={isDialogOpen}
+                setIsOpen={setIsDialogOpen}
+                onSave={handleSaveTask}
+                task={editingTask}
+              />
+            )}
           </div>
         </header>
       <main className="flex-1 p-4 md:p-8">
         <TasksTable 
             tasks={tasks} 
-            setTasks={setTasks} 
+            setTasks={handleSetTasks} 
             onEdit={handleOpenDialog}
             onDelete={handleDeleteRequest}
             onToggleStatus={handleToggleStatus}

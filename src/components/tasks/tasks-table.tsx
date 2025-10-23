@@ -31,7 +31,7 @@ const difficultyVariant = {
 
 interface TasksTableProps {
   tasks: Task[];
-  setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+  setTasks: (tasks: Task[]) => void;
   onEdit: (task: Task) => void;
   onDelete: (task: Task) => void;
   onToggleStatus: (taskId: string) => void;
@@ -59,8 +59,8 @@ const TranslatedDays = ({ days }: { days: ('mon' | 'tue' | 'wed' | 'thu' | 'fri'
 export default function TasksTable({ tasks, setTasks, onEdit, onDelete, onToggleStatus }: TasksTableProps) {
 
   const handleTaskCompletion = (taskId: string, completed: boolean) => {
-    setTasks(prevTasks =>
-      prevTasks.map(task =>
+    setTasks(
+      tasks.map(task =>
         task.id === taskId ? { ...task, completed } : task
       )
     );

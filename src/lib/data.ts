@@ -362,6 +362,49 @@ export const tasks: Task[] = [
   },
 ];
 
+export const getTasks = (): Task[] => {
+    if (typeof window === 'undefined') {
+        return tasks;
+    }
+    try {
+        const storedTasks = localStorage.getItem('habit-heroes-tasks');
+        if (storedTasks) {
+            return JSON.parse(storedTasks).map((task: any) => ({
+              ...task,
+              icon: iconMap[task.category] || Book, // Re-assign icon function
+              dueDate: new Date(task.dueDate)
+            }));
+        }
+    } catch (error) {
+        console.error("Failed to parse tasks from localStorage", error);
+    }
+    localStorage.setItem('habit-heroes-tasks', JSON.stringify(tasks));
+    return tasks;
+};
+
+export const updateTasks = (newTasks: Task[]) => {
+    if (typeof window !== 'undefined') {
+        try {
+            // We need to remove the icon before saving, as it's a function and not serializable
+            const tasksToSave = newTasks.map(({ icon, ...rest }) => rest);
+            localStorage.setItem('habit-heroes-tasks', JSON.stringify(tasksToSave));
+            window.dispatchEvent(new CustomEvent('tasksUpdated'));
+        } catch (error) {
+            console.error("Failed to save tasks to localStorage", error);
+        }
+    }
+};
+
+const iconMap: { [key: string]: LucideIcon } = {
+  Learning: Book,
+  Creative: Brush,
+  Health: Dumbbell,
+  School: Atom,
+  Activity: Bike,
+  Bed: Bed,
+};
+
+
 export const reportData = [
     { date: 'Mon', completed: 3 },
     { date: 'Tue', completed: 4 },
