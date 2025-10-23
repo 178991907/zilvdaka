@@ -55,7 +55,7 @@ export function EditAchievementDialog({ achievement, trigger, onSave, onDelete }
   );
   
   const handleSave = () => {
-    const newAchievement: Achievement = {
+    const newAchievementData: Achievement = {
       id: achievement?.id || `custom-${Date.now()}`,
       title,
       description,
@@ -63,9 +63,7 @@ export function EditAchievementDialog({ achievement, trigger, onSave, onDelete }
       unlocked,
       dateUnlocked: unlocked ? (dateUnlocked || new Date()) : undefined,
     };
-    onSave(newAchievement);
-    // Here, you would also need to handle saving custom translations
-    // For now, we rely on `data.ts` for existing translations
+    onSave(newAchievementData);
     setOpen(false);
   };
   
@@ -76,7 +74,6 @@ export function EditAchievementDialog({ achievement, trigger, onSave, onDelete }
     }
   };
   
-  // Use useEffect to reset state when the dialog opens with new `achievement` prop
   useEffect(() => {
     if (open) {
       setTitle(achievement?.title || '');
@@ -86,7 +83,6 @@ export function EditAchievementDialog({ achievement, trigger, onSave, onDelete }
       setDateUnlocked(achievement?.dateUnlocked ? new Date(achievement.dateUnlocked) : undefined);
     }
   }, [open, achievement]);
-
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
