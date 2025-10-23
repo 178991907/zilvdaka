@@ -37,7 +37,6 @@ export default function RewardsPage() {
                 </div>
                 <div>
                     <div className="flex justify-between items-center mb-4">
-                        <p className="text-sm text-muted-foreground"><ClientOnlyT tKey='settings.parentalControls.rewardSystemDescription' /></p>
                         <Dialog>
                             <DialogTrigger asChild>
                                 <Button>
