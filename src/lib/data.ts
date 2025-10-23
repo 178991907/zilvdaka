@@ -377,16 +377,31 @@ export const getTasks = (): Task[] => {
     try {
         const storedTasks = localStorage.getItem('habit-heroes-tasks');
         if (storedTasks) {
-            return JSON.parse(storedTasks).map((task: any) => ({
-              ...task,
-              icon: iconMap[task.category] || iconMap.Learning, // Re-assign icon function
-              dueDate: new Date(task.dueDate)
-            }));
+            const parsedTasks = JSON.parse(storedTasks);
+            
+            // **FIX**: Check if the stored data is the old, broken format (id is a number).
+            // If so, clear it and fall back to the new `initialTasks`.
+            if (parsedTasks.length > 0 && !isNaN(Number(parsedTasks[0].id))) {
+                localStorage.removeItem('habit-heroes-tasks');
+                // This will cause the next `if` to fail and initialize with correct data.
+            } else {
+                 return parsedTasks.map((task: any) => ({
+                    ...task,
+                    icon: iconMap[task.category] || iconMap.Learning, // Re-assign icon function
+                    dueDate: new Date(task.dueDate)
+                }));
+            }
         }
     } catch (error) {
         console.error("Failed to parse tasks from localStorage", error);
+        // If there's any error, it's safer to clear the broken storage
+        localStorage.removeItem('habit-heroes-tasks');
     }
-    localStorage.setItem('habit-heroes-tasks', JSON.stringify(initialTasks.map(({icon, ...rest}) => rest)));
+
+    // This part now runs if localStorage is empty OR was just cleared.
+    // We remove the non-serializable 'icon' before storing.
+    const tasksToSave = initialTasks.map(({icon, ...rest}) => rest);
+    localStorage.setItem('habit-heroes-tasks', JSON.stringify(tasksToSave));
     return initialTasks;
 };
 
