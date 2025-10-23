@@ -8,12 +8,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { ClientOnlyT } from '../layout/app-sidebar';
 import { Skeleton } from '../ui/skeleton';
+import { useSound } from '@/hooks/use-sound';
 
 export default function TaskList() {
   const { t } = useTranslation();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isClient, setIsClient] = useState(false);
   const { i18n } = useTranslation();
+  const playSound = useSound();
 
   useEffect(() => {
     const updateTodaysTasks = () => {
@@ -37,6 +39,9 @@ export default function TaskList() {
   }, []);
 
   const handleTaskCompletion = (task: Task, completed: boolean) => {
+    if (completed) {
+      playSound('success');
+    }
     completeTaskAndUpdateXP(task, completed);
   };
 

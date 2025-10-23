@@ -9,6 +9,7 @@ import { getUser, User } from '@/lib/data';
 import { Pets } from '@/lib/pets';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { useSound } from '@/hooks/use-sound';
 
 
 interface PetViewerProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -31,6 +32,7 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress, className }) => {
   const [eyeBlinkDuration, setEyeBlinkDuration] = useState(4);
   const [bodyAnimation, setBodyAnimation] = useState<AnimationType | null>(null);
   const [eyeAnimation, setEyeAnimation] = useState<AnimationType | null>(null);
+  const playSound = useSound();
 
   const petContainerRef = useRef<HTMLDivElement>(null);
   
@@ -59,6 +61,7 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress, className }) => {
   const selectedPet = Pets.find(p => p.id === user.petStyle) || Pets[0];
   
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    playSound('click');
     const target = event.target as SVGElement;
     const clickedPartId = target.id || target.parentElement?.id;
 

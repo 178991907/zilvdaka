@@ -78,13 +78,13 @@ export const getUser = (): User => {
 };
 
 // Function to update the global user object and localStorage
-export const updateUser = (newUserData: Partial<User>) => {
+export const updateUser = (newUserData: Partial<User>, eventDetail?: object) => {
    if (typeof window !== 'undefined') {
     const currentUser = getUser();
     const updatedUser = { ...currentUser, ...newUserData };
     try {
       localStorage.setItem('habit-heroes-user', JSON.stringify(updatedUser));
-      window.dispatchEvent(new CustomEvent('userProfileUpdated'));
+      window.dispatchEvent(new CustomEvent('userProfileUpdated', { detail: eventDetail }));
     } catch (error) {
         console.error("Failed to save user to localStorage", error);
     }
@@ -138,7 +138,7 @@ export const completeTaskAndUpdateXP = (task: Task, completed: boolean) => {
     level: newLevel,
     xpToNextLevel: newXpToNextLevel,
     petStyle: newPetStyle,
-  });
+  }, { leveledUp: hasLeveledUp });
 
   // Handle notifications
   if (hasLeveledUp) {

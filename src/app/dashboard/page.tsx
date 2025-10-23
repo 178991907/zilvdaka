@@ -10,12 +10,14 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useSound } from '@/hooks/use-sound';
 
 export default function DashboardPage() {
   const { t } = useTranslation();
   const [user, setUser] = useState<User | null>(null);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isClient, setIsClient] = useState(false);
+  const playSound = useSound();
 
   useEffect(() => {
     const loadData = () => {
@@ -26,7 +28,14 @@ export default function DashboardPage() {
 
     loadData();
 
-    const handleUserUpdate = () => setUser(getUser());
+    const handleUserUpdate = (event: Event) => {
+        const customEvent = event as CustomEvent;
+        setUser(getUser());
+
+        if (customEvent.detail?.leveledUp) {
+            playSound('level-up');
+        }
+    }
     const handleTasksUpdate = () => setTasks(getTasks());
 
     window.addEventListener('userProfileUpdated', handleUserUpdate);
@@ -36,7 +45,7 @@ export default function DashboardPage() {
       window.removeEventListener('userProfileUpdated', handleUserUpdate);
       window.removeEventListener('tasksUpdated', handleTasksUpdate);
     };
-  }, []);
+  }, [playSound]);
 
   const completedTasks = tasks.filter(t => t.completed).length;
   const totalTasks = tasks.filter(t => new Date(t.dueDate).toDateString() === new Date().toDateString()).length;
@@ -51,12 +60,12 @@ export default function DashboardPage() {
           <h1 className="text-xl font-semibold"><ClientOnlyT tKey='dashboard.title' /></h1>
         </header>
       <main className="flex-1 p-4 md:p-8">
-        <div className="grid lg:grid-cols-3 gap-6 mb-6">
+         <div className="grid lg:grid-cols-3 gap-6 mb-6">
           <div className="lg:col-span-1">
             {isClient && user ? (
-              <PetViewer progress={petProgress} className="h-full" />
+              <PetViewer progress={petProgress} />
             ) : (
-              <Skeleton className="h-full aspect-square w-full" />
+              <Skeleton className="h-full min-h-[400px] aspect-square w-full" />
             )}
           </div>
 
