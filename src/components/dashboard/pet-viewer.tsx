@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Star } from 'lucide-react';
 import { ClientOnlyT } from '../layout/app-sidebar';
@@ -36,7 +35,7 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress, className }) => {
 
   const petContainerRef = useRef<HTMLDivElement>(null);
   
-  const petScale = (0.6 + (progress / 100) * 0.3) * 1.5;
+  const petScale = (0.6 + (progress / 100) * 0.3) * 0.8;
 
   useEffect(() => {
     const handleProfileUpdate = () => {
