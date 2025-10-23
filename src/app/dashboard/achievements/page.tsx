@@ -15,7 +15,9 @@ export default function AchievementsPage() {
        <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 border-b bg-background px-4">
           <SidebarTrigger className="md:hidden" />
           <h1 className="text-xl font-semibold"><ClientOnlyT tKey='achievements.title' /></h1>
-          <span className="ml-auto text-sm text-muted-foreground">{t('achievements.unlocked', { unlockedCount, totalCount })}</span>
+          <span className="ml-auto text-sm font-semibold text-muted-foreground">
+            <ClientOnlyT tKey='achievements.unlocked' tOptions={{ unlockedCount, totalCount }} />
+          </span>
         </header>
       <main className="flex-1 p-4 md:p-8">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">

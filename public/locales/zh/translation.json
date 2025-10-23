@@ -2,27 +2,27 @@
   "appName": "习惯英雄",
   "landing": {
     "getStarted": "开始使用",
-    "heroTitle": "将日常任务变成史诗般的冒险",
-    "heroSubtitle": "一个有趣且引人入胜的习惯追踪系统，旨在激励孩子们完成任务并养成良好习惯。",
+    "heroTitle": "将日常任务变成有趣的冒险",
+    "heroSubtitle": "Habit Heroes 是一个游戏化的习惯追踪系统，旨在帮助孩子们建立健康的习惯，同时享受乐趣。",
     "startAdventure": "开始冒险",
-    "featuresTitle": "主要特点",
+    "featuresTitle": "为什么孩子们喜欢习惯英雄",
     "feature1": {
-      "title": "每日任务追踪",
-      "description": "轻松创建和管理每日任务，帮助孩子们保持正轨。"
+      "title": "每日冒险",
+      "description": "将家务和任务变成每日的挑战和冒险。"
     },
     "feature2": {
-      "title": "可解锁的成就",
-      "description": "孩子们在完成任务和达成里程碑时可以获得徽章。"
+      "title": "奖励和成就",
+      "description": "通过有趣的徽章和可解锁的奖励来庆祝进步。"
     },
     "feature3": {
-      "title": "可定制的宠物",
-      "description": "随着孩子们完成任务，一个虚拟宠物会成长和进化。"
+      "title": "可爱的宠物伴侣",
+      "description": "完成任务，看着你的虚拟宠物成长和升级。"
     },
     "feature4": {
       "title": "家长控制",
-      "description": "为实现目标设定自定义奖励，并监控孩子的进度。"
+      "description": "轻松设置任务、监控进度并自定义奖励。"
     },
-    "footerRights": "版权所有"
+    "footerRights": "版权所有。"
   },
   "sidebar": {
     "dashboard": "仪表板",
@@ -46,23 +46,63 @@
     "petTitle": "你的习惯英雄宠物",
     "petLevel": "宠物等级",
     "dailyGoal": "每日目标",
-    "dailyGoalDescription": "今天完成了 {{completedTasks}} / {{totalTasks}} 个任务",
+    "dailyGoalDescription": "已完成 {{completedTasks}} / {{totalTasks}} 个任务",
     "weeklyStreak": "每周连胜",
     "weeklyStreakValue": "{{count}} 天",
-    "weeklyStreakDescription": "保持连胜以获得奖励！",
-    "xpGained": "获得经验值",
-    "xpToNextLevel": "还差 {{xp}} 经验值升级",
+    "weeklyStreakDescription": "继续保持！",
+    "xpGained": "获得的经验值",
+    "xpToNextLevel": "还需 {{xp}} 经验值升级",
     "todaysAdventures": "今日待办",
-    "noAdventures": "今天没有冒险！"
+    "noAdventures": "今天没有冒险任务！"
+  },
+  "achievements": {
+    "title": "我的成就",
+    "unlocked": "{{unlockedCount}} / {{totalCount}} 解锁",
+    "unlockedOn": "解锁于",
+    "dateFormat": "yyyy年M月d日",
+    "items": {
+      "1": {
+        "title": "首次任务",
+        "description": "完成你的第一个任务。"
+      },
+      "2": {
+        "title": "任务大师",
+        "description": "总共完成10个任务。"
+      },
+      "3": {
+        "title": "完美一周",
+        "description": "连续7天完成所有任务。"
+      },
+      "4": {
+        "title": "连胜开始",
+        "description": "保持3天的完成连胜纪录。"
+      },
+      "5": {
+        "title": "学习英雄",
+        "description": "完成5个学习任务。"
+      },
+      "6": {
+        "title": "创意天才",
+        "description": "完成5个创意任务。"
+      }
+    }
+  },
+  "reports": {
+    "title": "进度报告",
+    "performanceTitle": "任务表现",
+    "selectRange": "选择范围",
+    "thisWeek": "本周",
+    "thisMonth": "本月",
+    "thisYear": "本年"
   },
   "tasks": {
-    "title": "任务",
+    "title": "任务管理",
     "addTask": "添加任务",
     "addTaskDialog": {
-      "title": "添加新任务",
-      "description": "在这里为你的英雄添加一个新的冒险。",
+      "title": "创建新任务",
+      "description": "在这里添加一个新的冒险到你的列表中。给它命名并选择一个类别。",
       "taskName": "任务名称",
-      "taskNamePlaceholder": "例如：阅读20分钟",
+      "taskNamePlaceholder": "例如：阅读一本书",
       "category": "类别",
       "categoryPlaceholder": "选择一个类别",
       "difficulty": "难度",
@@ -94,55 +134,7 @@
     "status": {
       "completed": "已完成",
       "pending": "待处理"
-    },
-    "items": {
-      "1": { "title": "阅读20分钟" },
-      "2": { "title": "练习绘画" },
-      "3": { "title": "准时睡觉" },
-      "4": { "title": "完成科学作业" },
-      "5": { "title": "公园骑行" },
-      "6": { "title": "晨间锻炼" }
     }
-  },
-  "achievements": {
-    "title": "成就",
-    "unlocked": "已解锁 {{unlockedCount}} / {{totalCount}}",
-    "unlockedOn": "解锁于",
-    "dateFormat": "yyyy年M月d日",
-    "items": {
-      "1": {
-        "title": "首次任务",
-        "description": "完成你的第一个任务。"
-      },
-      "2": {
-        "title": "任务大师",
-        "description": "总共完成10个任务。"
-      },
-      "3": {
-        "title": "完美一周",
-        "description": "连续7天完成所有任务。"
-      },
-      "4": {
-        "title": "连胜开始",
-        "description": "保持3天的完成连胜。"
-      },
-      "5": {
-        "title": "学习英雄",
-        "description": "完成5个学习任务。"
-      },
-      "6": {
-        "title": "创意天才",
-        "description": "完成5个创意任务。"
-      }
-    }
-  },
-  "reports": {
-    "title": "报告",
-    "performanceTitle": "每周表现",
-    "selectRange": "选择范围",
-    "thisWeek": "本周",
-    "thisMonth": "本月",
-    "thisYear": "本年"
   },
   "settings": {
     "title": "设置",
@@ -157,7 +149,7 @@
       "title": "个性化",
       "description": "自定义应用的外观和感觉。",
       "darkMode": "深色模式",
-      "darkModeDescription": "切换到深色主题。",
+      "darkModeDescription": "在深色和浅色主题之间切换。",
       "soundEffects": "音效",
       "soundEffectsDescription": "启用或禁用音效。"
     },
@@ -165,24 +157,24 @@
       "title": "语言",
       "description": "管理你的语言偏好。",
       "displayLanguage": "显示语言",
-      "selectLanguage": "选择一种语言"
+      "selectLanguage": "选择语言"
     },
     "parentalControls": {
       "title": "家长控制",
-      "description": "管理奖励和应用设置。",
+      "description": "管理应用设置和限制。",
       "rewardSystem": "奖励系统",
       "rewardSystemDescription": "为实现目标设定自定义奖励。",
       "addReward": "添加奖励",
       "addRewardDialog": {
         "title": "添加新奖励",
-        "description": "创建一个自定义奖励来激励你的英雄。",
+        "description": "创建可以通过完成任务来解锁的自定义奖励。",
         "rewardName": "奖励名称",
         "rewardNamePlaceholder": "例如：30分钟屏幕时间",
         "tasksRequired": "所需任务",
         "createButton": "创建奖励"
       },
-      "tasksToComplete": "需要完成 {{count}} 个任务",
-      "noRewards": "尚未设置奖励。"
+      "noRewards": "还没有奖励。点击“添加奖励”来创建一个！",
+      "tasksToComplete": "需要完成 {{count}} 个任务"
     }
   }
 }
