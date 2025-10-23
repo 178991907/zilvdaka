@@ -23,11 +23,12 @@ import {
 import { UserNav } from './user-nav';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
+import i18n from '@/i18n'; // Import the i18n instance
 
 // This wrapper prevents hydration errors by rendering the fallback language on the server
 // and only rendering the selected language on the client after hydration.
 export const ClientOnlyT = ({ tKey, tOptions }: { tKey: string; tOptions?: any }) => {
-  const { t, i18n } = useTranslation();
+  const { t, i18n: i18nInstance } = useTranslation();
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -35,23 +36,17 @@ export const ClientOnlyT = ({ tKey, tOptions }: { tKey: string; tOptions?: any }
   }, []);
 
   const getTranslation = (lng: string, key: string, options?: any) => {
-    let translation = i18n.getResource(lng, 'translation', key) as string | undefined;
-    if (translation && options) {
-      Object.keys(options).forEach(optKey => {
-        translation = translation!.replace(new RegExp(`{{${optKey}}}`, 'g'), options[optKey]);
-      });
-    }
-    return translation || key;
+    // Use the standard i18n.t() method which correctly handles nested keys and options.
+    return i18n.t(key, { lng, ...options });
   };
   
   if (!isClient) {
+    // On the server, always render the English text to ensure consistency with server-rendered HTML.
     const fallbackText = getTranslation('en', tKey, tOptions);
-    // Render a placeholder or the base language text on the server.
-    // Return `null` or a placeholder span to avoid hydration mismatch.
     return <span>{fallbackText}</span>;
   }
 
-  if (i18n.language === 'en-zh') {
+  if (i18nInstance.language === 'en-zh') {
     const zhText = getTranslation('zh', tKey, tOptions);
     const enText = getTranslation('en', tKey, tOptions);
     // Avoid showing the key if translation is missing for both
@@ -63,9 +58,11 @@ export const ClientOnlyT = ({ tKey, tOptions }: { tKey: string; tOptions?: any }
           </span>
         );
     }
-    return zhText || enText;
+     // Fallback to whichever translation is available if one is missing
+    return <span>{zhText !== tKey ? zhText : enText}</span>;
   }
 
+  // For 'en' or 'zh', use the standard t function
   return t(tKey, tOptions);
 };
 
