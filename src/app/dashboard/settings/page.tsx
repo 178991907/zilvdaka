@@ -30,26 +30,12 @@ export default function SettingsPage() {
   ]);
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
 
-  const [currentLanguage, setCurrentLanguage] = useState(i18n.language);
-
   useEffect(() => {
-    setCurrentLanguage(i18n.language || 'en-zh');
-    
     const storedSoundSetting = localStorage.getItem('sound-effects-enabled');
     if (storedSoundSetting !== null) {
       setIsSoundEnabled(storedSoundSetting === 'true');
     }
-
-    const handleLanguageChanged = (lng: string) => {
-      setCurrentLanguage(lng);
-    };
-
-    i18n.on('languageChanged', handleLanguageChanged);
-    
-    return () => {
-      i18n.off('languageChanged', handleLanguageChanged);
-    };
-  }, [i18n]);
+  }, []);
 
 
   const changeLanguage = (lng: string) => {
@@ -84,7 +70,7 @@ export default function SettingsPage() {
               <AvatarPicker />
             </div>
              <div className="space-y-2">
-              <Label>Choose Your Pet</Label>
+              <Label><ClientOnlyT tKey='settings.profile.choosePet' /></Label>
                <PetPicker />
             </div>
             <Button><ClientOnlyT tKey='settings.profile.save' /></Button>
@@ -131,7 +117,7 @@ export default function SettingsPage() {
             <CardContent>
                  <div className="space-y-2">
                     <Label htmlFor="language-select"><ClientOnlyT tKey='settings.language.displayLanguage' /></Label>
-                     <Select value={currentLanguage} onValueChange={changeLanguage}>
+                     <Select value={i18n.language} onValueChange={changeLanguage}>
                         <SelectTrigger id="language-select" className="w-[280px]">
                             <SelectValue placeholder={t('settings.language.selectLanguage')} />
                         </SelectTrigger>
