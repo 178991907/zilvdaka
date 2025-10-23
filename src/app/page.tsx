@@ -52,6 +52,47 @@ export default function LandingPage() {
           priority
         />
       </header>
+       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+          <div className="max-w-4xl mx-auto grid lg:grid-cols-2 gap-6 items-center">
+            <div>
+              {isClient && user ? (
+                <PetViewer progress={petProgress} className="min-h-[300px]" />
+              ) : (
+                <Skeleton className="h-full min-h-[300px] w-full" />
+              )}
+            </div>
+            <div className="space-y-6">
+              {isClient && user ? (
+                <>
+                  <div className="p-6">
+                    <ProgressSummaryContent
+                        icon={Target}
+                        titleTKey="dashboard.dailyGoal"
+                        value={`${Math.round(dailyProgress)}%`}
+                        descriptionTKey="dashboard.dailyGoalDescription"
+                        descriptionTPOptions={{ completedTasks, totalTasks }}
+                      />
+                  </div>
+                    <div className="p-6">
+                      <ProgressSummaryContent
+                        icon={Zap}
+                        titleTKey="dashboard.xpGained"
+                        value={`${user.xp} XP`}
+                        descriptionTKey="dashboard.xpToNextLevel"
+                        descriptionTPOptions={{ xp: user.xpToNextLevel - user.xp }}
+                        progress={petProgress}
+                      />
+                    </div>
+                </>
+              ) : (
+                <>
+                  <Skeleton className="h-32 w-full" />
+                  <Skeleton className="h-32 w-full" />
+                </>
+              )}
+            </div>
+          </div>
+        </div>
 
       <main className="flex-grow">
         <section className="py-12 md:py-20">
@@ -67,47 +108,6 @@ export default function LandingPage() {
                 <Link href="/dashboard">Start Your Adventure</Link>
               </Button>
             </div>
-            
-             <div className="mt-16 max-w-4xl mx-auto grid lg:grid-cols-2 gap-6 items-center">
-              <div>
-                {isClient && user ? (
-                  <PetViewer progress={petProgress} className="min-h-[300px]" />
-                ) : (
-                  <Skeleton className="h-full min-h-[300px] w-full" />
-                )}
-              </div>
-              <div className="space-y-6">
-                {isClient && user ? (
-                  <>
-                    <div className="p-6">
-                      <ProgressSummaryContent
-                          icon={Target}
-                          titleTKey="dashboard.dailyGoal"
-                          value={`${Math.round(dailyProgress)}%`}
-                          descriptionTKey="dashboard.dailyGoalDescription"
-                          descriptionTPOptions={{ completedTasks, totalTasks }}
-                        />
-                    </div>
-                     <div className="p-6">
-                       <ProgressSummaryContent
-                          icon={Zap}
-                          titleTKey="dashboard.xpGained"
-                          value={`${user.xp} XP`}
-                          descriptionTKey="dashboard.xpToNextLevel"
-                          descriptionTPOptions={{ xp: user.xpToNextLevel - user.xp }}
-                          progress={petProgress}
-                        />
-                     </div>
-                  </>
-                ) : (
-                  <>
-                    <Skeleton className="h-32 w-full" />
-                    <Skeleton className="h-32 w-full" />
-                  </>
-                )}
-              </div>
-            </div>
-
           </div>
         </section>
       </main>
