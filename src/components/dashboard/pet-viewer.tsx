@@ -34,7 +34,7 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress }) => {
 
   const petContainerRef = useRef<HTMLDivElement>(null);
   
-  const petScale = 0.6 + (progress / 100) * 0.3; // Reduced the base scale
+  const petScale = 0.6 + (progress / 100) * 0.3;
 
   useEffect(() => {
     const handleProfileUpdate = () => {
@@ -42,7 +42,7 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress }) => {
     };
     
     window.addEventListener('userProfileUpdated', handleProfileUpdate);
-    handleProfileUpdate(); // Initial load
+    handleProfileUpdate(); 
 
     // This will only run on the client, after initial hydration
     setEyeBlinkDuration(2 + Math.random() * 4);
@@ -81,7 +81,7 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress }) => {
   
   return (
     <Card 
-        className="bg-primary/10 border-primary/20 flex flex-col items-center justify-center p-0 aspect-square w-full relative overflow-hidden cursor-pointer"
+        className="bg-primary/10 border-primary/20 flex flex-col items-center justify-start p-0 aspect-square w-full relative overflow-hidden cursor-pointer"
         onClick={handleClick}
     >
       <div className="w-full p-6 pb-0">
@@ -92,10 +92,10 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress }) => {
         <Progress value={progress} className="w-full h-3" />
       </div>
 
-       <h2 className="text-2xl font-bold text-center my-4">{user.petName}</h2>
+       <h2 className="text-2xl font-bold text-center my-2">{user.petName}</h2>
 
        <motion.div
-        className="w-full h-full flex items-center justify-center"
+        className="w-full flex-grow flex items-center justify-center"
         style={{ scale: petScale, transition: 'transform 0.5s ease' }}
         animate={bodyAnimation ? animations[bodyAnimation] : {}}
         onAnimationComplete={() => setBodyAnimation(null)}
