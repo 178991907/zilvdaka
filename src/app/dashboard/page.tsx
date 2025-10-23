@@ -88,7 +88,7 @@ export default function DashboardPage() {
                         </CardContent>
                     </Card>
                     <div className="space-y-6">
-                        <Card>
+                        <Card className="p-6">
                              <ProgressSummaryContent
                                 icon={Target}
                                 titleTKey="dashboard.dailyGoal"
@@ -97,7 +97,7 @@ export default function DashboardPage() {
                                 descriptionTPOptions={{ completedTasks, totalTasks }}
                             />
                         </Card>
-                        <Card>
+                        <Card className="p-6">
                              <ProgressSummaryContent
                                 icon={Zap}
                                 titleTKey="dashboard.xpGained"
