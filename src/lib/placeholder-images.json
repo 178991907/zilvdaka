@@ -2,99 +2,99 @@
   "placeholderImages": [
     {
       "id": "avatar1",
-      "description": "3D cartoon car",
-      "imageUrl": "https://images.unsplash.com/photo-1738746819119-9f633966f43b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHwzRCUyMGNhcnRvb24lMjBjYXJ8ZW58MHx8fHwxNzYxMjI1MjU3fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "3D cartoon car"
+      "description": "A cute 3D cartoon monster",
+      "imageUrl": "https://images.unsplash.com/photo-1693914113686-30c5321f09ad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxjdXRlJTIwM2QlMjBtb25zdGVyfGVufDB8fHx8MTcyMDczMTg5N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cute 3D monster"
     },
     {
       "id": "avatar2",
-      "description": "3D cartoon airplane",
-      "imageUrl": "https://images.unsplash.com/photo-1682702578726-bb6de39cce67?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHwzRCUyMGNhcnRvb24lMjBhaXJwbGFuZXxlbnwwfHx8fDE3NjEyMjUyNTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "3D cartoon airplane"
+      "description": "A happy 3D cartoon character with a blue hat",
+      "imageUrl": "https://images.unsplash.com/photo-1665686306574-1ace09918530?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjdXRlJTIwM2QlMjBjaGFyYWN0ZXJ8ZW58MHx8fHwxNzIwNzMxODk3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cute 3D character"
     },
     {
       "id": "avatar3",
-      "description": "3D cartoon rocket",
-      "imageUrl": "https://images.unsplash.com/photo-1623683033827-31c999b099d2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHwzRCUyMGNhcnRvb24lMjByb2NrZXR8ZW58MHx8fHwxNzYxMjI1MjU3fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "3D cartoon rocket"
+      "description": "A playful 3D cartoon robot",
+      "imageUrl": "https://images.unsplash.com/photo-1678841384039-ec3c35b88b02?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjdXRlJTIwM2QlMjByb2JvdHxlbnwwfHx8fDE3MjA3MzE4OTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cute 3D robot"
     },
     {
       "id": "avatar4",
-      "description": "3D block world style character",
-      "imageUrl": "https://images.unsplash.com/photo-1760434685862-5f2b29748cb9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHwzRCUyMGJsb2NrJTIwd29ybGR8ZW58MHx8fHwxNzYxMjI1MjU3fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "3D block world"
+      "description": "A friendly 3D cartoon dinosaur",
+      "imageUrl": "https://images.unsplash.com/photo-1674482348911-886dce8e0019?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjdXRlJTIwM2QlMjBkaW5vc2F1cnxlbnwwfHx8fDE3MjA3MzE4OTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cute 3D dinosaur"
     },
     {
       "id": "avatar5",
-      "description": "3D cartoon style plumber character",
-      "imageUrl": "https://images.unsplash.com/photo-1684395882817-030e24c0322a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHwzRCUyMHZpZGVvJTIwZ2FtZXxlbnwwfHx8fDE3NjEyMjUyNTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "3D video game"
+      "description": "A 3D cartoon rocket in space",
+      "imageUrl": "https://images.unsplash.com/photo-1690425114757-bd77e38ae859?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjdXRlJTIwM2QlMjByb2NrZXR8ZW58MHx8fHwxNzIwNzMxODk3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cute 3D rocket"
     },
     {
       "id": "avatar6",
-      "description": "3D cartoon astronaut in space",
-      "imageUrl": "https://images.unsplash.com/photo-1759950616527-15c2818f2f3c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHwzRCUyMGNhcnRvb24lMjBzcGFjZXxlbnwwfHx8fDE3NjEyMjUyNTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "3D cartoon space"
+      "description": "A 3D cartoon airplane in the sky",
+      "imageUrl": "https://images.unsplash.com/photo-1682702578726-bb6de39cce67?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjdXRlJTIwM2QlMjBwbGFuZXxlbnwwfHx8fDE3MjA3MzE4OTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cute 3D plane"
     },
     {
       "id": "avatar7",
-      "description": "3D cartoon solar system",
-      "imageUrl": "https://images.unsplash.com/photo-1629459322097-a190793bd00b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHwzRCUyMGNhcnRvb24lMjBzb2xhcnxlbnwwfHx8fDE3NjEyMjUyNTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "3D cartoon solar"
+      "description": "A smiling 3D cartoon astronaut",
+      "imageUrl": "https://images.unsplash.com/photo-1674209536034-738936f38396?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjdXRlJTIwM2QlMjBhc3Ryb25hdXR8ZW58MHx8fHwxNzIwNzMxODk3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cute 3D astronaut"
     },
     {
       "id": "avatar8",
-      "description": "3D cartoon race car",
-      "imageUrl": "https://images.unsplash.com/photo-1568145399895-80d8a0ad8ad7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHwzRCUyMGNhcnRvb24lMjByYWNlY2FyfGVufDB8fHx8MTc2MTIyNTI1N3ww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "3D cartoon racecar"
+      "description": "A colorful 3D cartoon car",
+      "imageUrl": "https://images.unsplash.com/photo-1738746819119-9f633966f43b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjdXRlJTIwM2QlMjBjYXJ8ZW58MHx8fHwxNzIwNzMxODk3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cute 3D car"
     },
     {
       "id": "avatar9",
-      "description": "3D cartoon space shuttle",
-      "imageUrl": "https://images.unsplash.com/photo-1689714537268-838bc3430e5a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHwzRCUyMGNhcnRvb24lMjBzaHV0dGxlfGVufDB8fHx8MTc2MTIyNTI1OHww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "3D cartoon shuttle"
+      "description": "A cute 3D cartoon fox",
+      "imageUrl": "https://images.unsplash.com/photo-1680987214645-88e68e7bcf61?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjdXRlJTIwM2QlMjBmb3h8ZW58MHx8fHwxNzIwNzMyMDUzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cute 3D fox"
     },
     {
       "id": "avatar10",
-      "description": "3D cartoon spaceship",
-      "imageUrl": "https://images.unsplash.com/photo-1595445336136-a6ec962fbfed?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHwzRCUyMGNhcnRvb24lMjBzcGFjZXNoaXB8ZW58MHx8fHwxNzYxMjI1MjU4fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "3D cartoon spaceship"
+      "description": "A cute 3D cartoon puppy",
+      "imageUrl": "https://images.unsplash.com/photo-1681235945823-3a3233e52814?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjdXRlJTIwM2QlMjBkb2d8ZW58MHx8fHwxNzIwNzMyMDUzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cute 3D dog"
     },
     {
       "id": "avatar11",
-      "description": "3D block world animal",
-      "imageUrl": "https://images.unsplash.com/photo-1679210208096-4cd1e8a583ea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHwzRCUyMGJsb2NrJTIwYW5pbWFsfGVufDB8fHx8MTc2MTIyNTI1N3ww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "3D block animal"
+      "description": "A friendly 3D cartoon alien",
+      "imageUrl": "https://images.unsplash.com/photo-1694110336492-d8bf867a84be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjdXRlJTIwM2QlMjBhbGllbnxlbnwwfHx8fDE3MjA3MzIwNTN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cute 3D alien"
     },
     {
       "id": "avatar12",
-      "description": "3D cartoon red cap character",
-      "imageUrl": "https://images.unsplash.com/photo-1733837305574-9a8b96c08d5c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHwzRCUyMGNhcnRvb24lMjBjaGFyYWN0ZXJ8ZW58MHx8fHwxNzYxMjI1MjU3fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "3D cartoon character"
+      "description": "A cute 3D cartoon planet",
+      "imageUrl": "https://images.unsplash.com/photo-1636601209939-ed803d732d0e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjdXRlJTIwM2QlMjBwbGFuZXR8ZW58MHx8fHwxNzIwNzMyMDUzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cute 3D planet"
     },
     {
       "id": "avatar13",
-      "description": "3D cartoon alien",
-      "imageUrl": "https://images.unsplash.com/photo-1694110336492-d8bf867a84be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHwzRCUyMGNhcnRvb24lMjBhbGllbnxlbnwwfHx8fDE3NjEyMjUyNTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "3D cartoon alien"
+      "description": "A cute 3D cartoon cat",
+      "imageUrl": "https://images.unsplash.com/photo-1696048821943-3e691136b647?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjdXRlJTIwM2QlMjBjYXR8ZW58MHx8fHwxNzIwNzMyMDUzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cute 3D cat"
     },
     {
       "id": "avatar14",
-      "description": "3D cartoon planet Saturn",
-      "imageUrl": "https://images.unsplash.com/photo-1636601209939-ed803d732d0e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHwzRCUyMGNhcnRvb24lMjBwbGFuZXR8ZW58MHx8fHwxNzYxMjI1MjU3fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "3D cartoon planet"
+      "description": "A cute 3D cartoon penguin",
+      "imageUrl": "https://images.unsplash.com/photo-1702812034293-867851213e2f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjdXRlJTIwM2QlMjBwZW5ndWlufGVufDB8fHx8MTcyMDczMjA1M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cute 3D penguin"
     },
     {
       "id": "avatar15",
-      "description": "3D cartoon fire truck",
-      "imageUrl": "https://images.unsplash.com/photo-1592784082277-46e33f897110?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHwzRCUyMGNhcnRvb24lMjB0cnVja3xlbnwwfHx8fDE3NjEyMjUyNTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "3D cartoon truck"
+      "description": "A cute 3D cartoon mushroom character",
+      "imageUrl": "https://images.unsplash.com/photo-1678886139155-1b033e59533c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjdXRlJTIwM2QlMjBtdXNocm9vbXxlbnwwfHx8fDE3MjA3MzIwNTN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cute 3D mushroom"
     },
     {
       "id": "avatar16",
-      "description": "3D cartoon jet plane",
-      "imageUrl": "https://images.unsplash.com/photo-1663254743932-49190d0ee975?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHwzRCUyMGNhcnRvb24lMjBqZXR8ZW58MHx8fHwxNzYxMjI1MjU3fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "3D cartoon jet"
+      "description": "A cute 3D cartoon bee",
+      "imageUrl": "https://images.unsplash.com/photo-1698845129688-66bd3f619b88?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjdXRlJTIwM2QlMjBiZWV8ZW58MHx8fHwxNzIwNzMyMDUzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cute 3D bee"
     },
     {
       "id": "pet-happy",
@@ -129,7 +129,7 @@
     {
       "id": "landing-hero",
       "description": "Hero image for the landing page",
-      "imageUrl": "https://images.unsplash.com/photo-1636868240132-442d20fd00e7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxkYXNoYm9hcmQlMjBraWRzJTIwYXBwfGVufDB8fHx8MTc2MTIwNzA2MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1550999280-b8a04844e8e7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxkYXNoYm9hcmQlMjBraWRzJTIwYXBwfGVufDB8fHx8MTc2MTIwNzA2MXww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "dashboard kids app"
     }
   ]
