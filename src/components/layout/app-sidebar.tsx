@@ -23,38 +23,36 @@ import { UserNav } from './user-nav';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 
-// This wrapper prevents the translated text from rendering on the server.
-export const ClientOnlyT = ({ tKey, tOptions }: { tKey: string, tOptions?: any }) => {
-    const { t, i18n } = useTranslation();
-    const [isClient, setIsClient] = useState(false);
+// This wrapper prevents hydration errors by rendering the fallback language on the server
+// and only rendering the selected language on the client after hydration.
+export const ClientOnlyT = ({ tKey, tOptions }: { tKey: string; tOptions?: any }) => {
+  const { t, i18n } = useTranslation();
+  const [isClient, setIsClient] = useState(false);
 
-    useEffect(() => {
-        setIsClient(true);
-    }, []);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
-    // On the server, and on initial client render, we render the key.
-    // After hydration, we render the translated text.
-    // Or we could return null on server but that might cause a layout shift.
-    // Fallback to key is better.
-    if (!isClient) {
-        let fallbackText;
-        try {
-            const resources = i18n.getResourceBundle(i18n.language, 'translation') || i18n.getResourceBundle('en', 'translation');
-            fallbackText = tKey.split('.').reduce((acc, part) => acc && (acc as any)[part], resources);
-            if (tOptions && typeof fallbackText === 'string') {
-               Object.keys(tOptions).forEach(key => {
-                    fallbackText = fallbackText.replace(`{{${key}}}`, tOptions[key]);
-               });
-            }
-        } catch(e) {
-            // ignore
+  // On the server, and on initial client render, render the fallback text.
+  // After hydration (in the useEffect), we render the translated text.
+  if (!isClient) {
+    let fallbackText = tKey;
+    try {
+        const resources = i18n.getResourceBundle('en', 'translation');
+        fallbackText = tKey.split('.').reduce((acc, part) => acc && (acc as any)[part], resources);
+        if (tOptions && typeof fallbackText === 'string') {
+           Object.keys(tOptions).forEach(key => {
+                fallbackText = fallbackText.replace(new RegExp(`{{${key}}}`, 'g'), tOptions[key]);
+           });
         }
-        return fallbackText || tKey;
+    } catch(e) {
+        // ignore if path not found
     }
+    return fallbackText || tKey;
+  }
 
-    return t(tKey, tOptions);
+  return t(tKey, tOptions);
 };
-
 
 export default function AppSidebar() {
   const pathname = usePathname();
