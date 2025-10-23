@@ -21,16 +21,18 @@ export function ProgressSummaryContent({
 }: ProgressSummaryProps) {
     return (
         <div className="flex flex-col h-full">
-            <div className="flex items-center justify-between pb-2">
-                <CardTitle className="text-2xl font-semibold leading-none tracking-tight">
-                    {title}
-                </CardTitle>
+            <div className="flex items-baseline justify-between pb-2">
+                <div className="flex items-baseline gap-2">
+                    <CardTitle className="text-xl font-semibold leading-none tracking-tight">
+                        {title}
+                    </CardTitle>
+                    <div className="text-2xl font-bold">
+                        {value}
+                    </div>
+                </div>
                 <Icon className="h-5 w-5 text-muted-foreground" />
             </div>
             <div className="flex flex-col flex-grow">
-                <div className="text-2xl font-bold">
-                    {value}
-                </div>
                 <p className="text-xs text-muted-foreground">
                     {description}
                 </p>
