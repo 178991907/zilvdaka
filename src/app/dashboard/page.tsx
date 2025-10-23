@@ -64,94 +64,91 @@ export default function DashboardPage() {
 
         <main className="flex-grow p-4 md:p-8">
             <DashboardGridLayout>
-                <div key="pet" className="overflow-hidden rounded-lg">
-                    <Card className="h-full flex flex-col">
-                        <CardHeader>
-                            <CardTitle><ClientOnlyT tKey='dashboard.myPet' /></CardTitle>
-                        </CardHeader>
-                        <CardContent className="flex-grow flex flex-col">
-                            {isClient && user ? (
-                                <>
-                                    <PetViewer progress={petProgress} className="flex-grow" />
-                                    <div className="mt-4">
-                                        <div className="text-center">
-                                            <p className="text-lg font-bold">{user.petName}</p>
-                                            <p className="text-sm text-muted-foreground">
-                                                <ClientOnlyT tKey='user.level' tOptions={{ level: user.level }} />
-                                            </p>
-                                        </div>
-                                        <Progress value={petProgress} className="mt-4 h-2" />
+                <Card key="pet" className="flex flex-col">
+                    <CardHeader>
+                        <CardTitle><ClientOnlyT tKey='dashboard.myPet' /></CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex-grow flex flex-col">
+                        {isClient && user ? (
+                            <>
+                                <PetViewer progress={petProgress} className="flex-grow" />
+                                <div className="mt-4">
+                                    <div className="text-center">
+                                        <p className="text-lg font-bold">{user.petName}</p>
+                                        <p className="text-sm text-muted-foreground">
+                                            <ClientOnlyT tKey='user.level' tOptions={{ level: user.level }} />
+                                        </p>
                                     </div>
-                                </>
-                            ) : (
-                                <div className="flex-grow flex flex-col">
-                                    <Skeleton className="flex-grow w-full" />
-                                    <div className="mt-4">
-                                        <Skeleton className="h-6 w-24 mx-auto" />
-                                        <Skeleton className="h-4 w-16 mx-auto mt-2" />
-                                        <Skeleton className="h-2 w-full mt-4" />
-                                    </div>
+                                    <Progress value={petProgress} className="mt-4 h-2" />
                                 </div>
-                            )}
-                        </CardContent>
-                    </Card>
-                </div>
-                <div key="dailyGoal" className="overflow-hidden rounded-lg">
-                    <Card className="h-full">
-                        <CardContent className="p-4">
-                            <ProgressSummaryContent
-                                icon={Target}
-                                title={<ClientOnlyT tKey="dashboard.dailyGoal" />}
-                                value={`${Math.round(dailyProgress)}%`}
-                                description={<ClientOnlyT tKey="dashboard.dailyGoalDescription" tOptions={{ completedTasks, totalTasks }} />}
-                            />
-                        </CardContent>
-                    </Card>
-                </div>
-                <div key="xpGained" className="overflow-hidden rounded-lg">
-                    <Card className="h-full">
-                         <CardContent className="p-4">
-                            <ProgressSummaryContent
-                                icon={Zap}
-                                title={<ClientOnlyT tKey="dashboard.xpGained" />}
-                                value={`${user ? user.xp : 0} XP`}
-                                description={<ClientOnlyT tKey="dashboard.xpToNextLevel" tOptions={{ xp: user ? user.xpToNextLevel - user.xp : '...' }} />}
-                                progress={petProgress}
-                            />
-                         </CardContent>
-                    </Card>
-                </div>
-                <div key="petIntro" className="overflow-hidden rounded-lg">
-                    <Card className="h-full">
-                       <CardHeader className="flex flex-row items-start gap-4">
-                         <Info className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
-                         <div className="flex-1">
-                          <CardTitle><ClientOnlyT tKey="dashboard.petIntroTitle" /></CardTitle>
-                           {isClient && Array.isArray(petIntroItems) ? (
-                             <div className="mt-2 text-sm text-muted-foreground">
-                               {petIntroDescription && <p className="mb-3">{petIntroDescription}</p>}
-                               {petIntroItems.length > 0 && (
-                                 <ul className="space-y-2 list-disc pl-5">
-                                   {petIntroItems.map((item, index) => (
-                                     <li key={index}>{item}</li>
-                                   ))}
-                                 </ul>
-                               )}
-                             </div>
-                           ) : (
-                               <div className="mt-2 space-y-2">
-                                   <Skeleton className="h-4 w-full" />
-                                   <Skeleton className="h-4 w-full" />
-                                   <Skeleton className="h-4 w-3/4" />
-                               </div>
+                            </>
+                        ) : (
+                            <div className="flex-grow flex flex-col">
+                                <Skeleton className="flex-grow w-full" />
+                                <div className="mt-4">
+                                    <Skeleton className="h-6 w-24 mx-auto" />
+                                    <Skeleton className="h-4 w-16 mx-auto mt-2" />
+                                    <Skeleton className="h-2 w-full mt-4" />
+                                </div>
+                            </div>
+                        )}
+                    </CardContent>
+                </Card>
+                <Card key="dailyGoal">
+                    <CardContent className="p-4">
+                        <ProgressSummaryContent
+                            icon={Target}
+                            title={<ClientOnlyT tKey="dashboard.dailyGoal" />}
+                            value={`${Math.round(dailyProgress)}%`}
+                            description={<ClientOnlyT tKey="dashboard.dailyGoalDescription" tOptions={{ completedTasks, totalTasks }} />}
+                        />
+                    </CardContent>
+                </Card>
+                <Card key="xpGained">
+                     <CardContent className="p-4">
+                        <ProgressSummaryContent
+                            icon={Zap}
+                            title={<ClientOnlyT tKey="dashboard.xpGained" />}
+                            value={`${user ? user.xp : 0} XP`}
+                            description={<ClientOnlyT tKey="dashboard.xpToNextLevel" tOptions={{ xp: user ? user.xpToNextLevel - user.xp : '...' }} />}
+                            progress={petProgress}
+                        />
+                     </CardContent>
+                </Card>
+                <Card key="petIntro">
+                   <CardHeader className="flex flex-row items-start gap-4">
+                     <Info className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
+                     <div className="flex-1">
+                      <CardTitle><ClientOnlyT tKey="dashboard.petIntroTitle" /></CardTitle>
+                       {isClient && Array.isArray(petIntroItems) ? (
+                         <div className="mt-2 text-sm text-muted-foreground">
+                           {petIntroDescription && <p className="mb-3">{petIntroDescription}</p>}
+                           {petIntroItems.length > 0 && (
+                             <ul className="space-y-2 list-disc pl-5">
+                               {petIntroItems.map((item, index) => (
+                                 <li key={index}>{item}</li>
+                               ))}
+                             </ul>
                            )}
                          </div>
-                       </CardHeader>
-                   </Card>
-                </div>
-                <div key="tasks" className="overflow-hidden rounded-lg">
+                       ) : (
+                           <div className="mt-2 space-y-2">
+                               <Skeleton className="h-4 w-full" />
+                               <Skeleton className="h-4 w-full" />
+                               <Skeleton className="h-4 w-3/4" />
+                           </div>
+                       )}
+                     </div>
+                   </CardHeader>
+               </Card>
+               <Card key="tasks">
+                  <CardHeader>
+                    <CardTitle><ClientOnlyT tKey='dashboard.todaysAdventures' /></CardTitle>
+                  </CardHeader>
+                  <CardContent className="pt-0 px-2 pb-2">
                     <TaskList />
-                </div>
+                  </CardContent>
+                </Card>
             </DashboardGridLayout>
         </main>
     </div>
