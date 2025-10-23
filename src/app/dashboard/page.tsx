@@ -47,9 +47,9 @@ export default function DashboardPage() {
   const petProgress = user ? (user.xp / user.xpToNextLevel) * 100 : 0;
   const currentPet = user ? Pets.find(p => p.id === user.petStyle) : null;
 
-  const petIntroTitle = t('dashboard.petIntro.title');
-  const petIntroDescription = t('dashboard.petIntro.description');
-  const petIntroItems = t('dashboard.petIntro.items', { returnObjects: true }) as string[];
+  const petIntroTitle = t('dashboard.petIntroTitle');
+  const petIntroDescription = t('dashboard.petIntroDescription');
+  const petIntroItems = t('dashboard.petIntroItems', { returnObjects: true }) as string[];
 
 
   return (
