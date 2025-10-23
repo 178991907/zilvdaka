@@ -2,14 +2,12 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { CheckCircle, Trophy, Star, Shield, Target, Zap } from 'lucide-react';
+import { Target, Zap } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { getTasks, getUser, User, Task } from '@/lib/data';
 import { Skeleton } from '@/components/ui/skeleton';
 import PetViewer from '@/components/dashboard/pet-viewer';
-import ProgressSummary from '@/components/dashboard/progress-summary';
-import { ClientOnlyT } from '@/components/layout/app-sidebar';
+import { ProgressSummaryContent } from '@/components/dashboard/progress-summary';
 
 export default function LandingPage() {
   const [user, setUser] = useState<User | null>(null);
@@ -73,7 +71,9 @@ export default function LandingPage() {
             <div className="mt-16 max-w-4xl mx-auto">
               <div className="grid lg:grid-cols-2 gap-8 items-start">
                   {isClient && user ? (
-                    <PetViewer progress={petProgress} className="min-h-[450px]" />
+                    <div className="rounded-lg border bg-card text-card-foreground shadow-sm">
+                      <PetViewer progress={petProgress} className="min-h-[450px]" />
+                    </div>
                   ) : (
                     <Skeleton className="h-full min-h-[450px] w-full" />
                   )}
@@ -81,21 +81,25 @@ export default function LandingPage() {
                 <div className="space-y-6 text-left">
                   {isClient && user ? (
                     <>
-                      <ProgressSummary
-                        icon={Target}
-                        titleTKey="dashboard.dailyGoal"
-                        value={`${Math.round(dailyProgress)}%`}
-                        descriptionTKey="dashboard.dailyGoalDescription"
-                        descriptionTPOptions={{ completedTasks, totalTasks }}
-                      />
-                      <ProgressSummary
-                        icon={Zap}
-                        titleTKey="dashboard.xpGained"
-                        value={`${user.xp} XP`}
-                        descriptionTKey="dashboard.xpToNextLevel"
-                        descriptionTPOptions={{ xp: user.xpToNextLevel - user.xp }}
-                        progress={petProgress}
-                      />
+                      <div className="rounded-lg border bg-card text-card-foreground shadow-sm p-6">
+                        <ProgressSummaryContent
+                          icon={Target}
+                          titleTKey="dashboard.dailyGoal"
+                          value={`${Math.round(dailyProgress)}%`}
+                          descriptionTKey="dashboard.dailyGoalDescription"
+                          descriptionTPOptions={{ completedTasks, totalTasks }}
+                        />
+                      </div>
+                       <div className="rounded-lg border bg-card text-card-foreground shadow-sm p-6">
+                        <ProgressSummaryContent
+                          icon={Zap}
+                          titleTKey="dashboard.xpGained"
+                          value={`${user.xp} XP`}
+                          descriptionTKey="dashboard.xpToNextLevel"
+                          descriptionTPOptions={{ xp: user.xpToNextLevel - user.xp }}
+                          progress={petProgress}
+                        />
+                      </div>
                     </>
                   ) : (
                     <>
