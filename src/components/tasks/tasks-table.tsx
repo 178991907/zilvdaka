@@ -20,9 +20,9 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Checkbox } from '../ui/checkbox';
-import { useTranslation } from 'react-i18next';
 import { ClientOnlyT } from '../layout/app-sidebar';
 import { cn } from '@/lib/utils';
+import { useTranslation } from 'react-i18next';
 
 const difficultyVariant = {
     Easy: 'default',
@@ -51,9 +51,11 @@ const TranslatedDays = ({ days }: { days: ('mon' | 'tue' | 'wed' | 'thu' | 'fri'
   }
   
   if (!isClient) {
+    // On the server, render the English short names to avoid mismatch.
     return <span>{days.join(', ')}</span>;
   }
 
+  // On the client, render the translated full names.
   return (
     <>
       {days.map((day, index) => (
@@ -68,7 +70,6 @@ const TranslatedDays = ({ days }: { days: ('mon' | 'tue' | 'wed' | 'thu' | 'fri'
 
 
 export default function TasksTable({ tasks, setTasks, onEdit, onDelete, onToggleStatus }: TasksTableProps) {
-  const { t } = useTranslation();
 
   const handleTaskCompletion = (taskId: string, completed: boolean) => {
     setTasks(prevTasks =>
@@ -98,9 +99,14 @@ export default function TasksTable({ tasks, setTasks, onEdit, onDelete, onToggle
         tKey = `tasks.recurrence.display.every_x_${unit}s`;
     }
 
-    if (daysOfWeek && daysOfWeek.length > 0) {
-        tKey += '_on';
-        return <ClientOnlyT tKey={tKey} tOptions={{...options, days: <TranslatedDays days={daysOfWeek} />}} />;
+    const hasDays = daysOfWeek && daysOfWeek.length > 0;
+
+    if (hasDays) {
+        return (
+            <span>
+                <ClientOnlyT tKey={`${tKey}_on`} tOptions={options} /> <TranslatedDays days={daysOfWeek} />
+            </span>
+        );
     }
 
     return <ClientOnlyT tKey={tKey} tOptions={options} />;
