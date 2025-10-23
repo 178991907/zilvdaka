@@ -49,6 +49,30 @@ export default function TasksTable({ tasks, setTasks, onEdit, onDelete }: TasksT
   
   const isCustomTask = (taskId: string) => taskId.startsWith('task-');
 
+  const formatRecurrence = (task: Task) => {
+    if (!task.recurrence) return <ClientOnlyT tKey="tasks.recurrence.once" />;
+
+    const time = task.time || '';
+    switch(task.recurrence.frequency) {
+      case 'daily':
+        return <ClientOnlyT tKey="tasks.recurrence.display.daily" tOptions={{ time }} />;
+      case 'weekly':
+        if (task.recurrence.daysOfWeek && task.recurrence.daysOfWeek.length > 0) {
+          const days = task.recurrence.daysOfWeek
+            .map(day => t(`tasks.weekdaysShort.${day}`))
+            .join(', ');
+          return <ClientOnlyT tKey="tasks.recurrence.display.weekly" tOptions={{ days, time }} />;
+        }
+        return <ClientOnlyT tKey="tasks.recurrence.display.weekly" tOptions={{ days: t('tasks.recurrence.display.noDays'), time }} />;
+      case 'monthly':
+        return <ClientOnlyT tKey="tasks.recurrence.display.monthly" tOptions={{ time }} />;
+      case 'yearly':
+        return <ClientOnlyT tKey="tasks.recurrence.display.yearly" tOptions={{ time }} />;
+      default:
+        return <ClientOnlyT tKey="tasks.recurrence.once" />;
+    }
+  }
+
   return (
     <div className="rounded-lg border">
       <Table>
@@ -58,6 +82,7 @@ export default function TasksTable({ tasks, setTasks, onEdit, onDelete }: TasksT
             <TableHead><ClientOnlyT tKey='tasks.table.task' /></TableHead>
             <TableHead><ClientOnlyT tKey='tasks.table.category' /></TableHead>
             <TableHead><ClientOnlyT tKey='tasks.table.difficulty' /></TableHead>
+            <TableHead><ClientOnlyT tKey='tasks.table.recurrence' /></TableHead>
             <TableHead><ClientOnlyT tKey='tasks.table.status' /></TableHead>
             <TableHead className="text-right w-[50px]"><ClientOnlyT tKey='tasks.table.actions' /></TableHead>
           </TableRow>
@@ -80,6 +105,9 @@ export default function TasksTable({ tasks, setTasks, onEdit, onDelete }: TasksT
               </TableCell>
               <TableCell>
                 <Badge variant={difficultyVariant[task.difficulty]}><ClientOnlyT tKey={`tasks.difficulties.${task.difficulty.toLowerCase()}`} /></Badge>
+              </TableCell>
+               <TableCell className="text-muted-foreground text-xs">
+                {formatRecurrence(task)}
               </TableCell>
               <TableCell>
                 <Badge variant={task.completed ? 'default' : 'secondary'} className={task.completed ? 'bg-green-500/20 text-green-700' : ''}>

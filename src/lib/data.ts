@@ -1,6 +1,11 @@
 import type { LucideIcon } from 'lucide-react';
 import { Book, Brush, Bed, Atom, Bike, Dumbbell, ShieldCheck, Star, Trophy, Zap, Bug, Swords, Mountain, Flower, Gem } from 'lucide-react';
 
+export type Recurrence = {
+  frequency: 'daily' | 'weekly' | 'monthly' | 'yearly';
+  daysOfWeek?: ('mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun')[];
+};
+
 export type Task = {
   id: string;
   title: string;
@@ -9,6 +14,8 @@ export type Task = {
   difficulty: 'Easy' | 'Medium' | 'Hard';
   completed: boolean;
   dueDate: Date;
+  recurrence?: Recurrence;
+  time?: string;
 };
 
 export type Achievement = {
@@ -293,6 +300,8 @@ export const tasks: Task[] = [
     difficulty: 'Easy',
     completed: true,
     dueDate: new Date(),
+    recurrence: { frequency: 'daily' },
+    time: '20:00',
   },
   {
     id: '2',
@@ -302,6 +311,8 @@ export const tasks: Task[] = [
     difficulty: 'Medium',
     completed: false,
     dueDate: new Date(),
+    recurrence: { frequency: 'weekly', daysOfWeek: ['tue', 'thu'] },
+    time: '16:30',
   },
   {
     id: '3',
@@ -311,6 +322,8 @@ export const tasks: Task[] = [
     difficulty: 'Easy',
     completed: false,
     dueDate: new Date(),
+    recurrence: { frequency: 'daily' },
+    time: '21:00',
   },
   {
     id: '4',
@@ -338,6 +351,8 @@ export const tasks: Task[] = [
     difficulty: 'Medium',
     completed: true,
     dueDate: new Date(),
+     recurrence: { frequency: 'daily' },
+    time: '07:00',
   },
 ];
 

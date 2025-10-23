@@ -22,13 +22,11 @@ export default function TasksPage() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [deletingTask, setDeletingTask] = useState<Task | null>(null);
 
-  const handleAddTask = (newTaskData: { name: string; category: string; difficulty: 'Easy' | 'Medium' | 'Hard' }) => {
+  const handleAddTask = (newTaskData: Omit<Task, 'id' | 'icon' | 'completed' | 'dueDate'>) => {
     const newTask: Task = {
       id: `task-${Date.now()}`,
-      title: newTaskData.name,
-      category: newTaskData.category,
+      ...newTaskData,
       icon: iconMap[newTaskData.category] || Book,
-      difficulty: newTaskData.difficulty,
       completed: false,
       dueDate: new Date(),
     };
@@ -57,14 +55,12 @@ export default function TasksPage() {
     setIsDialogOpen(true);
   };
   
-  const handleSaveTask = (taskData: any) => {
+  const handleSaveTask = (taskData: Omit<Task, 'id' | 'icon' | 'completed' | 'dueDate'>) => {
     if (editingTask) {
       // Update existing task
        const updatedTask = {
         ...editingTask,
-        title: taskData.name,
-        category: taskData.category,
-        difficulty: taskData.difficulty,
+        ...taskData,
         icon: iconMap[taskData.category] || Book,
       };
       handleUpdateTask(updatedTask);
@@ -81,6 +77,10 @@ export default function TasksPage() {
           <SidebarTrigger className="md:hidden" />
           <h1 className="text-xl font-semibold"><ClientOnlyT tKey='tasks.title' /></h1>
           <div className="ml-auto">
+             <Button onClick={() => handleOpenDialog()}>
+                <PlusCircle className="mr-2 h-4 w-4" />
+                <ClientOnlyT tKey='tasks.addTask' />
+            </Button>
             <AddTaskDialog 
               isOpen={isDialogOpen}
               setIsOpen={setIsDialogOpen}

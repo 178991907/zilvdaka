@@ -7,7 +7,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -18,37 +17,50 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { PlusCircle } from 'lucide-react';
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useTranslation } from 'react-i18next';
 import { ClientOnlyT } from '../layout/app-sidebar';
 import { useState, useEffect } from 'react';
 import { Task } from '@/lib/data';
 
 type AddTaskDialogProps = {
-  onSave: (task: { name: string; category: string; difficulty: 'Easy' | 'Medium' | 'Hard' }) => void;
+  onSave: (task: Omit<Task, 'id' | 'icon' | 'completed' | 'dueDate'>) => void;
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
   task: Task | null;
 };
+
+const weekDays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'] as const;
 
 export function AddTaskDialog({ onSave, isOpen, setIsOpen, task }: AddTaskDialogProps) {
   const { t } = useTranslation();
   const [name, setName] = useState('');
   const [category, setCategory] = useState('');
   const [difficulty, setDifficulty] = useState<'Easy' | 'Medium' | 'Hard' | ''>('');
+  const [recurrence, setRecurrence] = useState({
+    frequency: 'daily',
+    daysOfWeek: [] as (typeof weekDays[number])[],
+  });
+  const [time, setTime] = useState('08:00');
   
   const isEditMode = task !== null;
 
   useEffect(() => {
-    if (isOpen && task) {
-      setName(task.title);
-      setCategory(task.category);
-      setDifficulty(task.difficulty);
-    } else if (!isOpen) {
-      // Reset form when dialog closes
-      setName('');
-      setCategory('');
-      setDifficulty('');
+    if (isOpen) {
+      if (task) {
+        setName(task.title);
+        setCategory(task.category);
+        setDifficulty(task.difficulty);
+        setRecurrence(task.recurrence || { frequency: 'daily', daysOfWeek: [] });
+        setTime(task.time || '08:00');
+      } else {
+        // Reset form for new task
+        setName('');
+        setCategory('');
+        setDifficulty('');
+        setRecurrence({ frequency: 'daily', daysOfWeek: [] });
+        setTime('08:00');
+      }
     }
   }, [isOpen, task]);
 
@@ -57,26 +69,12 @@ export function AddTaskDialog({ onSave, isOpen, setIsOpen, task }: AddTaskDialog
       // Basic validation
       return;
     }
-    onSave({ name, category, difficulty });
+    onSave({ title: name, category, difficulty, recurrence, time });
     setIsOpen(false);
   };
 
-  // The trigger is now handled in the parent page component
-  // to allow opening the dialog for both add and edit.
-  // We can keep a trigger here for simplicity if it's only for adding.
-  const triggerButton = !isEditMode && (
-     <DialogTrigger asChild>
-        <Button>
-          <PlusCircle className="mr-2 h-4 w-4" />
-          <ClientOnlyT tKey='tasks.addTask' />
-        </Button>
-      </DialogTrigger>
-  );
-
-
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      {!task && triggerButton}
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle><ClientOnlyT tKey={isEditMode ? 'tasks.editTaskDialog.title' : 'tasks.addTaskDialog.title'} /></DialogTitle>
@@ -129,6 +127,60 @@ export function AddTaskDialog({ onSave, isOpen, setIsOpen, task }: AddTaskDialog
               </SelectContent>
             </Select>
           </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="recurrence" className="text-right">
+              <ClientOnlyT tKey='tasks.addTaskDialog.recurrence' />
+            </Label>
+            <Select
+              value={recurrence.frequency}
+              onValueChange={(value) => setRecurrence(prev => ({ ...prev, frequency: value }))}
+            >
+              <SelectTrigger className="col-span-3">
+                <SelectValue placeholder={<ClientOnlyT tKey='tasks.addTaskDialog.selectRecurrence' />} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="daily"><ClientOnlyT tKey='tasks.recurrence.daily' /></SelectItem>
+                <SelectItem value="weekly"><ClientOnlyT tKey='tasks.recurrence.weekly' /></SelectItem>
+                <SelectItem value="monthly"><ClientOnlyT tKey='tasks.recurrence.monthly' /></SelectItem>
+                <SelectItem value="yearly"><ClientOnlyT tKey='tasks.recurrence.yearly' /></SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          {recurrence.frequency === 'weekly' && (
+             <div className="grid grid-cols-4 items-start gap-4">
+                <Label className="text-right pt-2">
+                    <ClientOnlyT tKey='tasks.addTaskDialog.daysOfWeek' />
+                </Label>
+                <ToggleGroup
+                    type="multiple"
+                    variant="outline"
+                    className="col-span-3 flex-wrap justify-start gap-1"
+                    value={recurrence.daysOfWeek}
+                    onValueChange={(days) => setRecurrence(prev => ({...prev, daysOfWeek: days as any}))}
+                >
+                    {weekDays.map(day => (
+                        <ToggleGroupItem key={day} value={day} className="h-8 w-8 p-0">
+                           <ClientOnlyT tKey={`tasks.weekdays.${day}`} />
+                        </ToggleGroupItem>
+                    ))}
+                </ToggleGroup>
+            </div>
+          )}
+
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="time" className="text-right">
+              <ClientOnlyT tKey='tasks.addTaskDialog.time' />
+            </Label>
+            <Input
+              id="time"
+              type="time"
+              className="col-span-3"
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+            />
+          </div>
+
         </div>
         <DialogFooter>
           <Button type="submit" onClick={handleSave}>
