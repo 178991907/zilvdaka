@@ -12,6 +12,7 @@ import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Pets } from '@/lib/pets';
 import { useTranslation } from 'react-i18next';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
+import { Progress } from '@/components/ui/progress';
 
 export default function DashboardPage() {
   const [user, setUser] = useState<User | null>(null);
@@ -47,7 +48,6 @@ export default function DashboardPage() {
   const petProgress = user ? (user.xp / user.xpToNextLevel) * 100 : 0;
   const currentPet = user ? Pets.find(p => p.id === user.petStyle) : null;
 
-  const petIntroTitle = t('dashboard.petIntroTitle');
   const petIntroDescription = t('dashboard.petIntroDescription');
   const petIntroItems = t('dashboard.petIntroItems', { returnObjects: true }) as string[];
 
@@ -65,7 +65,7 @@ export default function DashboardPage() {
         <main className="flex-grow p-4 md:p-8">
             <div className="max-w-6xl w-full mx-auto space-y-6">
                 <div className="grid lg:grid-cols-3 gap-6">
-                    <Card className="lg:col-span-2 transform scale-x-[0.8] scale-y-[1.2]">
+                    <Card className="lg:col-span-2">
                         <CardHeader>
                             <CardTitle><ClientOnlyT tKey='dashboard.myPet' /></CardTitle>
                         </CardHeader>
@@ -79,9 +79,7 @@ export default function DashboardPage() {
                                             <ClientOnlyT tKey='user.level' tOptions={{ level: user.level }} />
                                         </p>
                                     </div>
-                                    <div className="h-2 w-full mt-4 rounded-full bg-secondary overflow-hidden">
-                                        <div className="h-full bg-primary transition-all" style={{ width: `${petProgress}%` }}></div>
-                                    </div>
+                                    <Progress value={petProgress} className="mt-4 h-2" />
                                 </>
                             ) : (
                                 <>
