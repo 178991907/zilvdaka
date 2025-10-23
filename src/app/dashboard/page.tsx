@@ -67,7 +67,7 @@ export default function DashboardPage() {
             <div className="max-w-6xl w-full mx-auto space-y-6">
                 <div className="grid lg:grid-cols-3 gap-6">
                     <div className="lg:col-span-2 grid md:grid-cols-2 gap-6">
-                        <Card>
+                        <Card className="transform scale-125 origin-top-left md:ml-16 mt-8">
                             <CardHeader>
                                 <CardTitle><ClientOnlyT tKey='dashboard.myPet' /></CardTitle>
                             </CardHeader>
@@ -123,23 +123,19 @@ export default function DashboardPage() {
                         <CardHeader className="flex flex-row items-start gap-4">
                           <Info className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
                           <div className="flex-1">
-                            <CardTitle><ClientOnlyT tKey='dashboard.petIntroTitle' /></CardTitle>
-                            {isClient && currentPet ? (
+                          <CardTitle><ClientOnlyT tKey='dashboard.petIntroTitle' /></CardTitle>
+                            {isClient && Array.isArray(petIntroItems) ? (
                               <div className="mt-2 text-sm text-muted-foreground">
-                                <p className="mb-3"><ClientOnlyT tKey='pets.description.fullIntro' /></p>
-                                <ul className="space-y-2">
-                                  {Array.isArray(petIntroItems) && petIntroItems.map((item, index) => (
-                                    <li key={index} className="flex items-start">
-                                      <span className="mr-2 text-primary">{item.trim().startsWith('•') ? '' : '•'}</span>
-                                      <span>{item.trim().replace(/^•\s*/, '')}</span>
-                                    </li>
-                                  ))}
-                                </ul>
-                                <Button variant="link" asChild className="px-0 -mx-1 mt-3">
-                                    <Link href="/dashboard/settings">
-                                        <ClientOnlyT tKey='dashboard.changePet' />
-                                    </Link>
-                                </Button>
+                                {petIntroItems[0] && <p className="mb-3">{petIntroItems[0]}</p>}
+                                {petIntroItems.length > 1 && (
+                                  <ul className="space-y-2">
+                                    {petIntroItems.slice(1).map((item, index) => (
+                                      <li key={index} className="flex items-start">
+                                        <span>{item}</span>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                )}
                               </div>
                             ) : (
                                 <div className="mt-2 space-y-2">
