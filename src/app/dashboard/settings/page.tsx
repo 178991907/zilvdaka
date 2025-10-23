@@ -9,6 +9,7 @@ import { Switch } from '@/components/ui/switch';
 import AvatarPicker from '@/components/settings/avatar-picker';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useTranslation } from 'react-i18next';
+import { ClientOnlyT } from '@/components/layout/app-sidebar';
 
 export default function SettingsPage() {
   const { t, i18n } = useTranslation();
@@ -21,7 +22,7 @@ export default function SettingsPage() {
     <div className="flex flex-col">
        <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 border-b bg-background px-4">
           <SidebarTrigger className="md:hidden" />
-          <h1 className="text-xl font-semibold">{t('settings.title')}</h1>
+          <h1 className="text-xl font-semibold"><ClientOnlyT tKey='settings.title' /></h1>
         </header>
       <main className="flex-1 p-4 md:p-8 space-y-8">
         <Card>

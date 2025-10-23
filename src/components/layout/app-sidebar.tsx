@@ -24,7 +24,7 @@ import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 
 // This wrapper prevents the translated text from rendering on the server.
-const ClientOnlyT = ({ tKey }: { tKey: string }) => {
+export const ClientOnlyT = ({ tKey, tOptions }: { tKey: string, tOptions?: any }) => {
     const { t, i18n } = useTranslation();
     const [isClient, setIsClient] = useState(false);
 
@@ -37,20 +37,22 @@ const ClientOnlyT = ({ tKey }: { tKey: string }) => {
     // Or we could return null on server but that might cause a layout shift.
     // Fallback to key is better.
     if (!isClient) {
-        const resources = i18n.getResourceBundle('en', 'translation');
-        const keyParts = tKey.split('.');
-        let fallbackText = resources;
-        for (const part of keyParts) {
-            if (fallbackText && typeof fallbackText === 'object' && part in fallbackText) {
-                fallbackText = (fallbackText as any)[part];
-            } else {
-                return tKey; // Key not found, return the key itself
+        let fallbackText;
+        try {
+            const resources = i18n.getResourceBundle(i18n.language, 'translation') || i18n.getResourceBundle('en', 'translation');
+            fallbackText = tKey.split('.').reduce((acc, part) => acc && (acc as any)[part], resources);
+            if (tOptions && typeof fallbackText === 'string') {
+               Object.keys(tOptions).forEach(key => {
+                    fallbackText = fallbackText.replace(`{{${key}}}`, tOptions[key]);
+               });
             }
+        } catch(e) {
+            // ignore
         }
-        return fallbackText;
+        return fallbackText || tKey;
     }
 
-    return t(tKey);
+    return t(tKey, tOptions);
 };
 
 

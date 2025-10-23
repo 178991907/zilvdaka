@@ -8,6 +8,7 @@ import { tasks, user } from '@/lib/data';
 import { Flame, Target, Zap } from 'lucide-react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { ClientOnlyT } from '@/components/layout/app-sidebar';
 
 export default function DashboardPage() {
   const { t } = useTranslation();
@@ -19,7 +20,7 @@ export default function DashboardPage() {
     <div className="flex flex-col">
        <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 border-b bg-background px-4">
           <SidebarTrigger className="md:hidden" />
-          <h1 className="text-xl font-semibold">{t('dashboard.title')}</h1>
+          <h1 className="text-xl font-semibold"><ClientOnlyT tKey='dashboard.title' /></h1>
         </header>
       <main className="flex-1 p-4 md:p-8">
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
