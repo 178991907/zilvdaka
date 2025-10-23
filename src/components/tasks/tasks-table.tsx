@@ -46,8 +46,14 @@ const TranslatedDays = ({ days }: { days: ('mon' | 'tue' | 'wed' | 'thu' | 'fri'
     setIsClient(true);
   }, []);
 
-  if (!days || days.length === 0 || !isClient) return null;
+  if (!days || days.length === 0) {
+    return null;
+  }
   
+  if (!isClient) {
+    return <span>{days.join(', ')}</span>;
+  }
+
   return (
     <>
       {days.map((day, index) => (
@@ -127,10 +133,10 @@ export default function TasksTable({ tasks, setTasks, onEdit, onDelete, onToggle
               </TableCell>
               <TableCell className="font-medium flex items-center gap-3">
                  <task.icon className="h-5 w-5" />
-                 {task.id.startsWith('task-') ? task.title : <ClientOnlyT tKey={`tasks.items.${task.id}.title`} />}
+                 <ClientOnlyT tKey={`tasks.items.${task.id}.title`} fallback={task.title} />
               </TableCell>
               <TableCell>
-                <Badge variant="outline">{task.id.startsWith('task-') ? task.category : <ClientOnlyT tKey={`tasks.categories.${task.category.toLowerCase()}`} />}</Badge>
+                <Badge variant="outline"><ClientOnlyT tKey={`tasks.categories.${task.category.toLowerCase()}`} fallback={task.category} /></Badge>
               </TableCell>
               <TableCell>
                 <Badge variant={difficultyVariant[task.difficulty]}><ClientOnlyT tKey={`tasks.difficulties.${task.difficulty.toLowerCase()}`} /></Badge>
