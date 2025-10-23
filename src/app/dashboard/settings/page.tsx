@@ -10,13 +10,11 @@ import AvatarPicker from '@/components/settings/avatar-picker';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useTranslation } from 'react-i18next';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import PetPicker from '@/components/settings/pet-picker';
 import { useToast } from '@/hooks/use-toast';
 import { getUser, updateUser, User } from '@/lib/data';
-import { Upload } from 'lucide-react';
-import Image from 'next/image';
 
 export default function SettingsPage() {
   const { t, i18n } = useTranslation();
@@ -27,11 +25,9 @@ export default function SettingsPage() {
   const [petName, setPetName] = useState('');
   const [selectedAvatar, setSelectedAvatar] = useState('');
   const [selectedPet, setSelectedPet] = useState('');
-  const [appLogo, setAppLogo] = useState('');
   
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
   const { toast } = useToast();
-  const logoFileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const handleUserUpdate = () => {
@@ -41,7 +37,6 @@ export default function SettingsPage() {
       setPetName(user.petName);
       setSelectedAvatar(user.avatar);
       setSelectedPet(user.petStyle);
-      setAppLogo(user.appLogo || '');
     };
 
     handleUserUpdate(); // Initial load
@@ -68,17 +63,6 @@ export default function SettingsPage() {
     localStorage.setItem('sound-effects-enabled', String(checked));
   };
 
-  const handleLogoFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setAppLogo(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
   const handleSaveChanges = () => {
     // Save all changes from the page
     updateUser({
@@ -86,7 +70,6 @@ export default function SettingsPage() {
       petName: petName,
       avatar: selectedAvatar,
       petStyle: selectedPet,
-      appLogo: appLogo,
     });
 
     toast({
@@ -189,42 +172,6 @@ export default function SettingsPage() {
                     </Select>
                 </div>
             </CardContent>
-        </Card>
-
-         <Card>
-          <CardHeader>
-            <CardTitle><ClientOnlyT tKey='settings.appearance.title' /></CardTitle>
-            <CardDescription><ClientOnlyT tKey='settings.appearance.description' /></CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-             <div className="space-y-2">
-              <Label htmlFor="appLogo"><ClientOnlyT tKey='settings.profile.appLogo' /></Label>
-              <div className="flex items-center gap-4">
-                <div className="w-32 h-32 rounded-md border border-dashed flex items-center justify-center bg-muted/50 overflow-hidden">
-                    {appLogo ? (
-                        <Image src={appLogo} alt="App Logo Preview" width={120} height={120} className="object-contain" />
-                    ) : (
-                        <span className="text-xs text-muted-foreground text-center p-2"><ClientOnlyT tKey='settings.profile.logoPreview' /></span>
-                    )}
-                </div>
-                <div className="flex-1 space-y-2">
-                    <Input id="appLogo" placeholder={t('settings.profile.logoUrlPlaceholder')} value={appLogo} onChange={(e) => setAppLogo(e.target.value)} />
-                     <Button variant="outline" onClick={() => logoFileInputRef.current?.click()}>
-                        <Upload className="mr-2 h-4 w-4" />
-                        <ClientOnlyT tKey='settings.profile.upload' />
-                     </Button>
-                    <input
-                        type="file"
-                        ref={logoFileInputRef}
-                        className="hidden"
-                        onChange={handleLogoFileChange}
-                        accept="image/*"
-                    />
-                </div>
-              </div>
-            </div>
-            <Button onClick={handleSaveChanges}><ClientOnlyT tKey='settings.profile.save' /></Button>
-          </CardContent>
         </Card>
       </main>
     </div>
