@@ -21,25 +21,15 @@ const DigitalClock = () => {
   // Use i18n language to format date and time
   const language = i18n.language.startsWith('zh') ? 'zh-CN' : 'en-US';
 
-  const formattedDate = now.toLocaleDateString(language, {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-
   const formattedTime = now.toLocaleTimeString(language, {
     hour: '2-digit',
     minute: '2-digit',
-    second: '2-digit',
     hour12: false,
   });
 
   return (
     <div className="flex flex-col items-center">
-      <div className="text-sm font-medium text-muted-foreground">
-        {formattedDate}
-      </div>
-      <div className="text-4xl font-bold font-mono text-foreground">
+      <div className="text-3xl font-medium text-foreground">
         {formattedTime}
       </div>
     </div>
