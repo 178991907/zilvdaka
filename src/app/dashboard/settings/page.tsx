@@ -22,6 +22,7 @@ export default function SettingsPage() {
   
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [name, setName] = useState('');
+  const [petName, setPetName] = useState('');
   const [selectedAvatar, setSelectedAvatar] = useState('');
   const [selectedPet, setSelectedPet] = useState('');
   
@@ -33,6 +34,7 @@ export default function SettingsPage() {
       const user = getUser();
       setCurrentUser(user);
       setName(user.name);
+      setPetName(user.petName);
       setSelectedAvatar(user.avatar);
       setSelectedPet(user.petStyle);
     };
@@ -65,6 +67,7 @@ export default function SettingsPage() {
     // Save the changes to localStorage
     updateUser({
       name: name,
+      petName: petName,
       avatar: selectedAvatar,
       petStyle: selectedPet,
     });
@@ -100,6 +103,10 @@ export default function SettingsPage() {
              <div className="space-y-2">
               <Label><ClientOnlyT tKey='settings.profile.avatar' /></Label>
               <AvatarPicker selectedAvatar={selectedAvatar} onSelectAvatar={setSelectedAvatar} />
+            </div>
+            <div className="space-y-2">
+                <Label htmlFor="petName"><ClientOnlyT tKey='settings.profile.petName' /></Label>
+                <Input id="petName" value={petName} onChange={(e) => setPetName(e.target.value)} />
             </div>
              <div className="space-y-2">
               <Label><ClientOnlyT tKey='settings.profile.choosePet' /></Label>

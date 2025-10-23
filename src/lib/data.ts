@@ -40,6 +40,7 @@ export type User = {
   xp: number;
   xpToNextLevel: number;
   petStyle: string;
+  petName: string;
 };
 
 const defaultUser: User = {
@@ -49,6 +50,7 @@ const defaultUser: User = {
   xp: 0,
   xpToNextLevel: 100,
   petStyle: 'pet1',
+  petName: '泡泡',
 };
 
 // This function now gets user data, prioritizing localStorage.
