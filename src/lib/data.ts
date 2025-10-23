@@ -87,10 +87,52 @@ export const updateUser = (newUserData: Partial<User>) => {
   }
 };
 
+const XP_MAP = {
+  'Easy': 5,
+  'Medium': 10,
+  'Hard': 15,
+};
+
+export const completeTaskAndUpdateXP = (task: Task, completed: boolean) => {
+  const currentUser = getUser();
+  let newXp = currentUser.xp;
+  const xpChange = XP_MAP[task.difficulty] || 0;
+
+  if (completed) {
+    newXp += xpChange;
+  } else {
+    // Optionally, you can decide if de-selecting a task should remove XP
+    newXp -= xpChange;
+    if (newXp < 0) newXp = 0;
+  }
+
+  let newLevel = currentUser.level;
+  let newXpToNextLevel = currentUser.xpToNextLevel;
+
+  while (newXp >= newXpToNextLevel) {
+    newLevel++;
+    newXp -= newXpToNextLevel;
+    newXpToNextLevel = Math.floor(newXpToNextLevel * 1.5); // Increase XP requirement for next level
+  }
+  
+  updateUser({
+    xp: newXp,
+    level: newLevel,
+    xpToNextLevel: newXpToNextLevel,
+  });
+
+  // Also update the task's completion status
+  const tasks = getTasks();
+  const updatedTasks = tasks.map(t =>
+    t.id === task.id ? { ...t, completed } : t
+  );
+  updateTasks(updatedTasks);
+};
+
 
 const defaultAchievements: Achievement[] = [
   {
-    id: '1',
+    id: 'first_mission',
     title: 'First Mission',
     description: 'Complete your very first task.',
     icon: 'Star',
@@ -98,7 +140,7 @@ const defaultAchievements: Achievement[] = [
     dateUnlocked: new Date(new Date().setDate(new Date().getDate() - 5)),
   },
   {
-    id: '2',
+    id: 'task_master',
     title: 'Task Master',
     description: 'Complete 10 tasks in total.',
     icon: 'Trophy',
@@ -106,14 +148,14 @@ const defaultAchievements: Achievement[] = [
     dateUnlocked: new Date(new Date().setDate(new Date().getDate() - 2)),
   },
   {
-    id: '3',
+    id: 'perfect_week',
     title: 'Perfect Week',
     description: 'Complete all your tasks for 7 days in a row.',
     icon: 'ShieldCheck',
     unlocked: false,
   },
     {
-    id: '4',
+    id: 'streak_starter',
     title: 'Streak Starter',
     description: 'Maintain a 3-day completion streak.',
     icon: 'Zap',
@@ -121,14 +163,14 @@ const defaultAchievements: Achievement[] = [
     dateUnlocked: new Date(new Date().setDate(new Date().getDate() - 3)),
   },
   {
-    id: '5',
+    id: 'learning_hero',
     title: 'Learning Hero',
     description: 'Complete 5 learning tasks.',
     icon: 'Book',
     unlocked: false,
   },
   {
-    id: '6',
+    id: 'creative_genius',
     title: 'Creative Genius',
     description: 'Complete 5 creative tasks.',
     icon: 'Brush',
@@ -379,27 +421,24 @@ export const getTasks = (): Task[] => {
         if (storedTasks) {
             const parsedTasks = JSON.parse(storedTasks);
             
-            // **FIX**: Check if the stored data is the old, broken format (id is a number).
-            // If so, clear it and fall back to the new `initialTasks`.
-            if (parsedTasks.length > 0 && !isNaN(Number(parsedTasks[0].id))) {
+            if (parsedTasks.length > 0 && typeof parsedTasks[0].id === 'number') {
                 localStorage.removeItem('habit-heroes-tasks');
-                // This will cause the next `if` to fail and initialize with correct data.
-            } else {
-                 return parsedTasks.map((task: any) => ({
-                    ...task,
-                    icon: iconMap[task.category] || iconMap.Learning, // Re-assign icon function
-                    dueDate: new Date(task.dueDate)
-                }));
+                 const tasksToSave = initialTasks.map(({icon, ...rest}) => rest);
+                localStorage.setItem('habit-heroes-tasks', JSON.stringify(tasksToSave));
+                return initialTasks;
             }
+            
+            return parsedTasks.map((task: any) => ({
+                ...task,
+                icon: iconMap[task.category] || iconMap.Learning, // Re-assign icon function
+                dueDate: new Date(task.dueDate)
+            }));
         }
     } catch (error) {
         console.error("Failed to parse tasks from localStorage", error);
-        // If there's any error, it's safer to clear the broken storage
         localStorage.removeItem('habit-heroes-tasks');
     }
 
-    // This part now runs if localStorage is empty OR was just cleared.
-    // We remove the non-serializable 'icon' before storing.
     const tasksToSave = initialTasks.map(({icon, ...rest}) => rest);
     localStorage.setItem('habit-heroes-tasks', JSON.stringify(tasksToSave));
     return initialTasks;
@@ -408,7 +447,6 @@ export const getTasks = (): Task[] => {
 export const updateTasks = (newTasks: Task[]) => {
     if (typeof window !== 'undefined') {
         try {
-            // We need to remove the icon before saving, as it's a function and not serializable
             const tasksToSave = newTasks.map(({ icon, ...rest }) => rest);
             localStorage.setItem('habit-heroes-tasks', JSON.stringify(tasksToSave));
             window.dispatchEvent(new CustomEvent('tasksUpdated'));

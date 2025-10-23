@@ -4,18 +4,31 @@ import { SidebarTrigger } from '@/components/ui/sidebar';
 import PetViewer from '@/components/dashboard/pet-viewer';
 import ProgressSummary from '@/components/dashboard/progress-summary';
 import TaskList from '@/components/dashboard/task-list';
-import { getTasks, user } from '@/lib/data';
+import { getTasks, getUser, User } from '@/lib/data';
 import { Flame, Target, Zap } from 'lucide-react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
 
 export default function DashboardPage() {
   const { t } = useTranslation();
+  const [user, setUser] = useState<User>(getUser());
   const tasks = getTasks();
   const completedTasks = tasks.filter(t => t.completed).length;
   const totalTasks = tasks.filter(t => new Date(t.dueDate).toDateString() === new Date().toDateString()).length;
   const dailyProgress = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+  
+  useEffect(() => {
+    const handleUserUpdate = () => {
+      setUser(getUser());
+    };
+    window.addEventListener('userProfileUpdated', handleUserUpdate);
+    return () => {
+      window.removeEventListener('userProfileUpdated', handleUserUpdate);
+    };
+  }, []);
+  
+  const petProgress = (user.xp / user.xpToNextLevel) * 100;
 
   return (
     <div className="flex flex-col">
@@ -30,7 +43,7 @@ export default function DashboardPage() {
               <CardTitle><ClientOnlyT tKey='dashboard.petTitle'/></CardTitle>
             </CardHeader>
             <CardContent>
-              <PetViewer progress={user.xp} />
+              <PetViewer progress={petProgress} />
             </CardContent>
           </Card>
           <div className="space-y-6">
@@ -55,7 +68,7 @@ export default function DashboardPage() {
               value={`${user.xp} XP`}
               descriptionTKey="dashboard.xpToNextLevel"
               descriptionTPOptions={{ xp: user.xpToNextLevel - user.xp }}
-              progress={(user.xp / user.xpToNextLevel) * 100}
+              progress={petProgress}
             />
           </div>
         </div>

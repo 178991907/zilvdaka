@@ -1,8 +1,8 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
-import { getTasks, type Task } from '@/lib/data';
+import { getTasks, completeTaskAndUpdateXP, type Task } from '@/lib/data';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
@@ -10,16 +10,24 @@ import { ClientOnlyT } from '../layout/app-sidebar';
 
 export default function TaskList() {
   const { t } = useTranslation();
-  const [tasks, setTasks] = useState<Task[]>(
-    getTasks().filter(t => new Date(t.dueDate).toDateString() === new Date().toDateString())
-  );
+  const [tasks, setTasks] = useState<Task[]>([]);
 
-  const handleTaskCompletion = (taskId: string, completed: boolean) => {
-    setTasks(prevTasks =>
-      prevTasks.map(task =>
-        task.id === taskId ? { ...task, completed } : task
-      )
-    );
+  useEffect(() => {
+    const updateTodaysTasks = () => {
+        setTasks(getTasks().filter(t => new Date(t.dueDate).toDateString() === new Date().toDateString()));
+    };
+
+    updateTodaysTasks(); // Initial load
+
+    window.addEventListener('tasksUpdated', updateTodaysTasks);
+    return () => {
+      window.removeEventListener('tasksUpdated', updateTodaysTasks);
+    };
+  }, []);
+
+  const handleTaskCompletion = (task: Task, completed: boolean) => {
+    completeTaskAndUpdateXP(task, completed);
+    // The 'tasksUpdated' event fired by completeTaskAndUpdateXP will trigger the useEffect to update state
   };
 
   return (
@@ -48,14 +56,16 @@ export default function TaskList() {
                   <Checkbox
                     id={task.id}
                     checked={task.completed}
-                    onCheckedChange={(checked) => handleTaskCompletion(task.id, !!checked)}
+                    onCheckedChange={(checked) => handleTaskCompletion(task, !!checked)}
                     className="h-6 w-6 rounded-md"
+                    disabled={task.status === 'paused'}
                   />
                   <label
                     htmlFor={task.id}
                     className={cn(
                       'ml-4 flex-1 text-base font-medium transition-all',
-                      task.completed ? 'text-muted-foreground line-through' : 'text-foreground'
+                      task.completed ? 'text-muted-foreground line-through' : 'text-foreground',
+                      task.status === 'paused' ? 'cursor-not-allowed' : ''
                     )}
                   >
                     {task.id.startsWith('custom-') ? (
