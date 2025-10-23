@@ -20,10 +20,10 @@ export default function SettingsPage() {
   const { t, i18n } = useTranslation();
   const { theme, setTheme } = useTheme();
   
-  const [currentUser, setCurrentUser] = useState<User>(getUser());
-  const [name, setName] = useState(currentUser.name);
-  const [selectedAvatar, setSelectedAvatar] = useState(currentUser.avatar);
-  const [selectedPet, setSelectedPet] = useState(currentUser.petStyle);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [name, setName] = useState('');
+  const [selectedAvatar, setSelectedAvatar] = useState('');
+  const [selectedPet, setSelectedPet] = useState('');
   
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
   const { toast } = useToast();
@@ -74,6 +74,10 @@ export default function SettingsPage() {
       description: t('settings.profile.saveSuccessDescription'),
     });
   };
+
+  if (!currentUser) {
+    return null; // or a loading skeleton
+  }
 
 
   return (

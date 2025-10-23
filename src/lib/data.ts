@@ -450,24 +450,26 @@ export const getTasks = (): Task[] => {
         if (storedTasks) {
             const parsedTasks = JSON.parse(storedTasks);
             
+            // This is a recovery mechanism for old, malformed data structure.
+            // It checks if the ID of the first task is a number, which indicates the old structure.
             if (parsedTasks.length > 0 && typeof parsedTasks[0].id === 'number') {
-                localStorage.removeItem('habit-heroes-tasks');
-                 const tasksToSave = initialTasks.map(({icon, ...rest}) => rest);
-                localStorage.setItem('habit-heroes-tasks', JSON.stringify(tasksToSave));
-                return initialTasks.map(task => ({...task, icon: iconMap[task.category]}));
+                localStorage.removeItem('habit-heroes-tasks'); // Remove the bad data
+                // Fall through to re-initialize with correct data
+            } else {
+                 return parsedTasks.map((task: any) => ({
+                    ...task,
+                    icon: iconMap[task.category] || iconMap.Learning, // Re-assign icon function
+                    dueDate: new Date(task.dueDate)
+                }));
             }
-            
-            return parsedTasks.map((task: any) => ({
-                ...task,
-                icon: iconMap[task.category] || iconMap.Learning, // Re-assign icon function
-                dueDate: new Date(task.dueDate)
-            }));
         }
     } catch (error) {
         console.error("Failed to parse tasks from localStorage", error);
-        localStorage.removeItem('habit-heroes-tasks');
+        localStorage.removeItem('habit-heroes-tasks'); // Clear bad data on error
     }
 
+    // This part runs if localStorage is empty, or if it was just cleared.
+    // It initializes localStorage with the correct data structure.
     const tasksToSave = initialTasks.map(({icon, ...rest}) => rest);
     localStorage.setItem('habit-heroes-tasks', JSON.stringify(tasksToSave));
     return initialTasks;
