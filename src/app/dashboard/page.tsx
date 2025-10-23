@@ -15,6 +15,7 @@ import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { Pets } from '@/lib/pets';
 import { Button } from '@/components/ui/button';
 import { useTranslation } from 'react-i18next';
+import { Progress } from '@/components/ui/progress';
 
 export default function DashboardPage() {
   const [user, setUser] = useState<User | null>(null);
@@ -50,12 +51,7 @@ export default function DashboardPage() {
   const petProgress = user ? (user.xp / user.xpToNextLevel) * 100 : 0;
   const currentPet = user ? Pets.find(p => p.id === user.petStyle) : null;
 
-  const petIntroItems = [
-    t('pets.description.item1'),
-    t('pets.description.item2'),
-    t('pets.description.item3'),
-    t('pets.description.item4'),
-  ];
+  const petIntroItems = t('pets.description.items', { returnObjects: true }) as string[];
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
@@ -119,7 +115,7 @@ export default function DashboardPage() {
                                         descriptionTPOptions={{ xp: user ? user.xpToNextLevel - user.xp : '...' }}
                                         progress={petProgress}
                                     />
-                                </CardHeader>
+                                 </CardHeader>
                             </Card>
                         </div>
                     </div>
@@ -132,7 +128,7 @@ export default function DashboardPage() {
                               <div className="mt-2 text-sm text-muted-foreground">
                                 <p className="mb-3"><ClientOnlyT tKey='pets.description.fullIntro' /></p>
                                 <ul className="space-y-2">
-                                  {petIntroItems.map((item, index) => (
+                                  {Array.isArray(petIntroItems) && petIntroItems.map((item, index) => (
                                     <li key={index} className="flex items-start">
                                       <span className="mr-2 text-primary">{item.trim().startsWith('•') ? '' : '•'}</span>
                                       <span>{item.trim().replace(/^•\s*/, '')}</span>
@@ -162,5 +158,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-
-    
