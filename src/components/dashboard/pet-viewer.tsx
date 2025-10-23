@@ -28,37 +28,21 @@ const animations = {
 const PetViewer: React.FC<PetViewerProps> = ({ progress }) => {
   const { t } = useTranslation();
   const [eyeBlinkDuration, setEyeBlinkDuration] = useState(4);
-  const [isSoundEnabled, setIsSoundEnabled] = useState(true);
   const [bodyAnimation, setBodyAnimation] = useState<AnimationType | null>(null);
   const [eyeAnimation, setEyeAnimation] = useState<AnimationType | null>(null);
 
-  const audioRef = useRef<HTMLAudioElement>(null);
   const petContainerRef = useRef<HTMLDivElement>(null);
   
-  const petScale = 0.7 + (progress / 100) * 0.3; // Adjusted pet scale
+  const petScale = 0.7 + (progress / 100) * 0.3;
 
   useEffect(() => {
     // This will only run on the client, after initial hydration
     setEyeBlinkDuration(2 + Math.random() * 4);
-    // Check local storage for sound settings, assuming it's stored there from settings page
-    const soundSetting = localStorage.getItem('sound-effects-enabled');
-    if (soundSetting) {
-      setIsSoundEnabled(soundSetting === 'true');
-    }
   }, []);
 
   const selectedPet = Pets.find(p => p.id === user.petStyle) || Pets[0];
   
-  const playSound = () => {
-    if (isSoundEnabled && audioRef.current) {
-        audioRef.current.currentTime = 0;
-        audioRef.current.play().catch(e => console.error("Audio play failed:", e));
-    }
-  }
-
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    playSound();
-    
     const target = event.target as SVGElement;
     const clickedPartId = target.id || target.parentElement?.id;
 
@@ -67,16 +51,13 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress }) => {
         case 'eye-right':
         case 'eyes':
             setEyeAnimation('wink');
-            // Reset body animation if you want eyes to animate independently
             if (bodyAnimation) setBodyAnimation(null);
             break;
         case 'body':
         default:
-             // Trigger a random body animation
             const bodyAnims: AnimationType[] = ['jump', 'wiggle', 'spin', 'bounce'];
             const randomAnimation = bodyAnims[Math.floor(Math.random() * bodyAnims.length)];
             setBodyAnimation(randomAnimation);
-            // Reset eye animation
             if (eyeAnimation) setEyeAnimation(null);
             break;
     }
@@ -108,7 +89,6 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress }) => {
         />
       </motion.div>
       
-      <audio ref={audioRef} src="/sounds/pop.mp3" preload="auto"></audio>
     </Card>
   );
 };
