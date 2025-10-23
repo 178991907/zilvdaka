@@ -54,20 +54,11 @@ export default function DashboardPage() {
         <div className="grid lg:grid-cols-3 gap-6 mb-6">
           {/* Left Column */}
           <div className="lg:col-span-1">
-            <Card className="h-full">
-                <CardHeader>
-                  <CardTitle><ClientOnlyT tKey='dashboard.petTitle'/></CardTitle>
-                </CardHeader>
-                <CardContent className="pb-6 h-full flex flex-col">
-                  {isClient && user ? (
-                    <PetViewer progress={petProgress} className="flex-grow" />
-                  ) : (
-                    <div className="aspect-square w-full flex items-center justify-center">
-                      <Skeleton className="w-3/4 h-3/4 rounded-full" />
-                    </div>
-                  )}
-                </CardContent>
-            </Card>
+            {isClient && user ? (
+              <PetViewer progress={petProgress} className="h-full" />
+            ) : (
+              <Skeleton className="h-full aspect-square w-full" />
+            )}
           </div>
 
           {/* Right Column */}

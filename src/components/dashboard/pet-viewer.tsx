@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Star, Zap, Info } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -81,31 +81,33 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress, className }) => {
   };
   
   return (
-    <div 
-        className={cn("bg-primary/10 border-primary/20 flex flex-col items-center justify-start p-4 pt-0 aspect-square w-full relative overflow-hidden cursor-pointer rounded-lg", className)}
-        onClick={handleClick}
-    >
-       <motion.div
-        className="w-full flex-grow flex items-center justify-center"
-        style={{ scale: petScale, transition: 'transform 0.5s ease' }}
-        animate={bodyAnimation ? animations[bodyAnimation] : {}}
-        onAnimationComplete={() => setBodyAnimation(null)}
-      >
-        <div
-          ref={petContainerRef}
-          className="w-full h-full"
-          dangerouslySetInnerHTML={{ __html: selectedPet.getSvg(eyeBlinkDuration, eyeAnimation ? animations['wink'] : undefined) }}
-        />
-      </motion.div>
-      <div className="w-full pt-4">
-        <h2 className="text-lg font-bold text-center -mb-1">{user.petName}</h2>
-        <div className="flex items-center gap-2 mb-2">
-            <Star className="w-4 h-4 text-accent fill-accent" />
-            <span className="font-bold text-sm text-foreground"><ClientOnlyT tKey='dashboard.petLevel' /> {user.level}</span>
-        </div>
-        <Progress value={progress} className="w-full h-2" />
-      </div>
-    </div>
+     <Card className={cn("flex flex-col", className)}>
+        <CardHeader>
+            <CardTitle><ClientOnlyT tKey='dashboard.petTitle'/></CardTitle>
+        </CardHeader>
+        <CardContent className="flex flex-col flex-grow items-center justify-start p-4 pt-0 w-full relative overflow-hidden cursor-pointer" onClick={handleClick}>
+           <motion.div
+            className="w-full flex-grow flex items-center justify-center rounded-lg bg-primary/10"
+            style={{ scale: petScale, transition: 'transform 0.5s ease' }}
+            animate={bodyAnimation ? animations[bodyAnimation] : {}}
+            onAnimationComplete={() => setBodyAnimation(null)}
+          >
+            <div
+              ref={petContainerRef}
+              className="w-full h-full"
+              dangerouslySetInnerHTML={{ __html: selectedPet.getSvg(eyeBlinkDuration, eyeAnimation ? animations['wink'] : undefined) }}
+            />
+          </motion.div>
+          <div className="w-full pt-4">
+            <h2 className="text-lg font-bold text-center -mb-1">{user.petName}</h2>
+            <div className="flex items-center gap-2 mb-2">
+                <Star className="w-4 h-4 text-accent fill-accent" />
+                <span className="font-bold text-sm text-foreground"><ClientOnlyT tKey='dashboard.petLevel' /> {user.level}</span>
+            </div>
+            <Progress value={progress} className="w-full h-2" />
+          </div>
+        </CardContent>
+    </Card>
   );
 };
 
