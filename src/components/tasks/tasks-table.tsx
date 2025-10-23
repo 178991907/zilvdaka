@@ -36,6 +36,21 @@ interface TasksTableProps {
   onDelete: (task: Task) => void;
 }
 
+// This component handles the translation of daysOfWeek on the client side to prevent hydration mismatch.
+const TranslatedDays = ({ days }: { days: ('mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun')[] }) => {
+  return (
+    <>
+      {days.map((day, index) => (
+        <React.Fragment key={day}>
+          <ClientOnlyT tKey={`tasks.weekdaysShort.${day}`} />
+          {index < days.length - 1 && ', '}
+        </React.Fragment>
+      ))}
+    </>
+  );
+};
+
+
 export default function TasksTable({ tasks, setTasks, onEdit, onDelete }: TasksTableProps) {
   const { t } = useTranslation();
 
@@ -46,8 +61,6 @@ export default function TasksTable({ tasks, setTasks, onEdit, onDelete }: TasksT
       )
     );
   };
-  
-  const isCustomTask = (taskId: string) => taskId.startsWith('task-');
 
   const formatRecurrence = (task: Task) => {
     if (!task.recurrence) return <ClientOnlyT tKey="tasks.recurrence.once" />;
@@ -58,12 +71,10 @@ export default function TasksTable({ tasks, setTasks, onEdit, onDelete }: TasksT
         return <ClientOnlyT tKey="tasks.recurrence.display.daily" tOptions={{ time }} />;
       case 'weekly':
         if (task.recurrence.daysOfWeek && task.recurrence.daysOfWeek.length > 0) {
-          const days = task.recurrence.daysOfWeek
-            .map(day => t(`tasks.weekdaysShort.${day}`))
-            .join(', ');
-          return <ClientOnlyT tKey="tasks.recurrence.display.weekly" tOptions={{ days, time }} />;
+          const daysComponent = <TranslatedDays days={task.recurrence.daysOfWeek} />;
+          return <ClientOnlyT tKey="tasks.recurrence.display.weekly" tOptions={{ days: daysComponent, time }} />;
         }
-        return <ClientOnlyT tKey="tasks.recurrence.display.weekly" tOptions={{ days: t('tasks.recurrence.display.noDays'), time }} />;
+        return <ClientOnlyT tKey="tasks.recurrence.display.weekly" tOptions={{ days: <ClientOnlyT tKey="tasks.recurrence.display.noDays" />, time }} />;
       case 'monthly':
         return <ClientOnlyT tKey="tasks.recurrence.display.monthly" tOptions={{ time }} />;
       case 'yearly':
@@ -98,10 +109,10 @@ export default function TasksTable({ tasks, setTasks, onEdit, onDelete }: TasksT
               </TableCell>
               <TableCell className="font-medium flex items-center gap-3">
                  <task.icon className="h-5 w-5 text-muted-foreground" />
-                 {isCustomTask(task.id) ? task.title : <ClientOnlyT tKey={`tasks.items.${task.id}.title`} />}
+                 {task.id.startsWith('task-') ? task.title : <ClientOnlyT tKey={`tasks.items.${task.id}.title`} />}
               </TableCell>
               <TableCell>
-                <Badge variant="outline">{isCustomTask(task.id) ? task.category : <ClientOnlyT tKey={`tasks.categories.${task.category.toLowerCase()}`} />}</Badge>
+                <Badge variant="outline">{task.id.startsWith('task-') ? task.category : <ClientOnlyT tKey={`tasks.categories.${task.category.toLowerCase()}`} />}</Badge>
               </TableCell>
               <TableCell>
                 <Badge variant={difficultyVariant[task.difficulty]}><ClientOnlyT tKey={`tasks.difficulties.${task.difficulty.toLowerCase()}`} /></Badge>
