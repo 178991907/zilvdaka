@@ -3,9 +3,46 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { CheckCircle, Trophy, Star, Shield } from 'lucide-react';
+import { CheckCircle, Trophy, Star, Shield, Target, Zap } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { getTasks, getUser, User, Task } from '@/lib/data';
+import { Skeleton } from '@/components/ui/skeleton';
+import PetViewer from '@/components/dashboard/pet-viewer';
+import ProgressSummary from '@/components/dashboard/progress-summary';
+import { ClientOnlyT } from '@/components/layout/app-sidebar';
 
 export default function LandingPage() {
+  const [user, setUser] = useState<User | null>(null);
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    const loadData = () => {
+      setUser(getUser());
+      setTasks(getTasks());
+      setIsClient(true);
+    };
+
+    loadData();
+
+    const handleUserUpdate = () => setUser(getUser());
+    const handleTasksUpdate = () => setTasks(getTasks());
+
+    window.addEventListener('userProfileUpdated', handleUserUpdate);
+    window.addEventListener('tasksUpdated', handleTasksUpdate);
+
+    return () => {
+      window.removeEventListener('userProfileUpdated', handleUserUpdate);
+      window.removeEventListener('tasksUpdated', handleTasksUpdate);
+    };
+  }, []);
+
+  const completedTasks = tasks.filter(t => t.completed).length;
+  const totalTasks = tasks.filter(t => new Date(t.dueDate).toDateString() === new Date().toDateString()).length;
+  const dailyProgress = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+  
+  const petProgress = user ? (user.xp / user.xpToNextLevel) * 100 : 0;
+
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <header className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col items-center gap-4">
@@ -19,7 +56,7 @@ export default function LandingPage() {
       </header>
 
       <main className="flex-grow">
-        <section className="py-20 md:py-32">
+        <section className="py-12 md:py-20">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-4xl md:text-6xl font-bold font-headline tracking-tight text-foreground">
               宝贝成长计划
@@ -32,17 +69,44 @@ export default function LandingPage() {
                 <Link href="/dashboard">Start Your Adventure</Link>
               </Button>
             </div>
-            <div className="mt-16 relative">
-              <Image
-                src="https://picsum.photos/seed/habithero/1200/600"
-                alt="Discipline Baby Dashboard Preview"
-                width={1200}
-                height={600}
-                className="rounded-xl shadow-2xl mx-auto"
-                data-ai-hint="dashboard kids app"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent"></div>
+            
+            <div className="mt-16 max-w-4xl mx-auto">
+              <div className="grid lg:grid-cols-2 gap-8 items-start">
+                  {isClient && user ? (
+                    <PetViewer progress={petProgress} className="min-h-[450px]" />
+                  ) : (
+                    <Skeleton className="h-full min-h-[450px] w-full" />
+                  )}
+
+                <div className="space-y-6 text-left">
+                  {isClient && user ? (
+                    <>
+                      <ProgressSummary
+                        icon={Target}
+                        titleTKey="dashboard.dailyGoal"
+                        value={`${Math.round(dailyProgress)}%`}
+                        descriptionTKey="dashboard.dailyGoalDescription"
+                        descriptionTPOptions={{ completedTasks, totalTasks }}
+                      />
+                      <ProgressSummary
+                        icon={Zap}
+                        titleTKey="dashboard.xpGained"
+                        value={`${user.xp} XP`}
+                        descriptionTKey="dashboard.xpToNextLevel"
+                        descriptionTPOptions={{ xp: user.xpToNextLevel - user.xp }}
+                        progress={petProgress}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <Skeleton className="h-32 w-full" />
+                      <Skeleton className="h-32 w-full" />
+                    </>
+                  )}
+                </div>
+              </div>
             </div>
+
           </div>
         </section>
 
