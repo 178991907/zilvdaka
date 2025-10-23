@@ -1,3 +1,4 @@
+'use client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { LucideIcon } from 'lucide-react';
@@ -5,10 +6,10 @@ import { ClientOnlyT } from '../layout/app-sidebar';
 
 interface ProgressSummaryProps {
   icon: LucideIcon;
-  title: string;
   titleTKey: string;
   value: string;
-  description: string;
+  valueTKey?: string;
+  valueTPOptions?: any;
   descriptionTKey: string;
   descriptionTPOptions?: any;
   progress?: number;
@@ -16,10 +17,10 @@ interface ProgressSummaryProps {
 
 export default function ProgressSummary({
   icon: Icon,
-  title,
   titleTKey,
   value,
-  description,
+  valueTKey,
+  valueTPOptions,
   descriptionTKey,
   descriptionTPOptions,
   progress,
@@ -35,7 +36,9 @@ export default function ProgressSummary({
         </div>
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold">{value}</div>
+        <div className="text-2xl font-bold">
+            {valueTKey ? <ClientOnlyT tKey={valueTKey} tOptions={valueTPOptions} /> : value}
+        </div>
         <p className="text-xs text-muted-foreground">
           <ClientOnlyT tKey={descriptionTKey} tOptions={descriptionTPOptions} />
         </p>
