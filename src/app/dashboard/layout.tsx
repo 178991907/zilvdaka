@@ -13,8 +13,13 @@ export default function DashboardLayout({
         <AppSidebar />
       </Sidebar>
       <SidebarInset>
-        <div className="min-h-screen">
-          {children}
+        <div className="min-h-screen flex flex-col">
+          <div className="flex-1 flex flex-col">
+            {children}
+          </div>
+          <footer className="py-4 text-center text-xs text-muted-foreground">
+            <p>© 2025 英语全科启蒙. All Rights Reserved.『Terry开发与维护』</p>
+          </footer>
         </div>
       </SidebarInset>
     </SidebarProvider>
