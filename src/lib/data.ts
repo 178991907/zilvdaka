@@ -1,3 +1,4 @@
+
 'use client';
 import type { LucideIcon } from 'lucide-react';
 import { Book, Brush, Bed, Atom, Bike, Dumbbell, ShieldCheck, Star, Trophy, Zap, Bug, Swords, Mountain, Flower, Gem } from 'lucide-react';
@@ -94,11 +95,9 @@ const XP_MAP = {
 };
 
 const getPetStyleForLevel = (level: number): string => {
-  if (level >= 15) return 'pet5';
-  if (level >= 10) return 'pet4';
-  if (level >= 5) return 'pet3';
-  if (level >= 2) return 'pet2';
-  return 'pet1';
+  const sortedPets = [...Pets].sort((a, b) => b.unlockLevel - a.unlockLevel);
+  const bestPet = sortedPets.find(p => level >= p.unlockLevel);
+  return bestPet ? bestPet.id : 'pet1';
 };
 
 
@@ -141,10 +140,10 @@ export const completeTaskAndUpdateXP = (task: Task, completed: boolean) => {
     const newPet = Pets.find(p => p.id === newPetStyle);
     const oldPet = Pets.find(p => p.id === oldPetStyle);
 
-    if (newPetStyle !== oldPetStyle) {
+    if (newPetStyle !== oldPetStyle && newPet && oldPet) {
       toast({
         title: 'Your pet evolved!',
-        description: `Wow! Your ${oldPet?.name} evolved into a ${newPet?.name}! You reached level ${newLevel}.`,
+        description: `Wow! Your ${oldPet.name} evolved into a ${newPet.name}! You reached level ${newLevel}.`,
       });
     } else {
       toast({
@@ -499,3 +498,5 @@ export const reportData = [
     { date: 'Sat', completed: 6 },
     { date: 'Sun', completed: 5 },
 ];
+
+    

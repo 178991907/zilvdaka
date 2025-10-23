@@ -1,6 +1,8 @@
+
 export type PetInfo = {
   id: string;
   name: string;
+  unlockLevel: number;
   getSvg: (blinkDuration?: number, eyeAnimation?: object) => string;
 };
 
@@ -8,6 +10,7 @@ export const Pets: PetInfo[] = [
   {
     id: 'pet1',
     name: 'Blobby',
+    unlockLevel: 1,
     getSvg: (blinkDuration = 4) => `
 <svg viewBox="0 0 200 200" class="w-full h-full">
   <defs>
@@ -39,6 +42,7 @@ export const Pets: PetInfo[] = [
   {
     id: 'pet2',
     name: 'Spiky',
+    unlockLevel: 2,
     getSvg: (blinkDuration = 3) => `
 <svg viewBox="0 0 200 200" class="w-full h-full">
   <defs>
@@ -70,6 +74,7 @@ export const Pets: PetInfo[] = [
   {
     id: 'pet3',
     name: 'Cacto',
+    unlockLevel: 5,
     getSvg: (blinkDuration = 5) => `
 <svg viewBox="0 0 200 200" class="w-full h-full">
   <defs>
@@ -103,6 +108,7 @@ export const Pets: PetInfo[] = [
   {
     id: 'pet4',
     name: 'Boxy',
+    unlockLevel: 10,
     getSvg: (blinkDuration = 3.5) => `
 <svg viewBox="0 0 200 200" class="w-full h-full">
   <defs>
@@ -134,6 +140,7 @@ export const Pets: PetInfo[] = [
   {
     id: 'pet5',
     name: 'Cloudy',
+    unlockLevel: 15,
     getSvg: (blinkDuration = 6) => `
 <svg viewBox="0 0 200 200" class="w-full h-full">
   <defs>
@@ -162,3 +169,5 @@ export const Pets: PetInfo[] = [
     `,
   },
 ];
+
+    

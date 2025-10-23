@@ -1,3 +1,4 @@
+
 'use client';
 import { Pets, PetInfo } from '@/lib/pets';
 import { cn } from '@/lib/utils';
@@ -10,21 +11,11 @@ interface PetPickerProps {
   userLevel: number;
 }
 
-const getUnlockedPets = (level: number): PetInfo[] => {
-    const unlocked = new Set<string>();
-    if (level >= 1) unlocked.add('pet1');
-    if (level >= 2) unlocked.add('pet2');
-    if (level >= 5) unlocked.add('pet3');
-    if (level >= 10) unlocked.add('pet4');
-    if (level >= 15) unlocked.add('pet5');
-    return Pets.filter(p => unlocked.has(p.id));
-};
-
-
 export default function PetPicker({ selectedPet, onSelectPet, userLevel }: PetPickerProps) {
   
-  const unlockedPets = useMemo(() => getUnlockedPets(userLevel), [userLevel]);
-  const unlockedPetIds = new Set(unlockedPets.map(p => p.id));
+  const unlockedPetIds = useMemo(() => {
+    return new Set(Pets.filter(p => userLevel >= p.unlockLevel).map(p => p.id));
+  }, [userLevel]);
 
   return (
     <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4">
@@ -36,7 +27,7 @@ export default function PetPicker({ selectedPet, onSelectPet, userLevel }: PetPi
             className={cn(
               'relative rounded-lg border-2 transition-all aspect-square w-full p-2 bg-card',
               selectedPet === pet.id ? 'border-primary' : 'border-transparent',
-              isUnlocked ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'
+              isUnlocked ? 'cursor-pointer' : 'cursor-not-allowed'
             )}
             onClick={() => isUnlocked && onSelectPet(pet.id)}
             role="button"
@@ -46,8 +37,9 @@ export default function PetPicker({ selectedPet, onSelectPet, userLevel }: PetPi
             <div dangerouslySetInnerHTML={{ __html: pet.getSvg(0) }} className="w-full h-full" />
             
             {!isUnlocked && (
-                <div className="absolute inset-0 bg-black/40 rounded-lg flex items-center justify-center">
-                    <Lock className="h-8 w-8 text-white" />
+                <div className="absolute inset-0 bg-black/50 rounded-lg flex flex-col items-center justify-center text-white">
+                    <Lock className="h-8 w-8" />
+                    <span className="text-xs font-bold mt-1">Lv. {pet.unlockLevel}</span>
                 </div>
             )}
             
@@ -62,3 +54,5 @@ export default function PetPicker({ selectedPet, onSelectPet, userLevel }: PetPi
     </div>
   );
 }
+
+    
