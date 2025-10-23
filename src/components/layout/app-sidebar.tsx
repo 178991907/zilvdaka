@@ -95,20 +95,20 @@ export default function AppSidebar() {
     <>
       <SidebarHeader>
          <div className="flex items-center p-2">
-            <div className="flex items-center gap-2">
+            <div className="w-full">
               {user?.appLogo ? (
                 <div className="w-full h-auto aspect-[3/1] rounded-lg overflow-hidden">
                     <Image src={user.appLogo} alt="App Logo" width={600} height={200} className="object-cover w-full h-full" />
                 </div>
               ) : (
-                <>
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
+                <div className="flex items-center justify-start gap-2">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary shrink-0">
                     <Star className="h-6 w-6 text-primary-foreground" />
                   </div>
-                  <span className="font-bold text-xl font-headline text-foreground">
+                  <span className="font-bold text-xl font-headline text-foreground truncate">
                     <ClientOnlyT tKey="appName" />
                   </span>
-                </>
+                </div>
               )}
             </div>
         </div>
