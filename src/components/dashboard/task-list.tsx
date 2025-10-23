@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
-import { tasks as initialTasks, Task } from '@/lib/data';
+import { getTasks, type Task } from '@/lib/data';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
@@ -11,7 +11,7 @@ import { ClientOnlyT } from '../layout/app-sidebar';
 export default function TaskList() {
   const { t } = useTranslation();
   const [tasks, setTasks] = useState<Task[]>(
-    initialTasks.filter(t => new Date(t.dueDate).toDateString() === new Date().toDateString())
+    getTasks().filter(t => new Date(t.dueDate).toDateString() === new Date().toDateString())
   );
 
   const handleTaskCompletion = (taskId: string, completed: boolean) => {
@@ -58,7 +58,11 @@ export default function TaskList() {
                       task.completed ? 'text-muted-foreground line-through' : 'text-foreground'
                     )}
                   >
-                    <ClientOnlyT tKey={`tasks.items.${task.id}.title`} />
+                    {task.id.startsWith('custom-') ? (
+                      task.title
+                    ) : (
+                      <ClientOnlyT tKey={`tasks.items.${task.id}.title`} />
+                    )}
                   </label>
                   <div className="flex items-center justify-center h-8 w-8 rounded-full bg-primary/10">
                     <task.icon className="h-5 w-5 text-primary" />

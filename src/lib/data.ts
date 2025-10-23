@@ -301,7 +301,7 @@ export const iconMap: { [key: string]: LucideIcon } = {
   Bed: Bed,
 };
 
-export const tasks: Task[] = [
+const initialTasks: Task[] = [
   {
     id: 'read',
     title: 'Read for 20 minutes',
@@ -372,7 +372,7 @@ export const tasks: Task[] = [
 
 export const getTasks = (): Task[] => {
     if (typeof window === 'undefined') {
-        return tasks;
+        return initialTasks;
     }
     try {
         const storedTasks = localStorage.getItem('habit-heroes-tasks');
@@ -386,8 +386,8 @@ export const getTasks = (): Task[] => {
     } catch (error) {
         console.error("Failed to parse tasks from localStorage", error);
     }
-    localStorage.setItem('habit-heroes-tasks', JSON.stringify(tasks.map(({icon, ...rest}) => rest)));
-    return tasks;
+    localStorage.setItem('habit-heroes-tasks', JSON.stringify(initialTasks.map(({icon, ...rest}) => rest)));
+    return initialTasks;
 };
 
 export const updateTasks = (newTasks: Task[]) => {

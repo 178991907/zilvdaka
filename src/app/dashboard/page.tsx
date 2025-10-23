@@ -4,7 +4,7 @@ import { SidebarTrigger } from '@/components/ui/sidebar';
 import PetViewer from '@/components/dashboard/pet-viewer';
 import ProgressSummary from '@/components/dashboard/progress-summary';
 import TaskList from '@/components/dashboard/task-list';
-import { tasks, user } from '@/lib/data';
+import { getTasks, user } from '@/lib/data';
 import { Flame, Target, Zap } from 'lucide-react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -12,6 +12,7 @@ import { ClientOnlyT } from '@/components/layout/app-sidebar';
 
 export default function DashboardPage() {
   const { t } = useTranslation();
+  const tasks = getTasks();
   const completedTasks = tasks.filter(t => t.completed).length;
   const totalTasks = tasks.filter(t => new Date(t.dueDate).toDateString() === new Date().toDateString()).length;
   const dailyProgress = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
