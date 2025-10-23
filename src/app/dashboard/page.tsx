@@ -51,7 +51,7 @@ export default function DashboardPage() {
           <SidebarTrigger className="md:hidden" />
           <h1 className="text-xl font-semibold"><ClientOnlyT tKey='dashboard.title' /></h1>
           <div className="ml-auto flex items-center">
-            {isClient && <DigitalClock />}
+            {isClient ? <DigitalClock /> : <Skeleton className="h-16 w-48" />}
           </div>
         </header>
 
@@ -66,27 +66,27 @@ export default function DashboardPage() {
                 </div>
                 <div className="space-y-6">
                 {isClient && user ? (
-                    <>
-                    <div className="p-6 rounded-lg border bg-card text-card-foreground shadow-sm">
-                        <ProgressSummaryContent
-                            icon={Target}
-                            titleTKey="dashboard.dailyGoal"
-                            value={`${Math.round(dailyProgress)}%`}
-                            descriptionTKey="dashboard.dailyGoalDescription"
-                            descriptionTPOptions={{ completedTasks, totalTasks }}
-                        />
-                    </div>
+                    <Link href="/dashboard/settings" className="space-y-6">
                         <div className="p-6 rounded-lg border bg-card text-card-foreground shadow-sm">
-                        <ProgressSummaryContent
-                            icon={Zap}
-                            titleTKey="dashboard.xpGained"
-                            value={`${user.xp} XP`}
-                            descriptionTKey="dashboard.xpToNextLevel"
-                            descriptionTPOptions={{ xp: user.xpToNextLevel - user.xp }}
-                            progress={petProgress}
-                        />
+                            <ProgressSummaryContent
+                                icon={Target}
+                                titleTKey="dashboard.dailyGoal"
+                                value={`${Math.round(dailyProgress)}%`}
+                                descriptionTKey="dashboard.dailyGoalDescription"
+                                descriptionTPOptions={{ completedTasks, totalTasks }}
+                            />
                         </div>
-                    </>
+                        <div className="p-6 rounded-lg border bg-card text-card-foreground shadow-sm">
+                            <ProgressSummaryContent
+                                icon={Zap}
+                                titleTKey="dashboard.xpGained"
+                                value={`${user.xp} XP`}
+                                descriptionTKey="dashboard.xpToNextLevel"
+                                descriptionTPOptions={{ xp: user.xpToNextLevel - user.xp }}
+                                progress={petProgress}
+                            />
+                        </div>
+                    </Link>
                 ) : (
                     <>
                     <Skeleton className="h-32 w-full" />
