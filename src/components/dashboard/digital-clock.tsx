@@ -24,12 +24,13 @@ const DigitalClock = () => {
   const formattedTime = now.toLocaleTimeString(language, {
     hour: '2-digit',
     minute: '2-digit',
+    second: '2-digit',
     hour12: false,
   });
 
   return (
-    <div className="flex flex-col items-center">
-      <div className="text-3xl font-medium text-foreground">
+    <div className="bg-muted/50 p-2 rounded-md">
+      <div className="text-3xl font-mono text-foreground">
         {formattedTime}
       </div>
     </div>
