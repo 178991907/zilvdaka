@@ -21,17 +21,49 @@ import {
 } from 'lucide-react';
 import { UserNav } from './user-nav';
 import { useTranslation } from 'react-i18next';
+import { useEffect, useState } from 'react';
+
+// This wrapper prevents the translated text from rendering on the server.
+const ClientOnlyT = ({ tKey }: { tKey: string }) => {
+    const { t, i18n } = useTranslation();
+    const [isClient, setIsClient] = useState(false);
+
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
+
+    // On the server, and on initial client render, we render the key.
+    // After hydration, we render the translated text.
+    // Or we could return null on server but that might cause a layout shift.
+    // Fallback to key is better.
+    if (!isClient) {
+        const resources = i18n.getResourceBundle('en', 'translation');
+        const keyParts = tKey.split('.');
+        let fallbackText = resources;
+        for (const part of keyParts) {
+            if (fallbackText && typeof fallbackText === 'object' && part in fallbackText) {
+                fallbackText = (fallbackText as any)[part];
+            } else {
+                return tKey; // Key not found, return the key itself
+            }
+        }
+        return fallbackText;
+    }
+
+    return t(tKey);
+};
+
 
 export default function AppSidebar() {
   const pathname = usePathname();
   const { t } = useTranslation();
 
   const navItems = [
-    { href: '/dashboard', icon: LayoutDashboard, label: t('sidebar.dashboard') },
-    { href: '/dashboard/tasks', icon: CheckSquare, label: t('sidebar.tasks') },
-    { href: '/dashboard/achievements', icon: Trophy, label: t('sidebar.achievements') },
-    { href: '/dashboard/reports', icon: BarChart, label: t('sidebar.reports') },
-    { href: '/dashboard/settings', icon: Settings, label: t('sidebar.settings') },
+    { href: '/dashboard', icon: LayoutDashboard, labelKey: 'sidebar.dashboard' },
+    { href: '/dashboard/tasks', icon: CheckSquare, labelKey: 'sidebar.tasks' },
+    { href: '/dashboard/achievements', icon: Trophy, labelKey: 'sidebar.achievements' },
+    { href: '/dashboard/reports', icon: BarChart, labelKey: 'sidebar.reports' },
+    { href: '/dashboard/settings', icon: Settings, labelKey: 'sidebar.settings' },
   ];
 
   return (
@@ -42,7 +74,7 @@ export default function AppSidebar() {
             <Star className="h-6 w-6 text-primary-foreground" />
           </div>
           <span className="font-bold text-xl font-headline text-foreground">
-            {t('appName')}
+            <ClientOnlyT tKey="appName" />
           </span>
         </div>
       </SidebarHeader>
@@ -53,11 +85,11 @@ export default function AppSidebar() {
               <SidebarMenuButton
                 asChild
                 isActive={pathname === item.href}
-                tooltip={item.label}
+                tooltip={t(item.labelKey)}
               >
                 <Link href={item.href}>
                   <item.icon />
-                  <span>{item.label}</span>
+                  <span><ClientOnlyT tKey={item.labelKey} /></span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -71,7 +103,7 @@ export default function AppSidebar() {
                 <SidebarMenuButton asChild tooltip={t('sidebar.logout')}>
                     <Link href="/">
                         <LogOut />
-                        <span>{t('sidebar.logout')}</span>
+                        <span><ClientOnlyT tKey="sidebar.logout" /></span>
                     </Link>
                 </SidebarMenuButton>
             </SidebarMenuItem>
