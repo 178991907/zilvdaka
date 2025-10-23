@@ -14,23 +14,28 @@ interface PetViewerProps {
   progress: number;
 }
 
-type AnimationType = 'jump' | 'wiggle' | 'spin' | 'bounce';
+type AnimationType = 'jump' | 'wiggle' | 'spin' | 'bounce' | 'wink';
 
 const animations = {
   jump: { scale: [1, 1.1, 1], y: [0, -20, 0], transition: { duration: 0.4, ease: "easeInOut" } },
   wiggle: { rotate: [0, -10, 10, -10, 0], transition: { duration: 0.5, ease: "easeInOut" } },
   spin: { rotate: [0, 360], scale: [1, 0.8, 1], transition: { duration: 0.5, ease: "circOut" } },
   bounce: { y: [0, -15, 0, -8, 0], transition: { duration: 0.6, ease: "easeOut" } },
+  wink: { scaleY: [1, 0.1, 1], transition: { duration: 0.3 } },
 };
+
 
 const PetViewer: React.FC<PetViewerProps> = ({ progress }) => {
   const { t } = useTranslation();
   const [eyeBlinkDuration, setEyeBlinkDuration] = useState(4);
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
-  const [currentAnimation, setCurrentAnimation] = useState<AnimationType | null>(null);
+  const [bodyAnimation, setBodyAnimation] = useState<AnimationType | null>(null);
+  const [eyeAnimation, setEyeAnimation] = useState<AnimationType | null>(null);
+
   const audioRef = useRef<HTMLAudioElement>(null);
+  const petContainerRef = useRef<HTMLDivElement>(null);
   
-  const petScale = 0.8 + (progress / 100) * 0.4;
+  const petScale = 0.7 + (progress / 100) * 0.3; // Adjusted pet scale
 
   useEffect(() => {
     // This will only run on the client, after initial hydration
@@ -43,18 +48,38 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress }) => {
   }, []);
 
   const selectedPet = Pets.find(p => p.id === user.petStyle) || Pets[0];
-
-  const handleClick = () => {
-    // Play sound if enabled
+  
+  const playSound = () => {
     if (isSoundEnabled && audioRef.current) {
         audioRef.current.currentTime = 0;
         audioRef.current.play().catch(e => console.error("Audio play failed:", e));
     }
+  }
 
-    // Trigger a random animation
-    const animKeys = Object.keys(animations) as AnimationType[];
-    const randomAnimation = animKeys[Math.floor(Math.random() * animKeys.length)];
-    setCurrentAnimation(randomAnimation);
+  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    playSound();
+    
+    const target = event.target as SVGElement;
+    const clickedPartId = target.id || target.parentElement?.id;
+
+    switch(clickedPartId) {
+        case 'eye-left':
+        case 'eye-right':
+        case 'eyes':
+            setEyeAnimation('wink');
+            // Reset body animation if you want eyes to animate independently
+            if (bodyAnimation) setBodyAnimation(null);
+            break;
+        case 'body':
+        default:
+             // Trigger a random body animation
+            const bodyAnims: AnimationType[] = ['jump', 'wiggle', 'spin', 'bounce'];
+            const randomAnimation = bodyAnims[Math.floor(Math.random() * bodyAnims.length)];
+            setBodyAnimation(randomAnimation);
+            // Reset eye animation
+            if (eyeAnimation) setEyeAnimation(null);
+            break;
+    }
   };
   
   return (
@@ -72,13 +97,14 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress }) => {
 
        <motion.div
         className="w-full h-full flex items-center justify-center"
-        style={{ transform: `scale(${petScale})`, transition: 'transform 0.5s ease' }}
-        animate={currentAnimation ? animations[currentAnimation] : {}}
-        onAnimationComplete={() => setCurrentAnimation(null)}
+        style={{ scale: petScale, transition: 'transform 0.5s ease' }}
+        animate={bodyAnimation ? animations[bodyAnimation] : {}}
+        onAnimationComplete={() => setBodyAnimation(null)}
       >
         <div
+          ref={petContainerRef}
           className="w-full h-full"
-          dangerouslySetInnerHTML={{ __html: selectedPet.getSvg(eyeBlinkDuration) }}
+          dangerouslySetInnerHTML={{ __html: selectedPet.getSvg(eyeBlinkDuration, eyeAnimation ? animations['wink'] : undefined) }}
         />
       </motion.div>
       
