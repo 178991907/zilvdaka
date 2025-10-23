@@ -5,7 +5,7 @@ import { I18nProvider } from '@/components/i18n-provider';
 import { ThemeProvider } from '@/components/theme-provider';
 
 export const metadata: Metadata = {
-  title: 'Habit Heroes',
+  title: '自律宝贝',
   description: 'A gamified habit tracking system for kids.',
 };
 
