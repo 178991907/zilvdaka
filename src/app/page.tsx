@@ -98,7 +98,7 @@ export default function LandingPage() {
       </header>
 
       <main className="flex-grow">
-        <section className="py-12 md:py-20">
+        <section>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-4xl md:text-6xl font-bold font-headline tracking-tight text-foreground">
               开始学习
