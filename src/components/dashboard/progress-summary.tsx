@@ -28,9 +28,9 @@ export function ProgressSummaryContent({
     return (
         <>
             <div className="flex items-center justify-between pb-2">
-                <h3 className="text-base font-medium">
+                <CardTitle className="text-base">
                     <ClientOnlyT tKey={titleTKey} />
-                </h3>
+                </CardTitle>
                 <Icon className="h-5 w-5 text-muted-foreground" />
             </div>
             <div>
