@@ -71,7 +71,7 @@ export default function DashboardPage() {
                   ) : (
                     <>
                       <Pencil className="mr-2 h-4 w-4" />
-                      <ClientOnlyT tKey="dashboard.editLayout" />
+                      <ClientOnlyT tKey="dashboard.editPage" />
                     </>
                   )}
                 </Button>
