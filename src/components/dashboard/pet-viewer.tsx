@@ -18,6 +18,17 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress }) => {
     setEyeBlinkDuration(2 + Math.random() * 4);
   }, []); // Empty dependency array ensures this runs once on mount
 
+  const eyeStyle: React.CSSProperties = {
+    animationName: 'blink',
+    animationDuration: `${eyeBlinkDuration}s`,
+    animationIterationCount: 'infinite',
+  };
+
+  const eye2Style: React.CSSProperties = {
+    ...eyeStyle,
+    animationDelay: '0.1s',
+  };
+
   return (
     <Card className="bg-primary/10 border-primary/20 flex flex-col items-center justify-center p-6 aspect-square w-full relative overflow-hidden">
       <div className="absolute top-4 left-4 right-4">
@@ -61,14 +72,14 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress }) => {
               cy="90"
               r="7"
               fill="black"
-              style={{ animation: `blink ${eyeBlinkDuration}s infinite` }}
+              style={eyeStyle}
             />
             <circle
               cx="117"
               cy="90"
               r="7"
               fill="black"
-              style={{ animation: `blink ${eyeBlinkDuration}s infinite`, animationDelay: '0.1s' }}
+              style={eye2Style}
             />
           </g>
           
