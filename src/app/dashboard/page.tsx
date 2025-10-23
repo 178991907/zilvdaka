@@ -45,32 +45,36 @@ export default function DashboardPage() {
   const petProgress = user ? (user.xp / user.xpToNextLevel) * 100 : 0;
 
   return (
-    <div className="flex flex-col">
-       <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 border-b bg-background px-4">
+    <div className="flex flex-col h-full">
+       <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 border-b bg-background px-4 shrink-0">
           <SidebarTrigger className="md:hidden" />
           <h1 className="text-xl font-semibold"><ClientOnlyT tKey='dashboard.title' /></h1>
         </header>
-      <main className="flex-1 p-4 md:p-8">
-        <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-3">
-          <div className="lg:col-span-1">
-            <Card>
-              <CardHeader>
-                <CardTitle><ClientOnlyT tKey='dashboard.petTitle'/></CardTitle>
-              </CardHeader>
-              <CardContent>
-                {isClient && user ? (
-                  <PetViewer progress={petProgress} />
-                ) : (
-                  <div className="aspect-square w-full flex items-center justify-center">
-                    <Skeleton className="w-3/4 h-3/4 rounded-full" />
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+      <main className="flex-1 p-4 md:p-8 overflow-y-auto">
+        <div className="flex flex-col lg:flex-row gap-6 h-full">
+          {/* Left Column */}
+          <div className="lg:w-1/3 flex flex-col">
+            <div className="flex-grow">
+              <Card className="h-full">
+                <CardHeader>
+                  <CardTitle><ClientOnlyT tKey='dashboard.petTitle'/></CardTitle>
+                </CardHeader>
+                <CardContent className="h-full pb-6">
+                  {isClient && user ? (
+                    <PetViewer progress={petProgress} />
+                  ) : (
+                    <div className="aspect-square w-full flex items-center justify-center">
+                      <Skeleton className="w-3/4 h-3/4 rounded-full" />
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
           </div>
 
-          <div className="lg:col-span-2">
-            <div className="space-y-6">
+          {/* Right Column */}
+          <div className="lg:w-2/3 flex flex-col">
+            <div className="flex-grow flex flex-col gap-6">
               {isClient && user ? (
                 <>
                   <ProgressSummary
