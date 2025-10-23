@@ -87,26 +87,24 @@ export default function TasksTable({ tasks, setTasks, onEdit, onDelete }: TasksT
                 </Badge>
               </TableCell>
               <TableCell className="text-right">
-                {isCustomTask(task.id) ? (
-                    <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0">
-                        <span className="sr-only"><ClientOnlyT tKey='tasks.table.openMenu' /></span>
-                        <MoreHorizontal className="h-4 w-4" />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => onEdit(task)}>
-                            <Pencil className="mr-2 h-4 w-4"/>
-                            <ClientOnlyT tKey='tasks.table.edit' />
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="text-destructive" onClick={() => onDelete(task)}>
-                            <Trash2 className="mr-2 h-4 w-4"/>
-                            <ClientOnlyT tKey='tasks.table.delete' />
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                    </DropdownMenu>
-                ) : <div className='h-8 w-8 p-0'></div>}
+                <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="h-8 w-8 p-0">
+                    <span className="sr-only"><ClientOnlyT tKey='tasks.table.openMenu' /></span>
+                    <MoreHorizontal className="h-4 w-4" />
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                    <DropdownMenuItem onClick={() => onEdit(task)}>
+                        <Pencil className="mr-2 h-4 w-4"/>
+                        <ClientOnlyT tKey='tasks.table.edit' />
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="text-destructive" onClick={() => onDelete(task)}>
+                        <Trash2 className="mr-2 h-4 w-4"/>
+                        <ClientOnlyT tKey='tasks.table.delete' />
+                    </DropdownMenuItem>
+                </DropdownMenuContent>
+                </DropdownMenu>
               </TableCell>
             </TableRow>
           ))}
