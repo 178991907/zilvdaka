@@ -16,6 +16,8 @@ interface AchievementBadgeProps {
 }
 
 export default function AchievementBadge({ achievement, onSave, onDelete }: AchievementBadgeProps) {
+  const isCustom = achievement.id.startsWith('custom-');
+
   return (
     <div className={cn(
         "relative flex flex-col items-center justify-start text-center aspect-square rounded-xl transition-all duration-300 transform hover:scale-105 p-4 group",
@@ -61,10 +63,10 @@ export default function AchievementBadge({ achievement, onSave, onDelete }: Achi
         </div>
       <div className="flex flex-col flex-grow justify-center mt-2 z-10">
         <p className="font-bold text-base text-foreground">
-            <ClientOnlyT tKey={`achievements.items.${achievement.id}.title`} />
+            {isCustom ? achievement.title : <ClientOnlyT tKey={`achievements.items.${achievement.id}.title`} />}
         </p>
         <p className="text-xs text-muted-foreground mt-1 px-2">
-            <ClientOnlyT tKey={`achievements.items.${achievement.id}.description`} />
+            {isCustom ? achievement.description : <ClientOnlyT tKey={`achievements.items.${achievement.id}.description`} />}
         </p>
       </div>
       {achievement.unlocked && achievement.dateUnlocked && (
