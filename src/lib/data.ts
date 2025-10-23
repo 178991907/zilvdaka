@@ -254,9 +254,18 @@ export let achievements = getAchievements();
 
 export const updateAchievements = (newAchievements: Achievement[]) => {
     if (typeof window !== 'undefined') {
-        achievements = newAchievements;
+        // Sort custom achievements to the top
+        const sortedAchievements = [...newAchievements].sort((a, b) => {
+            const aIsCustom = a.id.startsWith('custom-');
+            const bIsCustom = b.id.startsWith('custom-');
+            if (aIsCustom && !bIsCustom) return -1;
+            if (!aIsCustom && bIsCustom) return 1;
+            return 0;
+        });
+
+        achievements = sortedAchievements;
         try {
-            localStorage.setItem('habit-heroes-achievements', JSON.stringify(newAchievements));
+            localStorage.setItem('habit-heroes-achievements', JSON.stringify(sortedAchievements));
             window.dispatchEvent(new CustomEvent('achievementsUpdated'));
         } catch (error) {
             console.error("Failed to save achievements to localStorage", error);

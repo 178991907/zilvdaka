@@ -3,16 +3,23 @@
 import { Achievement } from '@/lib/data';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
-import { Lock } from 'lucide-react';
+import { Lock, Pencil } from 'lucide-react';
 import { Icon } from '@/components/icons';
 import { ClientOnlyT } from '../layout/app-sidebar';
+import { Button } from '../ui/button';
 
 interface AchievementBadgeProps {
   achievement: Achievement;
+  onEdit: (achievement: Achievement) => void;
 }
 
-export default function AchievementBadge({ achievement }: AchievementBadgeProps) {
+export default function AchievementBadge({ achievement, onEdit }: AchievementBadgeProps) {
   const isCustom = achievement.id.startsWith('custom-');
+
+  const handleEditClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onEdit(achievement);
+  };
 
   return (
     <div className={cn(
@@ -25,6 +32,18 @@ export default function AchievementBadge({ achievement }: AchievementBadgeProps)
         {achievement.unlocked && (
             <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-slate-700/25 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]"></div>
         )}
+
+        {isCustom && (
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute top-2 right-2 h-7 w-7 z-20 opacity-0 group-hover:opacity-100 transition-opacity"
+            onClick={handleEditClick}
+          >
+            <Pencil className="h-4 w-4" />
+          </Button>
+        )}
+
         <div
           className={cn(
             'relative mx-auto flex h-24 w-24 items-center justify-center rounded-full z-10',

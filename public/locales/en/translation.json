@@ -1,68 +1,69 @@
+
 {
   "appName": "Habit Heroes",
+  "landing": {
+    "getStarted": "Get Started",
+    "heroTitle": "Turn Daily Routines into Epic Adventures",
+    "heroSubtitle": "Habit Heroes is a gamified task management system designed to help kids build positive habits in a fun and engaging way.",
+    "startAdventure": "Start Your Adventure",
+    "featuresTitle": "Why Parents & Kids Love Habit Heroes",
+    "feature1": {
+      "title": "Engaging Quests",
+      "description": "Transform chores and routines into exciting daily quests."
+    },
+    "feature2": {
+      "title": "Collectible Pets",
+      "description": "Watch a virtual pet grow and evolve as tasks are completed."
+    },
+    "feature3": {
+      "title": "Earn Achievements",
+      "description": "Unlock badges and rewards for consistent progress."
+    },
+    "feature4": {
+      "title": "Parental Controls",
+      "description": "Easily set tasks, monitor progress, and create custom rewards."
+    },
+    "footerRights": "All rights reserved."
+  },
   "sidebar": {
     "dashboard": "Dashboard",
     "tasks": "Tasks",
     "achievements": "Achievements",
     "reports": "Reports",
     "settings": "Settings",
-    "logout": "Logout"
+    "logout": "Log Out"
   },
   "user": {
     "level": "Level {{level}}",
     "menu": {
-      "profile": "Profile",
-      "billing": "Billing",
-      "settings": "Settings",
-      "logout": "Logout"
+        "profile": "Profile",
+        "billing": "Billing",
+        "settings": "Settings",
+        "logout": "Log Out"
     }
-  },
-  "landing": {
-    "getStarted": "Get Started",
-    "heroTitle": "Turn Habits into Heroic Adventures",
-    "heroSubtitle": "A gamified habit tracking system designed for kids. Complete tasks, earn XP, and watch your pet grow!",
-    "startAdventure": "Start Your Adventure",
-    "featuresTitle": "Why Kids and Parents Love Habit Heroes",
-    "feature1": {
-      "title": "Gamified Task Management",
-      "description": "Turn daily chores and learning into exciting quests."
-    },
-    "feature2": {
-      "title": "Unlockable Achievements",
-      "description": "Celebrate milestones with a wall of collectible badges."
-    },
-    "feature3": {
-      "title": "Virtual Pet Companion",
-      "description": "Your progress helps your magical pet evolve and grow."
-    },
-    "feature4": {
-      "title": "Parental Controls",
-      "description": "Set custom rewards and oversee your child's journey."
-    },
-    "footerRights": "All rights reserved."
   },
   "dashboard": {
     "title": "Dashboard",
-    "petTitle": "Your Hero Pet",
+    "petTitle": "Your Hero's Companion",
     "petLevel": "Pet Level",
     "dailyGoal": "Daily Goal Progress",
-    "dailyGoalDescription": "{{completedTasks}} of {{totalTasks}} tasks completed today",
+    "dailyGoalDescription": "{{completedTasks}} of {{totalTasks}} adventures today",
     "weeklyStreak": "Weekly Streak",
     "weeklyStreakValue": "{{count}} days",
-    "weeklyStreakDescription": "Keep it up for a week to get a bonus!",
+    "weeklyStreakDescription": "Keep it up for a full week!",
     "xpGained": "Total XP Gained",
     "xpToNextLevel": "{{xp}} XP to next level",
     "todaysAdventures": "Today's Adventures",
-    "noAdventures": "No adventures for today. Add a new task!"
+    "noAdventures": "No adventures for today. Great job!"
   },
   "tasks": {
-    "title": "Tasks",
+    "title": "Task Management",
     "addTask": "Add Task",
     "addTaskDialog": {
       "title": "Create a New Adventure",
-      "description": "Add a new task for your hero to complete. Set its category and difficulty.",
+      "description": "Add a new task for your hero to complete.",
       "taskName": "Task Name",
-      "taskNamePlaceholder": "e.g., Read a book chapter",
+      "taskNamePlaceholder": "e.g., Read a book for 15 minutes",
       "category": "Category",
       "categoryPlaceholder": "Select a category",
       "difficulty": "Difficulty",
@@ -81,19 +82,19 @@
       "medium": "Medium",
       "hard": "Hard"
     },
-    "table": {
-      "task": "Task",
-      "category": "Category",
-      "difficulty": "Difficulty",
-      "status": "Status",
-      "actions": "Actions",
-      "openMenu": "Open menu",
-      "edit": "Edit",
-      "delete": "Delete"
-    },
     "status": {
-      "completed": "Completed",
-      "pending": "Pending"
+        "completed": "Completed",
+        "pending": "Pending"
+    },
+    "table": {
+        "task": "Task",
+        "category": "Category",
+        "difficulty": "Difficulty",
+        "status": "Status",
+        "actions": "Actions",
+        "openMenu": "Open menu",
+        "edit": "Edit",
+        "delete": "Delete"
     },
     "items": {
       "1": { "title": "Read for 20 minutes" },
@@ -108,6 +109,30 @@
     "title": "Achievements",
     "unlocked": "{{unlockedCount}} of {{totalCount}} Unlocked",
     "unlockedOn": "Unlocked",
+    "add": {
+        "button": "Add Achievement",
+        "title": "Add Custom Achievement",
+        "description": "Create a new, unique badge for a special goal."
+    },
+    "edit": {
+        "title": "Edit Achievement",
+        "description": "Update the details of this custom achievement.",
+        "name": "Name",
+        "description_label": "Description",
+        "icon": "Icon",
+        "selectIcon": "Select an icon",
+        "unlocked": "Unlocked",
+        "date": "Date Unlocked",
+        "pickDate": "Pick a date",
+        "save": "Save Changes",
+        "cancel": "Cancel",
+        "delete": "Delete"
+    },
+    "delete": {
+        "title": "Are you sure?",
+        "description": "This action cannot be undone. This will permanently delete this achievement.",
+        "confirm": "Delete"
+    },
     "items": {
       "1": {
         "title": "First Mission",
@@ -198,7 +223,7 @@
   "reports": {
     "title": "Reports",
     "performanceTitle": "Task Performance",
-    "selectRange": "Select range",
+    "selectRange": "Select a range",
     "thisWeek": "This Week",
     "thisMonth": "This Month",
     "thisYear": "This Year"
@@ -206,43 +231,43 @@
   "settings": {
     "title": "Settings",
     "profile": {
-      "title": "Profile",
-      "description": "This is how others will see you on the site.",
-      "name": "Name",
-      "avatar": "Avatar",
-      "upload": "Upload",
-      "choosePet": "Choose Your Pet",
-      "save": "Save Changes",
-      "saveSuccessTitle": "Profile Updated!",
-      "saveSuccessDescription": "Your changes have been saved successfully."
+        "title": "Profile",
+        "description": "This is how others will see you on the site.",
+        "name": "Name",
+        "avatar": "Avatar",
+        "choosePet": "Choose Your Pet",
+        "save": "Save Changes",
+        "upload": "Upload",
+        "saveSuccessTitle": "Profile Updated!",
+        "saveSuccessDescription": "Your changes have been saved successfully."
     },
     "personalization": {
-      "title": "Personalization",
-      "description": "Customize the look and feel of the app.",
-      "darkMode": "Dark Mode",
-      "darkModeDescription": "Toggle between light and dark themes.",
-      "soundEffects": "Sound Effects",
-      "soundEffectsDescription": "Enable or disable sound effects."
+        "title": "Personalization",
+        "description": "Customize the look and feel of the application.",
+        "darkMode": "Dark Mode",
+        "darkModeDescription": "Toggle between light and dark themes.",
+        "soundEffects": "Sound Effects",
+        "soundEffectsDescription": "Enable or disable sound effects."
     },
     "language": {
-      "title": "Language",
-      "description": "Set your preferred display language.",
-      "displayLanguage": "Display Language",
-      "selectLanguage": "Select a language"
+        "title": "Language & Region",
+        "description": "Manage your language and region settings.",
+        "displayLanguage": "Display Language",
+        "selectLanguage": "Select a language"
     },
     "parentalControls": {
       "title": "Parental Controls",
-      "description": "Manage rewards and settings for your child.",
+      "description": "Manage rewards and other settings for your child.",
       "rewardSystem": "Reward System",
-      "rewardSystemDescription": "Set up custom rewards for completing tasks.",
+      "rewardSystemDescription": "Set up real-world rewards for completing tasks.",
       "addReward": "Add Reward",
       "addRewardDialog": {
-        "title": "Add Custom Reward",
-        "description": "Create a new reward your child can earn.",
-        "rewardName": "Reward Name",
-        "rewardNamePlaceholder": "e.g., 30 mins screen time",
-        "tasksRequired": "Tasks Required",
-        "createButton": "Create Reward"
+          "title": "Add a New Reward",
+          "description": "Create a custom reward your child can earn.",
+          "rewardName": "Reward",
+          "rewardNamePlaceholder": "e.g., An ice cream trip",
+          "tasksRequired": "Tasks",
+          "createButton": "Create Reward"
       },
       "tasksToComplete": "{{count}} tasks to complete",
       "noRewards": "No custom rewards set up yet."

@@ -1,26 +1,33 @@
 'use client';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { achievements as initialAchievements, Achievement } from '@/lib/data';
+import { achievements as initialAchievements, Achievement, getAchievements, updateAchievements } from '@/lib/data';
 import AchievementBadge from '@/components/achievements/achievement-badge';
-import { useTranslation } from 'react-i18next';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { useEffect, useState } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
+import { EditAchievementDialog } from '@/components/achievements/edit-achievement-dialog';
+import { Button } from '@/components/ui/button';
+import { PlusCircle } from 'lucide-react';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 
 export default function AchievementsPage() {
-  const { t } = useTranslation();
   const [achievements, setAchievements] = useState<Achievement[]>([]);
   const [isClient, setIsClient] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [editingAchievement, setEditingAchievement] = useState<Achievement | null>(null);
+  const [deletingAchievement, setDeletingAchievement] = useState<Achievement | null>(null);
+
 
   useEffect(() => {
+    // Only run on client
+    const loadedAchievements = getAchievements();
+    setAchievements(loadedAchievements);
     setIsClient(true);
+
     const handleAchievementsUpdate = () => {
-      const updatedAchievements = JSON.parse(localStorage.getItem('habit-heroes-achievements') || 'null') || initialAchievements;
+      const updatedAchievements = getAchievements();
       setAchievements(updatedAchievements);
     };
-
-    // Initial load
-    handleAchievementsUpdate();
 
     window.addEventListener('achievementsUpdated', handleAchievementsUpdate);
     return () => {
@@ -28,22 +35,68 @@ export default function AchievementsPage() {
     };
   }, []);
 
+  const handleAdd = () => {
+    setEditingAchievement(null);
+    setDialogOpen(true);
+  };
+
+  const handleEdit = (achievement: Achievement) => {
+    setEditingAchievement(achievement);
+    setDialogOpen(true);
+  };
+  
+  const handleDeleteRequest = (achievement: Achievement) => {
+    setDeletingAchievement(achievement);
+  };
+
+  const handleDeleteConfirm = () => {
+    if (deletingAchievement) {
+      const updated = achievements.filter(a => a.id !== deletingAchievement.id);
+      updateAchievements(updated);
+      setDeletingAchievement(null);
+    }
+  };
+
+  const handleSave = (savedAchievement: Achievement) => {
+    const isNew = !achievements.some(a => a.id === savedAchievement.id);
+    let updatedAchievements;
+    if (isNew) {
+      updatedAchievements = [...achievements, savedAchievement];
+    } else {
+      updatedAchievements = achievements.map(a =>
+        a.id === savedAchievement.id ? savedAchievement : a
+      );
+    }
+    updateAchievements(updatedAchievements);
+  };
+
   const unlockedCount = achievements.filter(a => a.unlocked).length;
   const totalCount = achievements.length;
     
   return (
     <div className="flex flex-col">
-       <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 border-b bg-background px-4">
-          <SidebarTrigger className="md:hidden" />
-          <h1 className="text-xl font-semibold"><ClientOnlyT tKey='achievements.title' /></h1>
-          <div className="ml-auto flex items-center gap-4">
-            {isClient ? (
+      <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 border-b bg-background px-4">
+        <SidebarTrigger className="md:hidden" />
+        <h1 className="text-xl font-semibold"><ClientOnlyT tKey='achievements.title' /></h1>
+        <div className="ml-auto flex items-center gap-4">
+          {isClient ? (
+            <>
               <span className="text-sm font-semibold text-muted-foreground">
                   <ClientOnlyT tKey='achievements.unlocked' tOptions={{ unlockedCount, totalCount }} />
               </span>
-            ) : <Skeleton className="h-5 w-24" />}
-          </div>
-        </header>
+              <Button size="sm" onClick={handleAdd}>
+                <PlusCircle className="mr-2 h-4 w-4" />
+                <ClientOnlyT tKey="achievements.add.button" />
+              </Button>
+            </>
+          ) : (
+            <>
+              <Skeleton className="h-5 w-24" />
+              <Skeleton className="h-9 w-28" />
+            </>
+          )}
+        </div>
+      </header>
       <main className="flex-1 p-4 md:p-8">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
             {!isClient && Array.from({ length: 10 }).map((_, index) => (
@@ -53,10 +106,38 @@ export default function AchievementsPage() {
                 <AchievementBadge 
                     key={achievement.id} 
                     achievement={achievement} 
+                    onEdit={handleEdit}
                 />
             ))}
         </div>
       </main>
+
+      {isClient && (
+        <EditAchievementDialog
+            isOpen={dialogOpen}
+            setIsOpen={setDialogOpen}
+            achievement={editingAchievement}
+            onSave={handleSave}
+            onDelete={handleDeleteRequest}
+        />
+      )}
+
+      <AlertDialog open={!!deletingAchievement} onOpenChange={(open) => !open && setDeletingAchievement(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle><ClientOnlyT tKey="achievements.delete.title" /></AlertDialogTitle>
+            <AlertDialogDescription>
+              <ClientOnlyT tKey="achievements.delete.description" />
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel><ClientOnlyT tKey="achievements.edit.cancel" /></AlertDialogCancel>
+            <AlertDialogAction onClick={handleDeleteConfirm} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              <ClientOnlyT tKey="achievements.delete.confirm" />
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
