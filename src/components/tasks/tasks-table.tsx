@@ -37,7 +37,8 @@ interface TasksTableProps {
 }
 
 // This component handles the translation of daysOfWeek on the client side to prevent hydration mismatch.
-const TranslatedDays = ({ days }: { days: ('mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun')[] }) => {
+const TranslatedDays = ({ days }: { days: ('mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun')[] | undefined }) => {
+  if (!days || days.length === 0) return null;
   return (
     <>
       {days.map((day, index) => (
@@ -62,27 +63,36 @@ export default function TasksTable({ tasks, setTasks, onEdit, onDelete }: TasksT
     );
   };
 
-  const formatRecurrence = (task: Task) => {
-    if (!task.recurrence) return <ClientOnlyT tKey="tasks.recurrence.once" />;
-
-    const time = task.time || '';
-    switch(task.recurrence.frequency) {
-      case 'daily':
-        return <ClientOnlyT tKey="tasks.recurrence.display.daily" tOptions={{ time }} />;
-      case 'weekly':
-        if (task.recurrence.daysOfWeek && task.recurrence.daysOfWeek.length > 0) {
-          const daysComponent = <TranslatedDays days={task.recurrence.daysOfWeek} />;
-          return <ClientOnlyT tKey="tasks.recurrence.display.weekly" tOptions={{ days: daysComponent, time }} />;
-        }
-        return <ClientOnlyT tKey="tasks.recurrence.display.weekly" tOptions={{ days: <ClientOnlyT tKey="tasks.recurrence.display.noDays" />, time }} />;
-      case 'monthly':
-        return <ClientOnlyT tKey="tasks.recurrence.display.monthly" tOptions={{ time }} />;
-      case 'yearly':
-        return <ClientOnlyT tKey="tasks.recurrence.display.yearly" tOptions={{ time }} />;
-      default:
-        return <ClientOnlyT tKey="tasks.recurrence.once" />;
+ const formatRecurrence = (task: Task) => {
+    if (!task.recurrence) {
+      if (task.time) {
+        return <ClientOnlyT tKey="tasks.recurrence.display.onceAtTime" tOptions={{ time: task.time }} />;
+      }
+      return <ClientOnlyT tKey="tasks.recurrence.once" />;
     }
-  }
+
+    const { interval, unit, daysOfWeek } = task.recurrence;
+    const time = task.time ? ` at ${task.time}` : '';
+    const intervalText = interval > 1 ? interval : '';
+
+    const options: { [key: string]: any } = {
+        count: interval,
+        time: task.time
+    };
+
+    let tKey = `tasks.recurrence.display.every_${unit}`;
+    if (interval > 1) {
+        tKey = `tasks.recurrence.display.every_x_${unit}s`;
+    }
+
+    if (unit === 'week' && daysOfWeek && daysOfWeek.length > 0) {
+        tKey += '_on';
+        options.days = <TranslatedDays days={daysOfWeek} />;
+    }
+
+    return <ClientOnlyT tKey={tKey} tOptions={options} />;
+};
+
 
   return (
     <div className="rounded-lg border">

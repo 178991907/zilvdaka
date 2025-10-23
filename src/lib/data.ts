@@ -2,7 +2,8 @@ import type { LucideIcon } from 'lucide-react';
 import { Book, Brush, Bed, Atom, Bike, Dumbbell, ShieldCheck, Star, Trophy, Zap, Bug, Swords, Mountain, Flower, Gem } from 'lucide-react';
 
 export type Recurrence = {
-  frequency: 'daily' | 'weekly' | 'monthly' | 'yearly';
+  interval: number;
+  unit: 'week' | 'month' | 'year';
   daysOfWeek?: ('mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun')[];
 };
 
@@ -174,7 +175,7 @@ const defaultAchievements: Achievement[] = [
     title: 'Brave Knight - Gold',
     description: '21-day streak.',
     icon: 'Swords',
-    unlocked: false,
+unlocked: false,
   },
   {
     id: 'explorer_bronze',
@@ -300,7 +301,7 @@ export const tasks: Task[] = [
     difficulty: 'Easy',
     completed: true,
     dueDate: new Date(),
-    recurrence: { frequency: 'daily' },
+    recurrence: { interval: 1, unit: 'week' },
     time: '20:00',
   },
   {
@@ -311,7 +312,7 @@ export const tasks: Task[] = [
     difficulty: 'Medium',
     completed: false,
     dueDate: new Date(),
-    recurrence: { frequency: 'weekly', daysOfWeek: ['tue', 'thu'] },
+    recurrence: { interval: 1, unit: 'week', daysOfWeek: ['tue', 'thu'] },
     time: '16:30',
   },
   {
@@ -322,7 +323,6 @@ export const tasks: Task[] = [
     difficulty: 'Easy',
     completed: false,
     dueDate: new Date(),
-    recurrence: { frequency: 'daily' },
     time: '21:00',
   },
   {
@@ -351,7 +351,6 @@ export const tasks: Task[] = [
     difficulty: 'Medium',
     completed: true,
     dueDate: new Date(),
-     recurrence: { frequency: 'daily' },
     time: '07:00',
   },
 ];
