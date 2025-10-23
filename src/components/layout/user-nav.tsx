@@ -17,10 +17,11 @@ import { CreditCard, LogOut, Settings, User as UserIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ClientOnlyT } from './app-sidebar';
 import { useState, useEffect } from 'react';
+import { Skeleton } from '../ui/skeleton';
 
 export function UserNav() {
   const { t } = useTranslation();
-  const [user, setUser] = useState<User>(getUser());
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const handleProfileUpdate = () => {
@@ -37,7 +38,19 @@ export function UserNav() {
     };
   }, []);
 
-  const selectedAvatar = Avatars.find(img => img.id === user.avatar);
+  const selectedAvatar = user ? Avatars.find(img => img.id === user.avatar) : null;
+
+  if (!user) {
+    return (
+        <div className="relative h-10 w-full flex items-center justify-start gap-2 px-2">
+            <Skeleton className="h-8 w-8 rounded-full" />
+            <div className="flex flex-col items-start gap-1">
+                <Skeleton className="h-4 w-20" />
+                <Skeleton className="h-3 w-12" />
+            </div>
+        </div>
+    );
+  }
 
   return (
     <DropdownMenu>
@@ -55,7 +68,9 @@ export function UserNav() {
           </Avatar>
            <div className="flex flex-col items-start truncate">
               <span className="font-semibold text-sm truncate">{user.name}</span>
-              <ClientOnlyT tKey="user.level" tOptions={{ level: user.level }} />
+               <span className="text-xs text-muted-foreground">
+                <ClientOnlyT tKey="user.level" tOptions={{ level: user.level }} />
+               </span>
             </div>
         </Button>
       </DropdownMenuTrigger>
