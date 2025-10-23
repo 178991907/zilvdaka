@@ -2,51 +2,51 @@
   "placeholderImages": [
     {
       "id": "avatar1",
-      "description": "User avatar 1",
-      "imageUrl": "https://images.unsplash.com/photo-1658233427329-9d72b824e144?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjYXJ0b29uJTIwcm9ib3R8ZW58MHx8fHwxNzYxMTY1MzQ1fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "cartoon robot"
+      "description": "A cute cartoon robot",
+      "imageUrl": "https://images.unsplash.com/photo-1695029321459-a65c4a35017c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjdXRlJTIwcm9ib3R8ZW58MHx8fHwxNzIyNDMwOTgxfDA&ixlib=rb-4.0.3&q=80&w=1080",
+      "imageHint": "cute robot"
     },
     {
       "id": "avatar2",
-      "description": "User avatar 2",
-      "imageUrl": "https://images.unsplash.com/photo-1572671734755-0554459614e2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzbWlsaW5nJTIwbW9uc3RlcnxlbnwwfHx8fDE3NjEyMTE1MTV8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "smiling monster"
+      "description": "A friendly cartoon monster",
+      "imageUrl": "https://images.unsplash.com/photo-1678822479469-93433a25c192?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjYXJ0b29uJTIwbW9uc3RlcnxlbnwwfHx8fDE3MjI0MzA5ODF8MA&ixlib=rb-4.0.3&q=80&w=1080",
+      "imageHint": "cartoon monster"
     },
     {
       "id": "avatar3",
-      "description": "User avatar 3",
-      "imageUrl": "https://images.unsplash.com/photo-1566847438217-76e82d383f84?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjdXRlJTIwY2F0fGVufDB8fHx8MTc2MTE1MTQzM3ww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "cute cat"
+      "description": "A happy cartoon cat",
+      "imageUrl": "https://images.unsplash.com/photo-1639433146437-3a3234a94a28?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjYXJ0b29uJTIwY2F0fGVufDB8fHx8MTcyMjQzMDk4Mnww&ixlib=rb-4.0.3&q=80&w=1080",
+      "imageHint": "cartoon cat"
     },
     {
       "id": "avatar4",
-      "description": "User avatar 4",
-      "imageUrl": "https://images.unsplash.com/photo-1559190394-df5a28aab5c5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxoYXBweSUyMGRvZ3xlbnwwfHx8fDE3NjExNTcwNDh8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "happy dog"
+      "description": "A joyful cartoon dog",
+      "imageUrl": "https://images.unsplash.com/photo-1621379190141-9c6f35b43690?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjYXJ0b29uJTIwZG9nfGVufDB8fHx8MTcyMjQzMDk4Mnww&ixlib=rb-4.0.3&q=80&w=1080",
+      "imageHint": "cartoon dog"
     },
     {
       "id": "avatar5",
-      "description": "User avatar 5",
-      "imageUrl": "https://images.unsplash.com/photo-1607337202714-a88f7abbdee7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxmcmllbmRseSUyMGFsaWVufGVufDB8fHx8MTc2MTIxMTUxNXww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "friendly alien"
+      "description": "A playful cartoon alien",
+      "imageUrl": "https://images.unsplash.com/photo-1695029321528-9189344161a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjdXRlJTIwYWxpZW58ZW58MHx8fHwxNzIyNDMwOTgyfDA&ixlib=rb-4.0.3&q=80&w=1080",
+      "imageHint": "cute alien"
     },
     {
       "id": "avatar6",
-      "description": "User avatar 6",
-      "imageUrl": "https://images.unsplash.com/photo-1719433413502-74efcf03bc47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bGl0dGxlJTIwZm94fGVufDB8fHx8MTc2MTIxMTUxNXww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "little fox"
+      "description": "A sweet cartoon fox",
+      "imageUrl": "https://images.unsplash.com/photo-1635399905118-89802c633215?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjYXJ0b29uJTIwZm94fGVufDB8fHx8MTcyMjQzMDk4M3ww&ixlib=rb-4.0.3&q=80&w=1080",
+      "imageHint": "cartoon fox"
     },
     {
       "id": "avatar7",
-      "description": "User avatar 7",
-      "imageUrl": "https://images.unsplash.com/photo-1722603570955-4f2bf81f01f6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y3V0ZSUyMGFzdHJvbmF1dHxlbnwwfHx8fDE3NjEyMTE1MTV8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "cute astronaut"
+      "description": "A brave cartoon astronaut",
+      "imageUrl": "https://images.unsplash.com/photo-1680539151528-0a4f54e64516?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjYXJ0b29uJTIwYXN0cm9uYXV0fGVufDB8fHx8MTcyMjQzMDk4M3ww&ixlib=rb-4.0.3&q=80&w=1080",
+      "imageHint": "cartoon astronaut"
     },
     {
       "id": "avatar8",
-      "description": "User avatar 8",
-      "imageUrl": "https://images.unsplash.com/photo-1736947137930-7725013e3da3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxwYW5kYSUyMGNoYXJhY3RlcnxlbnwwfHx8fDE3NjEyMTE1MTV8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "panda character"
+      "description": "A cuddly cartoon panda",
+      "imageUrl": "https://images.unsplash.com/photo-1635399905256-3a7e5a8e0d5f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjYXJ0b29uJTIwcGFuZGF8ZW58MHx8fHwxNzIyNDMwOTgzfDA&ixlib=rb-4.0.3&q=80&w=1080",
+      "imageHint": "cartoon panda"
     },
     {
       "id": "pet-happy",
