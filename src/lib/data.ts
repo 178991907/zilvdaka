@@ -1,5 +1,5 @@
 import type { LucideIcon } from 'lucide-react';
-import { Book, Brush, Bed, Atom, Bike, Dumbbell, ShieldCheck, Star, Trophy, Zap } from 'lucide-react';
+import { Book, Brush, Bed, Atom, Bike, Dumbbell, ShieldCheck, Star, Trophy, Zap, Ant, Swords, Mountain, Flower, Gem } from 'lucide-react';
 
 export type Task = {
   id: string;
@@ -179,6 +179,113 @@ export const achievements: Achievement[] = [
     title: 'Creative Genius',
     description: 'Complete 5 creative tasks.',
     icon: 'Brush',
+    unlocked: false,
+  },
+  {
+    id: 'ant_bronze',
+    title: 'Little Ant - Bronze',
+    description: '1-day streak.',
+    icon: 'Ant',
+    unlocked: true,
+    dateUnlocked: new Date(),
+  },
+  {
+    id: 'ant_silver',
+    title: 'Little Ant - Silver',
+    description: '3-day streak.',
+    icon: 'Ant',
+    unlocked: true,
+    dateUnlocked: new Date(),
+  },
+  {
+    id: 'ant_gold',
+    title: 'Little Ant - Gold',
+    description: '7-day streak.',
+    icon: 'Ant',
+    unlocked: false,
+  },
+  {
+    id: 'knight_bronze',
+    title: 'Brave Knight - Bronze',
+    description: '7-day streak.',
+    icon: 'Swords',
+    unlocked: false,
+  },
+  {
+    id: 'knight_silver',
+    title: 'Brave Knight - Silver',
+    description: '14-day streak.',
+    icon: 'Swords',
+    unlocked: false,
+  },
+  {
+    id: 'knight_gold',
+    title: 'Brave Knight - Gold',
+    description: '21-day streak.',
+    icon: 'Swords',
+    unlocked: false,
+  },
+  {
+    id: 'explorer_bronze',
+    title: 'Magic Explorer - Bronze',
+    description: '30-day streak.',
+    icon: 'Mountain',
+    unlocked: false,
+  },
+  {
+    id: 'explorer_silver',
+    title: 'Magic Explorer - Silver',
+    description: '60-day streak.',
+    icon: 'Mountain',
+    unlocked: false,
+  },
+  {
+    id: 'explorer_gold',
+    title: 'Magic Explorer - Gold',
+    description: '90-day streak.',
+    icon: 'Mountain',
+    unlocked: false,
+  },
+  {
+    id: 'guardian_bronze',
+    title: 'Seasons Guardian - Bronze',
+    description: '90-day streak.',
+    icon: 'Flower',
+    unlocked: false,
+  },
+  {
+    id: 'guardian_silver',
+    title: 'Seasons Guardian - Silver',
+    description: '180-day streak.',
+    icon: 'Flower',
+    unlocked: false,
+  },
+  {
+    id: 'guardian_gold',
+    title: 'Seasons Guardian - Gold',
+    description: '365-day streak.',
+    icon: 'Flower',
+    unlocked: false,
+  },
+  {
+    id: 'master_bronze',
+    title: 'Super Master - Bronze',
+    description: '1-year streak.',
+    icon: 'Gem',
+    unlocked: false,
+  },
+  {
+    id: 'master_silver',
+    title: 'Super Master - Silver',
+    description: '2-year streak.',
+    icon: 'Gem',
+    unlocked: false,
+  },
+  {
+    id: 'master_gold',
+    title: 'Super Master - Gold',
+    description: '3-year streak.',
+    icon: 'Gem',
     unlocked: false,
   },
 ];
