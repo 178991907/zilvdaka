@@ -8,13 +8,7 @@ import { CheckCircle, Trophy, Star, Shield } from 'lucide-react';
 export default function LandingPage() {
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      <header className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-        <div className="flex items-center gap-2">
-          <Star className="w-8 h-8 text-primary" />
-          <h1 className="text-2xl font-bold font-headline text-foreground">
-            Discipline Baby
-          </h1>
-        </div>
+      <header className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-end items-center">
         <Button asChild>
           <Link href="/dashboard">Get Started</Link>
         </Button>
