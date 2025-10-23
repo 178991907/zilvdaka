@@ -3,50 +3,50 @@
     {
       "id": "avatar1",
       "description": "User avatar 1",
-      "imageUrl": "https://images.unsplash.com/photo-1581888224535-31b0e242a5a5?q=80&w=200&h=200&auto=format&fit=crop&ixlib=rb-4.0.3",
-      "imageHint": "cute robot"
+      "imageUrl": "https://images.unsplash.com/photo-1639742887722-13988b488585?q=80&w=200&h=200&auto=format&fit=crop&ixlib=rb-4.0.3",
+      "imageHint": "cartoon boy"
     },
     {
       "id": "avatar2",
       "description": "User avatar 2",
-      "imageUrl": "https://images.unsplash.com/photo-1527440333343-6b350655e261?q=80&w=200&h=200&auto=format&fit=crop&ixlib=rb-4.0.3",
-      "imageHint": "cute monster"
+      "imageUrl": "https://images.unsplash.com/photo-1640960543409-dbe56a9039e1?q=80&w=200&h=200&auto=format&fit=crop&ixlib=rb-4.0.3",
+      "imageHint": "cartoon girl"
     },
     {
       "id": "avatar3",
       "description": "User avatar 3",
-      "imageUrl": "https://images.unsplash.com/photo-1634079870003-5050bf25c898?q=80&w=200&h=200&auto=format&fit=crop&ixlib=rb-4.0.3",
-      "imageHint": "smiling character"
+      "imageUrl": "https://images.unsplash.com/photo-1639742887721-a1d29c585b96?q=80&w=200&h=200&auto=format&fit=crop&ixlib=rb-4.0.3",
+      "imageHint": "cartoon character"
     },
     {
       "id": "avatar4",
       "description": "User avatar 4",
-      "imageUrl": "https://images.unsplash.com/photo-1610480357599-4c813a343588?q=80&w=200&h=200&auto=format&fit=crop&ixlib=rb-4.0.3",
-      "imageHint": "cartoon animal"
+      "imageUrl": "https://images.unsplash.com/photo-1639742887747-023a1789c62c?q=80&w=200&h=200&auto=format&fit=crop&ixlib=rb-4.0.3",
+      "imageHint": "smiling avatar"
     },
     {
       "id": "avatar5",
       "description": "User avatar 5",
-      "imageUrl": "https://images.unsplash.com/photo-1657644003083-a6f358244cb8?q=80&w=200&h=200&auto=format&fit=crop&ixlib=rb-4.0.3",
-      "imageHint": "cute robot"
+      "imageUrl": "https://images.unsplash.com/photo-1639742887693-a417b7c21e64?q=80&w=200&h=200&auto=format&fit=crop&ixlib=rb-4.0.3",
+      "imageHint": "happy kid"
     },
     {
       "id": "avatar6",
       "description": "User avatar 6",
-      "imageUrl": "https://images.unsplash.com/photo-1678886014389-91b54c861c28?q=80&w=200&h=200&auto=format&fit=crop&ixlib=rb-4.0.3",
-      "imageHint": "cute monster"
+      "imageUrl": "https://images.unsplash.com/photo-1639742887692-a12b4e7b8f04?q=80&w=200&h=200&auto=format&fit=crop&ixlib=rb-4.0.3",
+      "imageHint": "child avatar"
     },
     {
       "id": "avatar7",
       "description": "User avatar 7",
-      "imageUrl": "https://images.unsplash.com/photo-1633537715370-137837b019c4?q=80&w=200&h=200&auto=format&fit=crop&ixlib=rb-4.0.3",
-      "imageHint": "smiling character"
+      "imageUrl": "https://images.unsplash.com/photo-1605642253407-a51375d31590?q=80&w=200&h=200&auto=format&fit=crop&ixlib=rb-4.0.3",
+      "imageHint": "cute astronaut"
     },
     {
       "id": "avatar8",
       "description": "User avatar 8",
-      "imageUrl": "https://images.unsplash.com/photo-1632733977439-5b682e46b147?q=80&w=200&h=200&auto=format&fit=crop&ixlib=rb-4.0.3",
-      "imageHint": "cartoon animal"
+      "imageUrl": "https://images.unsplash.com/photo-1610928205259-9d5843b0222f?q=80&w=200&h=200&auto=format&fit=crop&ixlib=rb-4.0.3",
+      "imageHint": "animal character"
     },
     {
       "id": "pet-happy",
@@ -81,7 +81,7 @@
     {
       "id": "landing-hero",
       "description": "Hero image for the landing page",
-      "imageUrl": "https://images.unsplash.com/photo-1636868240132-442d20fd00e7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxkYXNoYm9hcmQlMjBraWRzJTIwYXBwfGVufDB8fHx8MTc2MTIwNzA2MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1636868240132-442d20fd00e7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxkYXNoYm9hcmQlMjBraWRzJTIwYXBwfGVufDB8fHx8MTc2MTIwNzA2MXww&ixlib-rb-4.1.0&q=80&w=1080",
       "imageHint": "dashboard kids app"
     }
   ]
