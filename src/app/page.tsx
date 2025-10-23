@@ -51,9 +51,7 @@ export default function LandingPage() {
           height={120}
           priority
         />
-      </header>
-       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8">
-          <div className="max-w-4xl mx-auto grid lg:grid-cols-2 gap-6 items-center">
+        <div className="max-w-4xl w-full mx-auto grid lg:grid-cols-2 gap-6 items-center mt-8">
             <div>
               {isClient && user ? (
                 <PetViewer progress={petProgress} className="min-h-[300px]" />
@@ -92,7 +90,7 @@ export default function LandingPage() {
               )}
             </div>
           </div>
-        </div>
+      </header>
 
       <main className="flex-grow">
         <section className="py-12 md:py-20">
