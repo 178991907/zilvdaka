@@ -1,9 +1,9 @@
 {
   "appName": "自律宝贝",
   "landing": {
-    "title": "游戏化你的习惯，养成你的宠物",
-    "description": "一个结合了任务管理和宠物养成的应用，让孩子们在乐趣中培养好习惯。",
-    "getStarted": "开始使用",
+    "title": "儿童游戏化习惯养成",
+    "description": "将日常事务变成激动人心的冒险。通过一个有趣且有奖励的游戏，激励您的孩子建立健康的习惯。",
+    "getStarted": "立即开始",
     "goToDashboard": "进入仪表盘"
   },
   "sidebar": {
@@ -13,50 +13,92 @@
     "reports": "报告",
     "rewards": "奖励",
     "settings": "设置",
-    "logout": "退出登录"
+    "logout": "登出"
   },
   "user": {
     "level": "等级 {{level}}",
     "menu": {
       "profile": "个人资料",
-      "billing": "订阅",
+      "billing": "账单",
       "settings": "设置",
-      "logout": "退出"
+      "logout": "登出"
     }
   },
   "dashboard": {
     "title": "仪表盘",
     "myPet": "我的宠物",
     "dailyGoal": "今日目标",
-    "dailyGoalDescription": "已完成 {{completedTasks}} / {{totalTasks}} 个任务",
-    "xpGained": "已获经验",
-    "xpToNextLevel": "距离下一级还需 {{xp}} XP",
-    "petIntro": "宠物介绍",
-    "petIntroContent": "欢迎来到您的宠物世界！这里是帮助您的伙伴成长的小秘诀：\n\n• **完成每日冒险**：每完成一个任务，都能为您的宠物赢得宝贵的经验值 (XP)。\n• **升级与成长**：积累经验值，您和您的宠物将一同升级。\n• **解锁新形态**：达到特定等级，您的宠物就有机会进化成更酷、更可爱的全新形态！\n• **互动与玩耍**：别忘了常常点击您的宠物，看看它会给您带来什么有趣的惊喜动画！",
-    "changePet": "更换你的宠物",
+    "dailyGoalDescription": "今日已完成 {{completedTasks}} / {{totalTasks}} 个任务",
+    "xpGained": "已获经验值",
+    "xpToNextLevel": "距离下一级还需 {{xp}} 点经验",
     "todaysAdventures": "今日探险",
-    "noAdventures": "今天没有探险任务，好好享受你的一天吧！"
+    "noAdventures": "今天没有安排探险。干得漂亮！",
+    "petIntroTitle": "宠物介绍",
+    "changePet": "更换您的宠物"
   },
   "tasks": {
-    "title": "任务管理",
-    "addTask": "添加新任务",
+    "title": "任务列表",
+    "addTask": "添加任务",
+    "addTaskDialog": {
+      "title": "创建新任务",
+      "description": "添加一个新的挑战。设置其名称、类别和难度。",
+      "taskName": "任务名称",
+      "taskNamePlaceholder": "例如：阅读20分钟",
+      "category": "类别",
+      "categoryPlaceholder": "选择一个类别",
+      "difficulty": "难度",
+      "difficultyPlaceholder": "选择一个难度",
+      "createTask": "创建任务",
+      "recurrence": "重复",
+      "repeatEvery": "每隔",
+      "selectUnit": "选择单位",
+      "daysOfWeek": "星期几",
+      "time": "时间"
+    },
+    "editTaskDialog": {
+        "title": "编辑任务",
+        "description": "更新此任务的详细信息。",
+        "save": "保存更改"
+    },
+    "recurrence": {
+      "once": "一次",
+      "recurring": "重复",
+      "units": {
+        "week": "周",
+        "month": "月",
+        "year": "年"
+      },
+      "display": {
+        "once": "一次性任务",
+        "onceAtTime": "一次性任务，在 {{time}}",
+        "every_week": "每周，在 {{time}}",
+        "every_week_on": "每周，在 {{time}}，于",
+        "every_x_weeks": "每 {{count}} 周，在 {{time}}",
+        "every_x_weeks_on": "每 {{count}} 周，在 {{time}}，于",
+        "every_month": "每月，在 {{time}}",
+        "every_x_months": "每 {{count}} 个月，在 {{time}}",
+        "every_year": "每年，在 {{time}}",
+        "every_x_years": "每 {{count}} 年，在 {{time}}"
+      }
+    },
     "table": {
       "task": "任务",
       "category": "类别",
       "difficulty": "难度",
+      "recurrence": "重复",
       "status": "状态",
       "actions": "操作",
       "openMenu": "打开菜单",
       "edit": "编辑",
       "delete": "删除",
-      "recurrence": "重复",
       "pause": "暂停",
       "resume": "恢复"
     },
-    "difficulties": {
-      "easy": "简单",
-      "medium": "中等",
-      "hard": "困难"
+    "status": {
+        "pending": "待处理",
+        "completed": "已完成",
+        "active": "进行中",
+        "paused": "已暂停"
     },
     "categories": {
       "learning": "学习",
@@ -65,59 +107,10 @@
       "school": "学校",
       "activity": "活动"
     },
-    "status": {
-        "active": "进行中",
-        "paused": "已暂停",
-        "completed": "已完成",
-        "pending": "待处理"
-    },
-    "addTaskDialog": {
-      "title": "创建新任务",
-      "description": "为您的孩子设置一个新的重复性或一次性任务。完成后点击保存。",
-      "taskName": "任务名称",
-      "taskNamePlaceholder": "例如：读一本书",
-      "category": "类别",
-      "categoryPlaceholder": "选择一个类别",
-      "difficulty": "难度",
-      "difficultyPlaceholder": "选择一个难度",
-      "createTask": "创建任务",
-      "recurrence": "重复设置",
-      "repeatEvery": "每",
-      "selectUnit": "选择单位",
-      "daysOfWeek": "星期几",
-      "time": "时间"
-    },
-    "editTaskDialog": {
-        "title": "编辑任务",
-        "description": "修改此任务的详细信息。完成后点击保存。",
-        "save": "保存更改"
-    },
-    "delete": {
-        "title": "确定要删除吗？",
-        "description": "此操作无法撤销。这将永久删除该任务。",
-        "cancel": "取消",
-        "confirm": "删除"
-    },
-    "recurrence": {
-        "once": "一次",
-        "recurring": "重复",
-        "units": {
-            "week": "周",
-            "month": "月",
-            "year": "年"
-        },
-        "display": {
-            "once": "一次性任务",
-            "onceAtTime": "一次性任务，在 {{time}}",
-            "every_week": "每周，在 {{time}}",
-            "every_month": "每月，在 {{time}}",
-            "every_year": "每年，在 {{time}}",
-            "every_week_on": "每周的",
-            "every_x_weeks": "每 {{count}} 周，在 {{time}}",
-            "every_x_months": "每 {{count}} 月，在 {{time}}",
-            "every_x_years": "每 {{count}} 年，在 {{time}}",
-            "every_x_weeks_on": "每 {{count}} 周的"
-        }
+    "difficulties": {
+      "easy": "简单",
+      "medium": "中等",
+      "hard": "困难"
     },
     "weekdays": {
       "mon": "一",
@@ -138,47 +131,41 @@
       "sun": "周日"
     },
     "weekdaysFull": {
-        "monday": "星期一",
-        "tuesday": "星期二",
-        "wednesday": "星期三",
-        "thursday": "星期四",
-        "friday": "星期五",
-        "saturday": "星期六",
-        "sunday": "星期日"
+      "monday": "星期一",
+      "tuesday": "星期二",
+      "wednesday": "星期三",
+      "thursday": "星期四",
+      "friday": "星期五",
+      "saturday": "星期六",
+      "sunday": "星期日"
     },
     "items": {
-      "read": {
-        "title": "阅读20分钟"
-      },
-      "drawing": {
-        "title": "练习绘画"
-      },
-      "bedtime": {
-        "title": "准时睡觉"
-      },
-      "homework": {
-        "title": "完成科学作业"
-      },
-      "bike": {
-        "title": "在公园骑自行车"
-      },
-      "workout": {
-        "title": "晨间锻炼"
-      }
+      "read": { "title": "阅读20分钟" },
+      "drawing": { "title": "练习绘画" },
+      "bedtime": { "title": "按时睡觉" },
+      "homework": { "title": "完成科学作业" },
+      "bike": { "title": "在公园骑自行车" },
+      "workout": { "title": "晨间锻炼" }
+    },
+    "delete": {
+      "title": "确定要删除吗？",
+      "description": "这将永久删除该任务。此操作无法撤销。",
+      "cancel": "取消",
+      "confirm": "删除"
     }
   },
   "achievements": {
-    "title": "成就",
+    "title": "成就馆",
     "unlocked": "已解锁 {{unlockedCount}} / {{totalCount}}",
     "unlockedOn": "解锁于",
     "add": {
-        "button": "新成就",
+        "button": "添加成就",
         "title": "添加新成就",
-        "description": "创建一个自定义成就。设置达成条件和漂亮的图标！"
+        "description": "为您的追踪器创建一个新的自定义成就。"
     },
     "edit": {
         "title": "编辑成就",
-        "description": "更新这个成就的详细信息。",
+        "description": "修改此成就的详细信息。",
         "name": "名称",
         "descriptionLabel": "描述",
         "icon": "图标",
@@ -187,14 +174,14 @@
         "unlocked": "已解锁",
         "date": "解锁日期",
         "pickDate": "选择日期",
-        "save": "保存更改",
+        "delete": "删除",
         "cancel": "取消",
-        "delete": "删除"
+        "save": "保存更改"
     },
     "delete": {
-        "title": "要删除成就吗？",
-        "description": "这将永久移除此成就，此操作无法撤销。",
-        "confirm": "删除"
+      "title": "删除成就",
+      "description": "您确定要删除这个成就吗？此操作无法撤销。",
+      "confirm": "删除"
     },
     "items": {
       "1": {
@@ -210,7 +197,7 @@
         "description": "连续7天完成所有任务。"
       },
       "4": {
-        "title": "连胜起点",
+        "title": "连胜开始",
         "description": "保持3天连续完成任务。"
       },
       "5": {
@@ -221,88 +208,43 @@
         "title": "创意天才",
         "description": "完成5个创意任务。"
       },
-      "ant_bronze": {
-        "title": "小蚂蚁-铜牌",
-        "description": "连续1天。"
-      },
-      "ant_silver": {
-        "title": "小蚂蚁-银牌",
-        "description": "连续3天。"
-      },
-      "ant_gold": {
-        "title": "小蚂蚁-金牌",
-        "description": "连续7天。"
-      },
-      "knight_bronze": {
-        "title": "勇敢骑士-铜牌",
-        "description": "连续7天。"
-      },
-      "knight_silver": {
-        "title": "勇敢骑士-银牌",
-        "description": "连续14天。"
-      },
-      "knight_gold": {
-        "title": "勇敢骑士-金牌",
-        "description": "连续21天。"
-      },
-      "explorer_bronze": {
-        "title": "魔法探险家-铜牌",
-        "description": "连续30天。"
-      },
-      "explorer_silver": {
-        "title": "魔法探险家-银牌",
-        "description": "连续60天。"
-      },
-      "explorer_gold": {
-        "title": "魔法探险家-金牌",
-        "description": "连续90天。"
-      },
-      "guardian_bronze": {
-        "title": "四季守护者-铜牌",
-        "description": "连续90天。"
-      },
-      "guardian_silver": {
-        "title": "四季守护者-银牌",
-        "description": "连续180天。"
-      },
-      "guardian_gold": {
-        "title": "四季守护者-金牌",
-        "description": "连续365天。"
-      },
-      "master_bronze": {
-        "title": "超级大师-铜牌",
-        "description": "连续1年。"
-      },
-      "master_silver": {
-        "title": "超级大师-银牌",
-        "description": "连续2年。"
-      },
-      "master_gold": {
-        "title": "超级大师-金牌",
-        "description": "连续3年。"
-      }
+      "ant_bronze": { "title": "小蚂蚁-铜牌", "description": "连续打卡1天。" },
+      "ant_silver": { "title": "小蚂蚁-银牌", "description": "连续打卡3天。" },
+      "ant_gold": { "title": "小蚂蚁-金牌", "description": "连续打卡7天。" },
+      "knight_bronze": { "title": "英勇骑士-铜牌", "description": "连续打卡7天。" },
+      "knight_silver": { "title": "英勇骑士-银牌", "description": "连续打卡14天。" },
+      "knight_gold": { "title": "英勇骑士-金牌", "description": "连续打卡21天。" },
+      "explorer_bronze": { "title": "魔法探险家-铜牌", "description": "连续打卡30天。" },
+      "explorer_silver": { "title": "魔法探险家-银牌", "description": "连续打卡60天。" },
+      "explorer_gold": { "title": "魔法探险家-金牌", "description": "连续打卡90天。" },
+      "guardian_bronze": { "title": "四季守护者-铜牌", "description": "连续打卡90天。" },
+      "guardian_silver": { "title": "四季守护者-银牌", "description": "连续打卡180天。" },
+      "guardian_gold": { "title": "四季守护者-金牌", "description": "连续打卡365天。" },
+      "master_bronze": { "title": "超级大师-铜牌", "description": "连续打卡1年。" },
+      "master_silver": { "title": "超级大师-银牌", "description": "连续打卡2年。" },
+      "master_gold": { "title": "超级大师-金牌", "description": "连续打卡3年。" }
     }
   },
   "reports": {
-    "title": "报告",
-    "performanceTitle": "表现趋势",
-    "selectRange": "选择日期范围",
+    "title": "成长报告",
+    "performanceTitle": "任务表现",
+    "selectRange": "选择范围",
     "thisWeek": "本周",
     "thisMonth": "本月",
     "thisYear": "本年"
   },
   "rewards": {
-    "title": "奖励"
+    "title": "奖励中心"
   },
   "settings": {
-    "title": "设置",
+    "title": "系统设置",
     "profile": {
       "title": "个人资料",
-      "description": "管理你的个人和宠物信息。",
+      "description": "管理您的个人和宠物信息。",
       "name": "姓名",
       "avatar": "头像",
-      "petName": "宠物名字",
-      "choosePet": "选择你的宠物",
+      "petName": "宠物昵称",
+      "choosePet": "选择您的宠物",
       "save": "保存更改",
       "saveSuccessTitle": "资料已更新",
       "saveSuccessDescription": "您的更改已成功保存。",
@@ -311,46 +253,52 @@
       "upload": "上传"
     },
     "personalization": {
-        "title": "个性化",
-        "description": "自定义应用的外观和感觉。",
-        "darkMode": "深色模式",
-        "darkModeDescription": "在浅色和深色主题之间切换。",
-        "soundEffects": "音效",
-        "soundEffectsDescription": "启用或禁用操作音效。"
+      "title": "个性化",
+      "description": "自定义应用的外观和感觉。",
+      "darkMode": "深色模式",
+      "darkModeDescription": "在亮色和深色主题之间切换。",
+      "soundEffects": "音效",
+      "soundEffectsDescription": "启用或禁用操作音效。"
     },
     "language": {
-        "title": "语言与地区",
-        "description": "设置您偏好的应用语言。",
-        "displayLanguage": "显示语言",
-        "selectLanguage": "选择一种语言"
+      "title": "语言与地区",
+      "description": "设置您的首选应用语言。",
+      "displayLanguage": "显示语言",
+      "selectLanguage": "选择一种语言"
     },
     "appearance": {
         "title": "外观",
-        "description": "自定义应用的外观。"
+        "description": "自定义应用的整体外观。"
     },
     "parentalControls": {
-        "rewardSystem": "奖励系统",
-        "rewardSystemDescription": "设置孩子可以通过完成任务获得的奖励。",
-        "addReward": "添加奖励",
-        "addRewardDialog": {
-            "title": "添加新奖励",
-            "description": "定义奖励及其获取条件。",
-            "rewardName": "奖励名称",
-            "rewardNamePlaceholder": "例如：30分钟屏幕时间",
-            "tasksRequired": "需要完成的任务数",
-            "daysRequired": "需要完成的天数",
-            "createButton": "创建奖励"
-        },
-        "noRewards": "尚未设置任何奖励。",
-        "tasksToComplete": "完成 {{count}} 个任务即可获得",
-        "daysToComplete": "完成 {{count}} 天的任务即可获得",
-        "tasksAndDaysToComplete": "在 {{daysCount}} 天内完成 {{tasksCount}} 个任务即可获得",
-        "noRequirement": "没有特定要求"
+      "rewardSystem": "奖励系统",
+      "rewardSystemDescription": "为完成任务设置奖励。",
+      "addReward": "添加奖励",
+      "addRewardDialog": {
+        "title": "添加新奖励",
+        "description": "定义一个新的奖励及其解锁条件。",
+        "rewardName": "奖励名称",
+        "rewardNamePlaceholder": "例如：30分钟看屏幕时间",
+        "tasksRequired": "需要完成的任务数",
+        "daysRequired": "需要连续完成的天数",
+        "createButton": "创建奖励"
+      },
+      "noRewards": "尚未设置任何奖励。",
+      "tasksToComplete": "完成 {{count}} 个任务即可解锁。",
+      "daysToComplete": "连续完成 {{count}} 天任务即可解锁。",
+      "tasksAndDaysToComplete": "完成 {{tasksCount}} 个任务并保持 {{daysCount}} 天连胜。",
+      "noRequirement": "未设置具体要求。"
     }
   },
   "pets": {
     "description": {
-        "default": "你的宠物会随着你完成任务而成长。升级以解锁新的进化形态！"
+      "fullIntro": "欢迎来到您的宠物世界！这里是帮助您的伙伴成长的小秘诀：",
+      "items": [
+        "完成每日冒险：每完成一个任务，都能为您的宠物赢得宝贵的经验值 (XP)。",
+        "升级与成长：积累经验值，您和您的宠物将一同升级。",
+        "解锁新形态：达到特定等级，您的宠物就有机会进化成更酷、更可爱的全新形态！",
+        "互动与玩耍：别忘了常常点击您的宠物，看看它会给您带来什么有趣的惊喜动画！"
+      ]
     }
   }
 }
