@@ -50,7 +50,7 @@ export default function DashboardPage() {
           <SidebarTrigger className="md:hidden" />
           <h1 className="text-xl font-semibold"><ClientOnlyT tKey='dashboard.title' /></h1>
         </header>
-      <main className="flex-1 p-4 md:p-8 overflow-y-auto">
+      <main className="flex-1 p-4 md:p-8 overflow-y-auto space-y-6">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
           
           {/* Left Column */}
@@ -65,6 +65,14 @@ export default function DashboardPage() {
                       descriptionTKey="dashboard.dailyGoalDescription"
                       descriptionTPOptions={{ completedTasks, totalTasks }}
                     />
+                     <ProgressSummary
+                      icon={Flame}
+                      titleTKey="dashboard.weeklyStreak"
+                      value=""
+                      valueTKey="dashboard.weeklyStreakValue"
+                      valueTPOptions={{ count: 4 }}
+                      descriptionTKey="dashboard.weeklyStreakDescription"
+                    />
                     <ProgressSummary
                       icon={Zap}
                       titleTKey="dashboard.xpGained"
@@ -72,14 +80,6 @@ export default function DashboardPage() {
                       descriptionTKey="dashboard.xpToNextLevel"
                       descriptionTPOptions={{ xp: user.xpToNextLevel - user.xp }}
                       progress={petProgress}
-                    />
-                    <ProgressSummary
-                      icon={Flame}
-                      titleTKey="dashboard.weeklyStreak"
-                      value=""
-                      valueTKey="dashboard.weeklyStreakValue"
-                      valueTPOptions={{ count: 4 }}
-                      descriptionTKey="dashboard.weeklyStreakDescription"
                     />
                   </>
                 ) : (
@@ -90,7 +90,6 @@ export default function DashboardPage() {
                   </>
                 )}
               </div>
-              <TaskList />
           </div>
 
           {/* Right Column */}
@@ -133,6 +132,8 @@ export default function DashboardPage() {
             </Card>
           </div>
         </div>
+        
+        <TaskList />
       </main>
     </div>
   );
