@@ -10,7 +10,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { tasks, Task } from '@/lib/data';
+import { Task } from '@/lib/data';
 import { Button } from '@/components/ui/button';
 import { MoreHorizontal, Pencil, Trash2 } from 'lucide-react';
 import {
@@ -29,18 +29,24 @@ const difficultyVariant = {
     Hard: 'destructive',
 } as const;
 
-export default function TasksTable() {
+interface TasksTableProps {
+  tasks: Task[];
+  setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+}
+
+export default function TasksTable({ tasks, setTasks }: TasksTableProps) {
   const { t } = useTranslation();
-  const [allTasks, setAllTasks] = React.useState<Task[]>(tasks);
 
   const handleTaskCompletion = (taskId: string, completed: boolean) => {
-    setAllTasks(prevTasks =>
+    setTasks(prevTasks =>
       prevTasks.map(task =>
         task.id === taskId ? { ...task, completed } : task
       )
     );
   };
   
+  const isCustomTask = (taskId: string) => taskId.startsWith('task-');
+
   return (
     <div className="rounded-lg border">
       <Table>
@@ -55,7 +61,7 @@ export default function TasksTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {allTasks.map(task => (
+          {tasks.map(task => (
             <TableRow key={task.id}>
               <TableCell>
                  <Checkbox
@@ -65,10 +71,10 @@ export default function TasksTable() {
               </TableCell>
               <TableCell className="font-medium flex items-center gap-3">
                  <task.icon className="h-5 w-5 text-muted-foreground" />
-                 <ClientOnlyT tKey={`tasks.items.${task.id}.title`} />
+                 {isCustomTask(task.id) ? task.title : <ClientOnlyT tKey={`tasks.items.${task.id}.title`} />}
               </TableCell>
               <TableCell>
-                <Badge variant="outline"><ClientOnlyT tKey={`tasks.categories.${task.category.toLowerCase()}`} /></Badge>
+                <Badge variant="outline">{isCustomTask(task.id) ? task.category : <ClientOnlyT tKey={`tasks.categories.${task.category.toLowerCase()}`} />}</Badge>
               </TableCell>
               <TableCell>
                 <Badge variant={difficultyVariant[task.difficulty]}><ClientOnlyT tKey={`tasks.difficulties.${task.difficulty.toLowerCase()}`} /></Badge>
