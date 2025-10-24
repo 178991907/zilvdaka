@@ -33,6 +33,12 @@ export type Achievement = {
   daysRequired?: number;
 };
 
+export type PomodoroSettings = {
+  work: number;
+  shortBreak: number;
+  longBreak: number;
+};
+
 export type User = {
   name: string;
   avatar: string;
@@ -42,6 +48,7 @@ export type User = {
   petStyle: string;
   petName: string;
   appLogo?: string;
+  pomodoroSettings?: PomodoroSettings;
   // White-labeling and content configuration
   appName: string;
   landingTitle: string;

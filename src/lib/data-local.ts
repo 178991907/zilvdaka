@@ -14,6 +14,11 @@ const defaultUser: User = {
   petStyle: 'pet1',
   petName: '泡泡',
   appLogo: '',
+  pomodoroSettings: {
+    work: 25,
+    shortBreak: 5,
+    longBreak: 15,
+  },
   // Configurable content
   appName: 'Discipline Baby',
   landingTitle: 'Gamify Your Child\'s Habits',

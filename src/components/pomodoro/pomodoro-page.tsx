@@ -9,26 +9,19 @@ import { Tabs, TabsList, TabsTrigger } from '../ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { getUser, updateUser, User } from '@/lib/data';
 
 type Mode = 'work' | 'shortBreak' | 'longBreak';
 
-const getInitialDurations = () => {
-  if (typeof window === 'undefined') {
+const getInitialDurations = (user: User | null) => {
+  if (user && user.pomodoroSettings) {
     return {
-      work: 25 * 60,
-      shortBreak: 5 * 60,
-      longBreak: 15 * 60,
+      work: user.pomodoroSettings.work * 60,
+      shortBreak: user.pomodoroSettings.shortBreak * 60,
+      longBreak: user.pomodoroSettings.longBreak * 60,
     };
   }
-  const savedDurations = localStorage.getItem('pomodoro-durations');
-  if (savedDurations) {
-    const parsed = JSON.parse(savedDurations);
-    return {
-      work: parsed.work * 60,
-      shortBreak: parsed.shortBreak * 60,
-      longBreak: parsed.longBreak * 60,
-    };
-  }
+  // Default values
   return {
     work: 25 * 60,
     shortBreak: 5 * 60,
@@ -37,8 +30,9 @@ const getInitialDurations = () => {
 };
 
 export default function PomodoroPage() {
+  const [user, setUser] = useState<User | null>(null);
   const [mode, setMode] = useState<Mode>('work');
-  const [durations, setDurations] = useState(getInitialDurations());
+  const [durations, setDurations] = useState(getInitialDurations(null));
   const [timeRemaining, setTimeRemaining] = useState(durations.work);
   const [isActive, setIsActive] = useState(false);
   const [pomodoros, setPomodoros] = useState(0);
@@ -51,6 +45,22 @@ export default function PomodoroPage() {
     shortBreak: { label: 'pomodoro.shortBreak' },
     longBreak: { label: 'pomodoro.longBreak' },
   };
+  
+  useEffect(() => {
+    const handleUserUpdate = () => {
+      const currentUser = getUser();
+      setUser(currentUser);
+      setDurations(getInitialDurations(currentUser));
+    };
+
+    handleUserUpdate(); // Initial load
+
+    window.addEventListener('userProfileUpdated', handleUserUpdate);
+    return () => {
+      window.removeEventListener('userProfileUpdated', handleUserUpdate);
+    };
+  }, []);
+
 
   const progress = (durations[mode] - timeRemaining) / durations[mode] * 100;
 
@@ -119,13 +129,9 @@ export default function PomodoroPage() {
       longBreak: parseInt(form.longBreak.value) || 15,
     };
     
-    setDurations({
-      work: newDurations.work * 60,
-      shortBreak: newDurations.shortBreak * 60,
-      longBreak: newDurations.longBreak * 60,
-    });
-
-    localStorage.setItem('pomodoro-durations', JSON.stringify(newDurations));
+    updateUser({ pomodoroSettings: newDurations });
+    
+    // The userProfileUpdated event will trigger a state update for durations
     setIsSettingsOpen(false);
   };
 
