@@ -32,39 +32,39 @@ const saveToLS = (key: string, value: any) => {
 
 const defaultLayouts = {
     lg: [
-        { i: 'pet', x: 0, y: 0, w: 8, h: 4, minH: 4, minW: 4 },
-        { i: 'dailyGoal', x: 8, y: 0, w: 4, h: 1, minH: 1, minW: 2 },
-        { i: 'xpGained', x: 8, y: 1, w: 4, h: 1, minH: 1, minW: 2 },
-        { i: 'petIntro', x: 8, y: 2, w: 4, h: 2, minH: 2, minW: 3 },
-        { i: 'tasks', x: 0, y: 4, w: 12, h: 3, minH: 3, minW: 6 },
+        { i: 'pet', x: 0, y: 0, w: 80, h: 40, minH: 40, minW: 40 },
+        { i: 'dailyGoal', x: 80, y: 0, w: 40, h: 10, minH: 10, minW: 20 },
+        { i: 'xpGained', x: 80, y: 10, w: 40, h: 10, minH: 10, minW: 20 },
+        { i: 'petIntro', x: 80, y: 20, w: 40, h: 20, minH: 20, minW: 30 },
+        { i: 'tasks', x: 0, y: 40, w: 120, h: 30, minH: 30, minW: 60 },
     ],
     md: [
-        { i: 'pet', x: 0, y: 0, w: 6, h: 4 },
-        { i: 'dailyGoal', x: 6, y: 0, w: 4, h: 1 },
-        { i: 'xpGained', x: 6, y: 1, w: 4, h: 1 },
-        { i: 'petIntro', x: 0, y: 4, w: 6, h: 2 },
-        { i: 'tasks', x: 0, y: 6, w: 10, h: 3 },
+        { i: 'pet', x: 0, y: 0, w: 60, h: 40 },
+        { i: 'dailyGoal', x: 60, y: 0, w: 40, h: 10 },
+        { i: 'xpGained', x: 60, y: 10, w: 40, h: 10 },
+        { i: 'petIntro', x: 0, y: 40, w: 60, h: 20 },
+        { i: 'tasks', x: 0, y: 60, w: 100, h: 30 },
     ],
     sm: [
-        { i: 'pet', x: 0, y: 0, w: 6, h: 4 },
-        { i: 'dailyGoal', x: 0, y: 4, w: 3, h: 1 },
-        { i: 'xpGained', x: 3, y: 4, w: 3, h: 1 },
-        { i: 'petIntro', x: 0, y: 5, w: 6, h: 2 },
-        { i: 'tasks', x: 0, y: 7, w: 6, h: 3 },
+        { i: 'pet', x: 0, y: 0, w: 60, h: 40 },
+        { i: 'dailyGoal', x: 0, y: 40, w: 30, h: 10 },
+        { i: 'xpGained', x: 30, y: 40, w: 30, h: 10 },
+        { i: 'petIntro', x: 0, y: 50, w: 60, h: 20 },
+        { i: 'tasks', x: 0, y: 70, w: 60, h: 30 },
     ],
     xs: [
-        { i: 'pet', x: 0, y: 0, w: 4, h: 4 },
-        { i: 'dailyGoal', x: 0, y: 4, w: 4, h: 1 },
-        { i: 'xpGained', x: 0, y: 5, w: 4, h: 1 },
-        { i: 'petIntro', x: 0, y: 6, w: 4, h: 2 },
-        { i: 'tasks', x: 0, y: 8, w: 4, h: 3 },
+        { i: 'pet', x: 0, y: 0, w: 40, h: 40 },
+        { i: 'dailyGoal', x: 0, y: 40, w: 40, h: 10 },
+        { i: 'xpGained', x: 0, y: 50, w: 40, h: 10 },
+        { i: 'petIntro', x: 0, y: 60, w: 40, h: 20 },
+        { i: 'tasks', x: 0, y: 80, w: 40, h: 30 },
     ],
     xxs: [
-        { i: 'pet', x: 0, y: 0, w: 2, h: 4 },
-        { i: 'dailyGoal', x: 0, y: 4, w: 2, h: 1 },
-        { i: 'xpGained', x: 0, y: 5, w: 2, h: 1 },
-        { i: 'petIntro', x: 0, y: 6, w: 2, h: 2 },
-        { i: 'tasks', x: 0, y: 8, w: 2, h: 3 },
+        { i: 'pet', x: 0, y: 0, w: 20, h: 40 },
+        { i: 'dailyGoal', x: 0, y: 40, w: 20, h: 10 },
+        { i: 'xpGained', x: 0, y: 50, w: 20, h: 10 },
+        { i: 'petIntro', x: 0, y: 60, w: 20, h: 20 },
+        { i: 'tasks', x: 0, y: 80, w: 20, h: 30 },
     ],
 };
 
@@ -108,8 +108,8 @@ const DashboardGridLayout = ({ children, isEditing }: { children: React.ReactNod
         className="layout"
         layouts={layouts}
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-        cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-        rowHeight={100}
+        cols={{ lg: 120, md: 100, sm: 60, xs: 40, xxs: 20 }}
+        rowHeight={10}
         onLayoutChange={onLayoutChange}
         isDraggable={isEditing}
         isResizable={isEditing}
