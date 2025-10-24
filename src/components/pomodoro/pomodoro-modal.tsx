@@ -3,6 +3,9 @@
 import {
   Dialog,
   DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
 } from '@/components/ui/dialog';
 import PomodoroPage from './pomodoro-page';
 import { usePomodoroModal } from '@/hooks/use-pomodoro-modal';
@@ -23,6 +26,10 @@ export default function PomodoroModal() {
   return (
     <Dialog open={isOpen} onOpenChange={closePomodoro}>
       <DialogContent className="max-w-md p-0 bg-transparent border-0 shadow-none">
+        <DialogHeader className="sr-only">
+          <DialogTitle>Pomodoro Timer</DialogTitle>
+          <DialogDescription>A timer to help you focus on your tasks.</DialogDescription>
+        </DialogHeader>
         <PomodoroPage />
       </DialogContent>
     </Dialog>
