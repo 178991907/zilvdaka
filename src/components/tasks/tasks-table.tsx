@@ -89,6 +89,13 @@ export default function TasksTable({ tasks, setTasks, onEdit, onDelete, onToggle
     const hasDays = daysOfWeek && daysOfWeek.length > 0;
 
     if (hasDays) {
+        if (task.time) {
+            return (
+                <span>
+                    <ClientOnlyT tKey={`${tKey}_on_at`} tOptions={options} /> <TranslatedDays days={daysOfWeek} />
+                </span>
+            );
+        }
         return (
             <span>
                 <ClientOnlyT tKey={`${tKey}_on`} tOptions={options} /> <TranslatedDays days={daysOfWeek} />
