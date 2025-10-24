@@ -67,14 +67,13 @@ export default function PomodoroPage() {
 
   const [currentTimerIndex, setCurrentTimerIndex] = useState(0);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isClient, setIsClient] = useState(false);
   
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
 
   const playSound = useSound();
   const { t } = useTranslation();
   
-  const currentTimer = timers[currentTimerIndex];
-
   const updateUserAndSettings = useCallback(() => {
     const currentUser = getUser();
     setUser(currentUser);
@@ -83,12 +82,15 @@ export default function PomodoroPage() {
   }, []);
 
   useEffect(() => {
+    setIsClient(true);
     updateUserAndSettings();
     window.addEventListener('userProfileUpdated', updateUserAndSettings);
     return () => {
       window.removeEventListener('userProfileUpdated', updateUserAndSettings);
     };
   }, [updateUserAndSettings]);
+
+  const currentTimer = timers[currentTimerIndex];
 
   useEffect(() => {
     if (!carouselApi) return;
@@ -103,11 +105,8 @@ export default function PomodoroPage() {
   
   // Effect to scroll to the new timer when it's added
   useEffect(() => {
-    if (timers.length > 1 && carouselApi) {
-        // Only scroll if the last timer is the one being added
-        if (currentTimerIndex === timers.length - 1) {
-            carouselApi.scrollTo(currentTimerIndex);
-        }
+    if (timers.length > 1 && carouselApi && currentTimerIndex === timers.length - 1) {
+        carouselApi.scrollTo(currentTimerIndex);
     }
   }, [timers.length, carouselApi, currentTimerIndex]);
   
@@ -175,7 +174,7 @@ export default function PomodoroPage() {
         clearInterval(interval);
       }
     };
-  }, [currentTimer, currentTimerIndex, nextMode, setTimers]);
+  }, [currentTimer, currentTimerIndex, nextMode]);
   
   const addTimer = () => {
     const newTimer = createNewTimer(settings);
@@ -187,9 +186,10 @@ export default function PomodoroPage() {
   const removeTimer = (index: number) => {
     if (timers.length <= 1) return;
     setTimers(prev => prev.filter((_, i) => i !== index));
-    // If we remove the current timer, move to the previous one
     if (index === currentTimerIndex) {
         setCurrentTimerIndex(Math.max(0, index - 1));
+    } else if (index < currentTimerIndex) {
+        setCurrentTimerIndex(currentTimerIndex - 1);
     }
   };
 
@@ -242,7 +242,18 @@ export default function PomodoroPage() {
   const defaultModeIds = ['work', 'shortBreak', 'longBreak'];
   const defaultModes = defaultModeIds.map(id => settings.modes.find(m => m.id === id)).filter(Boolean) as PomodoroMode[];
 
-  // All hooks are above, now we can safely return early if needed.
+  const getModeName = (mode: PomodoroMode) => {
+    if (!isClient) return mode.name; // Fallback for SSR
+
+    const keyMap: { [id: string]: string } = {
+        'work': 'pomodoro.settings.defaultModeWork',
+        'shortBreak': 'pomodoro.settings.defaultModeShortBreak',
+        'longBreak': 'pomodoro.settings.defaultModeLongBreak'
+    };
+    const tKey = keyMap[mode.id];
+    return tKey ? t(tKey) : mode.name;
+  };
+  
   if (!currentTimer) {
     return (
         <div className="flex flex-col items-center gap-6 w-full">
@@ -256,6 +267,10 @@ export default function PomodoroPage() {
     );
   }
 
+  const currentMode = settings.modes[currentTimer.modeIndex];
+  const duration = (currentMode?.duration || 0) * 60;
+  const progress = duration > 0 ? (duration - currentTimer.timeRemaining) / duration * 100 : 0;
+  
   return (
     <>
       <div className="flex flex-col items-center gap-6 w-full">
@@ -284,7 +299,7 @@ export default function PomodoroPage() {
                                 )}
                                 onClick={() => switchModeById(index, m.id)}
                               >
-                                 <ClientOnlyT tKey={m.id === 'work' ? 'pomodoro.settings.defaultModeFocus' : `pomodoro.settings.defaultMode${m.name.replace(' ','')}`} />
+                                {getModeName(m)}
                               </Button>
                             ))}
                         </div>
@@ -433,10 +448,23 @@ interface SettingsDialogProps {
 function SettingsDialog({ isOpen, setIsOpen, settings, onSave }: SettingsDialogProps) {
   const [currentSettings, setCurrentSettings] = useState(settings);
   const { t } = useTranslation();
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
     setCurrentSettings(settings);
   }, [settings, isOpen]);
+
+  const getModeName = (mode: PomodoroMode) => {
+    if (!isClient) return mode.name;
+    const keyMap: { [id: string]: string } = {
+        'work': 'pomodoro.settings.defaultModeWork',
+        'shortBreak': 'pomodoro.settings.defaultModeShortBreak',
+        'longBreak': 'pomodoro.settings.defaultModeLongBreak'
+    };
+    const tKey = keyMap[mode.id];
+    return tKey ? t(tKey) : mode.name;
+  };
 
   const handleModeChange = (index: number, field: keyof PomodoroMode, value: any) => {
     const newModes = [...currentSettings.modes];
@@ -480,7 +508,7 @@ function SettingsDialog({ isOpen, setIsOpen, settings, onSave }: SettingsDialogP
                   <div key={mode.id} className="flex items-center gap-2">
                     <Input
                       placeholder={t('pomodoro.settings.modeNamePlaceholder')}
-                      value={mode.id.startsWith('custom-') ? mode.name : t(`pomodoro.settings.defaultMode${mode.name.replace(' ','')}`)}
+                      value={getModeName(mode)}
                       onChange={(e) => handleModeChange(index, 'name', e.target.value)}
                       className="h-9"
                       disabled={['work', 'shortBreak', 'longBreak'].includes(mode.id)}
