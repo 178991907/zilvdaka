@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label';
 import { getUser, updateUser, User } from '@/lib/data';
 import type { PomodoroSettings, PomodoroMode } from '@/lib/data-types';
 import { useTranslation } from 'react-i18next';
+import { cn } from '@/lib/utils';
 
 const getInitialSettings = (user: User | null): PomodoroSettings => {
   const defaultSettings: PomodoroSettings = {
@@ -24,11 +25,17 @@ const getInitialSettings = (user: User | null): PomodoroSettings => {
 
   if (user?.pomodoroSettings) {
     // Merge user settings with defaults to ensure all properties are present
-    return {
+    const mergedSettings = {
       ...defaultSettings,
       ...user.pomodoroSettings,
       modes: user.pomodoroSettings.modes?.length ? user.pomodoroSettings.modes : defaultSettings.modes,
     };
+    // Ensure default modes exist
+    if (!mergedSettings.modes.find(m => m.id === 'work')) mergedSettings.modes.unshift({ id: 'work', name: 'Work', duration: 25 });
+    if (!mergedSettings.modes.find(m => m.id === 'shortBreak')) mergedSettings.modes.push({ id: 'shortBreak', name: 'Short Break', duration: 5 });
+    if (!mergedSettings.modes.find(m => m.id === 'longBreak')) mergedSettings.modes.push({ id: 'longBreak', name: 'Long Break', duration: 15 });
+    
+    return mergedSettings;
   }
   return defaultSettings;
 };
@@ -160,28 +167,37 @@ export default function PomodoroPage() {
     setIsSettingsOpen(false);
   };
 
-  const getModeNameComponent = (mode: PomodoroMode | undefined) => {
-    if (!mode) return null;
-
-    const defaultKeys: {[key: string]: string} = {
-        'work': 'pomodoro.settings.defaultModeWork',
-        'shortBreak': 'pomodoro.settings.defaultModeShortBreak',
-        'longBreak': 'pomodoro.settings.defaultModeLongBreak'
-    };
-    
-    if (defaultKeys[mode.id]) {
-        return <ClientOnlyT tKey={defaultKeys[mode.id]} />;
+  const switchModeById = (id: string) => {
+    const newIndex = settings.modes.findIndex(m => m.id === id);
+    if (newIndex !== -1) {
+      setModeIndex(newIndex);
     }
-    return <span>{mode.name}</span>;
   };
+
+  const defaultModeIds = ['work', 'shortBreak', 'longBreak'];
+  const defaultModes = defaultModeIds.map(id => settings.modes.find(m => m.id === id)).filter(Boolean) as PomodoroMode[];
 
 
   return (
     <>
-      <div className="flex flex-col items-center gap-8 text-center bg-card p-8 rounded-xl shadow-lg">
-         <h2 className="text-2xl font-bold text-foreground">
-            {getModeNameComponent(currentMode)}
-        </h2>
+      <div className="flex flex-col items-center gap-6 text-center bg-card p-8 rounded-xl shadow-lg">
+         <div className="flex items-center gap-2 rounded-full bg-primary/10 p-1">
+            {defaultModes.map(mode => (
+              <Button
+                key={mode.id}
+                variant={currentMode?.id === mode.id ? 'default' : 'ghost'}
+                className={cn(
+                  "rounded-full px-4 py-1.5 text-sm font-semibold transition-colors",
+                   currentMode?.id === mode.id
+                    ? 'bg-primary text-primary-foreground'
+                    : 'text-muted-foreground hover:text-primary'
+                )}
+                onClick={() => switchModeById(mode.id)}
+              >
+                 <ClientOnlyT tKey={`pomodoro.settings.defaultMode${mode.name.replace(' ','')}`} />
+              </Button>
+            ))}
+        </div>
         
         <div className="relative h-64 w-64">
           <AnimatePresence mode="wait">
