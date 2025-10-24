@@ -113,8 +113,6 @@ body {
 
 .react-grid-item.react-grid-placeholder {
   background: hsl(var(--primary) / 0.2);
-  background-image: linear-gradient(to right, hsl(var(--border)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--border)) 1px, transparent 1px);
-  background-size: 25px 25px;
   border-radius: var(--radius);
   transition-duration: 100ms;
   z-index: 2;
