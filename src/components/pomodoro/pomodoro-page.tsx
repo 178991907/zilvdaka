@@ -17,7 +17,7 @@ import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from '@/com
 const getInitialSettings = (user: User | null): PomodoroSettings => {
   const defaultSettings: PomodoroSettings = {
     modes: [
-      { id: 'work', name: 'Work', duration: 25 },
+      { id: 'work', name: 'Focus', duration: 25 },
       { id: 'shortBreak', name: 'Short Break', duration: 5 },
       { id: 'longBreak', name: 'Long Break', duration: 15 },
     ],
@@ -30,7 +30,7 @@ const getInitialSettings = (user: User | null): PomodoroSettings => {
       ...user.pomodoroSettings,
       modes: user.pomodoroSettings.modes?.length ? user.pomodoroSettings.modes : defaultSettings.modes,
     };
-    if (!mergedSettings.modes.find(m => m.id === 'work')) mergedSettings.modes.unshift({ id: 'work', name: 'Work', duration: 25 });
+    if (!mergedSettings.modes.find(m => m.id === 'work')) mergedSettings.modes.unshift({ id: 'work', name: 'Focus', duration: 25 });
     if (!mergedSettings.modes.find(m => m.id === 'shortBreak')) mergedSettings.modes.push({ id: 'shortBreak', name: 'Short Break', duration: 5 });
     if (!mergedSettings.modes.find(m => m.id === 'longBreak')) mergedSettings.modes.push({ id: 'longBreak', name: 'Long Break', duration: 15 });
     
@@ -74,6 +74,8 @@ export default function PomodoroPage() {
   const playSound = useSound();
   const { t } = useTranslation();
   
+  const currentTimer = timers[currentTimerIndex];
+
   const updateUserAndSettings = useCallback(() => {
     const currentUser = getUser();
     setUser(currentUser);
@@ -89,9 +91,7 @@ export default function PomodoroPage() {
       window.removeEventListener('userProfileUpdated', updateUserAndSettings);
     };
   }, [updateUserAndSettings]);
-
-  const currentTimer = timers[currentTimerIndex];
-
+  
   useEffect(() => {
     if (!carouselApi) return;
     const onSelect = (api: CarouselApi) => {
@@ -108,7 +108,7 @@ export default function PomodoroPage() {
     if (timers.length > 1 && carouselApi && currentTimerIndex === timers.length - 1) {
         carouselApi.scrollTo(currentTimerIndex);
     }
-  }, [timers.length, carouselApi, currentTimerIndex]);
+  }, [timers, carouselApi, currentTimerIndex]);
   
   const updateTimer = (index: number, updates: Partial<TimerInstance>) => {
     setTimers(prevTimers => 
@@ -174,7 +174,7 @@ export default function PomodoroPage() {
         clearInterval(interval);
       }
     };
-  }, [currentTimer, currentTimerIndex, nextMode]);
+  }, [currentTimer, currentTimerIndex, nextMode, setTimers]);
   
   const addTimer = () => {
     const newTimer = createNewTimer(settings);
@@ -191,6 +191,7 @@ export default function PomodoroPage() {
     } else if (index < currentTimerIndex) {
         setCurrentTimerIndex(currentTimerIndex - 1);
     }
+    setIsSettingsOpen(false);
   };
 
   const handleSaveSettings = (newSettings: PomodoroSettings) => {
@@ -239,20 +240,24 @@ export default function PomodoroPage() {
     return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
   };
 
-  const defaultModeIds = ['work', 'shortBreak', 'longBreak'];
-  const defaultModes = defaultModeIds.map(id => settings.modes.find(m => m.id === id)).filter(Boolean) as PomodoroMode[];
-
   const getModeName = (mode: PomodoroMode) => {
     if (!isClient) return mode.name; // Fallback for SSR
 
     const keyMap: { [id: string]: string } = {
-        'work': 'pomodoro.settings.defaultModeWork',
+        'work': 'pomodoro.settings.defaultModeFocus',
         'shortBreak': 'pomodoro.settings.defaultModeShortBreak',
         'longBreak': 'pomodoro.settings.defaultModeLongBreak'
     };
     const tKey = keyMap[mode.id];
     return tKey ? t(tKey) : mode.name;
   };
+
+  const defaultModeIds = ['work', 'shortBreak', 'longBreak'];
+  const defaultModes = useMemo(() => {
+    return defaultModeIds
+      .map(id => settings.modes.find(m => m.id === id))
+      .filter(Boolean) as PomodoroMode[];
+  }, [settings.modes]);
   
   if (!currentTimer) {
     return (
@@ -266,10 +271,6 @@ export default function PomodoroPage() {
         </div>
     );
   }
-
-  const currentMode = settings.modes[currentTimer.modeIndex];
-  const duration = (currentMode?.duration || 0) * 60;
-  const progress = duration > 0 ? (duration - currentTimer.timeRemaining) / duration * 100 : 0;
   
   return (
     <>
@@ -283,9 +284,6 @@ export default function PomodoroPage() {
               return (
                 <CarouselItem key={timer.id}>
                     <div className="flex flex-col items-center gap-6 text-center bg-card p-8 rounded-xl shadow-lg relative">
-                        <Button variant="ghost" size="icon" className="absolute top-2 right-2 h-8 w-8 text-muted-foreground hover:text-destructive" onClick={() => removeTimer(index)} disabled={timers.length <= 1}>
-                           <Trash2 className="h-4 w-4" />
-                        </Button>
                         <div className="flex items-center gap-2 rounded-full bg-primary/10 p-1">
                             {defaultModes.map(m => (
                               <Button
@@ -431,6 +429,8 @@ export default function PomodoroPage() {
           setIsOpen={setIsSettingsOpen}
           settings={settings}
           onSave={handleSaveSettings}
+          onDeleteCurrentTimer={() => removeTimer(currentTimerIndex)}
+          canDelete={timers.length > 1}
         />
       }
     </>
@@ -443,9 +443,11 @@ interface SettingsDialogProps {
   setIsOpen: (open: boolean) => void;
   settings: PomodoroSettings;
   onSave: (settings: PomodoroSettings) => void;
+  onDeleteCurrentTimer: () => void;
+  canDelete: boolean;
 }
 
-function SettingsDialog({ isOpen, setIsOpen, settings, onSave }: SettingsDialogProps) {
+function SettingsDialog({ isOpen, setIsOpen, settings, onSave, onDeleteCurrentTimer, canDelete }: SettingsDialogProps) {
   const [currentSettings, setCurrentSettings] = useState(settings);
   const { t } = useTranslation();
   const [isClient, setIsClient] = useState(false);
@@ -458,7 +460,7 @@ function SettingsDialog({ isOpen, setIsOpen, settings, onSave }: SettingsDialogP
   const getModeName = (mode: PomodoroMode) => {
     if (!isClient) return mode.name;
     const keyMap: { [id: string]: string } = {
-        'work': 'pomodoro.settings.defaultModeWork',
+        'work': 'pomodoro.settings.defaultModeFocus',
         'shortBreak': 'pomodoro.settings.defaultModeShortBreak',
         'longBreak': 'pomodoro.settings.defaultModeLongBreak'
     };
@@ -542,11 +544,21 @@ function SettingsDialog({ isOpen, setIsOpen, settings, onSave }: SettingsDialogP
               />
             </div>
           </div>
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button type="button" variant="secondary"><ClientOnlyT tKey="achievements.edit.cancel" /></Button>
-            </DialogClose>
-            <Button type="button" onClick={handleSave}><ClientOnlyT tKey="achievements.edit.save" /></Button>
+          <DialogFooter className="sm:justify-between">
+            <div>
+              {canDelete && (
+                <Button variant="destructive" onClick={onDeleteCurrentTimer}>
+                  <Trash2 className="mr-2 h-4 w-4" />
+                  <ClientOnlyT tKey="pomodoro.deleteTimer" />
+                </Button>
+              )}
+            </div>
+            <div className="flex gap-2">
+              <DialogClose asChild>
+                <Button type="button" variant="secondary"><ClientOnlyT tKey="achievements.edit.cancel" /></Button>
+              </DialogClose>
+              <Button type="button" onClick={handleSave}><ClientOnlyT tKey="achievements.edit.save" /></Button>
+            </div>
           </DialogFooter>
       </DialogContent>
     </Dialog>
