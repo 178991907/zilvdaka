@@ -44,13 +44,13 @@ export default function PetCard() {
 
   return (
     <Card className="h-full flex flex-col">
-      <CardContent className="flex-grow flex flex-col items-center justify-start min-h-0 p-0">
-        <div className="flex-grow flex items-center justify-start w-full h-full">
+      <CardContent className="flex flex-col items-center justify-start p-6">
+        <div className="w-full h-80">
            <Suspense fallback={<Skeleton className="w-full h-full" />}>
               <PetViewer petStyle={user.petStyle} progress={petProgress} className="w-full h-full" />
             </Suspense>
         </div>
-        <div className="text-center w-full px-6 pb-6">
+        <div className="text-center w-full mt-4">
           <p className="text-lg font-bold">{user.petName}</p>
           <p className="text-sm text-muted-foreground">
             <ClientOnlyT tKey='user.level' tOptions={{ level: user.level }} />
