@@ -14,7 +14,7 @@ export const Avatars: Record<string, LazyExoticComponent<FC<{}>>> = {
   avatar5: lazy(() => import('@/components/icons/avatar5')),
   avatar6: lazy(() => import('@/components/icons/avatar6')),
   avatar7: lazy(() => import('@/components/icons/avatar7')),
-  avatar8: lazy(() => import('@b/components/icons/avatar8')),
+  avatar8: lazy(() => import('@/components/icons/avatar8')),
   avatar9: lazy(() => import('@/components/icons/avatar9')),
   avatar10: lazy(() => import('@/components/icons/avatar10')),
   avatar11: lazy(() => import('@/components/icons/avatar11')),
@@ -24,4 +24,4 @@ export const Avatars: Record<string, LazyExoticComponent<FC<{}>>> = {
   avatar15: lazy(() => import('@/components/icons/avatar15')),
 };
 
-export const AvatarIds =
+export const AvatarIds = Object.keys(Avatars);

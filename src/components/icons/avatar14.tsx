@@ -7,4 +7,7 @@ const Avatar14: React.FC = () => (
     <rect x="60" y="10" width="8" height="60" fill="#8C5B38" />
     <path d="M68,20v20h30c-10-6.7-20-13.3-30-20z" fill="#FFF" />
     <circle cx="88" cy="30" r="4" fill="#000" />
-  </
+  </svg>
+);
+
+export default Avatar14;

@@ -19,4 +19,8 @@ const Avatar1: React.FC = () => (
     <path fill="url(#rocket-grad)" d="M78 35H50l-8-14h44l-8 14z" />
     <path fill="#4A4A4A" d="M64 9c0 5-6.3 9-14 9s-14-4-14-9c0-5 6.3-9 14-9s14 4 14 9z" />
     <path fill="url(#window-grad)" d="M64 58c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z" />
-    <path fill="#FFFFFF" d="M64 45c-7.2 0-13-5.8-13-13s5.8-13 13-13 13 5.8 13 13-5.8 13-13 1
+    <path fill="#FFFFFF" d="M64 45c-7.2 0-13-5.8-13-13s5.8-13 13-13 13 5.8 13 13-5.8 13-13 13z" opacity="0.3" />
+  </svg>
+);
+
+export default Avatar1;

@@ -11,4 +11,8 @@ const Avatar8: React.FC = () => (
     <circle cx="64" cy="64" r="54" fill="url(#monster-grad)" />
     <circle cx="64" cy="54" r="24" fill="#fff" />
     <circle cx="64" cy="54" r="12" fill="#333" />
-    <path d="M44,84 C54,100 74,100 84,84" fill="none" stroke="#333" strokeWidth="6
+    <path d="M44,84 C54,100 74,100 84,84" fill="none" stroke="#333" strokeWidth="6" strokeLinecap="round" />
+  </svg>
+);
+
+export default Avatar8;
