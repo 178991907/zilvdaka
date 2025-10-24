@@ -55,8 +55,8 @@ export default function LandingPage() {
           </div>
 
           {/* Right Column: Stats */}
-          <div className="w-full md:w-1/2 flex flex-col gap-4">
-            <div className="w-full">
+          <div className="w-full md:w-1/2 flex flex-col md:flex-row gap-4">
+            <div className="w-full md:w-1/2">
               {isClient ? (
                 <Card className="h-full">
                   <CardContent className="p-4 h-full">
@@ -72,7 +72,7 @@ export default function LandingPage() {
                 <Skeleton className="h-32 w-full" />
               )}
             </div>
-            <div className="w-full">
+            <div className="w-full md:w-1/2">
               {isClient && user ? (
                 <Card className="h-full">
                   <CardContent className="p-4 h-full">
