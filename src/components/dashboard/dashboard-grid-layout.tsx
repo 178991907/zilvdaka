@@ -32,7 +32,7 @@ const saveToLS = (key: string, value: any) => {
 
 const defaultLayouts = {
     lg: [
-        { i: 'pet', x: 0, y: 0, w: 2, h: 4, minH: 4, minW: 2 },
+        { i: 'pet', x: 0, y: 0, w: 2, h: 4, minH: 2, minW: 1 },
         { i: 'dailyGoal', x: 2, y: 0, w: 1, h: 1, minH: 1, minW: 1 },
         { i: 'xpGained', x: 2, y: 1, w: 1, h: 1, minH: 1, minW: 1 },
         { i: 'petIntro', x: 2, y: 2, w: 1, h: 2, minH: 2, minW: 1 },
