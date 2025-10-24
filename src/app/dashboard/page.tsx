@@ -56,7 +56,7 @@ export default function DashboardPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
-       <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 border-b bg-background px-4 shrink-0">
+       <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 bg-background px-4 shrink-0">
           <SidebarTrigger className="md:hidden" />
           <h1 className="text-xl font-semibold"><ClientOnlyT tKey='dashboard.title' /></h1>
           <div className="ml-auto flex items-center gap-4">

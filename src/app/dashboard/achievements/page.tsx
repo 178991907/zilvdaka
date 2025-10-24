@@ -75,7 +75,7 @@ export default function AchievementsPage() {
     
   return (
     <div className="flex flex-col">
-      <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 border-b bg-background px-4">
+      <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 bg-background px-4">
         <SidebarTrigger className="md:hidden" />
         <h1 className="text-xl font-semibold"><ClientOnlyT tKey='achievements.title' /></h1>
         <div className="ml-auto flex items-center gap-4">
