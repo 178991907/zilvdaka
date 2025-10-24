@@ -57,24 +57,23 @@ export default function PomodoroPage() {
   const currentMode = useMemo(() => settings.modes[modeIndex], [settings.modes, modeIndex]);
   const duration = useMemo(() => (currentMode?.duration || 0) * 60, [currentMode]);
 
-  useEffect(() => {
-    const handleUserUpdate = () => {
-      const currentUser = getUser();
-      setUser(currentUser);
-      const newSettings = getInitialSettings(currentUser);
-      setSettings(newSettings);
-    };
-
-    handleUserUpdate();
-
-    window.addEventListener('userProfileUpdated', handleUserUpdate);
-    return () => {
-      window.removeEventListener('userProfileUpdated', handleUserUpdate);
-    };
+  const updateUserAndSettings = useCallback(() => {
+    const currentUser = getUser();
+    setUser(currentUser);
+    const newSettings = getInitialSettings(currentUser);
+    setSettings(newSettings);
   }, []);
+
+  useEffect(() => {
+    updateUserAndSettings();
+
+    window.addEventListener('userProfileUpdated', updateUserAndSettings);
+    return () => {
+      window.removeEventListener('userProfileUpdated', updateUserAndSettings);
+    };
+  }, [updateUserAndSettings]);
   
   useEffect(() => {
-    // This effect resets the timer whenever the settings or mode changes.
     const newDuration = (settings.modes[modeIndex]?.duration || 0) * 60;
     setTimeRemaining(newDuration);
     setIsActive(false);
@@ -82,7 +81,7 @@ export default function PomodoroPage() {
 
   const progress = duration > 0 ? (duration - timeRemaining) / duration * 100 : 0;
 
-  const nextMode = useCallback(() => {
+ const nextMode = useCallback(() => {
     playSound('timer-end');
     let nextModeIndex = 0;
     
@@ -106,7 +105,7 @@ export default function PomodoroPage() {
       }
     }
     setModeIndex(nextModeIndex >= 0 && nextModeIndex < settings.modes.length ? nextModeIndex : 0);
-  }, [currentMode, pomodoros, playSound, settings]);
+  }, [currentMode?.id, pomodoros, playSound, settings]);
 
   
   useEffect(() => {
@@ -146,7 +145,6 @@ export default function PomodoroPage() {
   };
   
   const handleSaveSettings = (newSettings: PomodoroSettings) => {
-    // Ensure at least one mode exists
     if (newSettings.modes.length === 0) {
       newSettings.modes.push({ id: `custom-${Date.now()}`, name: 'Work', duration: 25 });
     }
@@ -156,7 +154,6 @@ export default function PomodoroPage() {
     
     updateUser({ pomodoroSettings: newSettings });
     
-    // Find the new index of the current mode ID, or reset to 0
     const currentModeId = currentMode?.id;
     let newCurrentModeIndex = currentModeId ? newSettings.modes.findIndex(m => m.id === currentModeId) : -1;
     if (newCurrentModeIndex === -1) {
@@ -187,7 +184,7 @@ export default function PomodoroPage() {
                 key={mode.id}
                 variant={currentMode?.id === mode.id ? 'default' : 'ghost'}
                 className={cn(
-                  "rounded-full px-4 py-1.5 text-sm font-semibold transition-colors",
+                  "rounded-full w-24 px-4 py-1.5 text-sm font-semibold transition-colors",
                    currentMode?.id === mode.id
                     ? 'bg-primary text-primary-foreground'
                     : 'text-muted-foreground hover:text-primary'
@@ -352,7 +349,7 @@ function SettingsDialog({ isOpen, setIsOpen, settings, onSave }: SettingsDialogP
         'longBreak': 'pomodoro.settings.defaultModeLongBreak'
     }
     if (defaultKeys[mode.id]) {
-        return t(defaultKeys[mode.id]);
+        return <ClientOnlyT tKey={defaultKeys[mode.id]} />;
     }
     return mode.name;
   }
@@ -372,7 +369,7 @@ function SettingsDialog({ isOpen, setIsOpen, settings, onSave }: SettingsDialogP
                   <div key={mode.id} className="flex items-center gap-2">
                     <Input
                       placeholder={t('pomodoro.settings.modeNamePlaceholder')}
-                      value={getModeName(mode)}
+                      value={mode.id.startsWith('custom-') ? mode.name : t(`pomodoro.settings.defaultMode${mode.name.replace(' ','')}`)}
                       onChange={(e) => handleModeChange(index, 'name', e.target.value)}
                       className="h-9"
                       disabled={['work', 'shortBreak', 'longBreak'].includes(mode.id)}
