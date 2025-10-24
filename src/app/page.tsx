@@ -28,32 +28,7 @@ export default function LandingPage() {
       </header>
 
       <main className="flex-1 flex items-center justify-center p-4">
-        <div className="text-center max-w-2xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-foreground">
-                {content.landingTitle || 'Title'}
-            </h1>
-            <p className="mt-4 text-lg md:text-xl text-muted-foreground max-w-xl mx-auto">
-                {content.landingDescription || 'Description'}
-            </p>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.4, ease: "easeOut" }}
-            className="mt-8"
-          >
-            <Button asChild size="lg" className="text-lg">
-              <Link href="/dashboard">
-                {content.landingCta || 'Get Started'}
-              </Link>
-            </Button>
-          </motion.div>
-        </div>
+        
       </main>
 
        <footer className="py-4 text-center text-xs text-muted-foreground">
