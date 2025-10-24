@@ -48,10 +48,6 @@ export default function LandingPage() {
         </nav>
       </header>
       
-      <div className="flex justify-center">
-        <DigitalClock />
-      </div>
-
       <main className="flex-1 flex flex-col items-center justify-start px-4 md:px-8">
         <div className="flex flex-col md:flex-row items-end justify-center gap-8 w-full max-w-4xl">
           {/* Left Column: Pet Viewer */}
@@ -60,7 +56,10 @@ export default function LandingPage() {
           </div>
 
           {/* Right Column: Stats */}
-          <div className="w-full md:w-1/2 flex flex-col gap-4">
+          <div className="w-full md:w-1/2 flex flex-col items-center gap-4">
+            <div className="flex justify-center">
+              <DigitalClock />
+            </div>
             <div className="w-full">
               {isClient ? (
                 <Card>
