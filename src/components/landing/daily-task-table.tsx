@@ -7,10 +7,12 @@ import { Task, completeTaskAndUpdateXP, getTodaysTasks } from '@/lib/data';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { useSound } from '@/hooks/use-sound';
 import DigitalClock from '../dashboard/digital-clock';
+import { usePomodoroModal } from '@/hooks/use-pomodoro-modal';
 
 export default function DailyTaskTable() {
   const [tasks, setTasks] = React.useState<Task[]>([]);
   const playSound = useSound();
+  const { openPomodoro } = usePomodoroModal();
 
   React.useEffect(() => {
     const loadTasks = () => {
@@ -34,6 +36,10 @@ export default function DailyTaskTable() {
       playSound('success');
     }
     completeTaskAndUpdateXP(task, completed);
+  };
+  
+  const handleStartTask = (task: Task) => {
+    openPomodoro();
   };
 
   return (
@@ -66,7 +72,7 @@ export default function DailyTaskTable() {
                   </div>
                 </TableCell>
                 <TableCell className="text-center">
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" onClick={() => handleStartTask(task)}>
                     <ClientOnlyT tKey="tasks.dailyTable.start" />
                   </Button>
                 </TableCell>

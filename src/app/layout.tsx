@@ -3,6 +3,8 @@ import { Toaster } from '@/components/ui/toaster';
 import './globals.css';
 import { I18nProvider } from '@/components/i18n-provider';
 import { ThemeProvider } from '@/components/theme-provider';
+import { PomodoroModalProvider } from '@/hooks/use-pomodoro-modal';
+import PomodoroModal from '@/components/pomodoro/pomodoro-modal';
 
 export const metadata: Metadata = {
   title: 'Discipline Baby',
@@ -29,7 +31,10 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <I18nProvider>
-            {children}
+            <PomodoroModalProvider>
+              {children}
+              <PomodoroModal />
+            </PomodoroModalProvider>
           </I18nProvider>
           <Toaster />
         </ThemeProvider>
