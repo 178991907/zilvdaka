@@ -17,15 +17,7 @@ export default function LandingPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      <header className="sticky top-0 z-10 flex h-[60px] items-center justify-between border-b bg-background/80 backdrop-blur-sm px-4 md:px-8">
-        <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary shrink-0">
-                <Star className="h-5 w-5 text-primary-foreground" />
-            </div>
-            <span className="font-bold text-lg font-headline text-foreground">
-                {content.appName || 'Discipline Baby'}
-            </span>
-        </div>
+      <header className="sticky top-0 z-10 flex h-[60px] items-center justify-end border-b bg-background/80 backdrop-blur-sm px-4 md:px-8">
         <nav>
           <Button asChild>
             <Link href="/dashboard">
