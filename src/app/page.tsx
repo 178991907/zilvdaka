@@ -41,12 +41,16 @@ export default function LandingPage() {
         </div>
         <nav className="flex justify-end w-1/3">
           <Button asChild>
-            <Link href="/dashboard">
+            <Link href="/dashboard/settings">
                 {user?.dashboardLink || 'Go to Dashboard'}
             </Link>
           </Button>
         </nav>
       </header>
+      
+      <div className="flex justify-center">
+        <DigitalClock />
+      </div>
       
       <main className="flex-1 flex flex-col items-center justify-start px-4 md:px-8">
         <div className="flex flex-col md:flex-row items-end justify-center gap-8 w-full max-w-4xl">
@@ -57,9 +61,6 @@ export default function LandingPage() {
 
           {/* Right Column: Stats */}
           <div className="w-full md:w-1/2 flex flex-col items-center gap-4">
-            <div className="flex justify-center">
-              <DigitalClock />
-            </div>
             <div className="w-full">
               {isClient ? (
                 <Card>
