@@ -37,7 +37,7 @@ const PetViewer: React.FC<PetViewerProps> = ({ petStyle, progress, className }) 
   
   return (
      <div className={cn("relative z-10 flex flex-col w-full h-full", className)}>
-        <div className="flex flex-col flex-grow items-center justify-start w-full relative overflow-hidden">
+        <div className="flex flex-col items-center w-full relative overflow-hidden flex-grow">
            <div
             className="w-full h-full flex items-center justify-center rounded-lg cursor-pointer"
             onClick={handleClick}

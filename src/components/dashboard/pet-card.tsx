@@ -46,14 +46,14 @@ export default function PetCard() {
     <Card className="h-full flex flex-col overflow-hidden">
       <CardContent className="flex flex-col p-0 h-full">
         {/* This div will grow and push the text content to the bottom */}
-        <div className="flex-grow flex justify-center w-full">
+        <div className="flex justify-center w-full">
           <Suspense fallback={<Skeleton className="w-full h-full" />}>
-              <PetViewer petStyle={user.petStyle} progress={petProgress} className="w-full h-full" />
+              <PetViewer petStyle={user.petStyle} progress={petProgress} className="w-full h-96" />
           </Suspense>
         </div>
         
         {/* This div will be pushed to the bottom */}
-        <div className="text-center w-full p-6 pt-0 flex-shrink-0">
+        <div className="text-center w-full p-6 pt-0 mt-auto">
           <p className="text-lg font-bold">{user.petName}</p>
           <p className="text-sm text-muted-foreground">
             <ClientOnlyT tKey='user.level' tOptions={{ level: user.level }} />
