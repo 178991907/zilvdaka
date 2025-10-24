@@ -9,7 +9,7 @@ import * as React from 'react';
 import { addDays, format } from 'date-fns';
 import { Calendar as CalendarIcon } from 'lucide-react';
 import { DateRange } from 'react-day-picker';
-
+import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
@@ -29,9 +29,15 @@ export default function ReportsPage() {
 
   return (
     <div className="flex flex-col">
-       <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 bg-background px-4">
-          <SidebarTrigger className="md:hidden" />
-          <h1 className="text-xl font-semibold"><ClientOnlyT tKey='reports.title' /></h1>
+       <header className="sticky top-0 z-10 flex h-[57px] items-center justify-between gap-1 bg-background px-4">
+          <div className="flex items-center gap-1 w-1/3">
+            <SidebarTrigger className="md:hidden" />
+            <h1 className="text-xl font-semibold truncate"><ClientOnlyT tKey='reports.title' /></h1>
+          </div>
+           <div className="flex justify-center w-1/3">
+             <Image src="https://pic1.imgdb.cn/item/6817c79a58cb8da5c8dc723f.png" alt="Logo" width={120} height={40} priority className="h-10 w-auto" />
+          </div>
+          <div className="w-1/3"></div>
         </header>
       <main className="flex-1 p-4 md:p-8">
         <Card>

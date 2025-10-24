@@ -9,6 +9,7 @@ import { EditAchievementDialog } from '@/components/achievements/edit-achievemen
 import { Button } from '@/components/ui/button';
 import { PlusCircle } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
+import Image from 'next/image';
 
 export default function AchievementsPage() {
   const [achievements, setAchievements] = useState<Achievement[]>([]);
@@ -75,13 +76,18 @@ export default function AchievementsPage() {
     
   return (
     <div className="flex flex-col">
-      <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 bg-background px-4">
-        <SidebarTrigger className="md:hidden" />
-        <h1 className="text-xl font-semibold"><ClientOnlyT tKey='achievements.title' /></h1>
-        <div className="ml-auto flex items-center gap-4">
+      <header className="sticky top-0 z-10 flex h-[57px] items-center justify-between gap-1 bg-background px-4">
+        <div className="flex items-center gap-1 w-1/3">
+          <SidebarTrigger className="md:hidden" />
+          <h1 className="text-xl font-semibold truncate"><ClientOnlyT tKey='achievements.title' /></h1>
+        </div>
+        <div className="flex justify-center w-1/3">
+          <Image src="https://pic1.imgdb.cn/item/6817c79a58cb8da5c8dc723f.png" alt="Logo" width={120} height={40} priority className="h-10 w-auto" />
+        </div>
+        <div className="flex items-center justify-end gap-4 w-1/3">
           {isClient ? (
             <>
-              <span className="text-sm font-semibold text-muted-foreground">
+              <span className="text-sm font-semibold text-muted-foreground text-right">
                   <ClientOnlyT tKey='achievements.unlocked' tOptions={{ unlockedCount, totalCount }} />
               </span>
               <Button size="sm" onClick={handleAdd}>

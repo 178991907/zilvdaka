@@ -15,6 +15,7 @@ import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { Progress } from '@/components/ui/progress';
 import DashboardGridLayout from '@/components/dashboard/dashboard-grid-layout';
 import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 
 export default function DashboardPage() {
   const [user, setUser] = useState<User | null>(null);
@@ -56,10 +57,15 @@ export default function DashboardPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
-       <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 bg-background px-4 shrink-0">
-          <SidebarTrigger className="md:hidden" />
-          <h1 className="text-xl font-semibold"><ClientOnlyT tKey='dashboard.title' /></h1>
-          <div className="ml-auto flex items-center gap-4">
+       <header className="sticky top-0 z-10 flex h-[57px] items-center justify-between gap-1 bg-background px-4">
+          <div className="flex items-center gap-1 w-1/3">
+            <SidebarTrigger className="md:hidden" />
+            <h1 className="text-xl font-semibold truncate"><ClientOnlyT tKey='dashboard.title' /></h1>
+          </div>
+          <div className="flex justify-center w-1/3">
+             <Image src="https://pic1.imgdb.cn/item/6817c79a58cb8da5c8dc723f.png" alt="Logo" width={120} height={40} priority className="h-10 w-auto" />
+          </div>
+          <div className="flex items-center justify-end gap-4 w-1/3">
             {isClient ? (
               <>
                 <Button variant="outline" size="sm" onClick={() => setIsEditing(!isEditing)}>
