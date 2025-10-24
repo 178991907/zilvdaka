@@ -1,9 +1,10 @@
 'use client';
-import { useState, useRef } from 'react';
-import { Avatars } from '@/lib/placeholder-images';
+import { useState, useRef, Suspense, lazy } from 'react';
+import { Avatars, AvatarIds } from '@/lib/placeholder-images';
 import { cn } from '@/lib/utils';
 import { CheckCircle, Upload } from 'lucide-react';
 import { ClientOnlyT } from '../layout/app-sidebar';
+import { Skeleton } from '../ui/skeleton';
 
 interface AvatarPickerProps {
   selectedAvatar: string;
@@ -72,28 +73,33 @@ export default function AvatarPicker({ selectedAvatar, onSelectAvatar }: AvatarP
       </div>
 
       {/* Pre-defined SVG Avatars */}
-      {Avatars.map((avatar) => (
-        <div
-          key={avatar.id}
-          className={cn(
-            'relative cursor-pointer rounded-full border-2 transition-all aspect-square w-full p-2 bg-card',
-            selectedAvatar === avatar.id ? 'border-primary' : 'border-transparent'
-          )}
-          onClick={() => {
-            onSelectAvatar(avatar.id);
-            setUploadedImage(null); // Clear uploaded image if a pre-defined one is selected
-          }}
-          role="button"
-          aria-label={`Select ${avatar.name} avatar`}
-        >
-          <div dangerouslySetInnerHTML={{ __html: avatar.svg }} className="w-full h-full" />
-          {selectedAvatar === avatar.id && (
-            <div className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary">
-              <CheckCircle className="h-3 w-3 text-primary-foreground" />
+      {AvatarIds.map((avatarId) => {
+        const AvatarComponent = Avatars[avatarId];
+        return (
+            <div
+              key={avatarId}
+              className={cn(
+                'relative cursor-pointer rounded-full border-2 transition-all aspect-square w-full p-2 bg-card',
+                selectedAvatar === avatarId ? 'border-primary' : 'border-transparent'
+              )}
+              onClick={() => {
+                onSelectAvatar(avatarId);
+                setUploadedImage(null); // Clear uploaded image if a pre-defined one is selected
+              }}
+              role="button"
+              aria-label={`Select ${avatarId} avatar`}
+            >
+              <Suspense fallback={<Skeleton className="w-full h-full rounded-full" />}>
+                <AvatarComponent />
+              </Suspense>
+              {selectedAvatar === avatarId && (
+                <div className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary">
+                  <CheckCircle className="h-3 w-3 text-primary-foreground" />
+                </div>
+              )}
             </div>
-          )}
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

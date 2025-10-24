@@ -16,7 +16,7 @@ import Link from 'next/link';
 import { CreditCard, LogOut, Settings, User as UserIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ClientOnlyT } from './app-sidebar';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { Skeleton } from '../ui/skeleton';
 
 export function UserNav() {
@@ -38,7 +38,7 @@ export function UserNav() {
     };
   }, []);
 
-  const selectedAvatar = user ? Avatars.find(img => img.id === user.avatar) : null;
+  const AvatarComponent = user ? Avatars[user.avatar] : null;
 
   if (!user) {
     return (
@@ -60,8 +60,10 @@ export function UserNav() {
           className="relative h-10 w-full justify-start gap-2 px-2"
         >
           <Avatar className="h-8 w-8 bg-card p-1">
-            {selectedAvatar ? (
-              <div dangerouslySetInnerHTML={{ __html: selectedAvatar.svg }} className="w-full h-full" />
+            {AvatarComponent ? (
+               <Suspense fallback={<AvatarFallback>{user.name.charAt(0)}</AvatarFallback>}>
+                <AvatarComponent />
+               </Suspense>
             ) : (
               <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
             )}
