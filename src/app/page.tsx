@@ -47,44 +47,46 @@ export default function LandingPage() {
         </nav>
       </header>
 
-      <main className="flex-1 flex items-center justify-center p-4 md:p-8 gap-8">
-        <div className="w-1/4">
-            {isClient ? (
-                <Card className="h-full">
-                    <CardContent className="p-4 h-full">
-                        <ProgressSummaryContent
-                            icon={Target}
-                            title={<ClientOnlyT tKey="dashboard.dailyGoal" />}
-                            value={`${Math.round(dailyProgress)}%`}
-                            description={<ClientOnlyT tKey="dashboard.dailyGoalDescription" tOptions={{ completedTasks, totalTasks }} />}
-                        />
-                    </CardContent>
-                </Card>
-            ) : (
-                <Skeleton className="h-32 w-full" />
-            )}
-        </div>
-        
-        <div className="w-1/2 flex justify-center">
-            {user && <PetViewer progress={petProgress} className="w-64 h-64" />}
-        </div>
-        
-        <div className="w-1/4">
-            {isClient && user ? (
-                <Card className="h-full">
-                    <CardContent className="p-4 h-full">
-                        <ProgressSummaryContent
-                            icon={Zap}
-                            title={<ClientOnlyT tKey="dashboard.xpGained" />}
-                            value={`${user.xp} XP`}
-                            description={<ClientOnlyT tKey="dashboard.xpToNextLevel" tOptions={{ xp: user.xpToNextLevel - user.xp }} />}
-                            progress={petProgress}
-                        />
-                    </CardContent>
-                </Card>
-             ) : (
-                <Skeleton className="h-32 w-full" />
-            )}
+      <main className="flex-1 flex flex-col items-center justify-start p-4 md:p-8">
+        <div className="flex flex-col items-center gap-4 w-full md:w-2/3 lg:w-1/2">
+            <div className="w-full">
+                {isClient ? (
+                    <Card className="h-full">
+                        <CardContent className="p-4 h-full">
+                            <ProgressSummaryContent
+                                icon={Target}
+                                title={<ClientOnlyT tKey="dashboard.dailyGoal" />}
+                                value={`${Math.round(dailyProgress)}%`}
+                                description={<ClientOnlyT tKey="dashboard.dailyGoalDescription" tOptions={{ completedTasks, totalTasks }} />}
+                            />
+                        </CardContent>
+                    </Card>
+                ) : (
+                    <Skeleton className="h-32 w-full" />
+                )}
+            </div>
+            
+            <div className="w-full flex justify-center">
+                {user && <PetViewer progress={petProgress} className="w-64 h-64" />}
+            </div>
+            
+            <div className="w-full">
+                {isClient && user ? (
+                    <Card className="h-full">
+                        <CardContent className="p-4 h-full">
+                            <ProgressSummaryContent
+                                icon={Zap}
+                                title={<ClientOnlyT tKey="dashboard.xpGained" />}
+                                value={`${user.xp} XP`}
+                                description={<ClientOnlyT tKey="dashboard.xpToNextLevel" tOptions={{ xp: user.xpToNextLevel - user.xp }} />}
+                                progress={petProgress}
+                            />
+                        </CardContent>
+                    </Card>
+                 ) : (
+                    <Skeleton className="h-32 w-full" />
+                )}
+            </div>
         </div>
       </main>
 
