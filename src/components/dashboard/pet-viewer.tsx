@@ -1,14 +1,13 @@
 'use client';
 
-import React, { useState, useEffect, Suspense } from 'react';
-import { getUser, User } from '@/lib/data';
-import { Pets } from '@/lib/pets';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useSound } from '@/hooks/use-sound';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Pets } from '@/lib/pets';
 
 interface PetViewerProps extends React.HTMLAttributes<HTMLDivElement> {
+  petStyle: string;
   progress: number;
 }
 
@@ -21,25 +20,11 @@ const animations = {
   bounce: { y: [0, -15, 0, -8, 0], transition: { duration: 0.6, ease: "easeOut" } },
 };
 
-const PetViewer: React.FC<PetViewerProps> = ({ progress, className }) => {
-  const [user, setUser] = useState<User | null>(null);
+const PetViewer: React.FC<PetViewerProps> = ({ petStyle, progress, className }) => {
   const [bodyAnimation, setBodyAnimation] = useState<AnimationType | null>(null);
   const playSound = useSound();
 
   const petScale = (0.6 + (progress / 100) * 0.3) * 1.5;
-
-  useEffect(() => {
-    const handleProfileUpdate = () => {
-      setUser(getUser());
-    };
-    
-    window.addEventListener('userProfileUpdated', handleProfileUpdate);
-    handleProfileUpdate(); 
-
-    return () => {
-      window.removeEventListener('userProfileUpdated', handleProfileUpdate);
-    };
-  }, []);
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     playSound('click');
@@ -48,11 +33,7 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress, className }) => {
     setBodyAnimation(randomAnimation);
   };
   
-  if (!user) {
-    return <Skeleton className={cn("w-full h-full", className)} />;
-  }
-
-  const PetComponent = Pets[user.petStyle] || Pets['pet1'];
+  const PetComponent = Pets[petStyle] || Pets['pet1'];
   
   return (
      <div className={cn("relative z-10 flex flex-col", className)}>
