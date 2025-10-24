@@ -101,7 +101,7 @@ export default function DashboardPage() {
         <main className="flex-grow p-4 md:p-8">
             <DashboardGridLayout isEditing={isEditing}>
                 <div key="pet" className="flex flex-col">
-                    <h2 className="text-2xl font-semibold leading-none tracking-tight mb-4 react-grid-drag-handle cursor-move"><ClientOnlyT tKey='dashboard.myPet' /></h2>
+                    <h2 className="text-2xl font-semibold leading-none tracking-tight mb-4 cursor-move"><ClientOnlyT tKey='dashboard.myPet' /></h2>
                     <div className="flex-grow">
                         <PetCard />
                     </div>

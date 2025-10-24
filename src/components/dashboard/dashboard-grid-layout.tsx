@@ -113,7 +113,6 @@ const DashboardGridLayout = ({ children, isEditing }: { children: React.ReactNod
         onLayoutChange={onLayoutChange}
         isDraggable={isEditing}
         isResizable={isEditing}
-        draggableHandle=".react-grid-drag-handle"
     >
         {children}
     </ResponsiveGridLayout>
