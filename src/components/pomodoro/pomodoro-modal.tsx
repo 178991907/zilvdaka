@@ -77,6 +77,3 @@ export function PomodoroModal() {
     </Dialog>
   );
 }
-
-// Default export for convenience if needed, though named exports are used.
-export default PomodoroModal;

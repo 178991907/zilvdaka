@@ -7,7 +7,7 @@ import { Task, completeTaskAndUpdateXP, getTodaysTasks } from '@/lib/data';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { useSound } from '@/hooks/use-sound';
 import DigitalClock from '../dashboard/digital-clock';
-import { usePomodoroModal } from '@/hooks/use-pomodoro-modal';
+import { usePomodoroModal } from '@/components/pomodoro/pomodoro-modal';
 
 export default function DailyTaskTable() {
   const [tasks, setTasks] = React.useState<Task[]>([]);
