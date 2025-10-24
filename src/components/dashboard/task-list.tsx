@@ -56,51 +56,56 @@ export default function TaskList() {
   }
 
   return (
-    <div className="space-y-4">
-      <AnimatePresence>
-        {tasks.length > 0 ? (
-          tasks.map((task, index) => (
-            <motion.div
-              key={task.id}
-              layout
-              initial={{ opacity: 0, y: 20, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.2 } }}
-              transition={{
-                duration: 0.3,
-                delay: index * 0.05,
-                ease: "easeInOut"
-              }}
-              className="flex items-center p-3 -m-3 rounded-lg transition-colors hover:bg-secondary"
-            >
-              <Checkbox
-                id={task.id}
-                checked={task.completed}
-                onCheckedChange={(checked) => handleTaskCompletion(task, !!checked)}
-                className="h-6 w-6 rounded-md"
-                disabled={task.status === 'paused'}
-              />
-              <label
-                htmlFor={task.id}
-                className={cn(
-                  'ml-4 flex-1 text-base font-medium transition-all',
-                  task.completed ? 'text-muted-foreground line-through' : 'text-foreground',
-                  task.status === 'paused' ? 'cursor-not-allowed' : ''
-                )}
+    <div className="rounded-lg border bg-card text-card-foreground shadow-sm">
+      <div className="p-6">
+        <h3 className="text-2xl font-semibold leading-none tracking-tight"><ClientOnlyT tKey='dashboard.todaysAdventures' /></h3>
+      </div>
+      <div className="p-6 pt-0">
+        <AnimatePresence>
+          {tasks.length > 0 ? (
+            tasks.map((task, index) => (
+              <motion.div
+                key={task.id}
+                layout
+                initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.2 } }}
+                transition={{
+                  duration: 0.3,
+                  delay: index * 0.05,
+                  ease: "easeInOut"
+                }}
+                className="flex items-center p-3 -m-3 rounded-lg transition-colors hover:bg-muted/50"
               >
-                {task.title}
-              </label>
-              <div className="flex items-center justify-center h-8 w-8 rounded-full bg-primary/10">
-                <task.icon className="h-5 w-5 text-primary" />
-              </div>
-            </motion.div>
-          ))
-        ) : (
-          <p className="text-muted-foreground text-center py-8">
-            <ClientOnlyT tKey='dashboard.noAdventures' />
-          </p>
-        )}
-      </AnimatePresence>
+                <Checkbox
+                  id={task.id}
+                  checked={task.completed}
+                  onCheckedChange={(checked) => handleTaskCompletion(task, !!checked)}
+                  className="h-6 w-6 rounded-md"
+                  disabled={task.status === 'paused'}
+                />
+                <label
+                  htmlFor={task.id}
+                  className={cn(
+                    'ml-4 flex-1 text-base font-medium transition-all',
+                    task.completed ? 'text-muted-foreground line-through' : 'text-foreground',
+                    task.status === 'paused' ? 'cursor-not-allowed' : ''
+                  )}
+                >
+                  {task.title}
+                </label>
+                <div className="flex items-center justify-center h-8 w-8 rounded-full bg-primary/10">
+                  <task.icon className="h-5 w-5 text-primary" />
+                </div>
+              </motion.div>
+            ))
+          ) : (
+            <p className="text-muted-foreground text-center py-8">
+              <ClientOnlyT tKey='dashboard.noAdventures' />
+            </p>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   );
 }

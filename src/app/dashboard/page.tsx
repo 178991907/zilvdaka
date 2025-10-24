@@ -35,7 +35,6 @@ export default function DashboardPage() {
   const [user, setUser] = useState<User | null>(null);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isClient, setIsClient] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -79,18 +78,9 @@ export default function DashboardPage() {
           <div className="flex items-center justify-end gap-4 w-1/2">
             {isClient ? (
               <>
-                <Button variant="outline" size="sm" onClick={() => setIsEditing(!isEditing)}>
-                  {isEditing ? (
-                    <>
-                      <Check className="mr-2 h-4 w-4" />
-                      <ClientOnlyT tKey="dashboard.done" />
-                    </>
-                  ) : (
-                    <>
-                      <Pencil className="mr-2 h-4 w-4" />
-                      <ClientOnlyT tKey="dashboard.editPage" />
-                    </>
-                  )}
+                <Button variant="ghost" size="sm">
+                  <Pencil className="mr-2 h-4 w-4" />
+                  <ClientOnlyT tKey="dashboard.editPage" />
                 </Button>
                 <DigitalClock />
               </>
@@ -99,15 +89,16 @@ export default function DashboardPage() {
         </header>
 
         <main className="flex-grow p-4 md:p-8">
-            <DashboardGridLayout isEditing={isEditing}>
-                <div key="pet" className="flex flex-col">
-                    <h2 className="text-2xl font-semibold leading-none tracking-tight mb-4 cursor-move"><ClientOnlyT tKey='dashboard.myPet' /></h2>
-                    <div className="flex-grow">
-                        <PetCard />
-                    </div>
+            <div className="flex flex-col lg:flex-row gap-8">
+                {/* Left Column */}
+                <div className="w-full lg:w-2/3 space-y-8">
+                    <PetCard />
+                    <TaskList />
                 </div>
-                <div key="dailyGoal">
-                    <Card className="h-full">
+
+                {/* Right Column */}
+                <div className="w-full lg:w-1/3 space-y-6">
+                    <Card>
                         <CardContent className="p-4">
                             <ProgressSummaryContent
                                 icon={Target}
@@ -117,9 +108,7 @@ export default function DashboardPage() {
                             />
                         </CardContent>
                     </Card>
-                </div>
-                <div key="xpGained">
-                     <Card className="h-full">
+                    <Card>
                         <CardContent className="p-4">
                             <ProgressSummaryContent
                                 icon={Zap}
@@ -130,9 +119,7 @@ export default function DashboardPage() {
                             />
                         </CardContent>
                      </Card>
-                </div>
-                <div key="petIntro">
-                   <Card className="h-full">
+                    <Card>
                         <CardHeader className="flex flex-row items-start gap-4">
                         <Info className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
                         <div className="flex-1">
@@ -158,18 +145,8 @@ export default function DashboardPage() {
                         </div>
                     </CardHeader>
                    </Card>
-               </div>
-               <div key="tasks">
-                 <Card>
-                    <CardHeader>
-                      <CardTitle><ClientOnlyT tKey='dashboard.todaysAdventures' /></CardTitle>
-                    </CardHeader>
-                    <CardContent className="pt-0 px-6 pb-2">
-                      <TaskList />
-                    </CardContent>
-                  </Card>
-               </div>
-            </DashboardGridLayout>
+                </div>
+            </div>
         </main>
     </div>
   );

@@ -32,39 +32,18 @@ const saveToLS = (key: string, value: any) => {
 
 const defaultLayouts = {
     lg: [
-        { i: 'pet', x: 0, y: 0, w: 10, h: 10, minH: 2, minW: 2 },
-        { i: 'dailyGoal', x: 10, y: 0, w: 2, h: 3, minH: 3, minW: 1 },
-        { i: 'xpGained', x: 10, y: 3, w: 2, h: 4, minH: 3, minW: 1 },
-        { i: 'petIntro', x: 10, y: 7, w: 2, h: 5, minH: 2, minW: 1 },
-        { i: 'tasks', x: 0, y: 10, w: 12, h: 4, minH: 2, minW: 2 },
+        { i: 'pet', x: 0, y: 0, w: 8, h: 10, minH: 8, minW: 4 },
+        { i: 'dailyGoal', x: 8, y: 0, w: 4, h: 3, minH: 3, minW: 2 },
+        { i: 'xpGained', x: 8, y: 3, w: 4, h: 3, minH: 3, minW: 2 },
+        { i: 'petIntro', x: 8, y: 6, w: 4, h: 4, minH: 4, minW: 2 },
+        { i: 'tasks', x: 0, y: 10, w: 12, h: 4, minH: 4, minW: 4 },
     ],
     md: [
-        { i: 'pet', x: 0, y: 0, w: 10, h: 10, minH: 2, minW: 2 },
-        { i: 'dailyGoal', x: 0, y: 10, w: 5, h: 3, minH: 3, minW: 1 },
-        { i: 'xpGained', x: 5, y: 10, w: 5, h: 3, minH: 3, minW: 1 },
-        { i: 'petIntro', x: 0, y: 13, w: 10, h: 5, minH: 2, minW: 1 },
-        { i: 'tasks', x: 0, y: 18, w: 10, h: 4, minH: 3, minW: 2 },
-    ],
-    sm: [
-        { i: 'pet', x: 0, y: 0, w: 6, h: 10, minH: 2, minW: 1 },
-        { i: 'dailyGoal', x: 0, y: 10, w: 6, h: 3, minH: 3, minW: 1 },
-        { i: 'xpGained', x: 0, y: 13, w: 6, h: 3, minH: 3, minW: 1 },
-        { i: 'petIntro', x: 0, y: 16, w: 6, h: 5, minH: 2, minW: 1 },
-        { i: 'tasks', x: 0, y: 21, w: 6, h: 4, minH: 3, minW: 1 },
-    ],
-     xs: [
-        { i: 'pet', x: 0, y: 0, w: 1, h: 3, minH: 2, minW: 1 },
-        { i: 'dailyGoal', x: 0, y: 3, w: 1, h: 3, minH: 3, minW: 1 },
-        { i: 'xpGained', x: 0, y: 6, w: 1, h: 3, minH: 3, minW: 1 },
-        { i: 'petIntro', x: 0, y: 9, w: 1, h: 5, minH: 2, minW: 1 },
-        { i: 'tasks', x: 0, y: 14, w: 1, h: 4, minH: 3, minW: 1 },
-    ],
-    xxs: [
-        { i: 'pet', x: 0, y: 0, w: 1, h: 3, minH: 2, minW: 1 },
-        { i: 'dailyGoal', x: 0, y: 3, w: 1, h: 3, minH: 3, minW: 1 },
-        { i: 'xpGained', x: 0, y: 6, w: 1, h: 3, minH: 3, minW: 1 },
-        { i: 'petIntro', x: 0, y: 9, w: 1, h: 5, minH: 2, minW: 1 },
-        { i: 'tasks', x: 0, y: 14, w: 1, h: 4, minH: 3, minW: 1 },
+        { i: 'pet', x: 0, y: 0, w: 6, h: 10, minH: 8, minW: 4 },
+        { i: 'dailyGoal', x: 6, y: 0, w: 4, h: 3, minH: 3, minW: 2 },
+        { i: 'xpGained', x: 6, y: 3, w: 4, h: 3, minH: 3, minW: 2 },
+        { i: 'petIntro', x: 0, y: 10, w: 10, h: 4, minH: 4, minW: 2 },
+        { i: 'tasks', x: 0, y: 14, w: 10, h: 4, minH: 4, minW: 4 },
     ],
 };
 
