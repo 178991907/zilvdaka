@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { getUser, User } from '@/lib/data';
 import { Pets } from '@/lib/pets';
 import { motion } from 'framer-motion';
@@ -55,7 +55,7 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress, className }) => {
   const PetComponent = Pets[user.petStyle] || Pets['pet1'];
   
   return (
-     <div className={cn("flex flex-col", className)}>
+     <div className={cn("relative z-10 flex flex-col", className)}>
         <div className="flex flex-col flex-grow items-center justify-center w-full relative overflow-hidden">
            <div
             className="w-full h-full flex items-center justify-center rounded-lg cursor-pointer"
@@ -67,7 +67,9 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress, className }) => {
               onAnimationComplete={() => setBodyAnimation(null)}
               className="w-full h-full"
             >
-              <PetComponent />
+              <Suspense fallback={<Skeleton className="w-full h-full rounded-full" />}>
+                <PetComponent />
+              </Suspense>
             </motion.div>
           </div>
         </div>
