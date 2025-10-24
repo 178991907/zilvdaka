@@ -2,12 +2,15 @@
 
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Skeleton } from '../ui/skeleton';
 
 const DigitalClock = () => {
   const [now, setNow] = useState(new Date());
+  const [isClient, setIsClient] = useState(false);
   const { i18n, t } = useTranslation();
 
   useEffect(() => {
+    setIsClient(true);
     const timerId = setInterval(() => {
       setNow(new Date());
     }, 1000);
@@ -16,6 +19,10 @@ const DigitalClock = () => {
       clearInterval(timerId);
     };
   }, []);
+
+  if (!isClient) {
+    return <Skeleton className="h-9 w-[280px]" />;
+  }
 
   const language = i18n.language.startsWith('zh') ? 'zh-CN' : 'en-US';
 
