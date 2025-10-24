@@ -6,15 +6,20 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { getUser, User } from '@/lib/data';
 import Image from 'next/image';
+import PetViewer from '@/components/dashboard/pet-viewer';
 
 export default function LandingPage() {
   const [content, setContent] = useState<Partial<User>>({});
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     // In a real app, this might be fetched, but here we get it from our data source
     const userConfig = getUser();
     setContent(userConfig);
+    setUser(userConfig);
   }, []);
+  
+  const petProgress = user ? (user.xp / user.xpToNextLevel) * 100 : 0;
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
@@ -34,7 +39,7 @@ export default function LandingPage() {
       </header>
 
       <main className="flex-1 flex items-center justify-center p-4">
-        
+        {user && <PetViewer progress={petProgress} className="w-64 h-64" />}
       </main>
 
        <footer className="py-4 text-center text-xl text-muted-foreground">
