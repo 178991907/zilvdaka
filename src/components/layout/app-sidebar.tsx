@@ -27,9 +27,6 @@ import { useEffect, useState } from 'react';
 import i18n from '@/i18n'; // Import the i18n instance
 import { getUser, User } from '@/lib/data';
 import Image from 'next/image';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import PomodoroTimer from '../pomodoro/pomodoro-timer';
-
 
 // This wrapper prevents hydration errors by rendering the fallback language on the server
 // and only rendering the selected language on the client after hydration.
@@ -86,6 +83,7 @@ export default function AppSidebar() {
     { href: '/dashboard/achievements', icon: Trophy, labelKey: 'sidebar.achievements' },
     { href: '/dashboard/reports', icon: BarChart, labelKey: 'sidebar.reports' },
     { href: '/dashboard/rewards', icon: Gift, labelKey: 'sidebar.rewards' },
+    { href: '/dashboard/pomodoro', icon: Timer, labelKey: 'sidebar.pomodoro' },
     { href: '/dashboard/settings', icon: Settings, labelKey: 'sidebar.settings' },
   ];
 
@@ -123,21 +121,6 @@ export default function AppSidebar() {
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}
-           <Collapsible asChild>
-            <SidebarMenuItem>
-              <CollapsibleTrigger asChild>
-                 <SidebarMenuButton
-                  tooltip={t('sidebar.pomodoro')}
-                >
-                  <Timer />
-                  <ClientOnlyT tKey="sidebar.pomodoro" />
-                </SidebarMenuButton>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                  <PomodoroTimer />
-              </CollapsibleContent>
-            </SidebarMenuItem>
-          </Collapsible>
         </SidebarMenu>
       </SidebarContent>
       <SidebarFooter className="flex flex-col gap-4">
