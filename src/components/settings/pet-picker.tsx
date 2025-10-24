@@ -36,7 +36,9 @@ export default function PetPicker({ selectedPet, onSelectPet, userLevel }: PetPi
             aria-label={`Select ${petInfo.name} pet`}
             aria-disabled={!isUnlocked}
           >
-            <PetComponent />
+            <Suspense fallback={<Skeleton className="w-full h-full rounded-lg" />}>
+              <PetComponent />
+            </Suspense>
             
             {!isUnlocked && (
                 <div className="absolute inset-0 bg-black/50 rounded-lg flex flex-col items-center justify-center text-white">
