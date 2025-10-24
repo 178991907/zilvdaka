@@ -76,6 +76,10 @@ export default function PomodoroPage() {
     return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
   };
 
+  const resetPomodoros = () => {
+    setPomodoros(0);
+  };
+
   return (
     <div className="flex flex-col items-center gap-8 text-center bg-card p-8 rounded-xl shadow-lg">
       <Tabs defaultValue="work" value={mode} onValueChange={handleModeChange} className="w-full">
@@ -155,17 +159,10 @@ export default function PomodoroPage() {
         >
           {isActive ? <Pause className="h-8 w-8" /> : <Play className="h-8 w-8" />}
         </Button>
-         <Button
-          variant="outline"
-          size="icon"
-          disabled // Settings not implemented yet
-          className="h-14 w-14 rounded-full disabled:opacity-30"
-        >
-          <Settings2 className="h-6 w-6" />
-        </Button>
+         <div className="h-14 w-14" />
       </div>
 
-       <div className="flex gap-4 mt-4">
+       <div className="flex gap-4 mt-4 cursor-pointer" onClick={resetPomodoros} title="Reset Pomodoro Count">
         {Array.from({ length: 4 }).map((_, i) => (
           <motion.div
             key={i}
