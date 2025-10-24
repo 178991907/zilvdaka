@@ -1,0 +1,24 @@
+'use client';
+
+import { ThemeProvider } from '@/components/theme-provider';
+import { I18nProvider } from '@/components/i18n-provider';
+import { PomodoroModalProvider } from '@/hooks/use-pomodoro-modal';
+import PomodoroModal from '@/components/pomodoro/pomodoro-modal';
+
+export function Providers({ children }: { children: React.ReactNode }) {
+  return (
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+    >
+      <I18nProvider>
+        <PomodoroModalProvider>
+          {children}
+          <PomodoroModal />
+        </PomodoroModalProvider>
+      </I18nProvider>
+    </ThemeProvider>
+  );
+}
