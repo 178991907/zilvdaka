@@ -13,9 +13,25 @@ import { Pets } from '@/lib/pets';
 import { useTranslation } from 'react-i18next';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { Progress } from '@/components/ui/progress';
-import DashboardGridLayout from '@/components/dashboard/dashboard-grid-layout';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
+
+const DashboardGridLayout = dynamic(() => import('@/components/dashboard/dashboard-grid-layout'), {
+  ssr: false,
+  loading: () => (
+     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+      <div className="lg:col-span-2"><Skeleton className="h-[400px]" /></div>
+      <div className="space-y-6">
+        <Skeleton className="h-[100px]" />
+        <Skeleton className="h-[100px]" />
+        <Skeleton className="h-[200px]" />
+      </div>
+      <div className="lg:col-span-3"><Skeleton className="h-[300px]" /></div>
+    </div>
+  ),
+});
+
 
 export default function DashboardPage() {
   const [user, setUser] = useState<User | null>(null);
@@ -175,14 +191,16 @@ export default function DashboardPage() {
                     </CardHeader>
                    </Card>
                </div>
-               <Card key="tasks">
-                  <CardHeader>
-                    <CardTitle><ClientOnlyT tKey='dashboard.todaysAdventures' /></CardTitle>
-                  </CardHeader>
-                  <CardContent className="pt-0 px-6 pb-2">
-                    <TaskList />
-                  </CardContent>
-                </Card>
+               <div key="tasks">
+                 <Card>
+                    <CardHeader>
+                      <CardTitle><ClientOnlyT tKey='dashboard.todaysAdventures' /></CardTitle>
+                    </CardHeader>
+                    <CardContent className="pt-0 px-6 pb-2">
+                      <TaskList />
+                    </CardContent>
+                  </Card>
+               </div>
             </DashboardGridLayout>
         </main>
     </div>
