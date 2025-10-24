@@ -44,7 +44,7 @@ export default function PetCard() {
 
   return (
     <Card className="h-full flex flex-col">
-      <CardContent className="flex-grow flex flex-col p-6 items-center justify-start min-h-0">
+      <CardContent className="flex-grow flex flex-col pb-6 items-center justify-start min-h-0">
         <div className="flex-grow flex items-center justify-center w-full h-full">
            <Suspense fallback={<Skeleton className="w-full h-full" />}>
               <PetViewer petStyle={user.petStyle} progress={petProgress} className="w-full h-full" />
