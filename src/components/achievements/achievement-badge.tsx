@@ -1,13 +1,26 @@
 'use client';
 
-import { Achievement } from '@/lib/data';
+import { Achievement, iconMap } from '@/lib/data';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
-import { Lock, Pencil } from 'lucide-react';
-import { Icon } from '@/components/icons';
+import { Lock, Pencil, Star, Book, Brush, ShieldCheck, Trophy, Zap, Swords, Mountain, Flower, Gem, Bug } from 'lucide-react';
 import { ClientOnlyT } from '../layout/app-sidebar';
 import { Button } from '../ui/button';
 import Image from 'next/image';
+import type { LucideIcon, LucideProps } from 'lucide-react';
+
+const icons: { [key: string]: LucideIcon } = {
+  Star, Book, Brush, ShieldCheck, Trophy, Zap, Swords, Mountain, Flower, Gem, Bug
+};
+
+const Icon = ({ name, ...props }: { name: string } & LucideProps) => {
+  const LucideIcon = icons[name];
+  if (!LucideIcon) {
+    return <Star {...props} />; // Fallback icon
+  }
+  return <LucideIcon {...props} />;
+};
+
 
 interface AchievementBadgeProps {
   achievement: Achievement;

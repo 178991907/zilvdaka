@@ -10,11 +10,24 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
 import { Achievement } from '@/lib/data';
-import { Icon, iconNames } from '@/components/icons';
-import { CalendarIcon, Trash2 } from 'lucide-react';
+import { CalendarIcon, Trash2, Star, Book, Brush, ShieldCheck, Trophy, Zap, Swords, Mountain, Flower, Gem, Bug, Pause, Play } from 'lucide-react';
+import type { LucideIcon, LucideProps } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { ClientOnlyT } from '../layout/app-sidebar';
+
+const iconNames = ['Star', 'Book', 'Brush', 'ShieldCheck', 'Trophy', 'Zap', 'Swords', 'Mountain', 'Flower', 'Gem', 'Bug', 'Pause', 'Play'];
+const icons: { [key: string]: LucideIcon } = {
+  Star, Book, Brush, ShieldCheck, Trophy, Zap, Swords, Mountain, Flower, Gem, Bug, Pause, Play
+};
+
+const Icon = ({ name, ...props }: { name: string } & LucideProps) => {
+  const LucideIcon = icons[name];
+  if (!LucideIcon) {
+    return <Star {...props} />; // Fallback icon
+  }
+  return <LucideIcon {...props} />;
+};
 
 interface EditAchievementDialogProps {
   isOpen: boolean;
