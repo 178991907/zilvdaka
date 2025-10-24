@@ -91,7 +91,7 @@ export default function DashboardPage() {
                         <CardContent className="flex-grow flex flex-col p-4">
                             {isClient && user ? (
                                 <>
-                                    <div className="flex items-start justify-center">
+                                    <div className="flex-grow flex items-start justify-center">
                                         <PetViewer progress={petProgress} />
                                     </div>
                                     <div className="mt-4">
@@ -106,8 +106,8 @@ export default function DashboardPage() {
                                 </>
                             ) : (
                                 <div className="flex-grow flex flex-col">
-                                    <div className='flex items-start justify-center'>
-                                      <Skeleton className="flex-grow w-full" />
+                                    <div className='flex-grow flex items-start justify-center'>
+                                      <Skeleton className="w-full h-full" />
                                     </div>
                                     <div className="mt-4">
                                         <Skeleton className="h-6 w-24 mx-auto" />
@@ -172,7 +172,7 @@ export default function DashboardPage() {
                     </CardHeader>
                    </Card>
                </div>
-               <div key="tasks" className="overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm react-grid-drag-handle">
+               <div key="tasks" className="overflow-hidden rounded-lg">
                   <CardHeader>
                     <CardTitle><ClientOnlyT tKey='dashboard.todaysAdventures' /></CardTitle>
                   </CardHeader>
