@@ -4,7 +4,7 @@ import TasksTable from '@/components/tasks/tasks-table';
 import { AddTaskDialog } from '@/components/tasks/add-task-dialog';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { useState, useEffect } from 'react';
-import { Task, getTasks, updateTasks, iconMap } from '@/lib/data';
+import { Task, getTasks, updateTasks } from '@/lib/data';
 import { PlusCircle } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
@@ -44,7 +44,7 @@ export default function TasksPage() {
       // Update existing task
        updatedTasks = tasks.map(t => 
         t.id === taskId 
-        ? { ...t, ...taskData, icon: iconMap[taskData.category] || iconMap.Learning } 
+        ? { ...t, ...taskData } 
         : t
       );
     } else {
@@ -52,7 +52,8 @@ export default function TasksPage() {
       const newTask: Task = {
         id: `custom-${Date.now()}`,
         ...taskData,
-        icon: iconMap[taskData.category] || iconMap.Learning,
+        // @ts-ignore icon will be added by updateTasks
+        icon: undefined,
         completed: false,
         dueDate: new Date(),
       };

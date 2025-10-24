@@ -443,7 +443,12 @@ export const getTasks = (): Task[] => {
             const parsedTasks = JSON.parse(storedTasks);
             
             return parsedTasks.map((task: any) => {
-                 const title = task.id.startsWith('custom-') ? task.title : i18n.t(`tasks.items.${task.id}.title`, { lng: i18n.language });
+                 const titleKey = `tasks.items.${task.id}.title`;
+                 // Only translate if the key exists and it's not a custom task
+                 const title = !task.id.startsWith('custom-') && i18n.exists(titleKey) 
+                    ? i18n.t(titleKey) 
+                    : task.title;
+
                  return {
                     ...task,
                     title: title,
@@ -467,8 +472,18 @@ export const getTasks = (): Task[] => {
 export const updateTasks = (newTasks: Task[]) => {
     if (typeof window !== 'undefined') {
         try {
-            const tasksToSave = newTasks.map(({ icon, ...rest }) => rest);
-            localStorage.setItem('habit-heroes-tasks', JSON.stringify(tasksToSave));
+            // Ensure every task has a valid icon before saving.
+            const processedTasks = newTasks.map(task => {
+                // If the icon property is missing or not a function, assign it.
+                if (!task.icon || typeof task.icon !== 'function') {
+                    task.icon = iconMap[task.category] || iconMap.Learning;
+                }
+                // Strip the function property before serialization
+                const { icon, ...rest } = task;
+                return rest;
+            });
+
+            localStorage.setItem('habit-heroes-tasks', JSON.stringify(processedTasks));
             window.dispatchEvent(new CustomEvent('tasksUpdated'));
         } catch (error) {
             console.error("Failed to save tasks to localStorage", error);
