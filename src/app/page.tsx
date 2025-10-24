@@ -11,7 +11,6 @@ import { ProgressSummaryContent } from '@/components/dashboard/progress-summary'
 import { Target, Zap } from 'lucide-react';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { Skeleton } from '@/components/ui/skeleton';
-import DigitalClock from '@/components/dashboard/digital-clock';
 import DailyTaskTable from '@/components/landing/daily-task-table';
 
 export default function LandingPage() {
@@ -75,9 +74,6 @@ export default function LandingPage() {
 
             {/* Right Column: Stats */}
             <div className="w-full md:w-1/2 flex flex-col items-center gap-4">
-              <div className="flex justify-center py-4">
-                <DigitalClock />
-              </div>
               <div className="w-full">
                 {isClient ? (
                   <Card>
@@ -115,7 +111,7 @@ export default function LandingPage() {
           </div>
 
           <div className="mt-8">
-            <DailyTaskTable tasks={tasks} />
+            <DailyTaskTable />
           </div>
 
         </div>

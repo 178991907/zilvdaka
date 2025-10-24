@@ -3,16 +3,31 @@ import * as React from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
-import { Task, completeTaskAndUpdateXP } from '@/lib/data';
+import { Task, completeTaskAndUpdateXP, getTodaysTasks } from '@/lib/data';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { useSound } from '@/hooks/use-sound';
+import DigitalClock from '../dashboard/digital-clock';
 
-interface DailyTaskTableProps {
-  tasks: Task[];
-}
-
-export default function DailyTaskTable({ tasks }: DailyTaskTableProps) {
+export default function DailyTaskTable() {
+  const [tasks, setTasks] = React.useState<Task[]>([]);
   const playSound = useSound();
+
+  React.useEffect(() => {
+    const loadTasks = () => {
+      setTasks(getTodaysTasks());
+    };
+    
+    loadTasks();
+    
+    window.addEventListener('tasksUpdated', loadTasks);
+    window.addEventListener('userProfileUpdated', loadTasks);
+
+    return () => {
+        window.removeEventListener('tasksUpdated', loadTasks);
+        window.removeEventListener('userProfileUpdated', loadTasks);
+    };
+  }, []);
+
 
   const handleTaskCompletion = (task: Task, completed: boolean) => {
     if (completed) {
@@ -25,6 +40,11 @@ export default function DailyTaskTable({ tasks }: DailyTaskTableProps) {
     <div className="rounded-lg border bg-card text-card-foreground shadow-sm">
       <Table>
         <TableHeader>
+           <TableRow>
+            <TableHead colSpan={4} className="text-center p-4">
+              <DigitalClock />
+            </TableHead>
+          </TableRow>
           <TableRow>
             <TableHead className="w-[80px] text-center text-lg"><ClientOnlyT tKey="tasks.dailyTable.order" /></TableHead>
             <TableHead className="text-lg"><ClientOnlyT tKey="tasks.dailyTable.dailyTask" /></TableHead>
