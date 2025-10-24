@@ -170,7 +170,7 @@ export function AddTaskDialog({ onSave, isOpen, setIsOpen, task }: AddTaskDialog
             <Label className="text-right">
                 <ClientOnlyT tKey='tasks.addTaskDialog.recurrence' />
             </Label>
-             <div className="col-span-3 flex items-center space-x-2">
+             <div className="col-span-3 flex items-center">
                 <ToggleGroup type="single" variant="outline" value={isRecurring ? 'on' : 'off'} onValueChange={(value) => setIsRecurring(value === 'on')}>
                     <ToggleGroupItem value="off" aria-label="Toggle off">
                         <ClientOnlyT tKey='tasks.recurrence.once' />
