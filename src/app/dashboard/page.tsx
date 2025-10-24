@@ -2,16 +2,14 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Target, Zap, Info, Pencil, Check } from 'lucide-react';
 import { useEffect, useState, Suspense } from 'react';
-import { getTasks, getUser, User, Task } from '@/lib/data';
+import { getUser, User, Task } from '@/lib/data';
 import { Skeleton } from '@/components/ui/skeleton';
-import PetViewer from '@/components/dashboard/pet-viewer';
 import { ProgressSummaryContent } from '@/components/dashboard/progress-summary';
 import DigitalClock from '@/components/dashboard/digital-clock';
 import TaskList from '@/components/dashboard/task-list';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { useTranslation } from 'react-i18next';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
-import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
@@ -29,6 +27,11 @@ const DashboardGridLayout = dynamic(() => import('@/components/dashboard/dashboa
       <div className="lg:col-span-3"><Skeleton className="h-[300px]" /></div>
     </div>
   ),
+});
+
+const PetCard = dynamic(() => import('@/components/dashboard/pet-card'), {
+  ssr: false,
+  loading: () => <Skeleton className="h-full w-full" />,
 });
 
 
@@ -102,42 +105,7 @@ export default function DashboardPage() {
         <main className="flex-grow p-4 md:p-8">
             <DashboardGridLayout isEditing={isEditing}>
                 <div key="pet" className="overflow-hidden rounded-lg">
-                  <Suspense fallback={<Skeleton className="h-full w-full" />}>
-                    <Card className="flex flex-col h-full">
-                        <CardHeader>
-                            <CardTitle><ClientOnlyT tKey='dashboard.myPet' /></CardTitle>
-                        </CardHeader>
-                        <CardContent className="flex-grow flex flex-col p-4">
-                            {isClient && user ? (
-                                <>
-                                    <div className="flex-grow flex items-start justify-center">
-                                      <PetViewer progress={petProgress} />
-                                    </div>
-                                    <div className="mt-4">
-                                        <div className="text-center">
-                                            <p className="text-lg font-bold">{user.petName}</p>
-                                            <p className="text-sm text-muted-foreground">
-                                                <ClientOnlyT tKey='user.level' tOptions={{ level: user.level }} />
-                                            </p>
-                                        </div>
-                                        <Progress value={petProgress} className="mt-4 h-2" />
-                                    </div>
-                                </>
-                            ) : (
-                                <div className="flex-grow flex flex-col">
-                                    <div className='flex-grow flex items-start justify-center'>
-                                      <Skeleton className="w-full h-full" />
-                                    </div>
-                                    <div className="mt-4">
-                                        <Skeleton className="h-6 w-24 mx-auto" />
-                                        <Skeleton className="h-4 w-16 mx-auto mt-2" />
-                                        <Skeleton className="h-2 w-full mt-4" />
-                                    </div>
-                                </div>
-                            )}
-                        </CardContent>
-                    </Card>
-                  </Suspense>
+                    <PetCard />
                 </div>
                 <div key="dailyGoal" className="overflow-hidden rounded-lg">
                     <Card className="h-full">
