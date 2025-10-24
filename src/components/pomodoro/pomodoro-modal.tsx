@@ -1,5 +1,7 @@
 'use client';
 
+import { create, useStore } from 'zustand';
+import { ReactNode, createContext, useContext, useRef, useEffect, useState } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -8,10 +10,50 @@ import {
   DialogDescription,
 } from '@/components/ui/dialog';
 import PomodoroPage from './pomodoro-page';
-import { usePomodoroModal } from '@/hooks/use-pomodoro-modal';
-import { useEffect, useState } from 'react';
 
-export default function PomodoroModal() {
+// --- Zustand Store Logic ---
+interface PomodoroModalState {
+  isOpen: boolean;
+  openPomodoro: () => void;
+  closePomodoro: () => void;
+}
+
+type PomodoroModalStore = ReturnType<typeof createPomodoroModalStore>;
+
+const createPomodoroModalStore = () =>
+  create<PomodoroModalState>((set) => ({
+    isOpen: false,
+    openPomodoro: () => set({ isOpen: true }),
+    closePomodoro: () => set({ isOpen: false }),
+  }));
+
+const PomodoroModalContext = createContext<PomodoroModalStore | null>(null);
+
+// --- Provider Component ---
+export function PomodoroModalProvider({ children }: { children: ReactNode }) {
+  const storeRef = useRef<PomodoroModalStore>();
+  if (!storeRef.current) {
+    storeRef.current = createPomodoroModalStore();
+  }
+  return (
+    <PomodoroModalContext.Provider value={storeRef.current}>
+      {children}
+    </PomodoroModalContext.Provider>
+  );
+}
+
+// --- Hook to use the store ---
+export const usePomodoroModal = () => {
+  const store = useContext(PomodoroModalContext);
+  if (!store) {
+    throw new Error('usePomodoroModal must be used within a PomodoroModalProvider');
+  }
+  return useStore(store);
+};
+
+
+// --- Modal Component ---
+export function PomodoroModal() {
   const { isOpen, closePomodoro } = usePomodoroModal();
   const [isClient, setIsClient] = useState(false);
 
@@ -35,3 +77,6 @@ export default function PomodoroModal() {
     </Dialog>
   );
 }
+
+// Default export for convenience if needed, though named exports are used.
+export default PomodoroModal;
