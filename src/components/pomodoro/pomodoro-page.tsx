@@ -101,6 +101,16 @@ export default function PomodoroPage() {
     };
   }, [carouselApi]);
   
+  // Effect to scroll to the new timer when it's added
+  useEffect(() => {
+    if (timers.length > 1 && carouselApi) {
+        // Only scroll if the last timer is the one being added
+        if (currentTimerIndex === timers.length - 1) {
+            carouselApi.scrollTo(currentTimerIndex);
+        }
+    }
+  }, [timers.length, carouselApi, currentTimerIndex]);
+  
   const updateTimer = (index: number, updates: Partial<TimerInstance>) => {
     setTimers(prevTimers => 
       prevTimers.map((timer, i) => i === index ? { ...timer, ...updates } : timer)
@@ -108,9 +118,10 @@ export default function PomodoroPage() {
   };
   
   const nextMode = useCallback((index: number) => {
-    playSound('timer-end');
     const timer = timers[index];
     if (!timer) return;
+
+    playSound('timer-end');
     const currentMode = settings.modes[timer.modeIndex];
     let nextModeIndex = 0;
     let newPomodoroCount = timer.pomodoros;
@@ -145,14 +156,17 @@ export default function PomodoroPage() {
   }, [playSound, settings, timers]);
 
   useEffect(() => {
+    if (!currentTimer) return;
+    
     let interval: NodeJS.Timeout | null = null;
-    const timer = timers[currentTimerIndex];
 
-    if (timer?.isActive && timer.timeRemaining > 0) {
+    if (currentTimer.isActive && currentTimer.timeRemaining > 0) {
       interval = setInterval(() => {
-        updateTimer(currentTimerIndex, { timeRemaining: timer.timeRemaining - 1 });
+        setTimers(prev => prev.map((t, i) => 
+            i === currentTimerIndex ? { ...t, timeRemaining: t.timeRemaining - 1 } : t
+        ));
       }, 1000);
-    } else if (timer?.isActive && timer.timeRemaining <= 0) {
+    } else if (currentTimer.isActive && currentTimer.timeRemaining <= 0) {
       nextMode(currentTimerIndex);
     }
 
@@ -161,34 +175,22 @@ export default function PomodoroPage() {
         clearInterval(interval);
       }
     };
-  }, [timers, currentTimerIndex, nextMode]);
+  }, [currentTimer, currentTimerIndex, nextMode, setTimers]);
   
   const addTimer = () => {
-    setTimers(prev => [...prev, createNewTimer(settings)]);
-    setTimeout(() => carouselApi?.scrollTo(timers.length), 0);
+    const newTimer = createNewTimer(settings);
+    const newIndex = timers.length;
+    setTimers(prev => [...prev, newTimer]);
+    setCurrentTimerIndex(newIndex);
   };
 
   const removeTimer = (index: number) => {
     if (timers.length <= 1) return;
     setTimers(prev => prev.filter((_, i) => i !== index));
-  };
-
-  // Add a guard clause to prevent crash when timers array is empty
-  // All hooks must be called before this return statement.
-  if (!currentTimer) {
-    return null;
-  }
-  
-  const currentMode = settings.modes[currentTimer.modeIndex];
-  const duration = (currentMode?.duration || 0) * 60;
-
-  const resetTimer = (index: number) => {
-    const timer = timers[index];
-    const mode = settings.modes[timer.modeIndex];
-    updateTimer(index, { 
-      isActive: false, 
-      timeRemaining: (mode?.duration || 0) * 60,
-    });
+    // If we remove the current timer, move to the previous one
+    if (index === currentTimerIndex) {
+        setCurrentTimerIndex(Math.max(0, index - 1));
+    }
   };
 
   const handleSaveSettings = (newSettings: PomodoroSettings) => {
@@ -240,6 +242,20 @@ export default function PomodoroPage() {
   const defaultModeIds = ['work', 'shortBreak', 'longBreak'];
   const defaultModes = defaultModeIds.map(id => settings.modes.find(m => m.id === id)).filter(Boolean) as PomodoroMode[];
 
+  // All hooks are above, now we can safely return early if needed.
+  if (!currentTimer) {
+    return (
+        <div className="flex flex-col items-center gap-6 w-full">
+            <div className="flex flex-col items-center justify-center gap-6 text-center bg-card p-8 rounded-xl shadow-lg h-[548px] w-full max-w-md">
+                <Button variant="outline" className="h-32 w-32 rounded-full border-dashed" onClick={addTimer}>
+                    <PlusCircle className="h-16 w-16 text-muted-foreground" />
+                </Button>
+                <p className="text-muted-foreground"><ClientOnlyT tKey="pomodoro.addTimer" /></p>
+            </div>
+        </div>
+    );
+  }
+
   return (
     <>
       <div className="flex flex-col items-center gap-6 w-full">
@@ -247,6 +263,7 @@ export default function PomodoroPage() {
           <CarouselContent>
             {timers.map((timer, index) => {
               const mode = settings.modes[timer.modeIndex];
+              const duration = (mode?.duration || 0) * 60;
               const progress = duration > 0 ? (duration - timer.timeRemaining) / duration * 100 : 0;
               return (
                 <CarouselItem key={timer.id}>
@@ -267,7 +284,7 @@ export default function PomodoroPage() {
                                 )}
                                 onClick={() => switchModeById(index, m.id)}
                               >
-                                 <ClientOnlyT tKey={`pomodoro.settings.defaultMode${m.name.replace(' ','')}`} />
+                                 <ClientOnlyT tKey={m.id === 'work' ? 'pomodoro.settings.defaultModeFocus' : `pomodoro.settings.defaultMode${m.name.replace(' ','')}`} />
                               </Button>
                             ))}
                         </div>
@@ -329,7 +346,7 @@ export default function PomodoroPage() {
                           <Button
                             variant="outline"
                             size="icon"
-                            onClick={() => resetTimer(index)}
+                            onClick={() => updateTimer(index, { isActive: false, timeRemaining: (settings.modes[timer.modeIndex]?.duration || 0) * 60 })}
                             className="h-14 w-14 rounded-full"
                           >
                             <RotateCcw className="h-6 w-6" />
@@ -423,8 +440,11 @@ function SettingsDialog({ isOpen, setIsOpen, settings, onSave }: SettingsDialogP
 
   const handleModeChange = (index: number, field: keyof PomodoroMode, value: any) => {
     const newModes = [...currentSettings.modes];
-    newModes[index] = { ...newModes[index], [field]: value };
-    setCurrentSettings({ ...currentSettings, modes: newModes });
+    const mode = newModes[index];
+    if (mode) {
+        newModes[index] = { ...mode, [field]: value };
+        setCurrentSettings({ ...currentSettings, modes: newModes });
+    }
   };
 
   const handleAddMode = () => {
