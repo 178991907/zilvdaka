@@ -82,6 +82,7 @@ const XP_MAP = {
 };
 
 const getPetStyleForLevel = (level: number): string => {
+  // Use the single source of truth from pets.ts
   const sortedPets = [...PetInfos].sort((a, b) => b.unlockLevel - a.unlockLevel);
   const bestPet = sortedPets.find(p => level >= p.unlockLevel);
   return bestPet ? bestPet.id : 'pet1';
