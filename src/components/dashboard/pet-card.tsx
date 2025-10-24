@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -31,11 +31,9 @@ export default function PetCard() {
         <CardHeader>
           <CardTitle><ClientOnlyT tKey='dashboard.myPet' /></CardTitle>
         </CardHeader>
-        <CardContent className="flex-grow flex flex-col p-4">
-          <div className="flex-grow flex items-center justify-center min-h-[200px]">
-            <Skeleton className="w-full h-full" />
-          </div>
-          <div className="mt-4">
+        <CardContent className="flex-grow flex flex-col items-center justify-center p-4">
+          <Skeleton className="w-full h-[200px]" />
+          <div className="mt-4 w-full">
             <Skeleton className="h-6 w-24 mx-auto" />
             <Skeleton className="h-4 w-16 mx-auto mt-2" />
             <Skeleton className="h-2 w-full mt-4" />
@@ -53,8 +51,10 @@ export default function PetCard() {
         <CardTitle><ClientOnlyT tKey='dashboard.myPet' /></CardTitle>
       </CardHeader>
       <CardContent className="flex-grow flex flex-col p-4">
-        <div className="flex-grow flex items-center justify-center min-h-[200px]">
-          <PetViewer petStyle={user.petStyle} progress={petProgress} />
+        <div className="flex-grow flex items-center justify-center min-h-[200px] w-full">
+          <Suspense fallback={<Skeleton className="w-full h-full" />}>
+            <PetViewer petStyle={user.petStyle} progress={petProgress} />
+          </Suspense>
         </div>
         <div className="mt-4">
           <div className="text-center">
