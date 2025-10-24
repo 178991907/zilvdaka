@@ -124,11 +124,7 @@ export default function TasksTable({ tasks, setTasks, onEdit, onDelete, onToggle
               </TableCell>
               <TableCell className="font-medium flex items-center gap-3">
                  {task.icon && <task.icon className="h-5 w-5" />}
-                 {task.id.startsWith('custom-') ? (
-                    task.title
-                  ) : (
-                    <ClientOnlyT tKey={`tasks.items.${task.id}.title`} />
-                  )}
+                 {task.title}
               </TableCell>
               <TableCell>
                 <Badge variant="outline"><ClientOnlyT tKey={`tasks.categories.${task.category.toLowerCase()}`} fallback={task.category} /></Badge>

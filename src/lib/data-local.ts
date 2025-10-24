@@ -441,17 +441,16 @@ export const getTasks = (): Task[] => {
         const storedTasks = localStorage.getItem('habit-heroes-tasks');
         if (storedTasks) {
             const parsedTasks = JSON.parse(storedTasks);
-            // This is a recovery mechanism for old, malformed data structure.
-            if (parsedTasks.length > 0 && typeof parsedTasks[0].id === 'number') {
-                localStorage.removeItem('habit-heroes-tasks');
-                 // Fall through to re-initialize with correct data
-            } else {
-                 return parsedTasks.map((task: any) => ({
+            
+            return parsedTasks.map((task: any) => {
+                 const title = task.id.startsWith('custom-') ? task.title : i18n.t(`tasks.items.${task.id}.title`, { lng: i18n.language });
+                 return {
                     ...task,
+                    title: title,
                     icon: iconMap[task.category] || iconMap.Learning, // Re-assign icon function
                     dueDate: new Date(task.dueDate)
-                }));
-            }
+                }
+            });
         }
     } catch (error) {
         console.error("Failed to parse tasks from localStorage", error);

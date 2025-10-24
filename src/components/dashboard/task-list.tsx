@@ -88,11 +88,7 @@ export default function TaskList() {
                   task.status === 'paused' ? 'cursor-not-allowed' : ''
                 )}
               >
-                {task.id.startsWith('custom-') ? (
-                  task.title
-                ) : (
-                  <ClientOnlyT tKey={`tasks.items.${task.id}.title`} />
-                )}
+                {task.title}
               </label>
               <div className="flex items-center justify-center h-8 w-8 rounded-full bg-primary/10">
                 <task.icon className="h-5 w-5 text-primary" />

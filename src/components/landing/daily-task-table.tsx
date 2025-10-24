@@ -69,7 +69,7 @@ export default function DailyTaskTable() {
                   <div className="flex items-center gap-3">
                     {task.icon && <task.icon className="h-5 w-5 text-primary" />}
                     <span className="font-medium">
-                      {task.id.startsWith('custom-') ? task.title : <ClientOnlyT tKey={`tasks.items.${task.id}.title`} />}
+                      {task.title}
                     </span>
                   </div>
                 </TableCell>
