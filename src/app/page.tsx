@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { getUser, getTodaysTasks, User, Task } from '@/lib/data';
 import Image from 'next/image';
 import PetViewer from '@/components/dashboard/pet-viewer';
@@ -69,7 +69,11 @@ export default function LandingPage() {
           <div className="flex flex-col md:flex-row items-end justify-center gap-8">
             {/* Left Column: Pet Viewer */}
             <div className="w-full md:w-1/2 flex flex-col items-center justify-center">
-              {user && <PetViewer progress={petProgress} className="w-80 h-80" />}
+              {user && (
+                <Suspense fallback={<Skeleton className="w-80 h-80 rounded-full" />}>
+                  <PetViewer progress={petProgress} className="w-80 h-80" />
+                </Suspense>
+              )}
             </div>
 
             {/* Right Column: Stats */}

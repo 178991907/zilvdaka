@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getUser, User } from '@/lib/data';
 import { Pets } from '@/lib/pets';
 import { motion } from 'framer-motion';
@@ -67,9 +67,7 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress, className }) => {
               onAnimationComplete={() => setBodyAnimation(null)}
               className="w-full h-full"
             >
-              <Suspense fallback={<Skeleton className="w-full h-full rounded-full" />}>
-                <PetComponent />
-              </Suspense>
+              <PetComponent />
             </motion.div>
           </div>
         </div>

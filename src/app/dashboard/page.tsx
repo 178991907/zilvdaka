@@ -1,7 +1,7 @@
 'use client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Target, Zap, Info, Pencil, Check } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { getTasks, getUser, User, Task } from '@/lib/data';
 import { Skeleton } from '@/components/ui/skeleton';
 import PetViewer from '@/components/dashboard/pet-viewer';
@@ -111,7 +111,9 @@ export default function DashboardPage() {
                             {isClient && user ? (
                                 <>
                                     <div className="flex-grow flex items-start justify-center">
+                                      <Suspense fallback={<Skeleton className="w-full h-full" />}>
                                         <PetViewer progress={petProgress} />
+                                      </Suspense>
                                     </div>
                                     <div className="mt-4">
                                         <div className="text-center">
