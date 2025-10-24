@@ -2,10 +2,19 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Star } from 'lucide-react';
-import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { getUser, User } from '@/lib/data';
 
 export default function LandingPage() {
+  const [content, setContent] = useState<Partial<User>>({});
+
+  useEffect(() => {
+    // In a real app, this might be fetched, but here we get it from our data source
+    const userConfig = getUser();
+    setContent(userConfig);
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <header className="sticky top-0 z-10 flex h-[60px] items-center justify-between border-b bg-background/80 backdrop-blur-sm px-4 md:px-8">
@@ -14,13 +23,13 @@ export default function LandingPage() {
                 <Star className="h-5 w-5 text-primary-foreground" />
             </div>
             <span className="font-bold text-lg font-headline text-foreground">
-                <ClientOnlyT tKey="appName" />
+                {content.appName || 'Discipline Baby'}
             </span>
         </div>
         <nav>
           <Button asChild>
             <Link href="/dashboard">
-                <ClientOnlyT tKey="landing.goToDashboard" />
+                {content.dashboardLink || 'Go to Dashboard'}
             </Link>
           </Button>
         </nav>
@@ -34,10 +43,10 @@ export default function LandingPage() {
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-foreground">
-                <ClientOnlyT tKey="landing.title" />
+                {content.landingTitle || 'Title'}
             </h1>
             <p className="mt-4 text-lg md:text-xl text-muted-foreground max-w-xl mx-auto">
-                <ClientOnlyT tKey="landing.description" />
+                {content.landingDescription || 'Description'}
             </p>
           </motion.div>
           <motion.div
@@ -48,7 +57,7 @@ export default function LandingPage() {
           >
             <Button asChild size="lg" className="text-lg">
               <Link href="/dashboard">
-                <ClientOnlyT tKey="landing.getStarted" />
+                {content.landingCta || 'Get Started'}
               </Link>
             </Button>
           </motion.div>

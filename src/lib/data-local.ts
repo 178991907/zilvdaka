@@ -3,16 +3,23 @@ import type { User, Task, Achievement } from './data-types';
 import { iconMap } from './data-types';
 import { toast } from '@/hooks/use-toast';
 import { Pets } from './pets';
+import i18n from '@/i18n';
 
 const defaultUser: User = {
   name: 'Alex',
   avatar: 'avatar1',
   level: 1,
-  xp: 0,
+  xp: 75,
   xpToNextLevel: 100,
   petStyle: 'pet1',
   petName: '泡泡',
   appLogo: '',
+  // Configurable content
+  appName: 'Discipline Baby',
+  landingTitle: 'Gamify Your Child\'s Habits',
+  landingDescription: 'Turn daily routines and learning into a fun adventure. Motivate your kids with rewards, achievements, and a virtual pet that grows with them.',
+  landingCta: 'Get Started for Free',
+  dashboardLink: 'Go to Dashboard',
 };
 
 // This function now gets user data, prioritizing localStorage.
@@ -105,13 +112,13 @@ export const completeTaskAndUpdateXP = (task: Task, completed: boolean) => {
 
     if (newPetStyle !== oldPetStyle && newPet && oldPet) {
       toast({
-        title: 'Your pet evolved!',
-        description: `Wow! Your ${oldPet.name} evolved into a ${newPet.name}! You reached level ${newLevel}.`,
+        title: i18n.t('notifications.petEvolved.title'),
+        description: i18n.t('notifications.petEvolved.description', { oldPetName: oldPet.name, newPetName: newPet.name, level: newLevel }),
       });
     } else {
       toast({
-        title: 'Level Up!',
-        description: `Congratulations! You and your pet have reached level ${newLevel}.`,
+        title: i18n.t('notifications.levelUp.title'),
+        description: i18n.t('notifications.levelUp.description', { level: newLevel }),
       });
     }
   }

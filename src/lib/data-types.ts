@@ -22,7 +22,7 @@ export type Task = {
 };
 
 export type Achievement = {
-  id: string;
+  id:string;
   title: string;
   description: string;
   icon: string;
@@ -42,6 +42,12 @@ export type User = {
   petStyle: string;
   petName: string;
   appLogo?: string;
+  // White-labeling and content configuration
+  appName: string;
+  landingTitle: string;
+  landingDescription: string;
+  landingCta: string;
+  dashboardLink: string;
 };
 
 export const iconMap: { [key: string]: LucideIcon } = {

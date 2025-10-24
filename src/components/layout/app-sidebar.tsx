@@ -100,7 +100,7 @@ export default function AppSidebar() {
                 <Star className="h-6 w-6 text-primary-foreground" />
               </div>
               <span className="font-bold text-xl font-headline text-foreground">
-                <ClientOnlyT tKey="appName" />
+                {user?.appName || <ClientOnlyT tKey="appName" />}
               </span>
             </div>
           )}
