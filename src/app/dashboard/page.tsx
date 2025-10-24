@@ -172,14 +172,14 @@ export default function DashboardPage() {
                     </CardHeader>
                    </Card>
                </div>
-               <div key="tasks" className="overflow-hidden rounded-lg">
+               <Card key="tasks">
                   <CardHeader>
                     <CardTitle><ClientOnlyT tKey='dashboard.todaysAdventures' /></CardTitle>
                   </CardHeader>
                   <CardContent className="pt-0 px-6 pb-2">
                     <TaskList />
                   </CardContent>
-                </div>
+                </Card>
             </DashboardGridLayout>
         </main>
     </div>
