@@ -19,7 +19,7 @@ const defaultUser: User = {
   landingTitle: 'Gamify Your Child\'s Habits',
   landingDescription: 'Turn daily routines and learning into a fun adventure. Motivate your kids with rewards, achievements, and a virtual pet that grows with them.',
   landingCta: 'Get Started for Free',
-  dashboardLink: 'Go to Dashboard',
+  dashboardLink: '进入主页',
 };
 
 // This function now gets user data, prioritizing localStorage.
