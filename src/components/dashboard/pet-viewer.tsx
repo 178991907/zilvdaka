@@ -24,7 +24,7 @@ const PetViewer: React.FC<PetViewerProps> = ({ petStyle, progress, className }) 
   const [bodyAnimation, setBodyAnimation] = useState<AnimationType | null>(null);
   const playSound = useSound();
 
-  const petScale = ((0.6 + (progress / 100) * 0.3) * 1.5) * 0.512;
+  const petScale = ((0.6 + (progress / 100) * 0.3) * 1.5) * 0.4096;
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     playSound('click');
