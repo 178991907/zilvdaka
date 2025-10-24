@@ -74,6 +74,12 @@ export default function PomodoroPage() {
   const { t } = useTranslation();
   
   const currentTimer = timers[currentTimerIndex];
+  
+  // FIX: Add a guard clause to prevent crash when timers array is empty
+  if (!currentTimer) {
+    return null;
+  }
+
   const currentMode = settings.modes[currentTimer.modeIndex];
   const duration = (currentMode?.duration || 0) * 60;
 
@@ -234,10 +240,6 @@ export default function PomodoroPage() {
 
   const defaultModeIds = ['work', 'shortBreak', 'longBreak'];
   const defaultModes = defaultModeIds.map(id => settings.modes.find(m => m.id === id)).filter(Boolean) as PomodoroMode[];
-
-  if (!currentTimer) {
-    return null;
-  }
 
   return (
     <>
