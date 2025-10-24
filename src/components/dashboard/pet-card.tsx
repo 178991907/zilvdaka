@@ -28,7 +28,7 @@ export default function PetCard() {
   if (!user) {
     return (
       <Card className="h-full flex flex-col">
-        <CardHeader>
+        <CardHeader className="pb-0">
           <CardTitle><ClientOnlyT tKey='dashboard.myPet' /></CardTitle>
         </CardHeader>
         <CardContent className="flex-grow flex flex-col items-center justify-center p-4">
@@ -47,17 +47,15 @@ export default function PetCard() {
 
   return (
     <Card className="h-full flex flex-col">
-      <CardHeader>
-        <CardTitle><ClientOnlyT tKey='dashboard.myPet' /></CardTitle>
-      </CardHeader>
-      <CardContent className="flex-grow flex flex-col p-4">
+      <CardContent className="flex-grow flex flex-col p-0">
         <div className="flex-grow flex items-start justify-center min-h-0 w-full">
           <Suspense fallback={<Skeleton className="w-full h-full" />}>
             <PetViewer petStyle={user.petStyle} progress={petProgress} className="w-full h-full" />
           </Suspense>
         </div>
-        <div className="mt-4">
+        <div className="p-4 pt-0">
           <div className="text-center">
+             <CardTitle className="mb-2"><ClientOnlyT tKey='dashboard.myPet' /></CardTitle>
             <p className="text-lg font-bold">{user.petName}</p>
             <p className="text-sm text-muted-foreground">
               <ClientOnlyT tKey='user.level' tOptions={{ level: user.level }} />
