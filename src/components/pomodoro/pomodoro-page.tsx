@@ -13,7 +13,7 @@ import type { PomodoroSettings, PomodoroMode } from '@/lib/data-types';
 import { useTranslation } from 'react-i18next';
 
 const getInitialSettings = (user: User | null): PomodoroSettings => {
-  return user?.pomodoroSettings || {
+  const defaultSettings: PomodoroSettings = {
     modes: [
       { id: 'work', name: 'Work', duration: 25 },
       { id: 'shortBreak', name: 'Short Break', duration: 5 },
@@ -21,7 +21,18 @@ const getInitialSettings = (user: User | null): PomodoroSettings => {
     ],
     longBreakInterval: 4,
   };
+
+  if (user?.pomodoroSettings) {
+    // Merge user settings with defaults to ensure all properties are present
+    return {
+      ...defaultSettings,
+      ...user.pomodoroSettings,
+      modes: user.pomodoroSettings.modes?.length ? user.pomodoroSettings.modes : defaultSettings.modes,
+    };
+  }
+  return defaultSettings;
 };
+
 
 export default function PomodoroPage() {
   const [user, setUser] = useState<User | null>(null);
@@ -137,7 +148,6 @@ export default function PomodoroPage() {
     }
     
     updateUser({ pomodoroSettings: newSettings });
-    setSettings(newSettings); // Immediately update local state
     
     // Find the new index of the current mode ID, or reset to 0
     const currentModeId = currentMode?.id;
@@ -157,7 +167,7 @@ export default function PomodoroPage() {
         'longBreak': 'pomodoro.settings.defaultModeLongBreak'
     }
     if (defaultKeys[mode.id]) {
-        return t(defaultKeys[mode.id]);
+        return <ClientOnlyT tKey={defaultKeys[mode.id]} />;
     }
     return mode.name;
   }
@@ -346,6 +356,7 @@ function SettingsDialog({ isOpen, setIsOpen, settings, onSave }: SettingsDialogP
                       value={getModeName(mode)}
                       onChange={(e) => handleModeChange(index, 'name', e.target.value)}
                       className="h-9"
+                      disabled={['work', 'shortBreak', 'longBreak'].includes(mode.id)}
                     />
                     <Input
                       type="number"
@@ -354,7 +365,7 @@ function SettingsDialog({ isOpen, setIsOpen, settings, onSave }: SettingsDialogP
                       onChange={(e) => handleModeChange(index, 'duration', parseInt(e.target.value) || 0)}
                       className="w-24 h-9"
                     />
-                    <Button variant="ghost" size="icon" className="h-9 w-9 text-destructive" onClick={() => handleRemoveMode(index)}>
+                    <Button variant="ghost" size="icon" className="h-9 w-9 text-destructive" onClick={() => handleRemoveMode(index)} disabled={['work', 'shortBreak', 'longBreak'].includes(mode.id)}>
                       <Trash2 className="h-4 w-4" />
                     </Button>
                   </div>
