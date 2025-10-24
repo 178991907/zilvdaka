@@ -70,8 +70,8 @@ export default function LandingPage() {
             {/* Left Column: Pet Viewer */}
             <div className="w-full md:w-1/2 flex flex-col items-center justify-center">
               {user && (
-                <Suspense fallback={<Skeleton className="w-80 h-80 rounded-full" />}>
-                  <PetViewer petStyle={user.petStyle} progress={petProgress} className="w-80 h-80" />
+                <Suspense fallback={<Skeleton className="w-[30rem] h-[30rem] rounded-full" />}>
+                  <PetViewer petStyle={user.petStyle} progress={petProgress} className="w-[30rem] h-[30rem]" />
                 </Suspense>
               )}
             </div>
