@@ -67,14 +67,10 @@ export default function RewardsPage() {
   return (
     <div className="flex flex-col">
        <header className="sticky top-0 z-10 flex h-[57px] items-center justify-between gap-1 bg-background px-4">
-          <div className="flex items-center gap-1 w-1/3">
+          <div className="flex items-center gap-1 w-full">
             <SidebarTrigger className="md:hidden" />
             <h1 className="text-xl font-semibold truncate"><ClientOnlyT tKey='rewards.title' /></h1>
           </div>
-           <div className="flex justify-center w-1/3">
-             <Image src="https://pic1.imgdb.cn/item/6817c79a58cb8da5c8dc723f.png" alt="Logo" width={180} height={57} priority className="h-[57px] w-auto" />
-          </div>
-          <div className="w-1/3"></div>
         </header>
       <main className="flex-1 p-4 md:p-8">
         <Card>
