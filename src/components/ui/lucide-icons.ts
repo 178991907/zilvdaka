@@ -21,4 +21,7 @@ export {
   Timer,
   RotateCcw,
   Settings2,
+  Plus,
+  Trash2,
+  PlusCircle,
 } from 'lucide-react';

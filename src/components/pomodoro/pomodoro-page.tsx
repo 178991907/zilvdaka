@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
-import { RotateCcw, Play, Pause, Settings2, Plus, Trash2 } from 'lucide-react';
+import { RotateCcw, Play, Pause, Settings2, Plus, Trash2, PlusCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSound } from '@/hooks/use-sound';
 import { ClientOnlyT } from '../layout/app-sidebar';
@@ -12,6 +12,7 @@ import { getUser, updateUser, User } from '@/lib/data';
 import type { PomodoroSettings, PomodoroMode } from '@/lib/data-types';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
+import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from '@/components/ui/carousel';
 
 const getInitialSettings = (user: User | null): PomodoroSettings => {
   const defaultSettings: PomodoroSettings = {
@@ -24,13 +25,11 @@ const getInitialSettings = (user: User | null): PomodoroSettings => {
   };
 
   if (user?.pomodoroSettings) {
-    // Merge user settings with defaults to ensure all properties are present
     const mergedSettings = {
       ...defaultSettings,
       ...user.pomodoroSettings,
       modes: user.pomodoroSettings.modes?.length ? user.pomodoroSettings.modes : defaultSettings.modes,
     };
-    // Ensure default modes exist
     if (!mergedSettings.modes.find(m => m.id === 'work')) mergedSettings.modes.unshift({ id: 'work', name: 'Work', duration: 25 });
     if (!mergedSettings.modes.find(m => m.id === 'shortBreak')) mergedSettings.modes.push({ id: 'shortBreak', name: 'Short Break', duration: 5 });
     if (!mergedSettings.modes.find(m => m.id === 'longBreak')) mergedSettings.modes.push({ id: 'longBreak', name: 'Long Break', duration: 15 });
@@ -40,22 +39,43 @@ const getInitialSettings = (user: User | null): PomodoroSettings => {
   return defaultSettings;
 };
 
+type TimerInstance = {
+  id: number;
+  modeIndex: number;
+  timeRemaining: number;
+  isActive: boolean;
+  pomodoros: number;
+};
+
+const createNewTimer = (settings: PomodoroSettings): TimerInstance => ({
+  id: Date.now(),
+  modeIndex: 0,
+  timeRemaining: (settings.modes[0]?.duration || 0) * 60,
+  isActive: false,
+  pomodoros: 0,
+});
+
 
 export default function PomodoroPage() {
   const [user, setUser] = useState<User | null>(null);
   const [settings, setSettings] = useState<PomodoroSettings>(getInitialSettings(null));
   
-  const [modeIndex, setModeIndex] = useState(0);
-  const [timeRemaining, setTimeRemaining] = useState(0);
-  const [isActive, setIsActive] = useState(false);
-  const [pomodoros, setPomodoros] = useState(0);
+  const [timers, setTimers] = useState<TimerInstance[]>(() => {
+    const initialSettings = getInitialSettings(getUser());
+    return [createNewTimer(initialSettings)];
+  });
+
+  const [currentTimerIndex, setCurrentTimerIndex] = useState(0);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   
+  const [carouselApi, setCarouselApi] = useState<CarouselApi>();
+
   const playSound = useSound();
   const { t } = useTranslation();
   
-  const currentMode = useMemo(() => settings.modes[modeIndex], [settings.modes, modeIndex]);
-  const duration = useMemo(() => (currentMode?.duration || 0) * 60, [currentMode]);
+  const currentTimer = timers[currentTimerIndex];
+  const currentMode = settings.modes[currentTimer.modeIndex];
+  const duration = (currentMode?.duration || 0) * 60;
 
   const updateUserAndSettings = useCallback(() => {
     const currentUser = getUser();
@@ -66,29 +86,47 @@ export default function PomodoroPage() {
 
   useEffect(() => {
     updateUserAndSettings();
-
     window.addEventListener('userProfileUpdated', updateUserAndSettings);
     return () => {
       window.removeEventListener('userProfileUpdated', updateUserAndSettings);
     };
   }, [updateUserAndSettings]);
-  
+
   useEffect(() => {
-    const newDuration = (settings.modes[modeIndex]?.duration || 0) * 60;
-    setTimeRemaining(newDuration);
-    setIsActive(false);
-  }, [modeIndex, settings]);
+    if (!carouselApi) return;
+    const onSelect = (api: CarouselApi) => {
+      setCurrentTimerIndex(api.selectedScrollSnap());
+    };
+    carouselApi.on("select", onSelect);
+    return () => {
+      carouselApi.off("select", onSelect);
+    };
+  }, [carouselApi]);
+  
+  const updateTimer = (index: number, updates: Partial<TimerInstance>) => {
+    setTimers(prevTimers => 
+      prevTimers.map((timer, i) => i === index ? { ...timer, ...updates } : timer)
+    );
+  };
 
-  const progress = duration > 0 ? (duration - timeRemaining) / duration * 100 : 0;
-
- const nextMode = useCallback(() => {
+  const resetTimer = (index: number) => {
+    const timer = timers[index];
+    const mode = settings.modes[timer.modeIndex];
+    updateTimer(index, { 
+      isActive: false, 
+      timeRemaining: (mode?.duration || 0) * 60,
+    });
+  };
+  
+  const nextMode = useCallback((index: number) => {
     playSound('timer-end');
+    const timer = timers[index];
+    const currentMode = settings.modes[timer.modeIndex];
     let nextModeIndex = 0;
+    let newPomodoroCount = timer.pomodoros;
     
     if (currentMode?.id === 'work') {
-      const newPomodoroCount = pomodoros + 1;
-      setPomodoros(newPomodoroCount);
-      
+      newPomodoroCount += 1;
       const isLongBreakTime = newPomodoroCount % settings.longBreakInterval === 0;
       const longBreakModeIndex = settings.modes.findIndex(m => m.id === 'longBreak');
       const shortBreakModeIndex = settings.modes.findIndex(m => m.id === 'shortBreak');
@@ -104,18 +142,29 @@ export default function PomodoroPage() {
         nextModeIndex = workModeIndex;
       }
     }
-    setModeIndex(nextModeIndex >= 0 && nextModeIndex < settings.modes.length ? nextModeIndex : 0);
-  }, [currentMode?.id, pomodoros, playSound, settings]);
+    
+    const newIndex = nextModeIndex >= 0 && nextModeIndex < settings.modes.length ? nextModeIndex : 0;
+    const newDuration = (settings.modes[newIndex]?.duration || 0) * 60;
+    
+    updateTimer(index, {
+      modeIndex: newIndex,
+      pomodoros: newPomodoroCount,
+      timeRemaining: newDuration,
+      isActive: false, // Pause after switching mode
+    });
+  }, [playSound, settings, timers]);
 
   
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
-    if (isActive && timeRemaining > 0) {
+    const timer = timers[currentTimerIndex];
+
+    if (timer?.isActive && timer.timeRemaining > 0) {
       interval = setInterval(() => {
-        setTimeRemaining(prev => prev - 1);
+        updateTimer(currentTimerIndex, { timeRemaining: timer.timeRemaining - 1 });
       }, 1000);
-    } else if (isActive && timeRemaining <= 0) {
-      nextMode();
+    } else if (timer?.isActive && timer.timeRemaining <= 0) {
+      nextMode(currentTimerIndex);
     }
 
     return () => {
@@ -123,25 +172,13 @@ export default function PomodoroPage() {
         clearInterval(interval);
       }
     };
-  }, [isActive, timeRemaining, nextMode]);
+  }, [timers, currentTimerIndex, nextMode]);
 
-  const handleToggle = () => {
-    setIsActive(prev => !prev);
-  };
-
-  const handleReset = () => {
-    setIsActive(false);
-    setTimeRemaining(duration);
-  };
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-  };
-
-  const resetPomodoros = () => {
-    setPomodoros(0);
   };
   
   const handleSaveSettings = (newSettings: PomodoroSettings) => {
@@ -153,140 +190,205 @@ export default function PomodoroPage() {
     }
     
     updateUser({ pomodoroSettings: newSettings });
-    
-    const currentModeId = currentMode?.id;
-    let newCurrentModeIndex = currentModeId ? newSettings.modes.findIndex(m => m.id === currentModeId) : -1;
-    if (newCurrentModeIndex === -1) {
-        newCurrentModeIndex = 0;
-    }
-    setModeIndex(newCurrentModeIndex);
 
+    setTimers(prev => prev.map(timer => {
+        const currentModeId = settings.modes[timer.modeIndex]?.id;
+        let newCurrentModeIndex = currentModeId ? newSettings.modes.findIndex(m => m.id === currentModeId) : -1;
+        if (newCurrentModeIndex === -1) {
+            newCurrentModeIndex = 0;
+        }
+        const newDuration = (newSettings.modes[newCurrentModeIndex]?.duration || 0) * 60;
+        return {
+          ...timer,
+          modeIndex: newCurrentModeIndex,
+          timeRemaining: newDuration,
+          isActive: false,
+        }
+    }));
+    
     setIsSettingsOpen(false);
   };
-
-  const switchModeById = (id: string) => {
-    const newIndex = settings.modes.findIndex(m => m.id === id);
-    if (newIndex !== -1) {
-      setModeIndex(newIndex);
+  
+  const switchModeById = (index: number, modeId: string) => {
+    const newModeIndex = settings.modes.findIndex(m => m.id === modeId);
+    if (newModeIndex !== -1) {
+      const newDuration = (settings.modes[newModeIndex]?.duration || 0) * 60;
+      updateTimer(index, {
+        modeIndex: newModeIndex,
+        timeRemaining: newDuration,
+        isActive: false
+      });
     }
   };
+  
+  const addTimer = () => {
+    setTimers(prev => [...prev, createNewTimer(settings)]);
+    setTimeout(() => carouselApi?.scrollTo(timers.length), 0);
+  };
+
+  const removeTimer = (index: number) => {
+    if (timers.length <= 1) return;
+    setTimers(prev => prev.filter((_, i) => i !== index));
+  };
+
 
   const defaultModeIds = ['work', 'shortBreak', 'longBreak'];
   const defaultModes = defaultModeIds.map(id => settings.modes.find(m => m.id === id)).filter(Boolean) as PomodoroMode[];
 
+  if (!currentTimer) {
+    return null;
+  }
 
   return (
     <>
-      <div className="flex flex-col items-center gap-6 text-center bg-card p-8 rounded-xl shadow-lg">
-         <div className="flex items-center gap-2 rounded-full bg-primary/10 p-1">
-            {defaultModes.map(mode => (
-              <Button
-                key={mode.id}
-                variant={currentMode?.id === mode.id ? 'default' : 'ghost'}
-                className={cn(
-                  "rounded-full w-24 px-4 py-1.5 text-sm font-semibold transition-colors",
-                   currentMode?.id === mode.id
-                    ? 'bg-primary text-primary-foreground'
-                    : 'text-muted-foreground hover:text-primary'
-                )}
-                onClick={() => switchModeById(mode.id)}
-              >
-                 <ClientOnlyT tKey={`pomodoro.settings.defaultMode${mode.name.replace(' ','')}`} />
-              </Button>
-            ))}
-        </div>
-        
-        <div className="relative h-64 w-64">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={modeIndex}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.5, ease: 'backInOut' }}
-              className="absolute inset-0"
-            >
-              <svg className="w-full h-full" viewBox="0 0 120 120">
-                <circle
-                  className="stroke-current text-muted"
-                  strokeWidth="10"
-                  cx="60"
-                  cy="60"
-                  r="50"
-                  fill="transparent"
-                />
-                <motion.circle
-                  className="stroke-current text-primary"
-                  strokeWidth="10"
-                  cx="60"
-                  cy="60"
-                  r="50"
-                  fill="transparent"
-                  strokeDasharray="314.15"
-                  strokeDashoffset={314.15 * (1 - progress / 100)}
-                  strokeLinecap="round"
-                  transform="rotate(-90 60 60)"
-                  initial={{ strokeDashoffset: 314.15 }}
-                  animate={{ strokeDashoffset: 314.15 * (1 - progress / 100) }}
-                  transition={{ duration: 1, ease: 'easeInOut' }}
-                />
-              </svg>
-            </motion.div>
-          </AnimatePresence>
-          <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <AnimatePresence mode="wait">
-                  <motion.span
-                      key={timeRemaining}
-                      initial={{ opacity: 0, y: -15 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 15, position: 'absolute' }}
-                      transition={{ duration: 0.3 }}
-                      className="text-6xl font-bold font-mono text-foreground"
-                  >
-                      {formatTime(timeRemaining)}
-                  </motion.span>
-              </AnimatePresence>
-          </div>
-        </div>
+      <div className="flex flex-col items-center gap-6 w-full">
+        <Carousel setApi={setCarouselApi} className="w-full max-w-md">
+          <CarouselContent>
+            {timers.map((timer, index) => {
+              const mode = settings.modes[timer.modeIndex];
+              const progress = duration > 0 ? (duration - timer.timeRemaining) / duration * 100 : 0;
+              return (
+                <CarouselItem key={timer.id}>
+                    <div className="flex flex-col items-center gap-6 text-center bg-card p-8 rounded-xl shadow-lg relative">
+                        <Button variant="ghost" size="icon" className="absolute top-2 right-2 h-8 w-8 text-muted-foreground hover:text-destructive" onClick={() => removeTimer(index)} disabled={timers.length <= 1}>
+                           <Trash2 className="h-4 w-4" />
+                        </Button>
+                        <div className="flex items-center gap-2 rounded-full bg-primary/10 p-1">
+                            {defaultModes.map(m => (
+                              <Button
+                                key={m.id}
+                                variant={mode.id === m.id ? 'default' : 'ghost'}
+                                className={cn(
+                                  "rounded-full w-24 px-4 py-1.5 text-sm font-semibold transition-colors",
+                                   mode.id === m.id
+                                    ? 'bg-primary text-primary-foreground'
+                                    : 'text-muted-foreground hover:text-primary'
+                                )}
+                                onClick={() => switchModeById(index, m.id)}
+                              >
+                                 <ClientOnlyT tKey={`pomodoro.settings.defaultMode${m.name.replace(' ','')}`} />
+                              </Button>
+                            ))}
+                        </div>
+                        
+                        <div className="relative h-64 w-64">
+                          <AnimatePresence mode="wait">
+                            <motion.div
+                              key={`${timer.id}-${timer.modeIndex}`}
+                              initial={{ opacity: 0, scale: 0.8 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              exit={{ opacity: 0, scale: 0.8 }}
+                              transition={{ duration: 0.5, ease: 'backInOut' }}
+                              className="absolute inset-0"
+                            >
+                              <svg className="w-full h-full" viewBox="0 0 120 120">
+                                <circle
+                                  className="stroke-current text-muted"
+                                  strokeWidth="10"
+                                  cx="60"
+                                  cy="60"
+                                  r="50"
+                                  fill="transparent"
+                                />
+                                <motion.circle
+                                  className="stroke-current text-primary"
+                                  strokeWidth="10"
+                                  cx="60"
+                                  cy="60"
+                                  r="50"
+                                  fill="transparent"
+                                  strokeDasharray="314.15"
+                                  strokeDashoffset={314.15 * (1 - progress / 100)}
+                                  strokeLinecap="round"
+                                  transform="rotate(-90 60 60)"
+                                  initial={{ strokeDashoffset: 314.15 }}
+                                  animate={{ strokeDashoffset: 314.15 * (1 - progress / 100) }}
+                                  transition={{ duration: 1, ease: 'easeInOut' }}
+                                />
+                              </svg>
+                            </motion.div>
+                          </AnimatePresence>
+                          <div className="absolute inset-0 flex flex-col items-center justify-center">
+                              <AnimatePresence mode="wait">
+                                  <motion.span
+                                      key={`${timer.id}-${timer.timeRemaining}`}
+                                      initial={{ opacity: 0, y: -15 }}
+                                      animate={{ opacity: 1, y: 0 }}
+                                      exit={{ opacity: 0, y: 15, position: 'absolute' }}
+                                      transition={{ duration: 0.3 }}
+                                      className="text-6xl font-bold font-mono text-foreground"
+                                  >
+                                      {formatTime(timer.timeRemaining)}
+                                  </motion.span>
+                              </AnimatePresence>
+                          </div>
+                        </div>
 
-        <div className="flex w-full justify-center items-center gap-4 mt-4">
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={handleReset}
-            className="h-14 w-14 rounded-full"
-          >
-            <RotateCcw className="h-6 w-6" />
-          </Button>
-          <Button
-            onClick={handleToggle}
-            className="w-32 h-16 rounded-full text-2xl font-bold"
-            size="lg"
-          >
-            {isActive ? <Pause className="h-8 w-8" /> : <Play className="h-8 w-8" />}
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => setIsSettingsOpen(true)}
-            className="h-14 w-14 rounded-full"
-          >
-            <Settings2 className="h-6 w-6" />
-          </Button>
-        </div>
+                        <div className="flex w-full justify-center items-center gap-4 mt-4">
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={() => resetTimer(index)}
+                            className="h-14 w-14 rounded-full"
+                          >
+                            <RotateCcw className="h-6 w-6" />
+                          </Button>
+                          <Button
+                            onClick={() => updateTimer(index, { isActive: !timer.isActive })}
+                            className="w-32 h-16 rounded-full text-2xl font-bold"
+                            size="lg"
+                          >
+                            {timer.isActive ? <Pause className="h-8 w-8" /> : <Play className="h-8 w-8" />}
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={() => setIsSettingsOpen(true)}
+                            className="h-14 w-14 rounded-full"
+                          >
+                            <Settings2 className="h-6 w-6" />
+                          </Button>
+                        </div>
+                    </div>
+                </CarouselItem>
+              )
+            })}
+             <CarouselItem>
+                <div className="flex flex-col items-center justify-center gap-6 text-center bg-card p-8 rounded-xl shadow-lg h-[548px]">
+                    <Button variant="outline" className="h-32 w-32 rounded-full border-dashed" onClick={addTimer}>
+                        <PlusCircle className="h-16 w-16 text-muted-foreground" />
+                    </Button>
+                    <p className="text-muted-foreground"><ClientOnlyT tKey="pomodoro.addTimer" /></p>
+                </div>
+             </CarouselItem>
+          </CarouselContent>
+        </Carousel>
 
-        <div className="flex gap-4 mt-4 cursor-pointer" onClick={resetPomodoros} title="Reset Pomodoro Count">
-          {Array.from({ length: settings.longBreakInterval }).map((_, i) => (
-            <motion.div
-              key={i}
-              animate={{ 
-                  backgroundColor: i < pomodoros % settings.longBreakInterval ? 'hsl(var(--primary))' : 'hsl(var(--muted))',
-                  scale: i === pomodoros % settings.longBreakInterval && currentMode?.id === 'work' && isActive ? 1.25 : 1,
-              }}
-              transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-              className="h-3 w-8 rounded-full"
-            />
+        <div className="flex gap-4 items-center justify-center mt-4">
+          {timers.map((_, i) => (
+            <button key={i} onClick={() => carouselApi?.scrollTo(i)}>
+              <motion.div
+                animate={{ 
+                    backgroundColor: i === currentTimerIndex ? 'hsl(var(--primary))' : 'hsl(var(--muted))',
+                    scale: i === currentTimerIndex ? 1.25 : 1,
+                }}
+                transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                className="h-3 w-8 rounded-full"
+              />
+            </button>
           ))}
+           <button onClick={() => carouselApi?.scrollTo(timers.length)}>
+                <motion.div
+                    animate={{ 
+                        backgroundColor: timers.length === currentTimerIndex ? 'hsl(var(--primary))' : 'hsl(var(--muted))',
+                        scale: timers.length === currentTimerIndex ? 1.25 : 1,
+                    }}
+                    transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                    className="h-3 w-3 rounded-full"
+                >
+                    <Plus className="h-3 w-3 text-muted-foreground" />
+                </motion.div>
+            </button>
         </div>
       </div>
       
@@ -342,18 +444,6 @@ function SettingsDialog({ isOpen, setIsOpen, settings, onSave }: SettingsDialogP
     onSave(currentSettings);
   };
   
-  const getModeName = (mode: PomodoroMode) => {
-    const defaultKeys: {[key: string]: string} = {
-        'work': 'pomodoro.settings.defaultModeWork',
-        'shortBreak': 'pomodoro.settings.defaultModeShortBreak',
-        'longBreak': 'pomodoro.settings.defaultModeLongBreak'
-    }
-    if (defaultKeys[mode.id]) {
-        return <ClientOnlyT tKey={defaultKeys[mode.id]} />;
-    }
-    return mode.name;
-  }
-
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="sm:max-w-md">
