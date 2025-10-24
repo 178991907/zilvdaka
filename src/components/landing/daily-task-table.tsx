@@ -26,10 +26,10 @@ export default function DailyTaskTable({ tasks }: DailyTaskTableProps) {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[80px] text-center"><ClientOnlyT tKey="tasks.dailyTable.order" /></TableHead>
-            <TableHead><ClientOnlyT tKey="tasks.dailyTable.dailyTask" /></TableHead>
-            <TableHead className="w-[120px] text-center"><ClientOnlyT tKey="tasks.dailyTable.execution" /></TableHead>
-            <TableHead className="w-[120px] text-center"><ClientOnlyT tKey="tasks.dailyTable.status" /></TableHead>
+            <TableHead className="w-[80px] text-center text-lg"><ClientOnlyT tKey="tasks.dailyTable.order" /></TableHead>
+            <TableHead className="text-lg"><ClientOnlyT tKey="tasks.dailyTable.dailyTask" /></TableHead>
+            <TableHead className="w-[120px] text-center text-lg"><ClientOnlyT tKey="tasks.dailyTable.execution" /></TableHead>
+            <TableHead className="w-[120px] text-center text-lg"><ClientOnlyT tKey="tasks.dailyTable.status" /></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
