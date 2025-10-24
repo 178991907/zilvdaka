@@ -48,7 +48,7 @@ export default function LandingPage() {
       </header>
 
       <main className="flex-1 flex flex-col items-center justify-start px-4 md:px-8">
-        <div className="flex flex-col md:flex-row items-center justify-center gap-8 w-full max-w-4xl">
+        <div className="flex flex-col md:flex-row items-end justify-center gap-8 w-full max-w-4xl">
           {/* Left Column: Pet Viewer */}
           <div className="w-full md:w-1/2 flex justify-center">
             {user && <PetViewer progress={petProgress} className="w-80 h-80" />}
@@ -69,7 +69,7 @@ export default function LandingPage() {
                   </CardContent>
                 </Card>
               ) : (
-                <Skeleton className="h-32 w-full" />
+                <Skeleton className="h-24 w-full" />
               )}
             </div>
             <div className="w-full">
@@ -86,7 +86,7 @@ export default function LandingPage() {
                   </CardContent>
                 </Card>
               ) : (
-                <Skeleton className="h-32 w-full" />
+                <Skeleton className="h-28 w-full" />
               )}
             </div>
           </div>
