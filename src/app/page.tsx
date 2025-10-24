@@ -47,7 +47,7 @@ export default function LandingPage() {
         </nav>
       </header>
 
-      <main className="flex-1 flex flex-col items-center justify-start p-4 md:p-8">
+      <main className="flex-1 flex flex-col items-center justify-start px-4 md:px-8">
         <div className="flex flex-col md:flex-row items-center justify-center gap-8 w-full max-w-4xl">
           {/* Left Column: Pet Viewer */}
           <div className="w-full md:w-1/2 flex justify-center">
