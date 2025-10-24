@@ -46,7 +46,7 @@ export default function PetCard() {
     <Card className="h-full flex flex-col overflow-hidden">
       <CardContent className="flex flex-col p-0 h-full">
         {/* This div will grow and push the text content to the bottom */}
-        <div className="flex-grow flex items-start justify-center w-full h-full">
+        <div className="flex-grow flex justify-center w-full">
           <Suspense fallback={<Skeleton className="w-full h-full" />}>
               <PetViewer petStyle={user.petStyle} progress={petProgress} className="w-full h-full" />
           </Suspense>
