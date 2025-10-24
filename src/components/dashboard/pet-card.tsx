@@ -27,10 +27,7 @@ export default function PetCard() {
 
   if (!user) {
     return (
-      <Card className="h-[480px] flex flex-col">
-        <CardHeader>
-           <Skeleton className="h-6 w-24" />
-        </CardHeader>
+      <Card className="h-full flex flex-col">
         <CardContent className="flex-grow flex flex-col items-center justify-center p-4">
           <Skeleton className="w-full h-full min-h-[200px]" />
           <div className="mt-4 w-full">
@@ -46,10 +43,7 @@ export default function PetCard() {
   const petProgress = user ? (user.xp / user.xpToNextLevel) * 100 : 0;
 
   return (
-    <Card className="h-[480px] flex flex-col">
-      <CardHeader>
-        <CardTitle><ClientOnlyT tKey='dashboard.myPet' /></CardTitle>
-      </CardHeader>
+    <Card className="h-full flex flex-col">
       <CardContent className="flex-grow flex flex-col p-6 items-center justify-center min-h-0">
         <div className="flex-grow flex items-center justify-center w-full h-full">
            <Suspense fallback={<Skeleton className="w-full h-full" />}>
