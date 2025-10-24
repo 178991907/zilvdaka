@@ -11,6 +11,7 @@ import { ProgressSummaryContent } from '@/components/dashboard/progress-summary'
 import { Target, Zap } from 'lucide-react';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { Skeleton } from '@/components/ui/skeleton';
+import DigitalClock from '@/components/dashboard/digital-clock';
 
 export default function LandingPage() {
   const [user, setUser] = useState<User | null>(null);
@@ -46,6 +47,10 @@ export default function LandingPage() {
           </Button>
         </nav>
       </header>
+
+      <div className="flex justify-center py-4">
+        <DigitalClock />
+      </div>
 
       <main className="flex-1 flex flex-col items-center justify-start px-4 md:px-8">
         <div className="flex flex-col md:flex-row items-end justify-center gap-8 w-full max-w-4xl">

@@ -35,11 +35,11 @@ const DigitalClock = () => {
   const dayOfWeekKey = `tasks.weekdaysFull.${now.toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase()}`;
 
   return (
-    <div className="flex flex-col items-end">
-        <div className="text-sm font-medium text-muted-foreground">
+    <div className="flex items-center justify-center gap-4">
+        <div className="text-lg font-medium text-muted-foreground">
             {formattedDate} {t(dayOfWeekKey)}
         </div>
-        <div className="text-3xl font-bold font-mono text-foreground">
+        <div className="text-2xl font-bold font-mono text-foreground">
             {formattedTime}
         </div>
     </div>
