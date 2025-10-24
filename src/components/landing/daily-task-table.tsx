@@ -45,10 +45,14 @@ export default function DailyTaskTable() {
   return (
     <div className="rounded-lg border bg-card text-card-foreground shadow-sm">
       <Table>
-        <TableCaption className="p-4">
-            <DigitalClock />
-        </TableCaption>
         <TableHeader>
+           <TableRow>
+            <TableCell colSpan={4} className="p-0">
+              <div className="p-4">
+                <DigitalClock />
+              </div>
+            </TableCell>
+          </TableRow>
           <TableRow>
             <TableHead className="w-[80px] text-center text-lg"><ClientOnlyT tKey="tasks.dailyTable.order" /></TableHead>
             <TableHead className="text-lg"><ClientOnlyT tKey="tasks.dailyTable.dailyTask" /></TableHead>
