@@ -176,7 +176,7 @@ export function AddTaskDialog({ onSave, isOpen, setIsOpen, task }: AddTaskDialog
                         <ClientOnlyT tKey='tasks.recurrence.once' />
                     </ToggleGroupItem>
                     <ToggleGroupItem value="on" aria-label="Toggle on">
-                        <ClientOnlyT tKey='tasks.recurrence.recurring' />
+                       <ClientOnlyT tKey='tasks.recurrence.recurring' />
                     </ToggleGroupItem>
                 </ToggleGroup>
              </div>
@@ -211,27 +211,27 @@ export function AddTaskDialog({ onSave, isOpen, setIsOpen, task }: AddTaskDialog
                     </Select>
                 </div>
               </div>
+
+              <div className="grid grid-cols-4 items-start gap-4">
+                  <Label className="text-right pt-2">
+                      <ClientOnlyT tKey='tasks.addTaskDialog.repeatOn' />
+                  </Label>
+                  <ToggleGroup
+                      type="multiple"
+                      variant="outline"
+                      className="col-span-3 flex-wrap justify-start gap-1"
+                      value={daysOfWeek}
+                      onValueChange={(days) => setDaysOfWeek(days as WeekDay[])}
+                  >
+                      {weekDays.map(day => (
+                          <ToggleGroupItem key={day} value={day} className="h-8 w-8 p-0">
+                              <ClientOnlyT tKey={`tasks.weekdays.${day}`} />
+                          </ToggleGroupItem>
+                      ))}
+                  </ToggleGroup>
+              </div>
             </>
           )}
-
-            <div className="grid grid-cols-4 items-start gap-4">
-                <Label className="text-right pt-2">
-                    <ClientOnlyT tKey='tasks.addTaskDialog.daysOfWeek' />
-                </Label>
-                <ToggleGroup
-                    type="multiple"
-                    variant="outline"
-                    className="col-span-3 flex-wrap justify-start gap-1"
-                    value={daysOfWeek}
-                    onValueChange={(days) => setDaysOfWeek(days as WeekDay[])}
-                >
-                    {weekDays.map(day => (
-                        <ToggleGroupItem key={day} value={day} className="h-8 w-8 p-0">
-                            <ClientOnlyT tKey={`tasks.weekdays.${day}`} />
-                        </ToggleGroupItem>
-                    ))}
-                </ToggleGroup>
-            </div>
 
 
           <div className="grid grid-cols-4 items-center gap-4">
