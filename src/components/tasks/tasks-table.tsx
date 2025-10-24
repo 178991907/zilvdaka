@@ -68,42 +68,33 @@ export default function TasksTable({ tasks, setTasks, onEdit, onDelete, onToggle
 
  const formatRecurrence = (task: Task) => {
     if (!task.recurrence) {
-      if (task.time) {
-        return <ClientOnlyT tKey="tasks.recurrence.display.onceAtTime" tOptions={{ time: task.time }} />;
-      }
-      return <ClientOnlyT tKey="tasks.recurrence.once" />;
+        return task.time 
+            ? <ClientOnlyT tKey="tasks.recurrence.display.onceAtTime" tOptions={{ time: task.time }} />
+            : <ClientOnlyT tKey="tasks.recurrence.once" />;
     }
 
     const { interval, unit, daysOfWeek } = task.recurrence;
-
-    const options: { [key: string]: any } = {
-        count: interval,
-        time: task.time
-    };
-
-    let tKey = `tasks.recurrence.display.every_${unit}`;
-    if (interval > 1) {
-        tKey = `tasks.recurrence.display.every_x_${unit}s`;
-    }
-
     const hasDays = daysOfWeek && daysOfWeek.length > 0;
+    const options = { count: interval, time: task.time };
+    
+    let baseKey = 'tasks.recurrence.display.every';
+    if (interval > 1) {
+        baseKey = `tasks.recurrence.display.every_x_${unit}s`;
+    } else {
+        baseKey = `tasks.recurrence.display.every_${unit}`;
+    }
 
     if (hasDays) {
-        if (task.time) {
-            return (
-                <span>
-                    <ClientOnlyT tKey={`${tKey}_on_at`} tOptions={options} /> <TranslatedDays days={daysOfWeek} />
-                </span>
-            );
-        }
+        const tKey = task.time ? `${baseKey}_on_at` : `${baseKey}_on`;
         return (
             <span>
-                <ClientOnlyT tKey={`${tKey}_on`} tOptions={options} /> <TranslatedDays days={daysOfWeek} />
+                <ClientOnlyT tKey={tKey} tOptions={options} /> <TranslatedDays days={daysOfWeek} />
             </span>
         );
+    } else {
+        const tKey = task.time ? `${baseKey}_at` : baseKey;
+        return <ClientOnlyT tKey={tKey} tOptions={options} />;
     }
-
-    return <ClientOnlyT tKey={tKey} tOptions={options} />;
 };
 
 
