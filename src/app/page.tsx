@@ -1,23 +1,32 @@
 'use client';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Star } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { getUser, User } from '@/lib/data';
+import { getUser, getTasks, User, Task } from '@/lib/data';
 import Image from 'next/image';
 import PetViewer from '@/components/dashboard/pet-viewer';
+import { Card, CardContent } from '@/components/ui/card';
+import { ProgressSummaryContent } from '@/components/dashboard/progress-summary';
+import { Target, Zap } from 'lucide-react';
+import { ClientOnlyT } from '@/components/layout/app-sidebar';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function LandingPage() {
-  const [content, setContent] = useState<Partial<User>>({});
   const [user, setUser] = useState<User | null>(null);
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    // In a real app, this might be fetched, but here we get it from our data source
     const userConfig = getUser();
-    setContent(userConfig);
     setUser(userConfig);
+    setTasks(getTasks());
+    setIsClient(true);
   }, []);
+
+  const completedTasks = tasks.filter(t => t.completed && new Date(t.dueDate).toDateString() === new Date().toDateString()).length;
+  const totalTasks = tasks.filter(t => new Date(t.dueDate).toDateString() === new Date().toDateString()).length;
+  const dailyProgress = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
   
   const petProgress = user ? (user.xp / user.xpToNextLevel) * 100 : 0;
 
@@ -32,14 +41,51 @@ export default function LandingPage() {
         <nav className="flex justify-end w-1/3">
           <Button asChild>
             <Link href="/dashboard">
-                {content.dashboardLink || 'Go to Dashboard'}
+                {user?.dashboardLink || 'Go to Dashboard'}
             </Link>
           </Button>
         </nav>
       </header>
 
-      <main className="flex-1 flex items-center justify-center p-4">
-        {user && <PetViewer progress={petProgress} className="w-64 h-64" />}
+      <main className="flex-1 flex items-center justify-center p-4 md:p-8 gap-8">
+        <div className="w-1/4">
+            {isClient ? (
+                <Card className="h-full">
+                    <CardContent className="p-4 h-full">
+                        <ProgressSummaryContent
+                            icon={Target}
+                            title={<ClientOnlyT tKey="dashboard.dailyGoal" />}
+                            value={`${Math.round(dailyProgress)}%`}
+                            description={<ClientOnlyT tKey="dashboard.dailyGoalDescription" tOptions={{ completedTasks, totalTasks }} />}
+                        />
+                    </CardContent>
+                </Card>
+            ) : (
+                <Skeleton className="h-32 w-full" />
+            )}
+        </div>
+        
+        <div className="w-1/2 flex justify-center">
+            {user && <PetViewer progress={petProgress} className="w-64 h-64" />}
+        </div>
+        
+        <div className="w-1/4">
+            {isClient && user ? (
+                <Card className="h-full">
+                    <CardContent className="p-4 h-full">
+                        <ProgressSummaryContent
+                            icon={Zap}
+                            title={<ClientOnlyT tKey="dashboard.xpGained" />}
+                            value={`${user.xp} XP`}
+                            description={<ClientOnlyT tKey="dashboard.xpToNextLevel" tOptions={{ xp: user.xpToNextLevel - user.xp }} />}
+                            progress={petProgress}
+                        />
+                    </CardContent>
+                </Card>
+             ) : (
+                <Skeleton className="h-32 w-full" />
+            )}
+        </div>
       </main>
 
        <footer className="py-4 text-center text-xl text-muted-foreground">
