@@ -9,7 +9,6 @@ import { ProgressSummaryContent } from '@/components/dashboard/progress-summary'
 import DigitalClock from '@/components/dashboard/digital-clock';
 import TaskList from '@/components/dashboard/task-list';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { Pets } from '@/lib/pets';
 import { useTranslation } from 'react-i18next';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { Progress } from '@/components/ui/progress';
@@ -103,6 +102,7 @@ export default function DashboardPage() {
         <main className="flex-grow p-4 md:p-8">
             <DashboardGridLayout isEditing={isEditing}>
                 <div key="pet" className="overflow-hidden rounded-lg">
+                  <Suspense fallback={<Skeleton className="h-full w-full" />}>
                     <Card className="flex flex-col h-full">
                         <CardHeader>
                             <CardTitle><ClientOnlyT tKey='dashboard.myPet' /></CardTitle>
@@ -111,9 +111,7 @@ export default function DashboardPage() {
                             {isClient && user ? (
                                 <>
                                     <div className="flex-grow flex items-start justify-center">
-                                      <Suspense fallback={<Skeleton className="w-full h-full" />}>
-                                        <PetViewer progress={petProgress} />
-                                      </Suspense>
+                                      <PetViewer progress={petProgress} />
                                     </div>
                                     <div className="mt-4">
                                         <div className="text-center">
@@ -139,6 +137,7 @@ export default function DashboardPage() {
                             )}
                         </CardContent>
                     </Card>
+                  </Suspense>
                 </div>
                 <div key="dailyGoal" className="overflow-hidden rounded-lg">
                     <Card className="h-full">
