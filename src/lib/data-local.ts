@@ -356,89 +356,95 @@ export const updateAchievements = (newAchievements: Achievement[]) => {
     }
 };
 
-const initialTasks: Task[] = [
-  {
-    id: 'read',
-    title: 'Read for 20 minutes',
-    category: 'Learning',
-    icon: iconMap.Learning,
-    difficulty: 'Easy',
-    completed: true,
-    status: 'active',
-    dueDate: new Date(),
-    recurrence: { interval: 1, unit: 'week', daysOfWeek: ['mon', 'tue', 'wed', 'thu', 'fri'] },
-    time: '20:00',
-  },
-  {
-    id: 'drawing',
-    title: 'Practice drawing',
-    category: 'Creative',
-    icon: iconMap.Creative,
-    difficulty: 'Medium',
-    completed: false,
-    status: 'active',
-    dueDate: new Date(),
-    recurrence: { interval: 1, unit: 'week', daysOfWeek: ['tue', 'thu'] },
-    time: '16:30',
-  },
-  {
-    id: 'bedtime',
-    title: 'Go to bed on time',
-    category: 'Health',
-    icon: iconMap.Health,
-    difficulty: 'Easy',
-    completed: false,
-    status: 'active',
-    dueDate: new Date(),
-    time: '21:00',
-  },
-  {
-    id: 'homework',
-    title: 'Finish science homework',
-    category: 'School',
-    icon: iconMap.School,
-    difficulty: 'Hard',
-    completed: true,
-    status: 'active',
-    dueDate: new Date(new Date().setDate(new Date().getDate() - 1)),
-  },
-  {
-    id: 'bike',
-    title: 'Bike ride in the park',
-    category: 'Activity',
-    icon: iconMap.Activity,
-    difficulty: 'Medium',
-    completed: false,
-    status: 'paused',
-    dueDate: new Date(new Date().setDate(new Date().getDate() + 1)),
-  },
-   {
-    id: 'workout',
-    title: 'Morning workout',
-    category: 'Health',
-    icon: iconMap.Health,
-    difficulty: 'Medium',
-    completed: true,
-    status: 'active',
-    dueDate: new Date(),
-    time: '07:00',
-  },
-];
+const getInitialTasks = (): Task[] => {
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
+
+  return [
+    {
+      id: 'read',
+      title: 'Read for 20 minutes',
+      category: 'Learning',
+      icon: iconMap.Learning,
+      difficulty: 'Easy',
+      completed: false,
+      status: 'active',
+      dueDate: today,
+      recurrence: { interval: 1, unit: 'week', daysOfWeek: ['mon', 'tue', 'wed', 'thu', 'fri'] },
+      time: '20:00',
+    },
+    {
+      id: 'drawing',
+      title: 'Practice drawing',
+      category: 'Creative',
+      icon: iconMap.Creative,
+      difficulty: 'Medium',
+      completed: false,
+      status: 'active',
+      dueDate: today,
+      recurrence: { interval: 1, unit: 'week', daysOfWeek: ['tue', 'thu'] },
+      time: '16:30',
+    },
+    {
+      id: 'bedtime',
+      title: 'Go to bed on time',
+      category: 'Health',
+      icon: iconMap.Health,
+      difficulty: 'Easy',
+      completed: false,
+      status: 'active',
+      dueDate: today,
+      time: '21:00',
+    },
+    {
+      id: 'homework',
+      title: 'Finish science homework',
+      category: 'School',
+      icon: iconMap.School,
+      difficulty: 'Hard',
+      completed: false,
+      status: 'active',
+      dueDate: yesterday,
+    },
+    {
+      id: 'bike',
+      title: 'Bike ride in the park',
+      category: 'Activity',
+      icon: iconMap.Activity,
+      difficulty: 'Medium',
+      completed: false,
+      status: 'paused',
+      dueDate: tomorrow,
+    },
+    {
+      id: 'workout',
+      title: 'Morning workout',
+      category: 'Health',
+      icon: iconMap.Health,
+      difficulty: 'Medium',
+      completed: false,
+      status: 'active',
+      dueDate: today,
+      time: '07:00',
+    },
+  ];
+};
 
 export const getTasks = (): Task[] => {
     if (typeof window === 'undefined') {
-        return initialTasks;
+        return getInitialTasks();
     }
     try {
         const storedTasks = localStorage.getItem('habit-heroes-tasks');
         if (storedTasks) {
             const parsedTasks = JSON.parse(storedTasks);
-            
             // This is a recovery mechanism for old, malformed data structure.
-            // It checks if the ID of the first task is a number, which indicates the old structure.
             if (parsedTasks.length > 0 && typeof parsedTasks[0].id === 'number') {
-                localStorage.removeItem('habit-heroes-tasks'); // Remove the bad data
-                // Fall through to re-initialize with correct data
+                localStorage.removeItem('habit-heroes-tasks');
+                 // Fall through to re-initialize with correct data
             } else {
                  return parsedTasks.map((task: any) => ({
                     ...task,
@@ -452,8 +458,8 @@ export const getTasks = (): Task[] => {
         localStorage.removeItem('habit-heroes-tasks'); // Clear bad data on error
     }
 
-    // This part runs if localStorage is empty, or if it was just cleared.
-    // It initializes localStorage with the correct data structure.
+    // This part runs if localStorage is empty or was just cleared.
+    const initialTasks = getInitialTasks();
     const tasksToSave = initialTasks.map(({icon, ...rest}) => rest);
     localStorage.setItem('habit-heroes-tasks', JSON.stringify(tasksToSave));
     return initialTasks;

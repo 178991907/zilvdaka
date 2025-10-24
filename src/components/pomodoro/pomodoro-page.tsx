@@ -103,12 +103,14 @@ export default function PomodoroPage() {
     };
   }, [carouselApi]);
   
-  // Effect to scroll to the new timer when it's added
   useEffect(() => {
-    if (timers.length > 1 && carouselApi && currentTimerIndex === timers.length - 1) {
-        carouselApi.scrollTo(currentTimerIndex);
+    if (timers.length > 1 && carouselApi) {
+        const newIndex = timers.length - 1;
+        if(currentTimerIndex === newIndex) {
+            carouselApi.scrollTo(newIndex);
+        }
     }
-  }, [timers, carouselApi, currentTimerIndex]);
+  }, [timers.length, carouselApi, currentTimerIndex]);
   
   const updateTimer = (index: number, updates: Partial<TimerInstance>) => {
     setTimers(prevTimers => 
@@ -185,7 +187,8 @@ export default function PomodoroPage() {
 
   const removeTimer = (index: number) => {
     if (timers.length <= 1) return;
-    setTimers(prev => prev.filter((_, i) => i !== index));
+    const newTimers = timers.filter((_, i) => i !== index);
+    setTimers(newTimers);
     if (index === currentTimerIndex) {
         setCurrentTimerIndex(Math.max(0, index - 1));
     } else if (index < currentTimerIndex) {
@@ -253,16 +256,19 @@ export default function PomodoroPage() {
     // Handle the case where translation is missing in client
     return translated === tKey ? mode.name : translated;
   };
-
-  const defaultModeIds = ['work', 'shortBreak', 'longBreak'];
-  const defaultModes = useMemo(() => {
-    return defaultModeIds
-      .map(id => settings.modes.find(m => m.id === id))
-      .filter(Boolean) as PomodoroMode[];
-  }, [settings.modes]);
   
-  if (!isClient || !currentTimer) {
+  if (!isClient) {
     return (
+        <div className="flex flex-col items-center gap-6 w-full">
+            <div className="flex flex-col items-center justify-center gap-6 text-center bg-card p-8 rounded-xl shadow-lg h-[548px] w-full max-w-md">
+                 <p className="text-muted-foreground">Loading Timer...</p>
+            </div>
+        </div>
+    );
+  }
+
+  if (!currentTimer) {
+     return (
         <div className="flex flex-col items-center gap-6 w-full">
             <div className="flex flex-col items-center justify-center gap-6 text-center bg-card p-8 rounded-xl shadow-lg h-[548px] w-full max-w-md">
                 <Button variant="outline" className="h-32 w-32 rounded-full border-dashed" onClick={addTimer}>
@@ -287,12 +293,12 @@ export default function PomodoroPage() {
                 <CarouselItem key={timer.id}>
                     <div className="flex flex-col items-center gap-6 text-center bg-card p-8 rounded-xl shadow-lg relative">
                         <div className="flex items-center gap-2 rounded-full bg-primary/10 p-1">
-                            {defaultModes.map(m => (
+                            {settings.modes.filter(m => ['work', 'shortBreak', 'longBreak'].includes(m.id)).map(m => (
                               <Button
                                 key={m.id}
                                 variant={mode.id === m.id ? 'default' : 'ghost'}
                                 className={cn(
-                                  "rounded-full w-24 px-4 py-1.5 text-sm font-semibold transition-colors",
+                                  "rounded-full px-4 py-1.5 text-sm font-semibold transition-colors w-24",
                                    mode.id === m.id
                                     ? 'bg-primary text-primary-foreground'
                                     : 'text-muted-foreground hover:text-primary'
@@ -462,7 +468,7 @@ function SettingsDialog({ isOpen, setIsOpen, settings, onSave, onDeleteCurrentTi
   const getModeName = (mode: PomodoroMode) => {
     if (!isClient) return mode.name;
     const keyMap: { [id: string]: string } = {
-        'work': 'pomodoro.settings.defaultModeFocus',
+        'work': 'pomodoro.settings.defaultModeWork',
         'shortBreak': 'pomodoro.settings.defaultModeShortBreak',
         'longBreak': 'pomodoro.settings.defaultModeLongBreak'
     };

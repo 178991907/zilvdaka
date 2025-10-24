@@ -39,15 +39,6 @@ const nextConfig: NextConfig = {
   devIndicators: {
     buildActivity: false,
   },
-  // START: ADDED TO FIX CROSS-ORIGIN WARNING
-  // This allows the Next.js development server to accept requests from the
-  // Firebase Studio preview environment.
-  experimental: {
-    allowedDevOrigins: [
-      'https://*.cluster-bqwaigqtxbeautecnatk4o6ynk.cloudworkstations.dev',
-    ],
-  },
-  // END: ADDED TO FIX CROSS-ORIGIN WARNING
 };
 
 export default nextConfig;

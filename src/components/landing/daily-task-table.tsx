@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableCaption } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Task, completeTaskAndUpdateXP, getTodaysTasks } from '@/lib/data';
@@ -45,12 +45,10 @@ export default function DailyTaskTable() {
   return (
     <div className="rounded-lg border bg-card text-card-foreground shadow-sm">
       <Table>
+        <TableCaption className="p-4">
+            <DigitalClock />
+        </TableCaption>
         <TableHeader>
-           <TableRow>
-            <TableHead colSpan={4} className="text-center p-4">
-              <DigitalClock />
-            </TableHead>
-          </TableRow>
           <TableRow>
             <TableHead className="w-[80px] text-center text-lg"><ClientOnlyT tKey="tasks.dailyTable.order" /></TableHead>
             <TableHead className="text-lg"><ClientOnlyT tKey="tasks.dailyTable.dailyTask" /></TableHead>
