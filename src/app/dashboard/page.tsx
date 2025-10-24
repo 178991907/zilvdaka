@@ -13,6 +13,7 @@ import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
+import PetCard from '@/components/dashboard/pet-card';
 
 const DashboardGridLayout = dynamic(() => import('@/components/dashboard/dashboard-grid-layout'), {
   ssr: false,
@@ -27,11 +28,6 @@ const DashboardGridLayout = dynamic(() => import('@/components/dashboard/dashboa
       <div className="lg:col-span-3"><Skeleton className="h-[300px]" /></div>
     </div>
   ),
-});
-
-const PetCard = dynamic(() => import('@/components/dashboard/pet-card'), {
-  ssr: false,
-  loading: () => <Skeleton className="h-full w-full" />,
 });
 
 
