@@ -6,7 +6,7 @@
     "dev": "cross-env NEXT_PUBLIC_STORAGE_PROVIDER=local next dev -p 9002",
     "genkit:dev": "genkit start src/ai/dev.ts",
     "genkit:watch": "genkit start --watch src/ai/dev.ts",
-    "build": "npx @cloudflare/next-on-pages",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit"
@@ -66,7 +66,6 @@
     "zustand": "^4.5.4"
   },
   "devDependencies": {
-    "@cloudflare/next-on-pages": "^1.12.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
