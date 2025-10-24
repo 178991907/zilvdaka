@@ -1,6 +1,6 @@
 'use client';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { Achievement, getAchievements, updateAchievements } from '@/lib/data';
+import { Achievement, getAchievements, updateAchievements, iconMap } from '@/lib/data';
 import AchievementBadge from '@/components/achievements/achievement-badge';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { useEffect, useState } from 'react';
@@ -101,18 +101,20 @@ export default function AchievementsPage() {
         </div>
       </header>
       <main className="flex-1 p-4 md:p-8">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-            {!isClient && Array.from({ length: 10 }).map((_, index) => (
-                <Skeleton key={index} className="aspect-square rounded-xl" />
-            ))}
-            {isClient && achievements.map((achievement, index) => (
-                <AchievementBadge 
-                    key={achievement.id} 
-                    achievement={achievement} 
-                    onEdit={handleEdit}
-                    index={index}
-                />
-            ))}
+        <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                {!isClient && Array.from({ length: 10 }).map((_, index) => (
+                    <Skeleton key={index} className="aspect-square rounded-xl" />
+                ))}
+                {isClient && achievements.map((achievement, index) => (
+                    <AchievementBadge 
+                        key={achievement.id} 
+                        achievement={achievement} 
+                        onEdit={handleEdit}
+                        index={index}
+                    />
+                ))}
+            </div>
         </div>
       </main>
 
