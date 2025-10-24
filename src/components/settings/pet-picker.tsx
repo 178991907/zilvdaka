@@ -1,5 +1,5 @@
 'use client';
-import { PetInfo, Pets, PetIds } from '@/lib/pets';
+import { PetInfo, PetIds, PetInfos } from '@/lib/pets';
 import { cn } from '@/lib/utils';
 import { CheckCircle, Lock } from 'lucide-react';
 import { useMemo, Suspense } from 'react';
@@ -11,16 +11,6 @@ interface PetPickerProps {
   userLevel: number;
 }
 
-// Temporary PetInfo data for calculating unlock levels. Will be removed after refactor.
-const PetInfos: Omit<PetInfo, 'component'>[] = [
-  { id: 'pet1', name: 'Blobby', unlockLevel: 1 },
-  { id: 'pet2', name: 'Spiky', unlockLevel: 2 },
-  { id: 'pet3', name: 'Cacto', unlockLevel: 5 },
-  { id: 'pet4', name: 'Boxy', unlockLevel: 10 },
-  { id: 'pet5', name: 'Cloudy', unlockLevel: 15 },
-];
-
-
 export default function PetPicker({ selectedPet, onSelectPet, userLevel }: PetPickerProps) {
   
   const unlockedPetIds = useMemo(() => {
@@ -29,20 +19,19 @@ export default function PetPicker({ selectedPet, onSelectPet, userLevel }: PetPi
 
   return (
     <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-7 gap-4">
-      {PetIds.map((petId) => {
-        const PetComponent = Pets[petId];
-        const petInfo = PetInfos.find(p => p.id === petId)!;
-        const isUnlocked = unlockedPetIds.has(petId);
+      {PetInfos.map((petInfo) => {
+        const PetComponent = petInfo.component;
+        const isUnlocked = unlockedPetIds.has(petInfo.id);
         
         return (
           <div
-            key={petId}
+            key={petInfo.id}
             className={cn(
               'relative rounded-lg border-2 transition-all aspect-square w-full p-2 bg-card',
-              selectedPet === petId ? 'border-primary' : 'border-transparent',
+              selectedPet === petInfo.id ? 'border-primary' : 'border-transparent',
               isUnlocked ? 'cursor-pointer' : 'cursor-not-allowed'
             )}
-            onClick={() => isUnlocked && onSelectPet(petId)}
+            onClick={() => isUnlocked && onSelectPet(petInfo.id)}
             role="button"
             aria-label={`Select ${petInfo.name} pet`}
             aria-disabled={!isUnlocked}
@@ -58,7 +47,7 @@ export default function PetPicker({ selectedPet, onSelectPet, userLevel }: PetPi
                 </div>
             )}
             
-            {selectedPet === petId && (
+            {selectedPet === petInfo.id && (
               <div className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full bg-primary">
                 <CheckCircle className="h-4 w-4 text-primary-foreground" />
               </div>

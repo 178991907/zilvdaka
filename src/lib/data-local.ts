@@ -2,7 +2,7 @@
 import type { User, Task, Achievement, PomodoroSettings } from './data-types';
 import { iconMap } from './data-types';
 import { toast } from '@/hooks/use-toast';
-import { Pets } from './pets';
+import { PetInfos } from './pets';
 import i18n from '@/i18n';
 
 const defaultPomodoroSettings: PomodoroSettings = {
@@ -82,7 +82,7 @@ const XP_MAP = {
 };
 
 const getPetStyleForLevel = (level: number): string => {
-  const sortedPets = [...Pets].sort((a, b) => b.unlockLevel - a.unlockLevel);
+  const sortedPets = [...PetInfos].sort((a, b) => b.unlockLevel - a.unlockLevel);
   const bestPet = sortedPets.find(p => level >= p.unlockLevel);
   return bestPet ? bestPet.id : 'pet1';
 };
@@ -130,8 +130,8 @@ export const completeTaskAndUpdateXP = (task: Task, completed: boolean) => {
       }, { leveledUp: hasLeveledUp });
 
       if (hasLeveledUp) {
-          const newPet = Pets.find(p => p.id === newPetStyle);
-          const oldPet = Pets.find(p => p.id === currentUser.petStyle);
+          const newPet = PetInfos.find(p => p.id === newPetStyle);
+          const oldPet = PetInfos.find(p => p.id === currentUser.petStyle);
 
           if (newPetStyle !== currentUser.petStyle && newPet && oldPet) {
               toast({
