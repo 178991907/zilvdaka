@@ -160,24 +160,27 @@ export default function PomodoroPage() {
     setIsSettingsOpen(false);
   };
 
-  const getModeName = (mode: PomodoroMode) => {
+  const getModeNameComponent = (mode: PomodoroMode | undefined) => {
+    if (!mode) return null;
+
     const defaultKeys: {[key: string]: string} = {
         'work': 'pomodoro.settings.defaultModeWork',
         'shortBreak': 'pomodoro.settings.defaultModeShortBreak',
         'longBreak': 'pomodoro.settings.defaultModeLongBreak'
-    }
+    };
+    
     if (defaultKeys[mode.id]) {
         return <ClientOnlyT tKey={defaultKeys[mode.id]} />;
     }
-    return mode.name;
-  }
+    return <span>{mode.name}</span>;
+  };
 
 
   return (
     <>
       <div className="flex flex-col items-center gap-8 text-center bg-card p-8 rounded-xl shadow-lg">
-        <h2 className="text-2xl font-bold text-foreground">
-          {currentMode ? getModeName(currentMode) : 'Pomodoro'}
+         <h2 className="text-2xl font-bold text-foreground">
+            {getModeNameComponent(currentMode)}
         </h2>
         
         <div className="relative h-64 w-64">
