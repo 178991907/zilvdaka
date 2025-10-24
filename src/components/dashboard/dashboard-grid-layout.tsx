@@ -32,39 +32,39 @@ const saveToLS = (key: string, value: any) => {
 
 const defaultLayouts = {
     lg: [
-        { i: 'pet', x: 0, y: 0, w: 2, h: 4, minH: 2, minW: 1 },
+        { i: 'pet', x: 0, y: 0, w: 2, h: 3, minH: 2, minW: 1 },
         { i: 'dailyGoal', x: 2, y: 0, w: 1, h: 1, minH: 1, minW: 1 },
-        { i: 'xpGained', x: 2, y: 1, w: 1, h: 1, minH: 1, minW: 1 },
-        { i: 'petIntro', x: 2, y: 2, w: 1, h: 2, minH: 2, minW: 1 },
-        { i: 'tasks', x: 0, y: 4, w: 3, h: 3, minH: 3, minW: 2 },
+        { i: 'xpGained', x: 3, y: 0, w: 1, h: 1, minH: 1, minW: 1 },
+        { i: 'petIntro', x: 2, y: 1, w: 2, h: 2, minH: 2, minW: 1 },
+        { i: 'tasks', x: 0, y: 3, w: 4, h: 2, minH: 2, minW: 2 },
     ],
     md: [
-        { i: 'pet', x: 0, y: 0, w: 2, h: 4 },
-        { i: 'dailyGoal', x: 0, y: 4, w: 1, h: 1 },
-        { i: 'xpGained', x: 1, y: 4, w: 1, h: 1 },
-        { i: 'petIntro', x: 0, y: 5, w: 2, h: 2 },
-        { i: 'tasks', x: 0, y: 7, w: 2, h: 3 },
+        { i: 'pet', x: 0, y: 0, w: 2, h: 3, minH: 2, minW: 1 },
+        { i: 'dailyGoal', x: 0, y: 3, w: 1, h: 1, minH: 1, minW: 1 },
+        { i: 'xpGained', x: 1, y: 3, w: 1, h: 1, minH: 1, minW: 1 },
+        { i: 'petIntro', x: 0, y: 4, w: 2, h: 2, minH: 2, minW: 1 },
+        { i: 'tasks', x: 0, y: 6, w: 2, h: 3, minH: 3, minW: 2 },
     ],
     sm: [
-        { i: 'pet', x: 0, y: 0, w: 1, h: 3 },
-        { i: 'dailyGoal', x: 0, y: 3, w: 1, h: 1 },
-        { i: 'xpGained', x: 0, y: 4, w: 1, h: 1 },
-        { i: 'petIntro', x: 0, y: 5, w: 1, h: 2 },
-        { i: 'tasks', x: 0, y: 7, w: 1, h: 3 },
+        { i: 'pet', x: 0, y: 0, w: 1, h: 3, minH: 2, minW: 1 },
+        { i: 'dailyGoal', x: 0, y: 3, w: 1, h: 1, minH: 1, minW: 1 },
+        { i: 'xpGained', x: 0, y: 4, w: 1, h: 1, minH: 1, minW: 1 },
+        { i: 'petIntro', x: 0, y: 5, w: 1, h: 2, minH: 2, minW: 1 },
+        { i: 'tasks', x: 0, y: 7, w: 1, h: 3, minH: 3, minW: 1 },
     ],
      xs: [
-        { i: 'pet', x: 0, y: 0, w: 1, h: 3 },
-        { i: 'dailyGoal', x: 0, y: 3, w: 1, h: 1 },
-        { i: 'xpGained', x: 0, y: 4, w: 1, h: 1 },
-        { i: 'petIntro', x: 0, y: 5, w: 1, h: 2 },
-        { i: 'tasks', x: 0, y: 7, w: 1, h: 3 },
+        { i: 'pet', x: 0, y: 0, w: 1, h: 3, minH: 2, minW: 1 },
+        { i: 'dailyGoal', x: 0, y: 3, w: 1, h: 1, minH: 1, minW: 1 },
+        { i: 'xpGained', x: 0, y: 4, w: 1, h: 1, minH: 1, minW: 1 },
+        { i: 'petIntro', x: 0, y: 5, w: 1, h: 2, minH: 2, minW: 1 },
+        { i: 'tasks', x: 0, y: 7, w: 1, h: 3, minH: 3, minW: 1 },
     ],
     xxs: [
-        { i: 'pet', x: 0, y: 0, w: 1, h: 3 },
-        { i: 'dailyGoal', x: 0, y: 3, w: 1, h: 1 },
-        { i: 'xpGained', x: 0, y: 4, w: 1, h: 1 },
-        { i: 'petIntro', x: 0, y: 5, w: 1, h: 2 },
-        { i: 'tasks', x: 0, y: 7, w: 1, h: 3 },
+        { i: 'pet', x: 0, y: 0, w: 1, h: 3, minH: 2, minW: 1 },
+        { i: 'dailyGoal', x: 0, y: 3, w: 1, h: 1, minH: 1, minW: 1 },
+        { i: 'xpGained', x: 0, y: 4, w: 1, h: 1, minH: 1, minW: 1 },
+        { i: 'petIntro', x: 0, y: 5, w: 1, h: 2, minH: 2, minW: 1 },
+        { i: 'tasks', x: 0, y: 7, w: 1, h: 3, minH: 3, minW: 1 },
     ],
 };
 
@@ -91,7 +91,7 @@ const DashboardGridLayout = ({ children, isEditing }: { children: React.ReactNod
 
   if (!isMounted) {
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
              {Children.map(children, child => {
                 if (isValidElement(child)) {
                     // This renders a static version for SSR to prevent layout shifts
@@ -108,7 +108,7 @@ const DashboardGridLayout = ({ children, isEditing }: { children: React.ReactNod
         className="layout"
         layouts={layouts}
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-        cols={{ lg: 3, md: 2, sm: 1, xs: 1, xxs: 1 }}
+        cols={{ lg: 4, md: 2, sm: 1, xs: 1, xxs: 1 }}
         rowHeight={100}
         onLayoutChange={onLayoutChange}
         isDraggable={isEditing}
