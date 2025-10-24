@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
+import { Switch } from '@/components/ui/switch';
 import { Task, completeTaskAndUpdateXP } from '@/lib/data';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { useSound } from '@/hooks/use-sound';
@@ -51,10 +51,9 @@ export default function DailyTaskTable({ tasks }: DailyTaskTableProps) {
                   </Button>
                 </TableCell>
                 <TableCell className="text-center">
-                  <Checkbox
-                    className="h-6 w-6"
+                  <Switch
                     checked={task.completed}
-                    onCheckedChange={(checked) => handleTaskCompletion(task, !!checked)}
+                    onCheckedChange={(checked) => handleTaskCompletion(task, checked)}
                   />
                 </TableCell>
               </TableRow>
