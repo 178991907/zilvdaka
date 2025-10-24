@@ -34,6 +34,7 @@ export const {
     getAchievements,
     updateAchievements,
     getTasks,
+    getTodaysTasks,
     updateTasks,
     iconMap,
     reportData

@@ -71,63 +71,66 @@ const getPetStyleForLevel = (level: number): string => {
 
 export const completeTaskAndUpdateXP = (task: Task, completed: boolean) => {
   const currentUser = getUser();
-  const oldLevel = currentUser.level;
-  const oldPetStyle = currentUser.petStyle;
-
-  let newXp = currentUser.xp;
-  const xpChange = XP_MAP[task.difficulty] || 0;
-
-  if (completed) {
-    newXp += xpChange;
-  } else {
-    // De-selecting a task removes XP
-    newXp -= xpChange;
-    if (newXp < 0) newXp = 0;
-  }
-
-  let newLevel = currentUser.level;
-  let newXpToNextLevel = currentUser.xpToNextLevel;
-  let hasLeveledUp = false;
-
-  while (newXp >= newXpToNextLevel) {
-    newLevel++;
-    newXp -= newXpToNextLevel;
-    newXpToNextLevel = Math.floor(newXpToNextLevel * 1.2); // Increase XP requirement for next level
-    hasLeveledUp = true;
-  }
   
-  const newPetStyle = getPetStyleForLevel(newLevel);
-  
-  updateUser({
-    xp: newXp,
-    level: newLevel,
-    xpToNextLevel: newXpToNextLevel,
-    petStyle: newPetStyle,
-  }, { leveledUp: hasLeveledUp });
+  // Find the original task to ensure we use the stored difficulty for XP calculation
+  const allTasks = getTasks();
+  const originalTask = allTasks.find(t => t.id === task.id);
+  if (!originalTask) return; // Task not found, do nothing
 
-  // Handle notifications
-  if (hasLeveledUp) {
-    const newPet = Pets.find(p => p.id === newPetStyle);
-    const oldPet = Pets.find(p => p.id === oldPetStyle);
+  const oldXp = currentUser.xp;
+  let newXp = oldXp;
+  const xpChange = XP_MAP[originalTask.difficulty] || 0;
 
-    if (newPetStyle !== oldPetStyle && newPet && oldPet) {
-      toast({
-        title: i18n.t('notifications.petEvolved.title'),
-        description: i18n.t('notifications.petEvolved.description', { oldPetName: oldPet.name, newPetName: newPet.name, level: newLevel }),
-      });
-    } else {
-      toast({
-        title: i18n.t('notifications.levelUp.title'),
-        description: i18n.t('notifications.levelUp.description', { level: newLevel }),
-      });
-    }
+  // Only change XP if the completion status is actually different
+  if (completed !== originalTask.completed) {
+      if (completed) {
+          newXp += xpChange;
+      } else {
+          newXp -= xpChange;
+      }
+      if (newXp < 0) newXp = 0;
+
+      let newLevel = currentUser.level;
+      let newXpToNextLevel = currentUser.xpToNextLevel;
+      let hasLeveledUp = false;
+
+      while (newXp >= newXpToNextLevel) {
+          newLevel++;
+          newXp -= newXpToNextLevel;
+          newXpToNextLevel = Math.floor(newXpToNextLevel * 1.2);
+          hasLeveledUp = true;
+      }
+      
+      const newPetStyle = getPetStyleForLevel(newLevel);
+      
+      updateUser({
+          xp: newXp,
+          level: newLevel,
+          xpToNextLevel: newXpToNextLevel,
+          petStyle: newPetStyle,
+      }, { leveledUp: hasLeveledUp });
+
+      if (hasLeveledUp) {
+          const newPet = Pets.find(p => p.id === newPetStyle);
+          const oldPet = Pets.find(p => p.id === currentUser.petStyle);
+
+          if (newPetStyle !== currentUser.petStyle && newPet && oldPet) {
+              toast({
+                  title: i18n.t('notifications.petEvolved.title'),
+                  description: i18n.t('notifications.petEvolved.description', { oldPetName: oldPet.name, newPetName: newPet.name, level: newLevel }),
+              });
+          } else {
+              toast({
+                  title: i18n.t('notifications.levelUp.title'),
+                  description: i18n.t('notifications.levelUp.description', { level: newLevel }),
+              });
+          }
+      }
   }
 
-
-  // Also update the task's completion status
-  const tasks = getTasks();
-  const updatedTasks = tasks.map(t =>
-    t.id === task.id ? { ...t, completed } : t
+  // Always update the task's completion status
+  const updatedTasks = allTasks.map(t =>
+      t.id === task.id ? { ...t, completed } : t
   );
   updateTasks(updatedTasks);
 };
@@ -447,6 +450,45 @@ export const updateTasks = (newTasks: Task[]) => {
             console.error("Failed to save tasks to localStorage", error);
         }
     }
+};
+
+const dayMapping = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'] as const;
+
+export const getTodaysTasks = (): Task[] => {
+    const allTasks = getTasks();
+    const today = new Date();
+    const todayString = today.toDateString();
+    const todayDay = dayMapping[today.getDay()];
+
+    return allTasks.filter(task => {
+        if (task.status !== 'active') {
+            return false;
+        }
+
+        const taskDueDate = new Date(task.dueDate);
+
+        if (task.recurrence) {
+            const { unit, interval, daysOfWeek } = task.recurrence;
+            if (unit === 'week') {
+                if (daysOfWeek && daysOfWeek.length > 0) {
+                    // It repeats on specific days of the week
+                    return daysOfWeek.includes(todayDay);
+                } else {
+                    // It repeats every X weeks, check if today is the correct day
+                    const diffTime = Math.abs(today.getTime() - taskDueDate.getTime());
+                    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                    if (taskDueDate.getDay() === today.getDay()) {
+                      return diffDays % (interval * 7) === 0;
+                    }
+                    return false;
+                }
+            }
+            // Add logic for 'month' and 'year' if needed
+        }
+        
+        // Non-recurring tasks
+        return taskDueDate.toDateString() === todayString;
+    });
 };
 
 
