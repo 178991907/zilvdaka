@@ -47,20 +47,25 @@ export default function TaskList() {
 
   if (!isClient) {
     return (
-        <div className="space-y-4 pt-6">
+       <Card className="h-full">
+         <CardHeader>
+           <Skeleton className="h-6 w-48" />
+         </CardHeader>
+        <CardContent className="space-y-4 pt-0">
           <Skeleton className="h-10 w-full" />
           <Skeleton className="h-10 w-full" />
           <Skeleton className="h-10 w-full" />
-        </div>
+        </CardContent>
+      </Card>
     )
   }
 
   return (
-    <div className="rounded-lg border bg-card text-card-foreground shadow-sm">
-      <div className="p-6">
-        <h3 className="text-2xl font-semibold leading-none tracking-tight"><ClientOnlyT tKey='dashboard.todaysAdventures' /></h3>
-      </div>
-      <div className="p-6 pt-0">
+    <Card className="h-full flex flex-col">
+      <CardHeader>
+        <CardTitle><ClientOnlyT tKey='dashboard.todaysAdventures' /></CardTitle>
+      </CardHeader>
+      <CardContent className="flex-grow pt-0 overflow-y-auto">
         <AnimatePresence>
           {tasks.length > 0 ? (
             tasks.map((task, index) => (
@@ -100,12 +105,14 @@ export default function TaskList() {
               </motion.div>
             ))
           ) : (
-            <p className="text-muted-foreground text-center py-8">
-              <ClientOnlyT tKey='dashboard.noAdventures' />
-            </p>
+            <div className="h-full flex items-center justify-center">
+              <p className="text-muted-foreground text-center py-8">
+                <ClientOnlyT tKey='dashboard.noAdventures' />
+              </p>
+            </div>
           )}
         </AnimatePresence>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }
