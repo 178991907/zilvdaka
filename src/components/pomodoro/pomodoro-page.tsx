@@ -17,7 +17,7 @@ import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from '@/com
 const getInitialSettings = (user: User | null): PomodoroSettings => {
   const defaultSettings: PomodoroSettings = {
     modes: [
-      { id: 'work', name: 'Focus', duration: 25 },
+      { id: 'work', name: 'Work', duration: 25 },
       { id: 'shortBreak', name: 'Short Break', duration: 5 },
       { id: 'longBreak', name: 'Long Break', duration: 15 },
     ],
@@ -30,7 +30,7 @@ const getInitialSettings = (user: User | null): PomodoroSettings => {
       ...user.pomodoroSettings,
       modes: user.pomodoroSettings.modes?.length ? user.pomodoroSettings.modes : defaultSettings.modes,
     };
-    if (!mergedSettings.modes.find(m => m.id === 'work')) mergedSettings.modes.unshift({ id: 'work', name: 'Focus', duration: 25 });
+    if (!mergedSettings.modes.find(m => m.id === 'work')) mergedSettings.modes.unshift({ id: 'work', name: 'Work', duration: 25 });
     if (!mergedSettings.modes.find(m => m.id === 'shortBreak')) mergedSettings.modes.push({ id: 'shortBreak', name: 'Short Break', duration: 5 });
     if (!mergedSettings.modes.find(m => m.id === 'longBreak')) mergedSettings.modes.push({ id: 'longBreak', name: 'Long Break', duration: 15 });
     
@@ -249,7 +249,9 @@ export default function PomodoroPage() {
         'longBreak': 'pomodoro.settings.defaultModeLongBreak'
     };
     const tKey = keyMap[mode.id];
-    return tKey ? t(tKey) : mode.name;
+    const translated = tKey ? t(tKey) : mode.name;
+    // Handle the case where translation is missing in client
+    return translated === tKey ? mode.name : translated;
   };
 
   const defaultModeIds = ['work', 'shortBreak', 'longBreak'];
@@ -259,7 +261,7 @@ export default function PomodoroPage() {
       .filter(Boolean) as PomodoroMode[];
   }, [settings.modes]);
   
-  if (!currentTimer) {
+  if (!isClient || !currentTimer) {
     return (
         <div className="flex flex-col items-center gap-6 w-full">
             <div className="flex flex-col items-center justify-center gap-6 text-center bg-card p-8 rounded-xl shadow-lg h-[548px] w-full max-w-md">
