@@ -72,7 +72,7 @@ export default function RewardsPage() {
             <h1 className="text-xl font-semibold truncate"><ClientOnlyT tKey='rewards.title' /></h1>
           </div>
            <div className="flex justify-center w-1/3">
-             <Image src="https://pic1.imgdb.cn/item/6817c79a58cb8da5c8dc723f.png" alt="Logo" width={120} height={40} priority className="h-10 w-auto" />
+             <Image src="https://pic1.imgdb.cn/item/6817c79a58cb8da5c8dc723f.png" alt="Logo" width={180} height={57} priority className="h-[57px] w-auto" />
           </div>
           <div className="w-1/3"></div>
         </header>

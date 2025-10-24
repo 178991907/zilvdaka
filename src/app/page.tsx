@@ -18,11 +18,11 @@ export default function LandingPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      <header className="sticky top-0 z-10 flex h-[60px] items-center justify-between bg-background/80 backdrop-blur-sm px-4 md:px-8">
+      <header className="sticky top-0 z-10 flex h-[70px] items-center justify-between bg-background/80 backdrop-blur-sm px-4 md:px-8">
         <div className="flex items-center gap-2 w-1/3">
         </div>
         <div className="flex justify-center w-1/3">
-          <Image src="https://pic1.imgdb.cn/item/6817c79a58cb8da5c8dc723f.png" alt="Logo" width={120} height={40} priority className="h-10 w-auto" />
+          <Image src="https://pic1.imgdb.cn/item/6817c79a58cb8da5c8dc723f.png" alt="Logo" width={180} height={57} priority className="h-[57px] w-auto" />
         </div>
         <nav className="flex justify-end w-1/3">
           <Button asChild>
