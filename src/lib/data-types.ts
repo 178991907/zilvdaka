@@ -33,10 +33,15 @@ export type Achievement = {
   daysRequired?: number;
 };
 
+export type PomodoroMode = {
+  id: string;
+  name: string;
+  duration: number;
+};
+
 export type PomodoroSettings = {
-  work: number;
-  shortBreak: number;
-  longBreak: number;
+  modes: PomodoroMode[];
+  longBreakInterval: number;
 };
 
 export type User = {

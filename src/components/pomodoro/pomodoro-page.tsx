@@ -1,84 +1,93 @@
 'use client';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
-import { RotateCcw, Play, Pause, Settings2 } from 'lucide-react';
+import { RotateCcw, Play, Pause, Settings2, Plus, Trash2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSound } from '@/hooks/use-sound';
 import { ClientOnlyT } from '../layout/app-sidebar';
-import { Tabs, TabsList, TabsTrigger } from '../ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { getUser, updateUser, User } from '@/lib/data';
+import type { PomodoroSettings, PomodoroMode } from '@/lib/data-types';
 
-type Mode = 'work' | 'shortBreak' | 'longBreak';
-
-const getInitialDurations = (user: User | null) => {
-  if (user && user.pomodoroSettings) {
-    return {
-      work: user.pomodoroSettings.work * 60,
-      shortBreak: user.pomodoroSettings.shortBreak * 60,
-      longBreak: user.pomodoroSettings.longBreak * 60,
-    };
-  }
-  // Default values
-  return {
-    work: 25 * 60,
-    shortBreak: 5 * 60,
-    longBreak: 15 * 60,
+const getInitialSettings = (user: User | null): PomodoroSettings => {
+  return user?.pomodoroSettings || {
+    modes: [
+      { id: 'work', name: 'Work', duration: 25 },
+      { id: 'shortBreak', name: 'Short Break', duration: 5 },
+      { id: 'longBreak', name: 'Long Break', duration: 15 },
+    ],
+    longBreakInterval: 4,
   };
 };
 
 export default function PomodoroPage() {
   const [user, setUser] = useState<User | null>(null);
-  const [mode, setMode] = useState<Mode>('work');
-  const [durations, setDurations] = useState(getInitialDurations(null));
-  const [timeRemaining, setTimeRemaining] = useState(durations.work);
+  const [settings, setSettings] = useState<PomodoroSettings>(getInitialSettings(null));
+  
+  const [modeIndex, setModeIndex] = useState(0);
+  const [timeRemaining, setTimeRemaining] = useState(0);
   const [isActive, setIsActive] = useState(false);
   const [pomodoros, setPomodoros] = useState(0);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   
   const playSound = useSound();
-
-  const MODES: Record<Mode, { label: string }> = {
-    work: { label: 'pomodoro.work' },
-    shortBreak: { label: 'pomodoro.shortBreak' },
-    longBreak: { label: 'pomodoro.longBreak' },
-  };
   
+  const currentMode = useMemo(() => settings.modes[modeIndex], [settings.modes, modeIndex]);
+  const duration = useMemo(() => (currentMode?.duration || 0) * 60, [currentMode]);
+
   useEffect(() => {
     const handleUserUpdate = () => {
       const currentUser = getUser();
       setUser(currentUser);
-      setDurations(getInitialDurations(currentUser));
+      const newSettings = getInitialSettings(currentUser);
+      setSettings(newSettings);
     };
 
-    handleUserUpdate(); // Initial load
+    handleUserUpdate();
 
     window.addEventListener('userProfileUpdated', handleUserUpdate);
     return () => {
       window.removeEventListener('userProfileUpdated', handleUserUpdate);
     };
   }, []);
+  
+  useEffect(() => {
+    // This effect resets the timer whenever the settings or mode changes.
+    const newDuration = (settings.modes[modeIndex]?.duration || 0) * 60;
+    setTimeRemaining(newDuration);
+    setIsActive(false);
+  }, [modeIndex, settings]);
 
-
-  const progress = (durations[mode] - timeRemaining) / durations[mode] * 100;
+  const progress = duration > 0 ? (duration - timeRemaining) / duration * 100 : 0;
 
   const nextMode = useCallback(() => {
     playSound('timer-end');
-    if (mode === 'work') {
+    let nextModeIndex = 0;
+    
+    if (currentMode?.id === 'work') {
       const newPomodoroCount = pomodoros + 1;
       setPomodoros(newPomodoroCount);
-      setMode(newPomodoroCount % 4 === 0 ? 'longBreak' : 'shortBreak');
-    } else {
-      setMode('work');
-    }
-  }, [mode, pomodoros, playSound]);
+      
+      const isLongBreakTime = newPomodoroCount % settings.longBreakInterval === 0;
+      const longBreakModeIndex = settings.modes.findIndex(m => m.id === 'longBreak');
+      const shortBreakModeIndex = settings.modes.findIndex(m => m.id === 'shortBreak');
 
-  useEffect(() => {
-    setTimeRemaining(durations[mode]);
-    setIsActive(false);
-  }, [mode, durations]);
+      if (isLongBreakTime && longBreakModeIndex !== -1) {
+        nextModeIndex = longBreakModeIndex;
+      } else if (shortBreakModeIndex !== -1) {
+        nextModeIndex = shortBreakModeIndex;
+      }
+    } else {
+      const workModeIndex = settings.modes.findIndex(m => m.id === 'work');
+      if (workModeIndex !== -1) {
+        nextModeIndex = workModeIndex;
+      }
+    }
+    setModeIndex(nextModeIndex);
+  }, [currentMode, pomodoros, playSound, settings]);
+
   
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
@@ -103,11 +112,7 @@ export default function PomodoroPage() {
 
   const handleReset = () => {
     setIsActive(false);
-    setTimeRemaining(durations[mode]);
-  };
-
-  const handleModeChange = (newMode: string) => {
-    setMode(newMode as Mode);
+    setTimeRemaining(duration);
   };
 
   const formatTime = (seconds: number) => {
@@ -120,18 +125,22 @@ export default function PomodoroPage() {
     setPomodoros(0);
   };
   
-  const handleSaveSettings = (e: React.FormEvent) => {
-    e.preventDefault();
-    const form = e.target as HTMLFormElement;
-    const newDurations = {
-      work: parseInt(form.work.value) || 25,
-      shortBreak: parseInt(form.shortBreak.value) || 5,
-      longBreak: parseInt(form.longBreak.value) || 15,
-    };
+  const handleSaveSettings = (newSettings: PomodoroSettings) => {
+    // Ensure at least one mode exists
+    if (newSettings.modes.length === 0) {
+      newSettings.modes.push({ id: `custom-${Date.now()}`, name: 'Work', duration: 25 });
+    }
+    if (newSettings.longBreakInterval < 1) {
+      newSettings.longBreakInterval = 1;
+    }
     
-    updateUser({ pomodoroSettings: newDurations });
+    updateUser({ pomodoroSettings: newSettings });
+    setSettings(newSettings); // Immediately update local state
     
-    // The userProfileUpdated event will trigger a state update for durations
+    // Find the new index of the current mode ID, or reset to 0
+    const newCurrentModeIndex = newSettings.modes.findIndex(m => m.id === currentMode.id);
+    setModeIndex(newCurrentModeIndex !== -1 ? newCurrentModeIndex : 0);
+
     setIsSettingsOpen(false);
   };
 
@@ -139,18 +148,14 @@ export default function PomodoroPage() {
   return (
     <>
       <div className="flex flex-col items-center gap-8 text-center bg-card p-8 rounded-xl shadow-lg">
-        <Tabs defaultValue="work" value={mode} onValueChange={handleModeChange} className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="work"><ClientOnlyT tKey={MODES.work.label} /></TabsTrigger>
-            <TabsTrigger value="shortBreak"><ClientOnlyT tKey={MODES.shortBreak.label} /></TabsTrigger>
-            <TabsTrigger value="longBreak"><ClientOnlyT tKey={MODES.longBreak.label} /></TabsTrigger>
-          </TabsList>
-        </Tabs>
+        <h2 className="text-2xl font-bold text-foreground">
+          {currentMode?.name || 'Pomodoro'}
+        </h2>
         
         <div className="relative h-64 w-64">
           <AnimatePresence mode="wait">
             <motion.div
-              key={mode}
+              key={modeIndex}
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
@@ -227,12 +232,12 @@ export default function PomodoroPage() {
         </div>
 
         <div className="flex gap-4 mt-4 cursor-pointer" onClick={resetPomodoros} title="Reset Pomodoro Count">
-          {Array.from({ length: 4 }).map((_, i) => (
+          {Array.from({ length: settings.longBreakInterval }).map((_, i) => (
             <motion.div
               key={i}
               animate={{ 
-                  backgroundColor: i < pomodoros % 4 ? 'hsl(var(--primary))' : 'hsl(var(--muted))',
-                  scale: i === pomodoros % 4 && mode === 'work' && isActive ? 1.25 : 1,
+                  backgroundColor: i < pomodoros % settings.longBreakInterval ? 'hsl(var(--primary))' : 'hsl(var(--muted))',
+                  scale: i === pomodoros % settings.longBreakInterval && currentMode.id === 'work' && isActive ? 1.25 : 1,
               }}
               transition={{ type: 'spring', stiffness: 500, damping: 30 }}
               className="h-3 w-8 rounded-full"
@@ -241,42 +246,112 @@ export default function PomodoroPage() {
         </div>
       </div>
       
-      <Dialog open={isSettingsOpen} onOpenChange={setIsSettingsOpen}>
-        <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle><ClientOnlyT tKey="pomodoro.settings.title" /></DialogTitle>
-              <DialogDescription><ClientOnlyT tKey="pomodoro.settings.description" /></DialogDescription>
-            </DialogHeader>
-            <form onSubmit={handleSaveSettings}>
-              <div className="grid gap-4 py-4">
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="work" className="text-right">
-                    <ClientOnlyT tKey="pomodoro.work" />
-                  </Label>
-                  <Input id="work" name="work" type="number" defaultValue={durations.work / 60} className="col-span-3" />
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="shortBreak" className="text-right">
-                    <ClientOnlyT tKey="pomodoro.shortBreak" />
-                  </Label>
-                  <Input id="shortBreak" name="shortBreak" type="number" defaultValue={durations.shortBreak / 60} className="col-span-3" />
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="longBreak" className="text-right">
-                    <ClientOnlyT tKey="pomodoro.longBreak" />
-                  </Label>
-                  <Input id="longBreak" name="longBreak" type="number" defaultValue={durations.longBreak / 60} className="col-span-3" />
-                </div>
-              </div>
-              <DialogFooter>
-                <DialogClose asChild>
-                  <Button type="button" variant="secondary"><ClientOnlyT tKey="achievements.edit.cancel" /></Button>
-                </DialogClose>
-                <Button type="submit"><ClientOnlyT tKey="achievements.edit.save" /></Button>
-              </DialogFooter>
-            </form>
-        </DialogContent>
-      </Dialog>
+      {isSettingsOpen && 
+        <SettingsDialog
+          isOpen={isSettingsOpen}
+          setIsOpen={setIsSettingsOpen}
+          settings={settings}
+          onSave={handleSaveSettings}
+        />
+      }
     </>
+  );
+}
+
+
+interface SettingsDialogProps {
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
+  settings: PomodoroSettings;
+  onSave: (settings: PomodoroSettings) => void;
+}
+
+function SettingsDialog({ isOpen, setIsOpen, settings, onSave }: SettingsDialogProps) {
+  const [currentSettings, setCurrentSettings] = useState(settings);
+
+  useEffect(() => {
+    setCurrentSettings(settings);
+  }, [settings]);
+
+  const handleModeChange = (index: number, field: keyof PomodoroMode, value: any) => {
+    const newModes = [...currentSettings.modes];
+    newModes[index] = { ...newModes[index], [field]: value };
+    setCurrentSettings({ ...currentSettings, modes: newModes });
+  };
+
+  const handleAddMode = () => {
+    const newMode: PomodoroMode = {
+      id: `custom-${Date.now()}`,
+      name: 'New Mode',
+      duration: 10,
+    };
+    setCurrentSettings({ ...currentSettings, modes: [...currentSettings.modes, newMode] });
+  };
+
+  const handleRemoveMode = (index: number) => {
+    const newModes = currentSettings.modes.filter((_, i) => i !== index);
+    setCurrentSettings({ ...currentSettings, modes: newModes });
+  };
+
+  const handleSave = () => {
+    onSave(currentSettings);
+  };
+
+  return (
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle><ClientOnlyT tKey="pomodoro.settings.title" /></DialogTitle>
+            <DialogDescription><ClientOnlyT tKey="pomodoro.settings.description" /></DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label><ClientOnlyT tKey="pomodoro.settings.modes" /></Label>
+              <div className="space-y-2 rounded-md border p-2">
+                {currentSettings.modes.map((mode, index) => (
+                  <div key={mode.id} className="flex items-center gap-2">
+                    <Input
+                      placeholder="Mode Name"
+                      value={mode.name}
+                      onChange={(e) => handleModeChange(index, 'name', e.target.value)}
+                      className="h-9"
+                    />
+                    <Input
+                      type="number"
+                      placeholder="Mins"
+                      value={mode.duration}
+                      onChange={(e) => handleModeChange(index, 'duration', parseInt(e.target.value) || 0)}
+                      className="w-20 h-9"
+                    />
+                    <Button variant="ghost" size="icon" className="h-9 w-9 text-destructive" onClick={() => handleRemoveMode(index)}>
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                ))}
+              </div>
+              <Button variant="outline" size="sm" onClick={handleAddMode}>
+                <Plus className="mr-2 h-4 w-4" />
+                <ClientOnlyT tKey="pomodoro.settings.addMode" />
+              </Button>
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="longBreakInterval"><ClientOnlyT tKey="pomodoro.settings.longBreakInterval" /></Label>
+              <Input
+                id="longBreakInterval"
+                type="number"
+                value={currentSettings.longBreakInterval}
+                onChange={(e) => setCurrentSettings({ ...currentSettings, longBreakInterval: parseInt(e.target.value) || 1 })}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button type="button" variant="secondary"><ClientOnlyT tKey="achievements.edit.cancel" /></Button>
+            </DialogClose>
+            <Button type="button" onClick={handleSave}><ClientOnlyT tKey="achievements.edit.save" /></Button>
+          </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

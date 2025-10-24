@@ -1,9 +1,19 @@
 'use client';
-import type { User, Task, Achievement } from './data-types';
+import type { User, Task, Achievement, PomodoroSettings } from './data-types';
 import { iconMap } from './data-types';
 import { toast } from '@/hooks/use-toast';
 import { Pets } from './pets';
 import i18n from '@/i18n';
+
+const defaultPomodoroSettings: PomodoroSettings = {
+  modes: [
+    { id: 'work', name: 'Work', duration: 25 },
+    { id: 'shortBreak', name: 'Short Break', duration: 5 },
+    { id: 'longBreak', name: 'Long Break', duration: 15 },
+  ],
+  longBreakInterval: 4,
+};
+
 
 const defaultUser: User = {
   name: 'Alex',
@@ -14,11 +24,7 @@ const defaultUser: User = {
   petStyle: 'pet1',
   petName: '泡泡',
   appLogo: '',
-  pomodoroSettings: {
-    work: 25,
-    shortBreak: 5,
-    longBreak: 15,
-  },
+  pomodoroSettings: defaultPomodoroSettings,
   // Configurable content
   appName: 'Discipline Baby',
   landingTitle: 'Gamify Your Child\'s Habits',
@@ -37,8 +43,13 @@ export const getUser = (): User => {
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
       // We merge with default user to ensure all fields are present,
-      // in case of data structure changes.
-      return { ...defaultUser, ...parsedUser };
+      // especially the new pomodoroSettings structure.
+      const userWithDefaults = { ...defaultUser, ...parsedUser };
+      userWithDefaults.pomodoroSettings = {
+        ...defaultPomodoroSettings,
+        ...(parsedUser.pomodoroSettings || {}),
+      };
+      return userWithDefaults;
     }
   } catch (error) {
     console.error("Failed to parse user from localStorage", error);
@@ -52,6 +63,9 @@ export const updateUser = (newUserData: Partial<User>, eventDetail?: object) => 
    if (typeof window !== 'undefined') {
     const currentUser = getUser();
     const updatedUser = { ...currentUser, ...newUserData };
+    if (newUserData.pomodoroSettings) {
+      updatedUser.pomodoroSettings = { ...currentUser.pomodoroSettings, ...newUserData.pomodoroSettings };
+    }
     try {
       localStorage.setItem('habit-heroes-user', JSON.stringify(updatedUser));
       window.dispatchEvent(new CustomEvent('userProfileUpdated', { detail: eventDetail }));
