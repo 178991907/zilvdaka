@@ -28,7 +28,7 @@ export default function PetCard() {
   if (!user) {
     return (
       <Card className="h-full flex flex-col">
-        <CardContent className="flex-grow flex flex-col items-center justify-center p-4">
+        <CardContent className="p-6 flex-grow flex flex-col items-center justify-center">
           <Skeleton className="w-full h-full min-h-[200px]" />
           <div className="mt-4 w-full">
             <Skeleton className="h-6 w-24 mx-auto" />
