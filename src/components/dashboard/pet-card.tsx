@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, Suspense } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Skeleton } from '@/components/ui/skeleton';
 import { getUser, User } from '@/lib/data';
@@ -44,7 +44,7 @@ export default function PetCard() {
 
   return (
     <Card className="h-full flex flex-col">
-      <CardContent className="flex-grow flex flex-col p-6 items-center justify-center min-h-0">
+      <CardContent className="flex-grow flex flex-col p-6 items-center justify-start min-h-0">
         <div className="flex-grow flex items-center justify-center w-full h-full">
            <Suspense fallback={<Skeleton className="w-full h-full" />}>
               <PetViewer petStyle={user.petStyle} progress={petProgress} className="w-full h-full" />
