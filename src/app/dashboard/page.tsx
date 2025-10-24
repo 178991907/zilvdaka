@@ -104,10 +104,10 @@ export default function DashboardPage() {
 
         <main className="flex-grow p-4 md:p-8">
             <DashboardGridLayout isEditing={isEditing}>
-                <div key="pet" className="overflow-hidden rounded-lg">
+                <div key="pet">
                     <PetCard />
                 </div>
-                <div key="dailyGoal" className="overflow-hidden rounded-lg">
+                <div key="dailyGoal">
                     <Card className="h-full">
                         <CardContent className="p-4">
                             <ProgressSummaryContent
@@ -119,7 +119,7 @@ export default function DashboardPage() {
                         </CardContent>
                     </Card>
                 </div>
-                <div key="xpGained" className="overflow-hidden rounded-lg">
+                <div key="xpGained">
                      <Card className="h-full">
                         <CardContent className="p-4">
                             <ProgressSummaryContent
@@ -132,7 +132,7 @@ export default function DashboardPage() {
                         </CardContent>
                      </Card>
                 </div>
-                <div key="petIntro" className="overflow-hidden rounded-lg">
+                <div key="petIntro">
                    <Card className="h-full">
                         <CardHeader className="flex flex-row items-start gap-4">
                         <Info className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
