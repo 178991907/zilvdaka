@@ -19,6 +19,7 @@ import {
   Star,
   LogOut,
   Gift,
+  Timer,
 } from 'lucide-react';
 import { UserNav } from './user-nav';
 import { useTranslation } from 'react-i18next';
@@ -26,6 +27,8 @@ import { useEffect, useState } from 'react';
 import i18n from '@/i18n'; // Import the i18n instance
 import { getUser, User } from '@/lib/data';
 import Image from 'next/image';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import PomodoroTimer from '../pomodoro/pomodoro-timer';
 
 
 // This wrapper prevents hydration errors by rendering the fallback language on the server
@@ -120,6 +123,21 @@ export default function AppSidebar() {
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}
+           <Collapsible asChild>
+            <SidebarMenuItem>
+              <CollapsibleTrigger asChild>
+                 <SidebarMenuButton
+                  tooltip={t('sidebar.pomodoro')}
+                >
+                  <Timer />
+                  <ClientOnlyT tKey="sidebar.pomodoro" />
+                </SidebarMenuButton>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                  <PomodoroTimer />
+              </CollapsibleContent>
+            </SidebarMenuItem>
+          </Collapsible>
         </SidebarMenu>
       </SidebarContent>
       <SidebarFooter className="flex flex-col gap-4">

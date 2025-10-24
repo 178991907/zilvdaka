@@ -18,4 +18,7 @@ export {
   Info,
   Pencil,
   Check,
+  Timer,
+  RotateCcw,
+  Settings2,
 } from 'lucide-react';
