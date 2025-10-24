@@ -43,8 +43,8 @@ export default function PetCard() {
   const petProgress = user ? (user.xp / user.xpToNextLevel) * 100 : 0;
 
   return (
-    <Card className="h-full flex flex-col">
-      <CardContent className="flex flex-col p-6 h-full">
+    <Card className="h-full flex flex-col overflow-hidden">
+      <CardContent className="flex flex-col p-0 h-full">
         {/* This div will grow and push the text content to the bottom */}
         <div className="flex-grow flex items-start justify-center w-full h-full">
           <Suspense fallback={<Skeleton className="w-full h-full" />}>
@@ -53,7 +53,7 @@ export default function PetCard() {
         </div>
         
         {/* This div will be pushed to the bottom */}
-        <div className="text-center w-full mt-4 flex-shrink-0">
+        <div className="text-center w-full p-6 pt-0 flex-shrink-0">
           <p className="text-lg font-bold">{user.petName}</p>
           <p className="text-sm text-muted-foreground">
             <ClientOnlyT tKey='user.level' tOptions={{ level: user.level }} />
