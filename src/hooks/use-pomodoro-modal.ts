@@ -15,12 +15,16 @@ const usePomodoroModalStore = create<PomodoroModalState>((set) => ({
 }));
 
 // React Context provider for the store
-const PomodoroModalContext = createContext<typeof usePomodoroModalStore | null>(null);
+const PomodoroModalContext = createContext<ReturnType<typeof create<PomodoroModalState>> | null>(null);
 
 export function PomodoroModalProvider({ children }: { children: ReactNode }) {
-  const storeRef = useRef<typeof usePomodoroModalStore>();
+  const storeRef = useRef<ReturnType<typeof create<PomodoroModalState>>>();
   if (!storeRef.current) {
-    storeRef.current = usePomodoroModalStore;
+    storeRef.current = create<PomodoroModalState>((set) => ({
+      isOpen: false,
+      openPomodoro: () => set({ isOpen: true }),
+      closePomodoro: () => set({ isOpen: false }),
+    }));
   }
   return (
     <PomodoroModalContext.Provider value={storeRef.current}>
@@ -30,11 +34,10 @@ export function PomodoroModalProvider({ children }: { children: ReactNode }) {
 }
 
 // Custom hook to use the store
-export const usePomodoroModal = () => {
+export const usePomodoroModal = (): PomodoroModalState => {
   const store = useContext(PomodoroModalContext);
   if (!store) {
     throw new Error('usePomodoroModal must be used within a PomodoroModalProvider');
   }
-  const { isOpen, openPomodoro, closePomodoro } = store();
-  return { isOpen, openPomodoro, closePomodoro };
+  return store();
 };
