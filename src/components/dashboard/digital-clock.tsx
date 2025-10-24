@@ -21,7 +21,7 @@ const DigitalClock = () => {
   }, []);
 
   if (!isClient) {
-    return <Skeleton className="h-9 w-[280px]" />;
+    return <Skeleton className="h-12 w-[380px]" />;
   }
 
   const language = i18n.language.startsWith('zh') ? 'zh-CN' : 'en-US';
@@ -43,10 +43,10 @@ const DigitalClock = () => {
 
   return (
     <div className="flex items-center justify-center gap-4">
-        <div className="text-lg font-medium text-muted-foreground">
+        <div className="text-xl font-medium text-muted-foreground">
             {formattedDate} {t(dayOfWeekKey)}
         </div>
-        <div className="text-2xl font-bold font-mono text-foreground">
+        <div className="text-4xl font-bold font-mono text-foreground">
             {formattedTime}
         </div>
     </div>
