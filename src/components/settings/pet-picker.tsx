@@ -1,5 +1,5 @@
 'use client';
-import { PetInfo, PetIds, PetInfos } from '@/lib/pets';
+import { PetInfos } from '@/lib/pets';
 import { cn } from '@/lib/utils';
 import { CheckCircle, Lock } from 'lucide-react';
 import { useMemo, Suspense } from 'react';
@@ -36,9 +36,7 @@ export default function PetPicker({ selectedPet, onSelectPet, userLevel }: PetPi
             aria-label={`Select ${petInfo.name} pet`}
             aria-disabled={!isUnlocked}
           >
-            <Suspense fallback={<Skeleton className="w-full h-full rounded-md" />}>
-              <PetComponent />
-            </Suspense>
+            <PetComponent />
             
             {!isUnlocked && (
                 <div className="absolute inset-0 bg-black/50 rounded-lg flex flex-col items-center justify-center text-white">

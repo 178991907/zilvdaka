@@ -67,9 +67,7 @@ const PetViewer: React.FC<PetViewerProps> = ({ progress, className }) => {
               onAnimationComplete={() => setBodyAnimation(null)}
               className="w-full h-full"
             >
-              <Suspense fallback={<Skeleton className="w-full h-full rounded-full" />}>
-                <PetComponent />
-              </Suspense>
+              <PetComponent />
             </motion.div>
           </div>
         </div>
