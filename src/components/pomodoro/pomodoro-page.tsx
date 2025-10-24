@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { getUser, updateUser, User } from '@/lib/data';
 import type { PomodoroSettings, PomodoroMode } from '@/lib/data-types';
+import { useTranslation } from 'react-i18next';
 
 const getInitialSettings = (user: User | null): PomodoroSettings => {
   return user?.pomodoroSettings || {
@@ -33,6 +34,7 @@ export default function PomodoroPage() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   
   const playSound = useSound();
+  const { t } = useTranslation();
   
   const currentMode = useMemo(() => settings.modes[modeIndex], [settings.modes, modeIndex]);
   const duration = useMemo(() => (currentMode?.duration || 0) * 60, [currentMode]);
@@ -85,7 +87,7 @@ export default function PomodoroPage() {
         nextModeIndex = workModeIndex;
       }
     }
-    setModeIndex(nextModeIndex);
+    setModeIndex(nextModeIndex >= 0 && nextModeIndex < settings.modes.length ? nextModeIndex : 0);
   }, [currentMode, pomodoros, playSound, settings]);
 
   
@@ -138,18 +140,34 @@ export default function PomodoroPage() {
     setSettings(newSettings); // Immediately update local state
     
     // Find the new index of the current mode ID, or reset to 0
-    const newCurrentModeIndex = newSettings.modes.findIndex(m => m.id === currentMode.id);
-    setModeIndex(newCurrentModeIndex !== -1 ? newCurrentModeIndex : 0);
+    const currentModeId = currentMode?.id;
+    let newCurrentModeIndex = currentModeId ? newSettings.modes.findIndex(m => m.id === currentModeId) : -1;
+    if (newCurrentModeIndex === -1) {
+        newCurrentModeIndex = 0;
+    }
+    setModeIndex(newCurrentModeIndex);
 
     setIsSettingsOpen(false);
   };
+
+  const getModeName = (mode: PomodoroMode) => {
+    const defaultKeys: {[key: string]: string} = {
+        'work': 'pomodoro.settings.defaultModeWork',
+        'shortBreak': 'pomodoro.settings.defaultModeShortBreak',
+        'longBreak': 'pomodoro.settings.defaultModeLongBreak'
+    }
+    if (defaultKeys[mode.id]) {
+        return t(defaultKeys[mode.id]);
+    }
+    return mode.name;
+  }
 
 
   return (
     <>
       <div className="flex flex-col items-center gap-8 text-center bg-card p-8 rounded-xl shadow-lg">
         <h2 className="text-2xl font-bold text-foreground">
-          {currentMode?.name || 'Pomodoro'}
+          {currentMode ? getModeName(currentMode) : 'Pomodoro'}
         </h2>
         
         <div className="relative h-64 w-64">
@@ -237,7 +255,7 @@ export default function PomodoroPage() {
               key={i}
               animate={{ 
                   backgroundColor: i < pomodoros % settings.longBreakInterval ? 'hsl(var(--primary))' : 'hsl(var(--muted))',
-                  scale: i === pomodoros % settings.longBreakInterval && currentMode.id === 'work' && isActive ? 1.25 : 1,
+                  scale: i === pomodoros % settings.longBreakInterval && currentMode?.id === 'work' && isActive ? 1.25 : 1,
               }}
               transition={{ type: 'spring', stiffness: 500, damping: 30 }}
               className="h-3 w-8 rounded-full"
@@ -268,10 +286,11 @@ interface SettingsDialogProps {
 
 function SettingsDialog({ isOpen, setIsOpen, settings, onSave }: SettingsDialogProps) {
   const [currentSettings, setCurrentSettings] = useState(settings);
+  const { t } = useTranslation();
 
   useEffect(() => {
     setCurrentSettings(settings);
-  }, [settings]);
+  }, [settings, isOpen]);
 
   const handleModeChange = (index: number, field: keyof PomodoroMode, value: any) => {
     const newModes = [...currentSettings.modes];
@@ -296,6 +315,18 @@ function SettingsDialog({ isOpen, setIsOpen, settings, onSave }: SettingsDialogP
   const handleSave = () => {
     onSave(currentSettings);
   };
+  
+  const getModeName = (mode: PomodoroMode) => {
+    const defaultKeys: {[key: string]: string} = {
+        'work': 'pomodoro.settings.defaultModeWork',
+        'shortBreak': 'pomodoro.settings.defaultModeShortBreak',
+        'longBreak': 'pomodoro.settings.defaultModeLongBreak'
+    }
+    if (defaultKeys[mode.id]) {
+        return t(defaultKeys[mode.id]);
+    }
+    return mode.name;
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -311,17 +342,17 @@ function SettingsDialog({ isOpen, setIsOpen, settings, onSave }: SettingsDialogP
                 {currentSettings.modes.map((mode, index) => (
                   <div key={mode.id} className="flex items-center gap-2">
                     <Input
-                      placeholder="Mode Name"
-                      value={mode.name}
+                      placeholder={t('pomodoro.settings.modeNamePlaceholder')}
+                      value={getModeName(mode)}
                       onChange={(e) => handleModeChange(index, 'name', e.target.value)}
                       className="h-9"
                     />
                     <Input
                       type="number"
-                      placeholder="Mins"
+                      placeholder={t('pomodoro.settings.minutesPlaceholder')}
                       value={mode.duration}
                       onChange={(e) => handleModeChange(index, 'duration', parseInt(e.target.value) || 0)}
-                      className="w-20 h-9"
+                      className="w-24 h-9"
                     />
                     <Button variant="ghost" size="icon" className="h-9 w-9 text-destructive" onClick={() => handleRemoveMode(index)}>
                       <Trash2 className="h-4 w-4" />
