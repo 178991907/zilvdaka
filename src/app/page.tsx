@@ -58,8 +58,8 @@ export default function LandingPage() {
           <div className="w-full md:w-1/2 flex flex-row gap-4">
             <div className="w-full md:w-1/2">
               {isClient ? (
-                <Card className="h-full">
-                  <CardContent className="p-4 h-full">
+                <Card>
+                  <CardContent className="p-4">
                     <ProgressSummaryContent
                       icon={Target}
                       title={<ClientOnlyT tKey="dashboard.dailyGoal" />}
@@ -74,8 +74,8 @@ export default function LandingPage() {
             </div>
             <div className="w-full md:w-1/2">
               {isClient && user ? (
-                <Card className="h-full">
-                  <CardContent className="p-4 h-full">
+                <Card>
+                  <CardContent className="p-4">
                     <ProgressSummaryContent
                       icon={Zap}
                       title={<ClientOnlyT tKey="dashboard.xpGained" />}
