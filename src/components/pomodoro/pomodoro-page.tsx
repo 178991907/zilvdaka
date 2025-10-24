@@ -74,14 +74,6 @@ export default function PomodoroPage() {
   const { t } = useTranslation();
   
   const currentTimer = timers[currentTimerIndex];
-  
-  // FIX: Add a guard clause to prevent crash when timers array is empty
-  if (!currentTimer) {
-    return null;
-  }
-
-  const currentMode = settings.modes[currentTimer.modeIndex];
-  const duration = (currentMode?.duration || 0) * 60;
 
   const updateUserAndSettings = useCallback(() => {
     const currentUser = getUser();
@@ -114,19 +106,11 @@ export default function PomodoroPage() {
       prevTimers.map((timer, i) => i === index ? { ...timer, ...updates } : timer)
     );
   };
-
-  const resetTimer = (index: number) => {
-    const timer = timers[index];
-    const mode = settings.modes[timer.modeIndex];
-    updateTimer(index, { 
-      isActive: false, 
-      timeRemaining: (mode?.duration || 0) * 60,
-    });
-  };
   
   const nextMode = useCallback((index: number) => {
     playSound('timer-end');
     const timer = timers[index];
+    if (!timer) return;
     const currentMode = settings.modes[timer.modeIndex];
     let nextModeIndex = 0;
     let newPomodoroCount = timer.pomodoros;
@@ -160,7 +144,6 @@ export default function PomodoroPage() {
     });
   }, [playSound, settings, timers]);
 
-  
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
     const timer = timers[currentTimerIndex];
@@ -179,14 +162,35 @@ export default function PomodoroPage() {
       }
     };
   }, [timers, currentTimerIndex, nextMode]);
-
-
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-  };
   
+  const addTimer = () => {
+    setTimers(prev => [...prev, createNewTimer(settings)]);
+    setTimeout(() => carouselApi?.scrollTo(timers.length), 0);
+  };
+
+  const removeTimer = (index: number) => {
+    if (timers.length <= 1) return;
+    setTimers(prev => prev.filter((_, i) => i !== index));
+  };
+
+  // Add a guard clause to prevent crash when timers array is empty
+  // All hooks must be called before this return statement.
+  if (!currentTimer) {
+    return null;
+  }
+  
+  const currentMode = settings.modes[currentTimer.modeIndex];
+  const duration = (currentMode?.duration || 0) * 60;
+
+  const resetTimer = (index: number) => {
+    const timer = timers[index];
+    const mode = settings.modes[timer.modeIndex];
+    updateTimer(index, { 
+      isActive: false, 
+      timeRemaining: (mode?.duration || 0) * 60,
+    });
+  };
+
   const handleSaveSettings = (newSettings: PomodoroSettings) => {
     if (newSettings.modes.length === 0) {
       newSettings.modes.push({ id: `custom-${Date.now()}`, name: 'Work', duration: 25 });
@@ -226,17 +230,12 @@ export default function PomodoroPage() {
       });
     }
   };
-  
-  const addTimer = () => {
-    setTimers(prev => [...prev, createNewTimer(settings)]);
-    setTimeout(() => carouselApi?.scrollTo(timers.length), 0);
-  };
 
-  const removeTimer = (index: number) => {
-    if (timers.length <= 1) return;
-    setTimers(prev => prev.filter((_, i) => i !== index));
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
   };
-
 
   const defaultModeIds = ['work', 'shortBreak', 'longBreak'];
   const defaultModes = defaultModeIds.map(id => settings.modes.find(m => m.id === id)).filter(Boolean) as PomodoroMode[];
