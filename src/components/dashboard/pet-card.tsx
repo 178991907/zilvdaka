@@ -28,11 +28,8 @@ export default function PetCard() {
   if (!user) {
     return (
       <Card className="h-full flex flex-col">
-        <CardHeader>
-          <CardTitle><ClientOnlyT tKey='dashboard.myPet' /></CardTitle>
-        </CardHeader>
         <CardContent className="flex-grow flex flex-col items-center justify-center p-4">
-          <Skeleton className="w-full h-[200px]" />
+          <Skeleton className="w-full h-full min-h-[200px]" />
           <div className="mt-4 w-full">
             <Skeleton className="h-6 w-24 mx-auto" />
             <Skeleton className="h-4 w-16 mx-auto mt-2" />
@@ -47,14 +44,11 @@ export default function PetCard() {
 
   return (
     <Card className="h-full flex flex-col">
-       <CardHeader>
-          <CardTitle><ClientOnlyT tKey='dashboard.myPet' /></CardTitle>
-        </CardHeader>
       <CardContent className="flex-grow flex flex-col p-0">
         <div className="flex-grow flex items-start justify-center min-h-0 w-full">
-          <Suspense fallback={<Skeleton className="w-full h-full" />}>
-            <PetViewer petStyle={user.petStyle} progress={petProgress} className="w-full h-full" />
-          </Suspense>
+           <Suspense fallback={<Skeleton className="w-full h-full" />}>
+              <PetViewer petStyle={user.petStyle} progress={petProgress} className="w-full h-full" />
+            </Suspense>
         </div>
         <div className="p-4 pt-0">
           <div className="text-center">
