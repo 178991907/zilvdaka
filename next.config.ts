@@ -39,6 +39,8 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  distDir: 'dist',
+  output: 'standalone',
 };
 
 export default nextConfig;
