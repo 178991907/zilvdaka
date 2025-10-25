@@ -21,7 +21,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useTranslation } from 'react-i18next';
 import { ClientOnlyT } from '../layout/app-sidebar';
 import { useState, useEffect } from 'react';
-import { Task } from '@/lib/data';
+import { Task } from '@/lib/data-browser';
 import { Switch } from '../ui/switch';
 
 type AddTaskDialogProps = {

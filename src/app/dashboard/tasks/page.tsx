@@ -4,7 +4,7 @@ import TasksTable from '@/components/tasks/tasks-table';
 import { AddTaskDialog } from '@/components/tasks/add-task-dialog';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { useState, useEffect } from 'react';
-import { Task, getTasks, updateTasks } from '@/lib/data';
+import { Task, getTasks, updateTasks } from '@/lib/data-browser';
 import { PlusCircle } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';

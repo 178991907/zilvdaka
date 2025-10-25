@@ -10,7 +10,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { Task } from '@/lib/data';
+import { Task } from '@/lib/data-browser';
 import { Button } from '@/components/ui/button';
 import { MoreHorizontal, Pencil, Trash2, Play, Pause } from 'lucide-react';
 import {

@@ -1,6 +1,6 @@
 'use client';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { Achievement, getAchievements, updateAchievements, iconMap } from '@/lib/data';
+import { Achievement, getAchievements, updateAchievements } from '@/lib/data-browser';
 import AchievementBadge from '@/components/achievements/achievement-badge';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { useEffect, useState } from 'react';

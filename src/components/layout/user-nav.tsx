@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { getUser, User } from '@/lib/data';
+import { getUser, User } from '@/lib/data-browser';
 import { Avatars } from '@/lib/placeholder-images';
 import Link from 'next/link';
 import { CreditCard, LogOut, Settings, User as UserIcon } from 'lucide-react';

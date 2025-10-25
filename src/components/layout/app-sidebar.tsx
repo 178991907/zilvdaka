@@ -25,7 +25,7 @@ import { UserNav } from './user-nav';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import i18n from '@/i18n'; // Import the i18n instance
-import { getUser, User } from '@/lib/data';
+import { getUser, User } from '@/lib/data-browser';
 import Image from 'next/image';
 
 // This wrapper prevents hydration errors by rendering the fallback language on the server

@@ -2,7 +2,7 @@
 'use client';
 
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Tooltip } from 'recharts';
-import { reportData } from '@/lib/data';
+import { reportData } from '@/lib/data-browser';
 import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from '../ui/chart';
 
 const chartConfig = {

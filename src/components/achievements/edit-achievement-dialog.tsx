@@ -9,7 +9,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
-import { Achievement } from '@/lib/data';
+import { Achievement } from '@/lib/data-browser';
 import { CalendarIcon, Trash2, Star, Book, Brush, ShieldCheck, Trophy, Zap, Swords, Mountain, Flower, Gem, Bug, Pause, Play } from 'lucide-react';
 import type { LucideIcon, LucideProps } from 'lucide-react';
 import { format } from 'date-fns';

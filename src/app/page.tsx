@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import { useEffect, useState, Suspense } from 'react';
-import { getUser, getTodaysTasks, User, Task } from '@/lib/data';
+import { getUser, getTodaysTasks, User, Task } from '@/lib/data-browser';
 import Image from 'next/image';
 import PetViewer from '@/components/dashboard/pet-viewer';
 import { Card, CardContent } from '@/components/ui/card';

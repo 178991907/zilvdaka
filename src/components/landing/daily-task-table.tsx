@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableCaption } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
-import { Task, completeTaskAndUpdateXP, getTodaysTasks } from '@/lib/data';
+import { Task, completeTaskAndUpdateXP, getTodaysTasks } from '@/lib/data-browser';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { useSound } from '@/hooks/use-sound';
 import DigitalClock from '../dashboard/digital-clock';

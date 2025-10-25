@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env NEXT_PUBLIC_STORAGE_PROVIDER=local next dev -p 9002",
+    "dev": "next dev -p 9002",
     "genkit:dev": "genkit start src/ai/dev.ts",
     "genkit:watch": "genkit start --watch src/ai/dev.ts",
     "build": "next build",
@@ -42,7 +42,6 @@
     "@radix-ui/react-tooltip": "^1.1.8",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "cross-env": "^7.0.3",
     "date-fns": "^3.6.0",
     "dotenv": "^16.5.0",
     "embla-carousel-react": "^8.6.0",

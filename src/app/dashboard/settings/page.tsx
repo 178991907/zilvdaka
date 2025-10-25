@@ -14,7 +14,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useTheme } from 'next-themes';
 import PetPicker from '@/components/settings/pet-picker';
 import { useToast } from '@/hooks/use-toast';
-import { getUser, updateUser, User } from '@/lib/data';
+import { getUser, updateUser, User } from '@/lib/data-browser';
 import { Upload } from 'lucide-react';
 import Image from 'next/image';
 

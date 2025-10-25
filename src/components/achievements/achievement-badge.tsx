@@ -1,6 +1,6 @@
 'use client';
 
-import { Achievement, iconMap } from '@/lib/data';
+import { Achievement } from '@/lib/data-browser';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { Lock, Pencil, Star, Book, Brush, ShieldCheck, Trophy, Zap, Swords, Mountain, Flower, Gem, Bug } from 'lucide-react';

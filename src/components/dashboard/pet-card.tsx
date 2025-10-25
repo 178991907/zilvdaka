@@ -4,7 +4,7 @@ import { useState, useEffect, Suspense } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Skeleton } from '@/components/ui/skeleton';
-import { getUser, User } from '@/lib/data';
+import { getUser, User } from '@/lib/data-browser';
 import PetViewer from '@/components/dashboard/pet-viewer';
 import { ClientOnlyT } from '../layout/app-sidebar';
 

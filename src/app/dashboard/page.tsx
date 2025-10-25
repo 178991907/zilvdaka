@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Target, Zap, Info, Pencil } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { getUser, User, Task, getTasks } from '@/lib/data';
+import { getUser, User, Task, getTasks } from '@/lib/data-browser';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ProgressSummaryContent } from '@/components/dashboard/progress-summary';
 import DigitalClock from '@/components/dashboard/digital-clock';

@@ -8,7 +8,7 @@ import { ClientOnlyT } from '../layout/app-sidebar';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { getUser, updateUser, User } from '@/lib/data';
+import { getUser, updateUser, User } from '@/lib/data-browser';
 import type { PomodoroSettings, PomodoroMode } from '@/lib/data-types';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
@@ -60,10 +60,7 @@ export default function PomodoroPage() {
   const [user, setUser] = useState<User | null>(null);
   const [settings, setSettings] = useState<PomodoroSettings>(getInitialSettings(null));
   
-  const [timers, setTimers] = useState<TimerInstance[]>(() => {
-    const initialSettings = getInitialSettings(getUser());
-    return [createNewTimer(initialSettings)];
-  });
+  const [timers, setTimers] = useState<TimerInstance[]>([]);
 
   const [currentTimerIndex, setCurrentTimerIndex] = useState(0);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -72,7 +69,7 @@ export default function PomodoroPage() {
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
 
   const playSound = useSound();
-  const { t } = useTranslation();
+  const { t } } from useTranslation();
   
   const currentTimer = timers[currentTimerIndex];
 
@@ -81,7 +78,12 @@ export default function PomodoroPage() {
     setUser(currentUser);
     const newSettings = getInitialSettings(currentUser);
     setSettings(newSettings);
-  }, []);
+    
+    if (timers.length === 0) {
+      setTimers([createNewTimer(newSettings)]);
+    }
+
+  }, [timers.length]);
 
   useEffect(() => {
     setIsClient(true);
@@ -457,7 +459,7 @@ interface SettingsDialogProps {
 
 function SettingsDialog({ isOpen, setIsOpen, settings, onSave, onDeleteCurrentTimer, canDelete }: SettingsDialogProps) {
   const [currentSettings, setCurrentSettings] = useState(settings);
-  const { t } = useTranslation();
+  const { t } } = useTranslation();
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {

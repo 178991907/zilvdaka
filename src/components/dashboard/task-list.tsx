@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
-import { getTasks, completeTaskAndUpdateXP, type Task } from '@/lib/data';
+import { getTasks, completeTaskAndUpdateXP, type Task } from '@/lib/data-browser';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
