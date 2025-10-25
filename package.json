@@ -6,7 +6,8 @@
     "dev": "cross-env NEXT_PUBLIC_STORAGE_PROVIDER=local next dev -p 9002",
     "genkit:dev": "genkit start src/ai/dev.ts",
     "genkit:watch": "genkit start --watch src/ai/dev.ts",
-    "build": "next build && npx @cloudflare/next-on-pages",
+    "build": "next build",
+    "build:cloudflare": "npm run build && npx @cloudflare/next-on-pages",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit"
