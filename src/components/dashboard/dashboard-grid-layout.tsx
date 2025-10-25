@@ -50,7 +50,7 @@ const defaultLayouts = {
 
 const DashboardGridLayout = ({ children, isEditing }: { children: React.ReactNode, isEditing: boolean }) => {
   const [isMounted, setIsMounted] = useState(false);
-  const [layouts, setLayouts] = useState<{[key: string]: Layout[]}>(() => getFromLS('layouts') || defaultLayouts);
+  const [layouts, setLayouts] = useState<{[key: string]: Layout[]}>(defaultLayouts);
 
   useEffect(() => {
     setIsMounted(true);
@@ -68,8 +68,10 @@ const DashboardGridLayout = ({ children, isEditing }: { children: React.ReactNod
   }, []);
   
   const onLayoutChange = (layout: Layout[], allLayouts: { [key: string]: Layout[] }) => {
-    saveToLS('layouts', allLayouts);
-    setLayouts(allLayouts);
+    if (isMounted) {
+      saveToLS('layouts', allLayouts);
+      setLayouts(allLayouts);
+    }
   };
 
   if (!isMounted) {

@@ -69,10 +69,12 @@ export default function LandingPage() {
           <div className="flex flex-col md:flex-row items-end justify-center gap-8">
             {/* Left Column: Pet Viewer */}
             <div className="w-full md:w-1/2 flex flex-col items-center justify-center">
-              {user && (
+              {isClient && user ? (
                 <Suspense fallback={<Skeleton className="w-[350px] h-[350px] rounded-full" />}>
                   <PetViewer petStyle={user.petStyle} progress={petProgress} className="w-[350px] h-[350px]" />
                 </Suspense>
+              ) : (
+                <Skeleton className="w-[350px] h-[350px] rounded-full" />
               )}
             </div>
 

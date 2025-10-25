@@ -17,6 +17,7 @@ import { useToast } from '@/hooks/use-toast';
 import { getUser, updateUser, User } from '@/lib/data-browser';
 import { Upload } from 'lucide-react';
 import Image from 'next/image';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function SettingsPage() {
   const { t, i18n } = useTranslation();
@@ -31,10 +32,12 @@ export default function SettingsPage() {
   const [appLogo, setAppLogo] = useState('');
   
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
+  const [isClient, setIsClient] = useState(false);
 
   const { toast } = useToast();
 
   useEffect(() => {
+    setIsClient(true);
     const soundEnabled = localStorage.getItem('sound-effects-enabled') !== 'false';
     setIsSoundEnabled(soundEnabled);
   }, []);
@@ -99,8 +102,22 @@ export default function SettingsPage() {
     fileInputRef.current?.click();
   };
 
-  if (!currentUser) {
-    return null; // or a loading skeleton
+  if (!isClient || !currentUser) {
+    return (
+       <div className="flex flex-col">
+       <header className="sticky top-0 z-10 flex h-[57px] items-center justify-between gap-1 bg-background px-4">
+          <div className="flex items-center gap-1 w-full">
+            <SidebarTrigger className="md:hidden" />
+            <h1 className="text-xl font-semibold truncate"><ClientOnlyT tKey='settings.title' /></h1>
+          </div>
+        </header>
+        <main className="flex-1 p-4 md:p-8 space-y-8">
+            <Skeleton className="w-full h-96 rounded-lg" />
+            <Skeleton className="w-full h-64 rounded-lg" />
+            <Skeleton className="w-full h-48 rounded-lg" />
+        </main>
+      </div>
+    )
   }
 
   return (

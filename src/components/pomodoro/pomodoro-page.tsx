@@ -57,7 +57,6 @@ const createNewTimer = (settings: PomodoroSettings): TimerInstance => ({
 
 
 export default function PomodoroPage() {
-  const [user, setUser] = useState<User | null>(null);
   const [settings, setSettings] = useState<PomodoroSettings>(getInitialSettings(null));
   
   const [timers, setTimers] = useState<TimerInstance[]>([]);
@@ -69,13 +68,12 @@ export default function PomodoroPage() {
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
 
   const playSound = useSound();
-  const { t } } from useTranslation();
+  const { t } = useTranslation();
   
   const currentTimer = timers[currentTimerIndex];
 
   const updateUserAndSettings = useCallback(() => {
     const currentUser = getUser();
-    setUser(currentUser);
     const newSettings = getInitialSettings(currentUser);
     setSettings(newSettings);
     
@@ -433,7 +431,7 @@ export default function PomodoroPage() {
         </div>
       </div>
       
-      {isSettingsOpen && 
+      {isClient && 
         <SettingsDialog
           isOpen={isSettingsOpen}
           setIsOpen={setIsSettingsOpen}
@@ -459,7 +457,7 @@ interface SettingsDialogProps {
 
 function SettingsDialog({ isOpen, setIsOpen, settings, onSave, onDeleteCurrentTimer, canDelete }: SettingsDialogProps) {
   const [currentSettings, setCurrentSettings] = useState(settings);
-  const { t } } = useTranslation();
+  const { t } = useTranslation();
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {

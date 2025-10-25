@@ -27,6 +27,7 @@ import { useEffect, useState } from 'react';
 import i18n from '@/i18n'; // Import the i18n instance
 import { getUser, User } from '@/lib/data-browser';
 import Image from 'next/image';
+import { Skeleton } from '../ui/skeleton';
 
 // This wrapper prevents hydration errors by rendering the fallback language on the server
 // and only rendering the selected language on the client after hydration.
@@ -68,8 +69,10 @@ export default function AppSidebar() {
   const pathname = usePathname();
   const { t } = useTranslation();
   const [user, setUser] = useState<User | null>(null);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
     const handleUserUpdate = () => setUser(getUser());
     window.addEventListener('userProfileUpdated', handleUserUpdate);
     handleUserUpdate(); // Initial load
@@ -91,19 +94,23 @@ export default function AppSidebar() {
     <>
       <SidebarContent>
         <SidebarHeader>
-          {user?.appLogo ? (
-            <div className="w-full h-auto aspect-[3/1] rounded-lg overflow-hidden">
-                <Image src={user.appLogo} alt="App Logo" width={600} height={200} className="object-cover w-full h-full" />
-            </div>
-          ) : (
-            <div className="flex flex-col items-center justify-center gap-2 w-full">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary shrink-0">
-                <Star className="h-6 w-6 text-primary-foreground" />
+          {isClient && user ? (
+            user.appLogo ? (
+              <div className="w-full h-auto aspect-[3/1] rounded-lg overflow-hidden">
+                  <Image src={user.appLogo} alt="App Logo" width={600} height={200} className="object-cover w-full h-full" />
               </div>
-              <span className="font-bold text-xl font-headline text-foreground">
-                {user?.appName || <ClientOnlyT tKey="appName" />}
-              </span>
-            </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center gap-2 w-full">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary shrink-0">
+                  <Star className="h-6 w-6 text-primary-foreground" />
+                </div>
+                <span className="font-bold text-xl font-headline text-foreground">
+                  {user.appName || <ClientOnlyT tKey="appName" />}
+                </span>
+              </div>
+            )
+          ) : (
+             <Skeleton className="w-full aspect-[3/1] rounded-lg" />
           )}
         </SidebarHeader>
         <SidebarMenu className="pt-4">

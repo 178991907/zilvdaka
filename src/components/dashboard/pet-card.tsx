@@ -10,8 +10,10 @@ import { ClientOnlyT } from '../layout/app-sidebar';
 
 export default function PetCard() {
   const [user, setUser] = useState<User | null>(null);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
     const handleUserUpdate = () => {
       setUser(getUser());
     };
@@ -25,7 +27,7 @@ export default function PetCard() {
     };
   }, []);
 
-  if (!user) {
+  if (!isClient || !user) {
     return (
       <Card className="h-full flex flex-col">
         <CardContent className="p-6 flex-grow flex flex-col items-center justify-center">
@@ -40,7 +42,7 @@ export default function PetCard() {
     );
   }
 
-  const petProgress = user ? (user.xp / user.xpToNextLevel) * 100 : 0;
+  const petProgress = (user.xp / user.xpToNextLevel) * 100;
 
   return (
     <Card className="h-full flex flex-col overflow-hidden">
