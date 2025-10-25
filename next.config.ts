@@ -2,6 +2,8 @@ import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
   /* config options here */
+  output: 'standalone',
+  distDir: 'dist',
   experimental: {
     forceSwcTransforms: true,
   },
@@ -39,8 +41,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  distDir: 'dist',
-  output: 'standalone',
 };
 
 export default nextConfig;
