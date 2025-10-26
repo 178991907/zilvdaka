@@ -4,9 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 9002",
-    "genkit:dev": "genkit start src/ai/dev.ts",
-    "genkit:watch": "genkit start --watch src/ai/dev.ts",
-    "build": "open-next build",
+    "build": "next build",
+    "build:cloudflare": "open-next build",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit"
