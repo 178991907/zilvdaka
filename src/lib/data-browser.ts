@@ -88,7 +88,7 @@ if (typeof window !== 'undefined') {
 // --- Universal Data Functions ---
 
 export async function getUser(): Promise<User> {
-  if (!db) {
+  if (dbInitializationError) {
     console.warn("DB not available, falling back to local storage for getUser.");
     return readFromCache(LOCAL_STORAGE_USER_KEY) || getDefaultUser();
   }
@@ -121,7 +121,7 @@ export async function getUser(): Promise<User> {
 }
 
 export async function updateUser(newUserData: Partial<Omit<User, 'id'>>) {
-  if (!db) {
+  if (dbInitializationError) {
     const currentUser = readFromCache(LOCAL_STORAGE_USER_KEY) || getDefaultUser();
     const updatedUser = { ...currentUser, ...newUserData };
     writeToCache(LOCAL_STORAGE_USER_KEY, updatedUser);
@@ -175,7 +175,7 @@ export async function completeTaskAndUpdateXP(task: Task, completed: boolean) {
 }
 
 export async function getAchievements(): Promise<Achievement[]> {
-    if (!db) {
+    if (dbInitializationError) {
         return (readFromCache(LOCAL_STORAGE_ACHIEVEMENTS_KEY) || getDefaultAchievements()).map((a: any) => ({
             ...a,
             id: a.id.toString(),
@@ -189,7 +189,7 @@ export async function getAchievements(): Promise<Achievement[]> {
             await db.insert(achievementsSchema).values(defaultAchievements as any);
             userAchievements = await db.query.achievements.findMany({ where: eq(achievementsSchema.userId, HARDCODED_USER_ID) });
         }
-        return userAchievements.map(a => ({...a, id: a.id.toString()}));
+        return userAchievements.map(a => ({...a, id: a.id.toString(), dateUnlocked: a.dateUnlocked ? new Date(a.dateUnlocked) : undefined }));
     } catch (error) {
         console.error("Failed to fetch achievements from DB, falling back to localStorage.", error);
         return (readFromCache(LOCAL_STORAGE_ACHIEVEMENTS_KEY) || getDefaultAchievements()).map((a: any) => ({
@@ -201,25 +201,36 @@ export async function getAchievements(): Promise<Achievement[]> {
 }
 
 export async function updateAchievements(newAchievements: Achievement[]) {
-    if (!db) {
+    if (dbInitializationError) {
         writeToCache(LOCAL_STORAGE_ACHIEVEMENTS_KEY, newAchievements);
         return;
     }
     try {
-      for (const achievement of newAchievements) {
-        const { id, ...data } = achievement;
-        const record = {
-            ...data,
-            userId: HARDCODED_USER_ID,
-            dateUnlocked: data.dateUnlocked ? new Date(data.dateUnlocked) : null
-        };
+        const existingAchievements = await db.query.achievements.findMany({ where: eq(achievementsSchema.userId, HARDCODED_USER_ID) });
+        const existingIds = new Set(existingAchievements.map(a => a.id.toString()));
 
-        if (id && !id.toString().startsWith('custom-')) {
-            await db.update(achievementsSchema).set(record).where(eq(achievementsSchema.id, Number(id)));
-        } else {
-            await db.insert(achievementsSchema).values(record as any);
+        for (const achievement of newAchievements) {
+            const { id, ...data } = achievement;
+            const record = {
+                ...data,
+                userId: HARDCODED_USER_ID,
+                dateUnlocked: data.dateUnlocked ? new Date(data.dateUnlocked) : null
+            };
+
+            if (id && existingIds.has(id.toString()) && !id.toString().startsWith('custom-')) {
+                 await db.update(achievementsSchema).set(record).where(eq(achievementsSchema.id, Number(id)));
+            } else {
+                 await db.insert(achievementsSchema).values(record as any);
+            }
         }
-      }
+
+        const newIds = new Set(newAchievements.map(a => a.id ? a.id.toString() : null));
+        for (const existingAchievement of existingAchievements) {
+            if (!newIds.has(existingAchievement.id.toString())) {
+                await db.delete(achievementsSchema).where(eq(achievementsSchema.id, existingAchievement.id));
+            }
+        }
+
     } catch (error) {
         console.error("Failed to save achievements to DB", error);
     }
@@ -234,7 +245,7 @@ const mapDbTaskToAppTask = (dbTask: any): Task => ({
 });
 
 export async function getTasks(): Promise<Task[]> {
-  if (!db) {
+  if (dbInitializationError) {
       return (readFromCache(LOCAL_STORAGE_TASKS_KEY) || getDefaultTasks()).map(mapDbTaskToAppTask);
   }
   try {
@@ -253,23 +264,27 @@ export async function getTasks(): Promise<Task[]> {
 };
 
 export async function updateTasks(newTasks: Task[]) {
-    if (!db) {
+    if (dbInitializationError) {
         writeToCache(LOCAL_STORAGE_TASKS_KEY, newTasks);
         return;
     }
      try {
+        const existingTasks = await db.query.tasks.findMany({ where: eq(tasksSchema.userId, HARDCODED_USER_ID) });
+        const existingIds = new Set(existingTasks.map(t => t.id.toString()));
+
         for (const task of newTasks) {
            const { ...taskForDb } = task;
            const dataForDb = {
                 ...taskForDb,
                 recurrence: task.recurrence ? JSON.stringify(task.recurrence) : null,
             };
-            // @ts-ignore
-            if (task.id && !task.id.startsWith('default-') && !task.id.startsWith('local-')) {
+            if (task.id && existingIds.has(task.id.toString()) && !task.id.toString().startsWith('default-') && !task.id.toString().startsWith('local-')) {
                 await db.update(tasksSchema).set(dataForDb).where(eq(tasksSchema.id, Number(task.id)));
             } else {
                 const { id, ...newRecord } = dataForDb;
-                await db.insert(tasksSchema).values(newRecord as any);
+                if (!existingIds.has(id as string)) {
+                   await db.insert(tasksSchema).values(newRecord as any);
+                }
             }
         }
     } catch (error) {
@@ -277,24 +292,25 @@ export async function updateTasks(newTasks: Task[]) {
     }
 }
 
-export async function saveTask(taskData: Omit<Task, 'id' | 'userId'>, taskId?: string) {
-    if (!db) {
+export async function saveTask(taskData: Omit<Task, 'id' | 'userId' | 'icon'>, taskId?: string) {
+    const fullTaskData = { ...taskData, icon: taskData.category };
+    if (dbInitializationError) {
         const tasks = readFromCache(LOCAL_STORAGE_TASKS_KEY) || [];
         if (taskId) {
             const index = tasks.findIndex((t: Task) => t.id === taskId);
-            if (index > -1) tasks[index] = { ...tasks[index], ...taskData };
+            if (index > -1) tasks[index] = { ...tasks[index], ...fullTaskData };
         } else {
-            tasks.unshift({ ...taskData, id: `local-${Date.now()}`, completed: false, icon: taskData.category, userId: HARDCODED_USER_ID });
+            tasks.unshift({ ...fullTaskData, id: `local-${Date.now()}`, completed: false, userId: HARDCODED_USER_ID });
         }
         writeToCache(LOCAL_STORAGE_TASKS_KEY, tasks);
         return;
     }
 
     const dataForDb = {
-        ...taskData,
+        ...fullTaskData,
         userId: HARDCODED_USER_ID,
-        recurrence: taskData.recurrence ? JSON.stringify(taskData.recurrence) : null,
-        dueDate: taskData.dueDate || new Date(),
+        recurrence: fullTaskData.recurrence ? JSON.stringify(fullTaskData.recurrence) : null,
+        dueDate: fullTaskData.dueDate || new Date(),
     };
     
     if (taskId && !taskId.startsWith('local-') && !taskId.startsWith('default-')) {
@@ -305,7 +321,7 @@ export async function saveTask(taskData: Omit<Task, 'id' | 'userId'>, taskId?: s
 }
 
 export async function deleteTask(taskId: string) {
-    if (!db) {
+    if (dbInitializationError) {
         let tasks = readFromCache(LOCAL_STORAGE_TASKS_KEY) || [];
         tasks = tasks.filter((t: Task) => t.id !== taskId);
         writeToCache(LOCAL_STORAGE_TASKS_KEY, tasks);
