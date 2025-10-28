@@ -4,30 +4,13 @@ import { useState, useEffect, Suspense } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Skeleton } from '@/components/ui/skeleton';
-import { getUser, User } from '@/lib/data-browser';
+import { User } from '@/lib/data-browser';
 import PetViewer from '@/components/dashboard/pet-viewer';
 import { ClientOnlyT } from '../layout/app-sidebar';
 
-export default function PetCard() {
-  const [user, setUser] = useState<User | null>(null);
-  const [isClient, setIsClient] = useState(false);
+export default function PetCard({ user }: { user: User | null }) {
 
-  useEffect(() => {
-    setIsClient(true);
-    const handleUserUpdate = () => {
-      setUser(getUser());
-    };
-
-    handleUserUpdate(); // Initial load
-
-    window.addEventListener('userProfileUpdated', handleUserUpdate);
-
-    return () => {
-      window.removeEventListener('userProfileUpdated', handleUserUpdate);
-    };
-  }, []);
-
-  if (!isClient || !user) {
+  if (!user) {
     return (
       <Card className="h-full flex flex-col">
         <CardContent className="p-6 flex-grow flex flex-col items-center justify-center">

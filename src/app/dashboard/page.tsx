@@ -29,24 +29,15 @@ export default function DashboardPage() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    const loadData = () => {
-      setUser(getUser());
-      setTasks(getTasks());
-      setIsClient(true);
+    setIsClient(true);
+    const loadData = async () => {
+        const [userData, tasksData] = await Promise.all([getUser(), getTasks()]);
+        setUser(userData);
+        setTasks(tasksData);
     };
 
     loadData();
 
-    const handleUserUpdate = () => setUser(getUser());
-    const handleTasksUpdate = () => setTasks(getTasks());
-
-    window.addEventListener('userProfileUpdated', handleUserUpdate);
-    window.addEventListener('tasksUpdated', handleTasksUpdate);
-
-    return () => {
-      window.removeEventListener('userProfileUpdated', handleUserUpdate);
-      window.removeEventListener('tasksUpdated', handleTasksUpdate);
-    };
   }, []);
 
   const completedTasks = tasks.filter(t => t.completed && new Date(t.dueDate).toDateString() === new Date().toDateString()).length;
@@ -87,10 +78,10 @@ export default function DashboardPage() {
         <main className="flex-grow p-4 md:p-8">
             <DashboardGridLayout isEditing={isEditing}>
                 <div key="pet">
-                    <PetCard />
+                    <PetCard user={user} />
                 </div>
                 <div key="tasks">
-                    <TaskList />
+                    <TaskList tasks={tasks} setTasks={setTasks} />
                 </div>
                 <div key="dailyGoal">
                     <Card className="h-full">
