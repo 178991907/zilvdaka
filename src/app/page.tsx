@@ -1,4 +1,5 @@
 
+
 'use server';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -62,7 +63,7 @@ export default async function LandingPage() {
             {/* Right Column: Stats */}
             <div className="w-full md:w-1/2 flex flex-col items-center gap-4">
               <div className="w-full">
-                {
+                
                   <Card>
                     <CardContent className="p-4">
                       <ProgressSummaryContent
@@ -73,7 +74,7 @@ export default async function LandingPage() {
                       />
                     </CardContent>
                   </Card>
-                }
+                
               </div>
               <div className="w-full">
                 {user ? (
