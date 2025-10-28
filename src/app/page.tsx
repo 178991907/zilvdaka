@@ -65,7 +65,7 @@ export default async function LandingPage() {
                   <Card>
                     <CardContent className="p-4">
                       <ProgressSummaryContent
-                        icon={Target}
+                        iconName="Target"
                         title={<ClientOnlyT tKey="dashboard.dailyGoal" />}
                         value={`${Math.round(dailyProgress)}%`}
                         description={<ClientOnlyT tKey="dashboard.dailyGoalDescription" tOptions={{ completedTasks, totalTasks }} />}
@@ -79,7 +79,7 @@ export default async function LandingPage() {
                   <Card>
                     <CardContent className="p-4">
                       <ProgressSummaryContent
-                        icon={Zap}
+                        iconName="Zap"
                         title={<ClientOnlyT tKey="dashboard.xpGained" />}
                         value={`${user.xp} XP`}
                         description={<ClientOnlyT tKey="dashboard.xpToNextLevel" tOptions={{ xp: user.xpToNextLevel - user.xp }} />}

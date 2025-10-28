@@ -1,11 +1,17 @@
 'use client';
 import { CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { LucideIcon } from 'lucide-react';
+import { LucideIcon, Target, Zap, Info } from 'lucide-react';
 import { ReactNode } from 'react';
 
+const iconMap: { [key: string]: LucideIcon } = {
+  Target,
+  Zap,
+  Info,
+};
+
 interface ProgressSummaryProps {
-  icon: LucideIcon;
+  iconName: string;
   title: ReactNode;
   value: string;
   description: ReactNode;
@@ -13,19 +19,21 @@ interface ProgressSummaryProps {
 }
 
 export function ProgressSummaryContent({
-  icon: Icon,
+  iconName,
   title,
   value,
   description,
   progress,
 }: ProgressSummaryProps) {
+    const Icon = iconMap[iconName];
+
     return (
         <div>
             <div className="flex items-center justify-between pb-2">
                  <div className="text-lg font-semibold leading-none tracking-tight">
                     {title}
                 </div>
-                <Icon className="h-5 w-5 text-muted-foreground" />
+                {Icon && <Icon className="h-5 w-5 text-muted-foreground" />}
             </div>
             <div className="text-2xl font-bold">
                 {value}

@@ -87,7 +87,7 @@ export default function DashboardPage() {
                     <Card className="h-full">
                         <CardContent className="p-4 h-full flex flex-col justify-center">
                             <ProgressSummaryContent
-                                icon={Target}
+                                iconName="Target"
                                 title={<ClientOnlyT tKey="dashboard.dailyGoal" />}
                                 value={`${Math.round(dailyProgress)}%`}
                                 description={<ClientOnlyT tKey="dashboard.dailyGoalDescription" tOptions={{ completedTasks, totalTasks }} />}
@@ -99,7 +99,7 @@ export default function DashboardPage() {
                     <Card className="h-full">
                         <CardContent className="p-4 h-full flex flex-col justify-center">
                             <ProgressSummaryContent
-                                icon={Zap}
+                                iconName="Zap"
                                 title={<ClientOnlyT tKey="dashboard.xpGained" />}
                                 value={`${user ? user.xp : 0} XP`}
                                 description={<ClientOnlyT tKey="dashboard.xpToNextLevel" tOptions={{ xp: user ? user.xpToNextLevel - user.xp : '...' }} />}
