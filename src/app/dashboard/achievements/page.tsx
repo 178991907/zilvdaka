@@ -20,14 +20,16 @@ export default function AchievementsPage() {
 
 
   useEffect(() => {
-    // Only run on client
-    const loadedAchievements = getAchievements();
-    setAchievements(loadedAchievements);
-    setIsClient(true);
+    const fetchAchievements = async () => {
+        const loadedAchievements = await getAchievements();
+        setAchievements(loadedAchievements);
+        setIsClient(true);
+    };
+    fetchAchievements();
 
-    const handleAchievementsUpdate = () => {
-      const updatedAchievements = getAchievements();
-      setAchievements(updatedAchievements);
+    const handleAchievementsUpdate = async () => {
+        const updatedAchievements = await getAchievements();
+        setAchievements(updatedAchievements);
     };
 
     window.addEventListener('achievementsUpdated', handleAchievementsUpdate);
@@ -50,15 +52,15 @@ export default function AchievementsPage() {
     setDeletingAchievement(achievement);
   };
 
-  const handleDeleteConfirm = () => {
+  const handleDeleteConfirm = async () => {
     if (deletingAchievement) {
       const updated = achievements.filter(a => a.id !== deletingAchievement.id);
-      updateAchievements(updated);
+      await updateAchievements(updated);
       setDeletingAchievement(null);
     }
   };
 
-  const handleSave = (savedAchievement: Achievement) => {
+  const handleSave = async (savedAchievement: Achievement) => {
     const isNew = !achievements.some(a => a.id === savedAchievement.id);
     let updatedAchievements;
     if (isNew) {
@@ -68,7 +70,7 @@ export default function AchievementsPage() {
         a.id === savedAchievement.id ? savedAchievement : a
       );
     }
-    updateAchievements(updatedAchievements);
+    await updateAchievements(updatedAchievements);
   };
 
   const unlockedCount = achievements.filter(a => a.unlocked).length;

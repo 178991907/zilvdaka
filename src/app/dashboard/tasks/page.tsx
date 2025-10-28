@@ -4,12 +4,11 @@ import TasksTable from '@/components/tasks/tasks-table';
 import { AddTaskDialog } from '@/components/tasks/add-task-dialog';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { useState, useEffect } from 'react';
-import { Task, getTasks, updateTasks } from '@/lib/data-browser';
+import { Task, getTasks, deleteTask, saveTask, updateTasks } from '@/lib/data-browser';
 import { PlusCircle } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-
 
 export default function TasksPage() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -18,13 +17,17 @@ export default function TasksPage() {
   const [deletingTask, setDeletingTask] = useState<Task | null>(null);
   const [isClient, setIsClient] = useState(false);
 
-  useEffect(() => {
-    const loadedTasks = getTasks();
+  const fetchTasks = async () => {
+    const loadedTasks = await getTasks();
     setTasks(loadedTasks);
+  };
+
+  useEffect(() => {
+    fetchTasks();
     setIsClient(true);
 
     const handleTasksUpdate = () => {
-      setTasks(getTasks());
+      fetchTasks();
     };
     window.addEventListener('tasksUpdated', handleTasksUpdate);
     return () => {
@@ -38,53 +41,35 @@ export default function TasksPage() {
     setIsDialogOpen(true);
   };
   
-  const handleSaveTask = (taskData: Omit<Task, 'id' | 'icon' | 'completed' | 'dueDate'>, taskId?: string) => {
-    let updatedTasks;
-    if (taskId) {
-      // Update existing task
-       updatedTasks = tasks.map(t => 
-        t.id === taskId 
-        ? { ...t, ...taskData } 
-        : t
-      );
-    } else {
-      // Add new task
-      const newTask: Task = {
-        id: `custom-${Date.now()}`,
-        ...taskData,
-        // @ts-ignore icon will be added by updateTasks
-        icon: undefined,
-        completed: false,
-        dueDate: new Date(),
-      };
-      updatedTasks = [newTask, ...tasks];
-    }
-    updateTasks(updatedTasks);
+  const handleSaveTask = async (taskData: Omit<Task, 'id' | 'icon' | 'userId'>, taskId?: string) => {
+    await saveTask(taskData, taskId);
+    fetchTasks(); // Re-fetch tasks from the source of truth
   };
 
   const handleDeleteRequest = (task: Task) => {
     setDeletingTask(task);
   };
 
-  const handleDeleteConfirm = () => {
+  const handleDeleteConfirm = async () => {
     if (deletingTask) {
-      const updatedTasks = tasks.filter(task => task.id !== deletingTask.id);
-      updateTasks(updatedTasks);
+      await deleteTask(deletingTask.id);
+      fetchTasks();
       setDeletingTask(null);
     }
   };
   
-  const handleToggleStatus = (taskId: string) => {
-    const updatedTasks = tasks.map(task =>
-      task.id === taskId
-        ? { ...task, status: task.status === 'active' ? 'paused' : 'active' }
-        : task
-    );
-    updateTasks(updatedTasks);
+  const handleToggleStatus = async (taskId: string) => {
+    const taskToToggle = tasks.find(task => task.id === taskId);
+    if (taskToToggle) {
+        const newStatus = taskToToggle.status === 'active' ? 'paused' : 'active';
+        await saveTask({ ...taskToToggle, status: newStatus }, taskId);
+        fetchTasks();
+    }
   };
 
-  const handleSetTasks = (newTasks: Task[]) => {
-    updateTasks(newTasks);
+  const handleSetTasks = async (newTasks: Task[]) => {
+    await updateTasks(newTasks);
+    fetchTasks();
   }
 
   return (

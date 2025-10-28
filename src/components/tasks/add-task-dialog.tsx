@@ -1,3 +1,4 @@
+
 'use client';
 import { Button } from '@/components/ui/button';
 import {
@@ -25,7 +26,7 @@ import { Task } from '@/lib/data-browser';
 import { Switch } from '../ui/switch';
 
 type AddTaskDialogProps = {
-  onSave: (task: Omit<Task, 'id' | 'icon' | 'completed' | 'dueDate'>, taskId?: string) => void;
+  onSave: (task: Omit<Task, 'id' | 'userId'>, taskId?: string) => void;
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
   task: Task | null;
@@ -91,12 +92,15 @@ export function AddTaskDialog({ onSave, isOpen, setIsOpen, task }: AddTaskDialog
       return;
     }
     
-    const taskData: Omit<Task, 'id' | 'icon' | 'completed' | 'dueDate'> = { 
+    const taskData: Omit<Task, 'id' | 'userId' > = { 
       title: name, 
       category, 
+      icon: category,
       difficulty, 
       time,
       status,
+      completed: task?.completed || false,
+      dueDate: task?.dueDate || new Date(),
     };
 
     if (isRecurring) {

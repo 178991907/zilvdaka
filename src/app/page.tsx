@@ -1,8 +1,8 @@
-'use client';
+
+'use server';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { motion } from 'framer-motion';
-import { useEffect, useState, Suspense } from 'react';
+import { Suspense } from 'react';
 import { getUser, getTodaysTasks, User, Task } from '@/lib/data-browser';
 import Image from 'next/image';
 import PetViewer from '@/components/dashboard/pet-viewer';
@@ -13,33 +13,9 @@ import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { Skeleton } from '@/components/ui/skeleton';
 import DailyTaskTable from '@/components/landing/daily-task-table';
 
-export default function LandingPage() {
-  const [user, setUser] = useState<User | null>(null);
-  const [tasks, setTasks] = useState<Task[]>([]);
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    const loadData = () => {
-      setUser(getUser());
-      setTasks(getTodaysTasks());
-      setIsClient(true);
-    };
-
-    loadData();
-
-    const handleUpdate = () => {
-      setUser(getUser());
-      setTasks(getTodaysTasks());
-    };
-
-    window.addEventListener('userProfileUpdated', handleUpdate);
-    window.addEventListener('tasksUpdated', handleUpdate);
-
-    return () => {
-      window.removeEventListener('userProfileUpdated', handleUpdate);
-      window.removeEventListener('tasksUpdated', handleUpdate);
-    };
-  }, []);
+export default async function LandingPage() {
+  const user: User = await getUser();
+  const tasks: Task[] = await getTodaysTasks();
 
   const completedTasks = tasks.filter(t => t.completed).length;
   const totalTasks = tasks.length;
@@ -53,11 +29,15 @@ export default function LandingPage() {
         <div className="flex items-center gap-2 w-1/3">
         </div>
         <div className="flex justify-center w-1/3">
-          <Image src="https://pic1.imgdb.cn/item/6817c79a58cb8da5c8dc723f.png" alt="Logo" width={360} height={114} priority className="h-[114px] w-auto" />
+           {user.appLogo ? (
+              <Image src={user.appLogo} alt="App Logo" width={360} height={114} priority className="h-auto w-auto max-h-[114px] max-w-[360px]" />
+           ) : (
+             <Image src="https://pic1.imgdb.cn/item/6817c79a58cb8da5c8dc723f.png" alt="Logo" width={360} height={114} priority className="h-[114px] w-auto" />
+           )}
         </div>
         <nav className="flex justify-end w-1/3">
           <Button asChild>
-            <Link href="/dashboard/settings">
+            <Link href="/dashboard">
                 <ClientOnlyT tKey="dashboardLink" />
             </Link>
           </Button>
@@ -69,7 +49,7 @@ export default function LandingPage() {
           <div className="flex flex-col md:flex-row items-end justify-center gap-8">
             {/* Left Column: Pet Viewer */}
             <div className="w-full md:w-1/2 flex flex-col items-center justify-center">
-              {isClient && user ? (
+              {user ? (
                 <Suspense fallback={<Skeleton className="w-[350px] h-[350px] rounded-full" />}>
                   <PetViewer petStyle={user.petStyle} progress={petProgress} className="w-[350px] h-[350px]" />
                 </Suspense>
@@ -81,7 +61,7 @@ export default function LandingPage() {
             {/* Right Column: Stats */}
             <div className="w-full md:w-1/2 flex flex-col items-center gap-4">
               <div className="w-full">
-                {isClient ? (
+                {
                   <Card>
                     <CardContent className="p-4">
                       <ProgressSummaryContent
@@ -92,12 +72,10 @@ export default function LandingPage() {
                       />
                     </CardContent>
                   </Card>
-                ) : (
-                  <Skeleton className="h-24 w-full" />
-                )}
+                }
               </div>
               <div className="w-full">
-                {isClient && user ? (
+                {user ? (
                   <Card>
                     <CardContent className="p-4">
                       <ProgressSummaryContent
@@ -117,7 +95,7 @@ export default function LandingPage() {
           </div>
 
           <div className="mt-8">
-            <DailyTaskTable />
+            <DailyTaskTable initialTasks={tasks} />
           </div>
 
         </div>

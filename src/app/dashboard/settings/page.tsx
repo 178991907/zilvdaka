@@ -36,24 +36,24 @@ export default function SettingsPage() {
 
   const { toast } = useToast();
 
+  const handleUserUpdate = async () => {
+    const user = await getUser();
+    setCurrentUser(user);
+    if (user) {
+        setName(user.name);
+        setPetName(user.petName);
+        setSelectedAvatar(user.avatar);
+        setSelectedPet(user.petStyle);
+        setAppLogo(user.appLogo || '');
+    }
+  };
+
   useEffect(() => {
     setIsClient(true);
     const soundEnabled = localStorage.getItem('sound-effects-enabled') !== 'false';
     setIsSoundEnabled(soundEnabled);
-  }, []);
-
-  useEffect(() => {
-    const handleUserUpdate = () => {
-      const user = getUser();
-      setCurrentUser(user);
-      setName(user.name);
-      setPetName(user.petName);
-      setSelectedAvatar(user.avatar);
-      setSelectedPet(user.petStyle);
-      setAppLogo(user.appLogo || '');
-    };
-
-    handleUserUpdate(); // Initial load
+    
+    handleUserUpdate();
 
     window.addEventListener('userProfileUpdated', handleUserUpdate);
 
@@ -61,7 +61,6 @@ export default function SettingsPage() {
       window.removeEventListener('userProfileUpdated', handleUserUpdate);
     };
   }, []);
-
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
@@ -72,8 +71,8 @@ export default function SettingsPage() {
     localStorage.setItem('sound-effects-enabled', String(checked));
   };
 
-  const handleSaveChanges = () => {
-    updateUser({
+  const handleSaveChanges = async () => {
+    await updateUser({
       name: name,
       petName: petName,
       avatar: selectedAvatar,
@@ -85,6 +84,8 @@ export default function SettingsPage() {
       title: t('settings.profile.saveSuccessTitle'),
       description: t('settings.profile.saveSuccessDescription'),
     });
+    // Trigger a manual refresh of user data everywhere
+    window.dispatchEvent(new CustomEvent('userProfileUpdated'));
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {

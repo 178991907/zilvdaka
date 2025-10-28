@@ -13,7 +13,7 @@ export type Task = {
   id: string;
   title: string;
   category: string;
-  icon: LucideIcon;
+  icon: string; // Changed from LucideIcon to string
   difficulty: 'Easy' | 'Medium' | 'Hard';
   completed: boolean;
   status: 'active' | 'paused';

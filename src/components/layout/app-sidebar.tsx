@@ -73,7 +73,10 @@ export default function AppSidebar() {
 
   useEffect(() => {
     setIsClient(true);
-    const handleUserUpdate = () => setUser(getUser());
+    const handleUserUpdate = async () => {
+        const userData = await getUser();
+        setUser(userData);
+    };
     window.addEventListener('userProfileUpdated', handleUserUpdate);
     handleUserUpdate(); // Initial load
     return () => window.removeEventListener('userProfileUpdated', handleUserUpdate);

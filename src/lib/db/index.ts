@@ -1,11 +1,22 @@
 import { drizzle } from 'drizzle-orm/neon-http';
-import { neon } from '@neondatabase/serverless';
+import { neon, type NeonHttpDatabase } from '@neondatabase/serverless';
 import * as schema from './schema';
 import 'dotenv/config';
 
-if (!process.env.DATABASE_URL) {
-  throw new Error('DATABASE_URL is not set in .env file');
+let db: NeonHttpDatabase<typeof schema> | null = null;
+let dbInitializationError: Error | null = null;
+
+try {
+  if (process.env.DATABASE_URL) {
+    const sql = neon(process.env.DATABASE_URL);
+    db = drizzle(sql, { schema });
+  } else {
+    console.warn("DATABASE_URL is not set. Database operations will be disabled. Falling back to localStorage.");
+  }
+} catch (error) {
+  dbInitializationError = error as Error;
+  console.error("Failed to initialize database:", dbInitializationError);
+  db = null;
 }
 
-const sql = neon(process.env.DATABASE_URL);
-export const db = drizzle(sql, { schema });
+export { db, dbInitializationError };

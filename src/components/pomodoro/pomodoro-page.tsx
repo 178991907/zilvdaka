@@ -72,8 +72,8 @@ export default function PomodoroPage() {
   
   const currentTimer = timers[currentTimerIndex];
 
-  const updateUserAndSettings = useCallback(() => {
-    const currentUser = getUser();
+  const updateUserAndSettings = useCallback(async () => {
+    const currentUser = await getUser();
     const newSettings = getInitialSettings(currentUser);
     setSettings(newSettings);
     
@@ -197,7 +197,7 @@ export default function PomodoroPage() {
     setIsSettingsOpen(false);
   };
 
-  const handleSaveSettings = (newSettings: PomodoroSettings) => {
+  const handleSaveSettings = async (newSettings: PomodoroSettings) => {
     if (newSettings.modes.length === 0) {
       newSettings.modes.push({ id: `custom-${Date.now()}`, name: 'Work', duration: 25 });
     }
@@ -205,7 +205,8 @@ export default function PomodoroPage() {
       newSettings.longBreakInterval = 1;
     }
     
-    updateUser({ pomodoroSettings: newSettings });
+    await updateUser({ pomodoroSettings: newSettings });
+    setSettings(newSettings); // Immediately update local settings
 
     setTimers(prev => prev.map(timer => {
         const currentModeId = settings.modes[timer.modeIndex]?.id;

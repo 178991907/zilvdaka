@@ -2,7 +2,6 @@
 'use client';
 
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Tooltip } from 'recharts';
-import { reportData } from '@/lib/data-browser';
 import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from '../ui/chart';
 
 const chartConfig = {
@@ -11,6 +10,16 @@ const chartConfig = {
     color: "hsl(var(--primary))",
   },
 } satisfies ChartConfig;
+
+const reportData = [
+    { date: 'Mon', completed: 3 },
+    { date: 'Tue', completed: 4 },
+    { date: 'Wed', completed: 2 },
+    { date: 'Thu', completed: 5 },
+    { date: 'Fri', completed: 4 },
+    { date: 'Sat', completed: 6 },
+    { date: 'Sun', completed: 5 },
+];
 
 export default function ProgressChart() {
   return (

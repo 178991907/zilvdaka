@@ -24,8 +24,9 @@ export function UserNav() {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const handleProfileUpdate = () => {
-      setUser(getUser());
+    const handleProfileUpdate = async () => {
+      const userData = await getUser();
+      setUser(userData);
     };
 
     window.addEventListener('userProfileUpdated', handleProfileUpdate);

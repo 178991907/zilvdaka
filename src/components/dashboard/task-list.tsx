@@ -1,8 +1,10 @@
+
 'use client';
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { completeTaskAndUpdateXP, type Task } from '@/lib/data-browser';
+import { iconMap } from '@/lib/data-types';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
@@ -59,7 +61,9 @@ export default function TaskList({ tasks, setTasks }: TaskListProps) {
       <CardContent className="flex-grow pt-0 overflow-y-auto">
         <AnimatePresence>
           {todaysTasks.length > 0 ? (
-            todaysTasks.map((task, index) => (
+            todaysTasks.map((task, index) => {
+              const Icon = iconMap[task.icon];
+              return (
               <motion.div
                 key={task.id}
                 layout
@@ -91,10 +95,10 @@ export default function TaskList({ tasks, setTasks }: TaskListProps) {
                   {task.title}
                 </label>
                 <div className="flex items-center justify-center h-8 w-8 rounded-full bg-primary/10">
-                  <task.icon className="h-5 w-5 text-primary" />
+                  {Icon && <Icon className="h-5 w-5 text-primary" />}
                 </div>
               </motion.div>
-            ))
+            )})
           ) : (
             <div className="h-full flex items-center justify-center">
               <p className="text-muted-foreground text-center py-8">

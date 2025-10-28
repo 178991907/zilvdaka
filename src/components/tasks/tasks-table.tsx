@@ -1,3 +1,4 @@
+
 'use client';
 
 import * as React from 'react';
@@ -11,6 +12,7 @@ import {
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Task } from '@/lib/data-browser';
+import { iconMap } from '@/lib/data-types';
 import { Button } from '@/components/ui/button';
 import { MoreHorizontal, Pencil, Trash2, Play, Pause } from 'lucide-react';
 import {
@@ -113,7 +115,9 @@ export default function TasksTable({ tasks, setTasks, onEdit, onDelete, onToggle
           </TableRow>
         </TableHeader>
         <TableBody>
-          {tasks.map(task => (
+          {tasks.map(task => {
+            const Icon = iconMap[task.icon];
+            return (
             <TableRow key={task.id} className={cn(task.status === 'paused' && 'text-muted-foreground bg-muted/30')}>
               <TableCell>
                  <Checkbox
@@ -123,7 +127,7 @@ export default function TasksTable({ tasks, setTasks, onEdit, onDelete, onToggle
                   />
               </TableCell>
               <TableCell className="font-medium flex items-center gap-3">
-                 {task.icon && <task.icon className="h-5 w-5" />}
+                 {Icon && <Icon className="h-5 w-5" />}
                  {task.title}
               </TableCell>
               <TableCell>
@@ -175,7 +179,7 @@ export default function TasksTable({ tasks, setTasks, onEdit, onDelete, onToggle
                 </DropdownMenu>
               </TableCell>
             </TableRow>
-          ))}
+          )})}
         </TableBody>
       </Table>
     </div>
