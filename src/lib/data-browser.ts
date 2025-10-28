@@ -91,7 +91,6 @@ const mapDbUserToAppUser = (user: any): User => {
 
 export async function getUser(): Promise<User> {
   if (dbInitializationError) {
-    console.warn("DB not available, falling back to local storage for getUser.");
     return getClientUser(); 
   }
   try {
