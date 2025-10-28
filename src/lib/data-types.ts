@@ -1,7 +1,6 @@
-
 // src/lib/data-types.ts
 import type { LucideIcon } from 'lucide-react';
-import { Book, Brush, Bed, Atom, Bike, Dumbbell } from 'lucide-react';
+import { Book, Brush, Bed, Atom, Bike, Dumbbell, Gift } from 'lucide-react';
 
 export type Recurrence = {
   interval: number;
@@ -11,9 +10,10 @@ export type Recurrence = {
 
 export type Task = {
   id: string;
+  userId: string;
   title: string;
   category: string;
-  icon: string; // Changed from LucideIcon to string
+  icon: string;
   difficulty: 'Easy' | 'Medium' | 'Hard';
   completed: boolean;
   status: 'active' | 'paused';
@@ -24,6 +24,7 @@ export type Task = {
 
 export type Achievement = {
   id:string;
+  userId: string;
   title: string;
   description: string;
   icon: string;
@@ -46,6 +47,7 @@ export type PomodoroSettings = {
 };
 
 export type User = {
+  id: string;
   name: string;
   avatar: string;
   level: number;
@@ -70,4 +72,5 @@ export const iconMap: { [key: string]: LucideIcon } = {
   School: Atom,
   Activity: Bike,
   Bed: Bed,
+  Gift: Gift,
 };

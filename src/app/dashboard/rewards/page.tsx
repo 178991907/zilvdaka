@@ -1,3 +1,4 @@
+
 'use client';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Card, CardContent, CardTitle, CardDescription } from '@/components/ui/card';
@@ -7,28 +8,41 @@ import { Label } from '@/components/ui/label';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
 import { PlusCircle, Trash2 } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import Image from 'next/image';
+import { Achievement, getAchievements, updateAchievements } from '@/lib/data-browser';
+import { Skeleton } from '@/components/ui/skeleton';
 
-type Reward = {
-  name: string;
-  tasksRequired?: number;
-  daysRequired?: number;
-};
 
 export default function RewardsPage() {
   const { t } = useTranslation();
-  const [rewards, setRewards] = useState<Reward[]>([
-    { name: '30 minutes of screen time', tasksRequired: 5 },
-    { name: 'Ice cream trip', tasksRequired: 10 },
-  ]);
+  const [rewards, setRewards] = useState<Achievement[]>([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [newRewardName, setNewRewardName] = useState('');
   const [newTasksRequired, setNewTasksRequired] = useState('');
   const [newDaysRequired, setNewDaysRequired] = useState('');
+  const [isClient, setIsClient] = useState(false);
 
-  const getRewardDescription = (reward: Reward): { tKey: string, tOptions?: any } => {
+  useEffect(() => {
+    const fetchRewards = async () => {
+      const allAchievements = await getAchievements();
+      // Rewards are custom achievements
+      const customAchievements = allAchievements.filter(a => a.id.startsWith('custom-'));
+      setRewards(customAchievements);
+      setIsClient(true);
+    };
+
+    fetchRewards();
+
+    const handleUpdate = () => fetchRewards();
+    window.addEventListener('achievementsUpdated', handleUpdate);
+    return () => {
+      window.removeEventListener('achievementsUpdated', handleUpdate);
+    };
+  }, []);
+
+  const getRewardDescription = (reward: Achievement): { tKey: string, tOptions?: any } => {
     const tasks = reward.tasksRequired;
     const days = reward.daysRequired;
 
@@ -42,17 +56,24 @@ export default function RewardsPage() {
     return { tKey: 'settings.parentalControls.noRequirement' };
   };
 
-  const handleAddReward = () => {
+  const handleAddReward = async () => {
     if (!newRewardName.trim()) return;
 
-    const newReward: Reward = {
-      name: newRewardName.trim(),
+    const newReward: Achievement = {
+      id: `custom-${Date.now()}`,
+      title: newRewardName.trim(),
+      description: 'Custom user reward',
+      icon: 'Gift', // Using a default icon for rewards
+      unlocked: false,
       tasksRequired: newTasksRequired ? parseInt(newTasksRequired, 10) : undefined,
       daysRequired: newDaysRequired ? parseInt(newDaysRequired, 10) : undefined,
     };
-
+    
+    const allAchievements = await getAchievements();
+    const updatedAchievements = [...allAchievements, newReward];
+    await updateAchievements(updatedAchievements);
+    
     setRewards(prev => [...prev, newReward]);
-
     // Reset fields and close dialog
     setNewRewardName('');
     setNewTasksRequired('');
@@ -60,9 +81,28 @@ export default function RewardsPage() {
     setIsDialogOpen(false);
   };
 
-  const handleDeleteReward = (indexToDelete: number) => {
-    setRewards(prev => prev.filter((_, index) => index !== indexToDelete));
+  const handleDeleteReward = async (idToDelete: string) => {
+    const allAchievements = await getAchievements();
+    const updatedAchievements = allAchievements.filter(a => a.id !== idToDelete);
+    await updateAchievements(updatedAchievements);
+    setRewards(prev => prev.filter((reward) => reward.id !== idToDelete));
   };
+  
+  if (!isClient) {
+     return (
+       <div className="flex flex-col">
+         <header className="sticky top-0 z-10 flex h-[57px] items-center justify-between gap-1 bg-background px-4">
+            <div className="flex items-center gap-1 w-full">
+              <SidebarTrigger className="md:hidden" />
+              <h1 className="text-xl font-semibold truncate"><ClientOnlyT tKey='rewards.title' /></h1>
+            </div>
+          </header>
+        <main className="flex-1 p-4 md:p-8">
+            <Skeleton className="w-full h-96 rounded-lg" />
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col">
@@ -147,12 +187,12 @@ export default function RewardsPage() {
                            return (
                            <div key={index} className="flex items-center justify-between p-2 rounded-md hover:bg-muted/50">
                                 <div>
-                                    <p className="font-medium">{reward.name}</p>
+                                    <p className="font-medium">{reward.title}</p>
                                     <p className="text-sm text-muted-foreground">
                                         <ClientOnlyT tKey={tKey} tOptions={tOptions} />
                                     </p>
                                 </div>
-                                <Button variant="ghost" size="icon" className="text-destructive" onClick={() => handleDeleteReward(index)}>
+                                <Button variant="ghost" size="icon" className="text-destructive" onClick={() => handleDeleteReward(reward.id)}>
                                     <Trash2 className="h-4 w-4" />
                                 </Button>
                            </div>

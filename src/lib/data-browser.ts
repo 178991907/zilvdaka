@@ -3,7 +3,7 @@
 
 import { db, dbInitializationError } from '@/lib/db';
 import { users, tasks as tasksSchema, achievements as achievementsSchema } from '@/lib/db/schema';
-import { eq } from 'drizzle-orm';
+import { eq, and } from 'drizzle-orm';
 import type { User, Task, Achievement, PomodoroSettings } from './data-types';
 import { PetInfos } from './pets';
 
@@ -85,6 +85,15 @@ if (typeof window !== 'undefined') {
     if (!readFromCache(LOCAL_STORAGE_ACHIEVEMENTS_KEY)) writeToCache(LOCAL_STORAGE_ACHIEVEMENTS_KEY, getDefaultAchievements());
 }
 
+const mapDbUserToAppUser = (user: any): User => {
+  if (!user) return getDefaultUser();
+  const parsedPomodoroSettings = typeof user.pomodoroSettings === 'string' 
+      ? JSON.parse(user.pomodoroSettings) 
+      : user.pomodoroSettings;
+
+  return { ...user, pomodoroSettings: parsedPomodoroSettings };
+};
+
 // --- Universal Data Functions ---
 
 export async function getUser(): Promise<User> {
@@ -106,14 +115,10 @@ export async function getUser(): Promise<User> {
       };
       await db.insert(users).values(dbUser as any);
       user = await db.query.users.findFirst({ where: eq(users.id, HARDCODED_USER_ID) });
-      if (!user) throw new Error("Failed to create and retrieve user.");
     }
     
-    const parsedPomodoroSettings = typeof user.pomodoroSettings === 'string' 
-      ? JSON.parse(user.pomodoroSettings) 
-      : user.pomodoroSettings;
+    return mapDbUserToAppUser(user);
 
-    return { ...user, pomodoroSettings: parsedPomodoroSettings };
   } catch (error) {
     console.error("Failed to fetch/create user from DB, falling back to localStorage.", error);
     return readFromCache(LOCAL_STORAGE_USER_KEY) || getDefaultUser();
@@ -145,13 +150,54 @@ const getPetStyleForLevel = (level: number): string => {
   return bestPet ? bestPet.id : 'pet1';
 };
 
+const mapDbTaskToAppTask = (dbTask: any): Task => ({
+    ...dbTask,
+    id: dbTask.id.toString(),
+    icon: dbTask.category,
+    dueDate: dbTask.dueDate ? new Date(dbTask.dueDate) : new Date(),
+    recurrence: dbTask.recurrence && typeof dbTask.recurrence === 'string' ? JSON.parse(dbTask.recurrence) : dbTask.recurrence,
+});
+
 export async function completeTaskAndUpdateXP(task: Task, completed: boolean) {
+    if (dbInitializationError) {
+        console.warn("DB not available, using local storage for completeTaskAndUpdateXP.");
+        const currentUser = readFromCache(LOCAL_STORAGE_USER_KEY) || getDefaultUser();
+        const allTasks = readFromCache(LOCAL_STORAGE_TASKS_KEY) || [];
+        const originalTask = allTasks.find((t: Task) => t.id === task.id);
+        if (!originalTask || completed === originalTask.completed) return;
+
+        const xpChange = XP_MAP[originalTask.difficulty] || 0;
+        let newXp = currentUser.xp + (completed ? xpChange : -xpChange);
+        if (newXp < 0) newXp = 0;
+
+        let newLevel = currentUser.level;
+        let newXpToNextLevel = currentUser.xpToNextLevel;
+        while (newXp >= newXpToNextLevel) {
+            newLevel++;
+            newXp -= newXpToNextLevel;
+            newXpToNextLevel = Math.floor(newXpToNextLevel * 1.2);
+        }
+        
+        const updatedUser = {
+            ...currentUser,
+            xp: newXp,
+            level: newLevel,
+            xpToNextLevel: newXpToNextLevel,
+            petStyle: getPetStyleForLevel(newLevel),
+        };
+        writeToCache(LOCAL_STORAGE_USER_KEY, updatedUser);
+
+        const updatedTasks = allTasks.map((t: Task) => t.id === task.id ? { ...t, completed } : t);
+        writeToCache(LOCAL_STORAGE_TASKS_KEY, updatedTasks);
+        return;
+    }
+    
+    // DB implementation
     const currentUser = await getUser();
-    const allTasks = await getTasks();
-    const originalTask = allTasks.find(t => t.id === task.id);
+    const originalTask = await db.query.tasks.findFirst({ where: eq(tasksSchema.id, Number(task.id)) });
     if (!originalTask || completed === originalTask.completed) return;
 
-    const xpChange = XP_MAP[originalTask.difficulty] || 0;
+    const xpChange = XP_MAP[originalTask.difficulty as keyof typeof XP_MAP] || 0;
     let newXp = currentUser.xp + (completed ? xpChange : -xpChange);
     if (newXp < 0) newXp = 0;
 
@@ -170,17 +216,18 @@ export async function completeTaskAndUpdateXP(task: Task, completed: boolean) {
         petStyle: getPetStyleForLevel(newLevel),
     });
 
-    const updatedTasks = allTasks.map(t => t.id === task.id ? { ...t, completed } : t);
-    await updateTasks(updatedTasks);
+    await db.update(tasksSchema).set({ completed }).where(eq(tasksSchema.id, Number(task.id)));
 }
+
+const mapDbAchievementToAppAchievement = (a: any): Achievement => ({
+    ...a,
+    id: a.id.toString(),
+    dateUnlocked: a.dateUnlocked ? new Date(a.dateUnlocked) : undefined
+});
 
 export async function getAchievements(): Promise<Achievement[]> {
     if (dbInitializationError) {
-        return (readFromCache(LOCAL_STORAGE_ACHIEVEMENTS_KEY) || getDefaultAchievements()).map((a: any) => ({
-            ...a,
-            id: a.id.toString(),
-            dateUnlocked: a.dateUnlocked ? new Date(a.dateUnlocked) : undefined
-        }));
+        return (readFromCache(LOCAL_STORAGE_ACHIEVEMENTS_KEY) || getDefaultAchievements()).map(mapDbAchievementToAppAchievement);
     }
     try {
         let userAchievements = await db.query.achievements.findMany({ where: eq(achievementsSchema.userId, HARDCODED_USER_ID) });
@@ -189,14 +236,10 @@ export async function getAchievements(): Promise<Achievement[]> {
             await db.insert(achievementsSchema).values(defaultAchievements as any);
             userAchievements = await db.query.achievements.findMany({ where: eq(achievementsSchema.userId, HARDCODED_USER_ID) });
         }
-        return userAchievements.map(a => ({...a, id: a.id.toString(), dateUnlocked: a.dateUnlocked ? new Date(a.dateUnlocked) : undefined }));
+        return userAchievements.map(mapDbAchievementToAppAchievement);
     } catch (error) {
         console.error("Failed to fetch achievements from DB, falling back to localStorage.", error);
-        return (readFromCache(LOCAL_STORAGE_ACHIEVEMENTS_KEY) || getDefaultAchievements()).map((a: any) => ({
-            ...a,
-            id: a.id.toString(),
-            dateUnlocked: a.dateUnlocked ? new Date(a.dateUnlocked) : undefined
-        }));
+        return (readFromCache(LOCAL_STORAGE_ACHIEVEMENTS_KEY) || getDefaultAchievements()).map(mapDbAchievementToAppAchievement);
     }
 }
 
@@ -206,43 +249,26 @@ export async function updateAchievements(newAchievements: Achievement[]) {
         return;
     }
     try {
-        const existingAchievements = await db.query.achievements.findMany({ where: eq(achievementsSchema.userId, HARDCODED_USER_ID) });
-        const existingIds = new Set(existingAchievements.map(a => a.id.toString()));
-
-        for (const achievement of newAchievements) {
-            const { id, ...data } = achievement;
-            const record = {
-                ...data,
-                userId: HARDCODED_USER_ID,
-                dateUnlocked: data.dateUnlocked ? new Date(data.dateUnlocked) : null
-            };
-
-            if (id && existingIds.has(id.toString()) && !id.toString().startsWith('custom-')) {
-                 await db.update(achievementsSchema).set(record).where(eq(achievementsSchema.id, Number(id)));
-            } else {
-                 await db.insert(achievementsSchema).values(record as any);
-            }
+        // This is a simplified approach: clear and re-insert.
+        // For production, a more sophisticated diffing logic would be better.
+        await db.delete(achievementsSchema).where(eq(achievementsSchema.userId, HARDCODED_USER_ID));
+        
+        if (newAchievements.length > 0) {
+            const achievementsToInsert = newAchievements.map(ach => {
+                const { id, ...rest } = ach; // Exclude 'id' for insertion
+                return {
+                    ...rest,
+                    userId: HARDCODED_USER_ID,
+                    dateUnlocked: ach.dateUnlocked ? new Date(ach.dateUnlocked) : null,
+                };
+            });
+            await db.insert(achievementsSchema).values(achievementsToInsert as any);
         }
-
-        const newIds = new Set(newAchievements.map(a => a.id ? a.id.toString() : null));
-        for (const existingAchievement of existingAchievements) {
-            if (!newIds.has(existingAchievement.id.toString())) {
-                await db.delete(achievementsSchema).where(eq(achievementsSchema.id, existingAchievement.id));
-            }
-        }
-
     } catch (error) {
         console.error("Failed to save achievements to DB", error);
     }
 }
 
-const mapDbTaskToAppTask = (dbTask: any): Task => ({
-    ...dbTask,
-    id: dbTask.id.toString(),
-    icon: dbTask.category,
-    dueDate: dbTask.dueDate ? new Date(dbTask.dueDate) : new Date(),
-    recurrence: dbTask.recurrence && typeof dbTask.recurrence === 'string' ? JSON.parse(dbTask.recurrence) : dbTask.recurrence,
-});
 
 export async function getTasks(): Promise<Task[]> {
   if (dbInitializationError) {
@@ -252,6 +278,7 @@ export async function getTasks(): Promise<Task[]> {
     let userTasks = await db.query.tasks.findMany({ where: eq(tasksSchema.userId, HARDCODED_USER_ID) });
     if (userTasks.length === 0) {
       const defaultTasks = getDefaultTasks().map(t => ({ ...t, recurrence: JSON.stringify(t.recurrence) }));
+      // @ts-ignore
       const insertableTasks = defaultTasks.map(({ id, ...rest }) => rest);
       await db.insert(tasksSchema).values(insertableTasks as any);
       userTasks = await db.query.tasks.findMany({ where: eq(tasksSchema.userId, HARDCODED_USER_ID) });
@@ -269,23 +296,8 @@ export async function updateTasks(newTasks: Task[]) {
         return;
     }
      try {
-        const existingTasks = await db.query.tasks.findMany({ where: eq(tasksSchema.userId, HARDCODED_USER_ID) });
-        const existingIds = new Set(existingTasks.map(t => t.id.toString()));
-
         for (const task of newTasks) {
-           const { ...taskForDb } = task;
-           const dataForDb = {
-                ...taskForDb,
-                recurrence: task.recurrence ? JSON.stringify(task.recurrence) : null,
-            };
-            if (task.id && existingIds.has(task.id.toString()) && !task.id.toString().startsWith('default-') && !task.id.toString().startsWith('local-')) {
-                await db.update(tasksSchema).set(dataForDb).where(eq(tasksSchema.id, Number(task.id)));
-            } else {
-                const { id, ...newRecord } = dataForDb;
-                if (!existingIds.has(id as string)) {
-                   await db.insert(tasksSchema).values(newRecord as any);
-                }
-            }
+            await saveTask(task, task.id);
         }
     } catch (error) {
         console.error("Failed to save tasks to DB", error);
@@ -293,30 +305,33 @@ export async function updateTasks(newTasks: Task[]) {
 }
 
 export async function saveTask(taskData: Omit<Task, 'id' | 'userId' | 'icon'>, taskId?: string) {
-    const fullTaskData = { ...taskData, icon: taskData.category };
     if (dbInitializationError) {
         const tasks = readFromCache(LOCAL_STORAGE_TASKS_KEY) || [];
         if (taskId) {
             const index = tasks.findIndex((t: Task) => t.id === taskId);
-            if (index > -1) tasks[index] = { ...tasks[index], ...fullTaskData };
+            if (index > -1) tasks[index] = { ...tasks[index], ...taskData };
         } else {
-            tasks.unshift({ ...fullTaskData, id: `local-${Date.now()}`, completed: false, userId: HARDCODED_USER_ID });
+            tasks.unshift({ ...taskData, id: `local-${Date.now()}`, completed: false, userId: HARDCODED_USER_ID });
         }
         writeToCache(LOCAL_STORAGE_TASKS_KEY, tasks);
         return;
     }
 
     const dataForDb = {
-        ...fullTaskData,
+        ...taskData,
         userId: HARDCODED_USER_ID,
-        recurrence: fullTaskData.recurrence ? JSON.stringify(fullTaskData.recurrence) : null,
-        dueDate: fullTaskData.dueDate || new Date(),
+        recurrence: taskData.recurrence ? JSON.stringify(taskData.recurrence) : null,
+        dueDate: taskData.dueDate || new Date(),
     };
     
+    // Drizzle requires 'id' to be excluded for inserts
+    // @ts-ignore
+    const { id, icon, ...restOfData } = dataForDb;
+
     if (taskId && !taskId.startsWith('local-') && !taskId.startsWith('default-')) {
-        await db.update(tasksSchema).set(dataForDb).where(eq(tasksSchema.id, parseInt(taskId, 10)));
+        await db.update(tasksSchema).set(restOfData).where(eq(tasksSchema.id, parseInt(taskId, 10)));
     } else {
-        await db.insert(tasksSchema).values(dataForDb as any);
+        await db.insert(tasksSchema).values(restOfData);
     }
 }
 
