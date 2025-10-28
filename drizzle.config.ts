@@ -1,5 +1,4 @@
-import type { Config } from 'drizzle-kit';
-import 'dotenv/config';
+require('dotenv').config({ path: '.env' });
 
 if (!process.env.DATABASE_URL) {
   // This is a warning now instead of an error to allow local dev without a DB.
@@ -7,11 +6,12 @@ if (!process.env.DATABASE_URL) {
   console.warn('DATABASE_URL is not set in .env file. Drizzle Kit commands might fail.');
 }
 
-export default {
+/** @type { import("drizzle-kit").Config } */
+module.exports = {
   schema: './src/lib/db/schema.ts',
   out: './drizzle',
-  driver: 'pg',
+  dialect: 'postgresql',
   dbCredentials: {
-    connectionString: process.env.DATABASE_URL!, // Use non-null assertion as Drizzle CLI needs it
+    url: process.env.DATABASE_URL,
   },
-} satisfies Config;
+};
