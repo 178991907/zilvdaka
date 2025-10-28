@@ -6,17 +6,26 @@ import 'dotenv/config';
 let db: NeonHttpDatabase<typeof schema>;
 let dbInitializationError: Error | null = null;
 
-if (!process.env.DATABASE_URL) {
+let connectionString = process.env.DATABASE_URL;
+
+if (!connectionString) {
   dbInitializationError = new Error("DATABASE_URL is not set. Database operations will be disabled.");
   console.warn(dbInitializationError.message);
-}
+} else {
+  try {
+    // Clean up the connection string to handle common copy-paste errors
+    // from psql or other clients.
+    const urlMatch = connectionString.match(/postgresql:\/\/[^']+/);
+    if (urlMatch) {
+      connectionString = urlMatch[0];
+    }
 
-try {
-  const sql = neon(process.env.DATABASE_URL!);
-  db = drizzle(sql, { schema });
-} catch (error) {
-  dbInitializationError = error as Error;
-  console.error("Failed to initialize database:", dbInitializationError);
+    const sql = neon(connectionString);
+    db = drizzle(sql, { schema });
+  } catch (error) {
+    dbInitializationError = error as Error;
+    console.error("Failed to initialize database:", dbInitializationError);
+  }
 }
 
 // @ts-ignore - This is a valid export pattern for conditional modules
