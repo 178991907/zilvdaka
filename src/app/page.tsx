@@ -8,17 +8,18 @@ import Image from 'next/image';
 import PetViewer from '@/components/dashboard/pet-viewer';
 import { Card, CardContent } from '@/components/ui/card';
 import { ProgressSummaryContent } from '@/components/dashboard/progress-summary';
-import { Target, Zap } from 'lucide-react';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { Skeleton } from '@/components/ui/skeleton';
 import DailyTaskTable from '@/components/landing/daily-task-table';
+import { dbInitializationError } from '@/lib/db';
 
 export default async function LandingPage() {
   const user: User = await getUser();
-  const tasks: Task[] = await getTodaysTasks();
+  // getTodaysTasks will use the database if available.
+  const initialTasks: Task[] = await getTodaysTasks() || [];
 
-  const completedTasks = tasks.filter(t => t.completed).length;
-  const totalTasks = tasks.length;
+  const completedTasks = initialTasks.filter(t => t.completed).length;
+  const totalTasks = initialTasks.length;
   const dailyProgress = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
   
   const petProgress = user ? (user.xp / user.xpToNextLevel) * 100 : 0;
@@ -95,7 +96,10 @@ export default async function LandingPage() {
           </div>
 
           <div className="mt-8">
-            <DailyTaskTable initialTasks={tasks} />
+            <DailyTaskTable 
+                initialTasks={initialTasks} 
+                useLocalStorage={!!dbInitializationError}
+            />
           </div>
 
         </div>

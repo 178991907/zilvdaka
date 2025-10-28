@@ -13,7 +13,6 @@ export type Task = {
   userId: string;
   title: string;
   category: string;
-  icon: string;
   difficulty: 'Easy' | 'Medium' | 'Hard';
   completed: boolean;
   status: 'active' | 'paused';

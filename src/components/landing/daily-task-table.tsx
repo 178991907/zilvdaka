@@ -1,10 +1,10 @@
 
 'use client';
 import * as React from 'react';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableCaption } from '@/components/ui/table';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
-import { Task, completeTaskAndUpdateXP } from '@/lib/data-browser';
+import { Task, getClientTodaysTasks, completeClientTaskAndUpdateXP, completeTaskAndUpdateXP } from '@/lib/data-browser';
 import { iconMap } from '@/lib/data-types';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { useSound } from '@/hooks/use-sound';
@@ -12,20 +12,46 @@ import DigitalClock from '../dashboard/digital-clock';
 import { usePomodoroModal } from '@/components/pomodoro/pomodoro-modal';
 import { useRouter } from 'next/navigation';
 
-export default function DailyTaskTable({ initialTasks }: { initialTasks: Task[]}) {
+export default function DailyTaskTable({ initialTasks, useLocalStorage }: { initialTasks: Task[], useLocalStorage: boolean }) {
   const [tasks, setTasks] = React.useState<Task[]>(initialTasks);
   const playSound = useSound();
   const { openPomodoro } = usePomodoroModal();
   const router = useRouter();
 
+  React.useEffect(() => {
+    // If we need to use localStorage, fetch the data on the client
+    if (useLocalStorage) {
+      const fetchClientData = async () => {
+        const clientTasks = await getClientTodaysTasks();
+        setTasks(clientTasks);
+      };
+      fetchClientData();
+      
+      const handleTasksUpdate = () => fetchClientData();
+      window.addEventListener('tasksUpdated', handleTasksUpdate);
+      return () => {
+        window.removeEventListener('tasksUpdated', handleTasksUpdate);
+      };
+    }
+  }, [useLocalStorage]);
 
   const handleTaskCompletion = async (task: Task, completed: boolean) => {
     if (completed) {
       playSound('success');
     }
-    await completeTaskAndUpdateXP(task, completed);
-    // Optimistically update UI
+    
+    if (useLocalStorage) {
+      await completeClientTaskAndUpdateXP(task, completed);
+      const clientTasks = await getClientTodaysTasks(); // Re-fetch to ensure consistency
+      setTasks(clientTasks);
+    } else {
+      await completeTaskAndUpdateXP(task, completed);
+    }
+    
+    // Optimistically update UI while waiting for server refresh
     setTasks(prevTasks => prevTasks.map(t => t.id === task.id ? { ...t, completed } : t));
+    
+    // Refresh server components to get latest user XP/level.
     router.refresh();
   };
   
@@ -54,7 +80,7 @@ export default function DailyTaskTable({ initialTasks }: { initialTasks: Task[]}
         <TableBody>
           {tasks.length > 0 ? (
             tasks.map((task, index) => {
-              const Icon = iconMap[task.icon];
+              const Icon = iconMap[task.category];
               return (
               <TableRow key={task.id}>
                 <TableCell className="text-center font-medium">{index + 1}</TableCell>
