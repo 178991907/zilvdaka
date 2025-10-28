@@ -10,12 +10,11 @@ let connectionString = process.env.DATABASE_URL;
 
 if (!connectionString) {
   dbInitializationError = new Error("DATABASE_URL is not set. Database operations will be disabled.");
-  console.warn(dbInitializationError.message);
 } else {
   try {
-    // Clean up the connection string to handle common copy-paste errors
-    // from psql or other clients.
-    const urlMatch = connectionString.match(/postgresql:\/\/[^']+/);
+    // Ultimate fix: Clean up the connection string to handle common copy-paste errors
+    // from psql or other clients. This regex finds the actual URL.
+    const urlMatch = connectionString.match(/postgresql:\/\/[^'"]+/);
     if (urlMatch) {
       connectionString = urlMatch[0];
     }
@@ -23,8 +22,8 @@ if (!connectionString) {
     const sql = neon(connectionString);
     db = drizzle(sql, { schema });
   } catch (error) {
-    dbInitializationError = error as Error;
-    console.error("Failed to initialize database:", dbInitializationError);
+    dbInitializationError = new Error(`Failed to initialize database: ${(error as Error).message}`);
+    console.error(dbInitializationError);
   }
 }
 
