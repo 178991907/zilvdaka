@@ -1,5 +1,4 @@
 
-
 'use server';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -30,9 +29,9 @@ export default async function LandingPage() {
       <header className="sticky top-0 z-10 flex h-[120px] items-center justify-between bg-background/80 backdrop-blur-sm px-4 md:px-8">
         <div className="flex items-center gap-2 w-1/3">
         </div>
-        <div className="flex justify-center w-1/3">
+        <div className="flex justify-center items-center w-1/3 h-full">
            {user.appLogo ? (
-              <Image src={user.appLogo} alt="App Logo" width={360} height={114} priority className="h-auto w-auto max-h-[114px] max-w-[360px]" />
+              <Image src={user.appLogo} alt="App Logo" width={360} height={114} priority className="object-contain max-h-full max-w-full" />
            ) : (
              <Image src="https://pic1.imgdb.cn/item/6817c79a58cb8da5c8dc723f.png" alt="Logo" width={360} height={114} priority />
            )}
