@@ -2,9 +2,7 @@ import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
   /* config options here */
-  experimental: {
-    forceSwcTransforms: true,
-  },
+  output: 'standalone',
   typescript: {
     ignoreBuildErrors: true,
   },
