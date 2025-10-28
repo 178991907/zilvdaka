@@ -34,7 +34,7 @@ export default async function LandingPage() {
            {user.appLogo ? (
               <Image src={user.appLogo} alt="App Logo" width={360} height={114} priority className="h-auto w-auto max-h-[114px] max-w-[360px]" />
            ) : (
-             <Image src="https://pic1.imgdb.cn/item/6817c79a58cb8da5c8dc723f.png" alt="Logo" width={360} height={114} priority className="h-[114px] w-auto" />
+             <Image src="https://pic1.imgdb.cn/item/6817c79a58cb8da5c8dc723f.png" alt="Logo" width={360} height={114} priority />
            )}
         </div>
         <nav className="flex justify-end w-1/3">
