@@ -91,6 +91,10 @@ const mapDbUserToAppUser = (user: any): User => {
 
 export async function getUser(): Promise<User> {
   if (dbInitializationError) {
+    // If on server, return default. If on client, try localStorage.
+    if (typeof window === 'undefined') {
+        return getDefaultUser();
+    }
     return getClientUser(); 
   }
   try {
@@ -99,7 +103,6 @@ export async function getUser(): Promise<User> {
     });
 
     if (!user) {
-      console.log('No user found in DB, creating and seeding default user.');
       const defaultUser = getDefaultUser();
       const dbUser = {
         ...defaultUser,
@@ -111,7 +114,10 @@ export async function getUser(): Promise<User> {
     
     return mapDbUserToAppUser(user);
   } catch (error) {
-    console.error("Failed to fetch/create user from DB. Falling back to client user.", error);
+    console.error("DB Error: Failed to fetch/create user. Falling back.", error);
+    if (typeof window === 'undefined') {
+        return getDefaultUser();
+    }
     return getClientUser();
   }
 }
@@ -150,12 +156,14 @@ const mapDbTaskToAppTask = (dbTask: any): Task => ({
 
 export async function getTasks(): Promise<Task[]> {
   if (dbInitializationError) {
+     if (typeof window === 'undefined') {
+        return getDefaultTasks();
+    }
     return getClientTasks();
   }
   try {
     let userTasks = await db.query.tasks.findMany({ where: eq(tasksSchema.userId, HARDCODED_USER_ID) });
      if (userTasks.length === 0) {
-        console.log("No tasks found, seeding default tasks to DB.");
         const defaultTasks = getDefaultTasks().map(t => ({
             ...t,
             userId: HARDCODED_USER_ID,
@@ -167,7 +175,10 @@ export async function getTasks(): Promise<Task[]> {
     }
     return userTasks.map(mapDbTaskToAppTask);
   } catch (error) {
-    console.error("Failed to fetch tasks from DB.", error);
+    console.error("DB Error: Failed to fetch tasks. Falling back.", error);
+     if (typeof window === 'undefined') {
+        return getDefaultTasks();
+    }
     return getClientTasks();
   }
 };
@@ -275,7 +286,6 @@ export async function getAchievements(): Promise<Achievement[]> {
     try {
         let userAchievements = await db.query.achievements.findMany({ where: eq(achievementsSchema.userId, HARDCODED_USER_ID) });
         if (userAchievements.length === 0) {
-            console.log("No achievements found, seeding default achievements to DB.");
             const defaultAchievements = getDefaultAchievements().map(a => ({
                 ...a,
                 userId: HARDCODED_USER_ID,
@@ -287,7 +297,7 @@ export async function getAchievements(): Promise<Achievement[]> {
         }
         return userAchievements.map(mapDbAchievementToAppAchievement);
     } catch (error) {
-        console.error("Failed to fetch achievements from DB.", error);
+        console.error("DB Error: Failed to fetch achievements. Falling back.", error);
         return getClientAchievements();
     }
 }

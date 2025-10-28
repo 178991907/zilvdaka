@@ -29,7 +29,7 @@ export default async function LandingPage() {
       <header className="sticky top-0 z-10 flex h-[120px] items-center justify-between bg-background/80 backdrop-blur-sm px-4 md:px-8">
         <div className="flex items-center gap-2 w-1/3">
         </div>
-        <div className="flex justify-center items-center w-1/3 h-full">
+        <div className="flex justify-center items-center w-1/3">
            {user.appLogo ? (
               <Image src={user.appLogo} alt="App Logo" width={360} height={114} priority className="object-contain max-h-full max-w-full" />
            ) : (

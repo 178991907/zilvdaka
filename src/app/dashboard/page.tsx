@@ -11,7 +11,6 @@ import { SidebarTrigger } from '@/components/ui/sidebar';
 import { useTranslation } from 'react-i18next';
 import { ClientOnlyT } from '@/components/layout/app-sidebar';
 import { Button } from '@/components/ui/button';
-import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import PetCard from '@/components/dashboard/pet-card';
 

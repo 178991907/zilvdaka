@@ -16,7 +16,6 @@ import PetPicker from '@/components/settings/pet-picker';
 import { useToast } from '@/hooks/use-toast';
 import { getUser, updateUser, User } from '@/lib/data-browser';
 import { Upload } from 'lucide-react';
-import Image from 'next/image';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function SettingsPage() {

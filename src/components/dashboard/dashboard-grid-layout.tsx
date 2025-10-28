@@ -50,10 +50,9 @@ const defaultLayouts = {
 
 const DashboardGridLayout = ({ children, isEditing }: { children: React.ReactNode, isEditing: boolean }) => {
   const [isMounted, setIsMounted] = useState(false);
-  const [layouts, setLayouts] = useState<{[key: string]: Layout[]}>(defaultLayouts);
+  const [layouts, setLayouts] = useState<{[key: string]: Layout[]}>(() => getFromLS('layouts') || defaultLayouts);
 
   useEffect(() => {
-    setIsMounted(true);
     const savedLayouts = getFromLS('layouts');
     if (savedLayouts) {
         // Basic validation to prevent completely broken layouts
@@ -65,17 +64,18 @@ const DashboardGridLayout = ({ children, isEditing }: { children: React.ReactNod
     } else {
         setLayouts(defaultLayouts);
     }
+    setIsMounted(true);
   }, []);
   
   const onLayoutChange = (layout: Layout[], allLayouts: { [key: string]: Layout[] }) => {
-    if (isMounted) {
-      saveToLS('layouts', allLayouts);
-      setLayouts(allLayouts);
-    }
+    saveToLS('layouts', allLayouts);
+    setLayouts(allLayouts);
   };
 
   if (!isMounted) {
-    // Render a placeholder or simplified layout for SSR to prevent hydration mismatch
+    // Render an invisible placeholder on the server and during initial client render
+    // to prevent hydration mismatch and layout flash. The correct layout is applied
+    // once the component is mounted on the client.
     return <div className="p-4 md:p-8 opacity-0"></div>;
   }
   

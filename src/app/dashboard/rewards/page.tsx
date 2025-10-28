@@ -10,7 +10,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Dialog
 import { PlusCircle, Trash2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import Image from 'next/image';
 import { Achievement, getAchievements, updateAchievements } from '@/lib/data-browser';
 import { Skeleton } from '@/components/ui/skeleton';
 

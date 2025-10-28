@@ -8,7 +8,6 @@ import { Task, getTasks, deleteTask, saveTask, updateTasks } from '@/lib/data-br
 import { PlusCircle } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import Image from 'next/image';
 
 export default function TasksPage() {
   const [tasks, setTasks] = useState<Task[]>([]);
