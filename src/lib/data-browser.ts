@@ -1,4 +1,5 @@
 
+
 'use server';
 
 import { db, dbInitializationError } from '@/lib/db';
@@ -44,8 +45,8 @@ const getDefaultUser = (): User => ({
 const getDefaultTasks = (): Task[] => {
     const today = new Date();
     return [
-        { id: `default-${Date.now()}-1`, userId: HARDCODED_USER_ID, title: 'Read for 20 minutes', category: 'Learning', difficulty: 'Easy', completed: false, status: 'active', dueDate: today, recurrence: { interval: 1, unit: 'week', daysOfWeek: ['mon', 'tue', 'wed', 'thu', 'fri'] }, time: '20:00' },
-        { id: `default-${Date.now()}-2`, userId: HARDCODED_USER_ID, title: 'Practice drawing', category: 'Creative', difficulty: 'Medium', completed: false, status: 'active', dueDate: today, recurrence: { interval: 1, unit: 'week', daysOfWeek: ['tue', 'thu'] }, time: '16:30' },
+        { id: `default-${Date.now()}-1`, userId: HARDCODED_USER_ID, title: 'Read for 20 minutes', category: 'Learning', icon: 'Learning', difficulty: 'Easy', completed: false, status: 'active', dueDate: today, recurrence: { interval: 1, unit: 'week', daysOfWeek: ['mon', 'tue', 'wed', 'thu', 'fri'] }, time: '20:00' },
+        { id: `default-${Date.now()}-2`, userId: HARDCODED_USER_ID, title: 'Practice drawing', category: 'Creative', icon: 'Creative', difficulty: 'Medium', completed: false, status: 'active', dueDate: today, recurrence: { interval: 1, unit: 'week', daysOfWeek: ['tue', 'thu'] }, time: '16:30' },
     ];
 };
 
@@ -56,7 +57,7 @@ const getDefaultAchievements = (): Achievement[] => [
 ];
 
 // --- Local Storage Helper Functions ---
-// These are only used in a browser context, so they need the 'use client' directive.
+// These are only used in a browser context.
 const readFromLocalStorage = (key: string): any => {
     if (typeof window === 'undefined') return null;
     const item = localStorage.getItem(key);
@@ -91,9 +92,7 @@ const mapDbUserToAppUser = (user: any): User => {
 export async function getUser(): Promise<User> {
   if (dbInitializationError) {
     console.warn("DB not available, falling back to local storage for getUser.");
-    // This part runs client-side if DB fails. We can't use localStorage on the server.
-    // The component calling this will need to handle the client-side fetch.
-    return getDefaultUser(); 
+    return getClientUser(); 
   }
   try {
     let user = await db.query.users.findFirst({
@@ -113,14 +112,14 @@ export async function getUser(): Promise<User> {
     
     return mapDbUserToAppUser(user);
   } catch (error) {
-    console.error("Failed to fetch/create user from DB. This might be a connection issue.", error);
-    return getDefaultUser(); // Return default user on error
+    console.error("Failed to fetch/create user from DB. Falling back to client user.", error);
+    return getClientUser();
   }
 }
 
 export async function updateUser(newUserData: Partial<Omit<User, 'id'>>) {
   if (dbInitializationError) {
-     throw new Error("Database not available. Cannot update user.");
+     return updateClientUser(newUserData);
   }
   try {
     const dataToUpdate: { [key: string]: any } = { ...newUserData };
@@ -152,8 +151,7 @@ const mapDbTaskToAppTask = (dbTask: any): Task => ({
 
 export async function getTasks(): Promise<Task[]> {
   if (dbInitializationError) {
-    console.warn("DB not available, returning empty array for getTasks. Component should fall back to localStorage.");
-    return [];
+    return getClientTasks();
   }
   try {
     let userTasks = await db.query.tasks.findMany({ where: eq(tasksSchema.userId, HARDCODED_USER_ID) });
@@ -163,22 +161,21 @@ export async function getTasks(): Promise<Task[]> {
             ...t,
             userId: HARDCODED_USER_ID,
             recurrence: t.recurrence ? JSON.stringify(t.recurrence) : null,
-            // @ts-ignore
-            id: undefined // Exclude id for insertion
         }));
-        await db.insert(tasksSchema).values(defaultTasks);
+        // @ts-ignore - Drizzle handles id for insertion
+        await db.insert(tasksSchema).values(defaultTasks.map(({id, ...rest}) => rest));
         userTasks = await db.query.tasks.findMany({ where: eq(tasksSchema.userId, HARDCODED_USER_ID) });
     }
     return userTasks.map(mapDbTaskToAppTask);
   } catch (error) {
     console.error("Failed to fetch tasks from DB.", error);
-    return [];
+    return getClientTasks();
   }
 };
 
 export async function completeTaskAndUpdateXP(task: Task, completed: boolean) {
     if (dbInitializationError) {
-       throw new Error("Database not available. Cannot complete task.");
+       return completeClientTaskAndUpdateXP(task, completed);
     }
     
     const currentUser = await getUser();
@@ -215,7 +212,7 @@ export async function completeTaskAndUpdateXP(task: Task, completed: boolean) {
 
 export async function saveTask(taskData: Omit<Task, 'id' | 'userId'>, taskId?: string) {
     if (dbInitializationError) {
-        throw new Error("Database not available. Cannot save task.");
+        return saveClientTask(taskData, taskId);
     }
     
     const dataForDb = {
@@ -229,7 +226,8 @@ export async function saveTask(taskData: Omit<Task, 'id' | 'userId'>, taskId?: s
         if (taskId && !isNaN(parseInt(taskId))) {
             await db.update(tasksSchema).set(dataForDb).where(eq(tasksSchema.id, parseInt(taskId, 10)));
         } else {
-            await db.insert(tasksSchema).values(dataForDb as any);
+             // @ts-ignore
+            await db.insert(tasksSchema).values(dataForDb);
         }
     } catch (error) {
         console.error("Failed to save task to DB", error);
@@ -240,7 +238,7 @@ export async function saveTask(taskData: Omit<Task, 'id' | 'userId'>, taskId?: s
 
 export async function deleteTask(taskId: string) {
     if (dbInitializationError) {
-        throw new Error("Database not available. Cannot delete task.");
+        return deleteClientTask(taskId);
     }
     if (taskId && !isNaN(parseInt(taskId))) {
         try {
@@ -250,6 +248,17 @@ export async function deleteTask(taskId: string) {
             throw error;
         }
     }
+}
+
+export async function updateTasks(newTasks: Task[]) {
+  if (dbInitializationError) {
+    writeToLocalStorage(LOCAL_STORAGE_TASKS_KEY, newTasks);
+    return;
+  }
+  // This is a complex operation for a database, involving potential updates,
+  // creations, and deletions. For now, we'll just re-fetch to ensure consistency.
+  // A more robust implementation would diff the arrays.
+  console.warn("updateTasks with database is not fully implemented for batch updates. Re-fetching is recommended.");
 }
 
 
@@ -262,8 +271,7 @@ const mapDbAchievementToAppAchievement = (a: any): Achievement => ({
 
 export async function getAchievements(): Promise<Achievement[]> {
     if (dbInitializationError) {
-        console.warn("DB not available, returning empty array for getAchievements. Component should fall back to localStorage.");
-        return [];
+        return getClientAchievements();
     }
     try {
         let userAchievements = await db.query.achievements.findMany({ where: eq(achievementsSchema.userId, HARDCODED_USER_ID) });
@@ -272,23 +280,23 @@ export async function getAchievements(): Promise<Achievement[]> {
             const defaultAchievements = getDefaultAchievements().map(a => ({
                 ...a,
                 userId: HARDCODED_USER_ID,
-                // @ts-ignore
-                id: undefined // Exclude id for insertion
+                dateUnlocked: a.dateUnlocked ? new Date(a.dateUnlocked) : null,
             }));
-            await db.insert(achievementsSchema).values(defaultAchievements as any);
+             // @ts-ignore
+            await db.insert(achievementsSchema).values(defaultAchievements.map(({id, ...rest}) => rest));
             userAchievements = await db.query.achievements.findMany({ where: eq(achievementsSchema.userId, HARDCODED_USER_ID) });
         }
         return userAchievements.map(mapDbAchievementToAppAchievement);
     } catch (error) {
         console.error("Failed to fetch achievements from DB.", error);
-        return [];
+        return getClientAchievements();
     }
 }
 
 
 export async function updateAchievements(newAchievements: Achievement[]) {
     if (dbInitializationError) {
-        throw new Error("Database not available. Cannot update achievements.");
+        return updateClientAchievements(newAchievements);
     }
     try {
         // This is a simplified approach: clear and re-insert for the user.
@@ -314,7 +322,6 @@ export async function updateAchievements(newAchievements: Achievement[]) {
 
 
 // --- Fallback Client-side Data Functions ---
-// These functions are exported to be used ONLY on the client when the DB check fails.
 
 export async function getClientUser(): Promise<User> {
     const user = readFromLocalStorage(LOCAL_STORAGE_USER_KEY) || getDefaultUser();
@@ -336,19 +343,17 @@ export async function getClientTasks(): Promise<Task[]> {
 export async function saveClientTask(taskData: Omit<Task, 'id' | 'userId'>, taskId?: string) {
     let tasks = await getClientTasks();
     if (taskId) {
-        tasks = tasks.map(t => t.id === taskId ? { ...t, ...taskData } : t);
+        tasks = tasks.map(t => t.id === taskId ? { ...t, ...taskData, id: taskId, userId: HARDCODED_USER_ID } : t);
     } else {
-        tasks.unshift({ ...taskData, id: `local-${Date.now()}`, completed: false, userId: HARDCODED_USER_ID });
+        tasks.unshift({ ...taskData, id: `local-${Date.now()}`, userId: HARDCODED_USER_ID });
     }
     writeToLocalStorage(LOCAL_STORAGE_TASKS_KEY, tasks);
-    return Promise.resolve();
 }
 
 export async function deleteClientTask(taskId: string) {
     let tasks = await getClientTasks();
     tasks = tasks.filter(t => t.id !== taskId);
     writeToLocalStorage(LOCAL_STORAGE_TASKS_KEY, tasks);
-    return Promise.resolve();
 }
 
 export async function completeClientTaskAndUpdateXP(task: Task, completed: boolean) {
@@ -391,13 +396,10 @@ export async function updateClientAchievements(newAchievements: Achievement[]) {
 }
 
 // This function needs to be available on the server to determine which tasks to show on the landing page.
-export async function getTodaysTasks(): Promise<Task[]> {
+export async function getTodaysTasks(): Promise<Task[] | undefined> {
     try {
-        const allTasks = await getTasks(); // This will use DB if available, or return []
-        if (dbInitializationError && allTasks.length === 0) {
-            // This case should not happen if called from a client component, but as a server-side fallback:
-             return [];
-        }
+        const allTasks = await getTasks(); 
+        if (!allTasks) return [];
 
         const today = new Date();
         const todayString = today.toDateString();
@@ -420,4 +422,27 @@ export async function getTodaysTasks(): Promise<Task[]> {
         console.error("Error in getTodaysTasks", e);
         return [];
     }
+}
+
+export async function getClientTodaysTasks(): Promise<Task[]> {
+    const allTasks = await getClientTasks();
+    if (!allTasks) return [];
+
+    const today = new Date();
+    const todayString = today.toDateString();
+    const dayMapping = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'] as const;
+    const todayDay = dayMapping[today.getDay()];
+
+    return allTasks.filter(task => {
+        if (task.status !== 'active') return false;
+
+        if (task.recurrence) {
+            const { unit, daysOfWeek } = task.recurrence;
+            if (unit === 'week' && daysOfWeek && daysOfWeek.length > 0) {
+                return daysOfWeek.includes(todayDay);
+            }
+        }
+        
+        return new Date(task.dueDate).toDateString() === todayString;
+    });
 }
